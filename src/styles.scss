@@ -1,0 +1,141 @@
+.sidebar .logo:after{
+  display: none;
+}
+.sidebar .nav {
+    margin-top: 25px !important;
+}
+.mini-sidebar{
+    width: 45px !important;
+}
+.sidebar .nav p {
+    font-family: Tahoma !important;
+    font-size: 12px !important;
+}
+.main-panel-mini{
+    width: calc(100% - 50px);
+}
+.nav-link.nav-link-mini{
+    padding: 2px 8px !important;
+}
+.children-menu-item{
+    list-style: none !important;
+}
+.children-menu-item-none{
+    display: none;
+}
+.icon-lenxuong{
+   float: right !important;
+   transition: .2s;
+}
+.icon-lenxuong-down{
+   transform: rotate(-90deg) !important;
+}
+.thugon{
+    position: absolute;
+    background: transparent;
+    right: 5px;
+    border: none;
+    color: white;
+    &:hover{
+       color: #c4c4c4;
+    }
+}
+.icon-lenxuong-an{
+    display: none;
+}
+.nav-link{
+    margin: 0 !important;
+    color: white !important;
+    background: #4caf5033;
+    padding: 2px !important;
+}
+.nav-item.active .nav-link{
+    font-weight: bold !important;
+}
+img.logo-default{
+    height: 50px;
+    width: 280px;
+    object-fit: cover;
+}
+.container-fluid{
+    padding-left: 0 !important;
+}
+.main-panel .navbar{
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+.page-logo{
+    float: left;
+    display: block;
+    width: 280px;
+    height: 50px;
+}
+.navbar{
+    border-bottom: 2px solid #ef5d08;
+    padding: 0 !important;
+    padding-top: 5px !important;
+    position: fixed !important;
+}
+.navbar {
+    color: white !important;
+    background-color: #023a54 !important;
+}
+.logo{
+    padding: 0 !important;
+    color: white !important;
+    background-color: #023a54 !important;
+    z-index: 999;
+}
+.sidebar-wrapper{
+    color: white !important;
+    background-color: #023a54 !important;
+    z-index: 1;
+    top: 52px;
+}
+.sidebar-background{
+    z-index: 9;
+}
+.element-not-allow{
+  pointer-events: none;
+}
+.my-button-create, .my-button-create-normal {
+  background-color: var(--background-default);
+  cursor: pointer;
+  border-radius: 5px;
+  border: var(--button-create-border);
+  &:hover{
+    background-color: var(--button-create-hover-color);
+    box-shadow: var(--button-create-box-shadow);
+  }
+}
+.my-button-create {
+  width: 180px;
+}
+.card.card-cascade .view.gradient-card-header {
+  padding: 1rem 1rem;
+  text-align: center;
+}
+
+.card.card-cascade h3,
+.card.card-cascade h4,
+{
+  margin-bottom: 0px;
+}
+.top-bar-items-area {
+   	background-color: var(--primary-light);
+}
+.blue-gradient {
+  background-color: var(--background-default);
+}
+.card-header {
+  background-color: var(--background-default);
+}
+.mt-5, .my-5 {
+   margin-top: 0 !important;
+}
+.modal-lg { 
+  top: 36px !important;
+}
+.list-group-item {
+    padding: 0.15rem 1rem;
+}

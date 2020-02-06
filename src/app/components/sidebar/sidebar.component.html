@@ -1,0 +1,62 @@
+<div class="sidebar-wrapper" [ngClass]="{'mini-sidebar': mini}">
+  <button class="thugon" (click)="toggle()"><i class="material-icons icon-image-preview">dehaze</i>
+  </button>
+  <div *ngIf="isMobileMenu()">
+    <ul class="nav navbar-nav nav-mobile-menu">
+        <li class="nav-item">
+            <a [ngClass]="{'nav-link-mini': mini}" class="nav-link" href="javascript:void(0)">
+                <i class="material-icons">dashboard</i>
+                <p>
+                    <span class="d-lg-none d-md-block">Stats</span>
+                </p>
+            </a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="material-icons">notifications</i>
+                <span class="notification">5</span>
+                <p>
+                    <span class="d-lg-none d-md-block">Some Actions</span>
+                </p>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="#">Mike John responded to your email</a>
+                <a class="dropdown-item" href="#">You have 5 new tasks</a>
+                <a class="dropdown-item" href="#">You're now friend with Andrew</a>
+                <a class="dropdown-item" href="#">Another Notification</a>
+                <a class="dropdown-item" href="#">Another One</a>
+            </div>
+        </li>
+        <li class="nav-item">
+            <a [ngClass]="{'nav-link-mini': mini}" class="nav-link" href="javascript:void(0)">
+                <i class="material-icons">person</i>
+                <p>
+                    <span class="d-lg-none d-md-block">Account</span>
+                </p>
+            </a>
+        </li>
+    </ul>
+  </div>
+    <ul class="nav">
+        <li routerLinkActive="active" *ngFor="let menuItem of menuItems; let i = index;" class="{{menuItem.class}} nav-item">
+            <a (click)="miniItemList()" *ngIf="menuItem && !menuItem.childrens" [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[menuItem.path]">
+                <i class="material-icons">{{menuItem.icon}}</i>
+                <p>{{menuItem.title}}</p>
+            </a>
+	    <a (click)="xulyDropParents(i)" *ngIf="menuItem && menuItem.childrens && menuItem.childrens.length > 0" [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[menuItem.path]">
+                <i class="material-icons">{{menuItem.icon}}</i>
+                <p>{{menuItem.title}}
+		<i [ngClass]="{'icon-lenxuong-an': mini, 'icon-lenxuong-down': dropParent[i]}" id="{{ 'dropItem_' + i }}"  class="icon-lenxuong material-icons icon-image-preview">chevron_left</i>
+		</p>
+            </a>
+	    <ul [ngClass]="{'children-menu-item-none': mini || !dropParent[i]}" id="{{ 'danhSachItems_' + i }}" class="children-menu-item" *ngIf="menuItem && menuItem.childrens && menuItem.childrens.length > 0">
+        	<li routerLinkActive="active" *ngFor="let childMenuItem of menuItem.childrens" class="{{childMenuItem.class}} nav-item">
+	            <a  [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[childMenuItem.path]">
+                	<i class="material-icons"></i>
+        	        <p class="pl-3">{{childMenuItem.title}}</p>
+	            </a>
+        	</li>
+	    </ul>
+        </li>
+    </ul>
+</div>

@@ -91,9 +91,20 @@ img.logo-default{
     background-color: #023a54 !important;
     z-index: 1;
     top: 52px;
+    height: calc(100vh - 50px) !important;
 }
-.sidebar-background{
+.sidebar-background, .sidebar{
     z-index: 9;
+}
+footer{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 3;
+}
+.copyright{
+    padding: 0 !important;
 }
 .element-not-allow{
   pointer-events: none;

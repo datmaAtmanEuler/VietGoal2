@@ -61,7 +61,7 @@ export class SidebarComponent implements OnInit {
 	   } else {
 	   	_this.dropParent[ind] = !_this.dropParent[ind];
 	   }
-	});
+	});	
   }
   miniItemList() {
         for(let i = 0; i < this.dropParent.length; i++) {

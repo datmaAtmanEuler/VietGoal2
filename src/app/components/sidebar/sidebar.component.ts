@@ -53,11 +53,15 @@ export class SidebarComponent implements OnInit {
         this.sidebarUpdate.emit(this.mini);
   }
   xulyDropParents(index: number) {
+	const _this = this;
 	this.miniItemList();
-	this.dropParent.forEach(function(dp: any){
-	   dp = false;
+	this.dropParent.forEach(function(dp: any, ind: number){
+	   if(ind != index) {   	
+	   	_this.dropParent[ind] = false;
+	   } else {
+	   	_this.dropParent[ind] = !_this.dropParent[ind];
+	   }
 	});
-	this.dropParent[index] = !this.dropParent[index];
   }
   miniItemList() {
         for(let i = 0; i < this.dropParent.length; i++) {

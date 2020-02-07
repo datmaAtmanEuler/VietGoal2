@@ -54,7 +54,6 @@ export class SidebarComponent implements OnInit {
   }
   xulyDropParents(index: number) {
 	const _this = this;
-	this.miniItemList();
 	this.dropParent.forEach(function(dp: any, ind: number){
 	   if(ind != index) {   	
 	   	_this.dropParent[ind] = false;
@@ -62,18 +61,5 @@ export class SidebarComponent implements OnInit {
 	   	_this.dropParent[ind] = !_this.dropParent[ind];
 	   }
 	});	
-  }
-  miniItemList() {
-        for(let i = 0; i < this.dropParent.length; i++) {
-		let dropItem = document.getElementById('dropItem_' + i);
-		if(dropItem) {
-			$(dropItem).removeClass('icon-lenxuong-down');
-		}
-		let danhSachItems = document.getElementById('danhSachItems_' + i);
-		if(danhSachItems) {
-			$(danhSachItems).addClass('children-menu-item-none');
-		}
-		
-	}
   }
 }

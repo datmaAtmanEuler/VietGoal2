@@ -39,17 +39,13 @@
   </div>
     <ul class="nav">
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems; let i = index;" class="{{menuItem.class}} nav-item">
-            <a (click)="miniItemList()" *ngIf="menuItem && !menuItem.childrens" [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[menuItem.path]">
-                <i class="material-icons">{{menuItem.icon}}</i>
-                <p>{{menuItem.title}}</p>
-            </a>
-	    <a (click)="xulyDropParents(i)" *ngIf="menuItem && menuItem.childrens && menuItem.childrens.length > 0" [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[menuItem.path]">
+            <a (click)="xulyDropParents(i)" [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[menuItem.path]">
                 <i class="material-icons">{{menuItem.icon}}</i>
                 <p>{{menuItem.title}}
-		<i [ngClass]="{'icon-lenxuong-an': mini, 'icon-lenxuong-down': dropParent[i]}" id="{{ 'dropItem_' + i }}"  class="icon-lenxuong material-icons icon-image-preview">chevron_left</i>
-		</p>
+                    <i *ngIf="menuItem && menuItem.childrens && menuItem.childrens.length > 0" [ngClass]="{'icon-lenxuong-an': mini, 'icon-lenxuong-down': dropParent[i]}" class="icon-lenxuong material-icons icon-image-preview">chevron_left</i>
+                </p>
             </a>
-	    <ul [ngClass]="{'children-menu-item-none': mini || !dropParent[i]}" id="{{ 'danhSachItems_' + i }}" class="children-menu-item" *ngIf="menuItem && menuItem.childrens && menuItem.childrens.length > 0">
+	    <ul [ngClass]="{'children-menu-item-none': mini || !dropParent[i]}" class="children-menu-item" *ngIf="menuItem && menuItem.childrens && menuItem.childrens.length > 0">
         	<li routerLinkActive="active" *ngFor="let childMenuItem of menuItem.childrens" class="{{childMenuItem.class}} nav-item">
 	            <a  [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[childMenuItem.path]">
                 	<i class="material-icons"></i>

@@ -1,0 +1,11 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ "MESSAGE.NameList.Confirm" | translate}}</h4>
+  </div>
+<div class="modal-body">
+    <div class="text-center border border-light">
+        <div class="ml-3 mr-3 text-center" [innerHTML]='"MESSAGE.CONFIRMATION.AreYouSureAction" | translate: {"color": "text-danger", "action": ( ((("MESSAGE.NameList.Delete" | translate) + " " + ("MESSAGE.NameList." + confirmObject | translate))  | lowercase)) }'>
+        </div>
+        <button class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{ "MESSAGE.NameList.Close" | translate}}</button>
+        <button class="btn btn-success" (click)="Update()" alt=''>{{ "MESSAGE.NameList.OK" | translate}}</button>
+    </div>
+</div>

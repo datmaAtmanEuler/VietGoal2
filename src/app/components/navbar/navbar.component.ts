@@ -132,10 +132,17 @@ export class NavbarComponent implements OnInit {
           titlee = titlee.slice( 1 );
       }
 
-      for(var item = 0; item < this.listTitles.length; item++){
-          if(this.listTitles[item].path === titlee){
-              return this.listTitles[item].title;
-          }
+      for(var i = 0; i < this.listTitles.length; i++){
+	  if(this.listTitles[i].childrens && this.listTitles[i].childrens.length > 0) {
+		for(var j = 0; j < this.listTitles[i].childrens.length; j++){
+	  		if(this.listTitles[i].childrens[j].path === titlee){
+                  		return this.listTitles[i].childrens[j].title;
+              		}
+	  	}
+	  } 
+	  if(this.listTitles[i].path === titlee){
+             return this.listTitles[i].title;
+	  }
       }
       return 'Dashboard';
     }

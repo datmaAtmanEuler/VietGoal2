@@ -4,12 +4,11 @@
             <a href="">
                         <img src="http://media.ascvn.com.vn/Media/1_ASC/Images/logo8f320af-a8.png" class="logo-default">
 
-
             </a>
             
         </div>
         <div class="navbar-wrapper">
-          <a class="navbar-brand" href="javascript:void(0)">{{getTitle()}}</a>
+          <a class="navbar-brand" href="javascript:void(0)">{{getTitle() | translate}}</a>
         </div>
         <button mat-raised-button class="navbar-toggler" type="button" (click)="sidebarToggle()">
             <span class="sr-only">Toggle navigation</span>
@@ -19,7 +18,7 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navigation">
             <ul class="navbar-nav">
-                <li class="nav-item dropdown">
+                <li class="nav-item dropdown mr-2">
                     <a class="nav-link special" href="javascript:void(0)" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <i class="material-icons">notifications</i>
                         <span class="notification">5</span>
@@ -35,7 +34,7 @@
                         <a class="dropdown-item" href="javascript:void(0)">Another One</a>
                     </div>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item mr-2">
                     <a class="nav-link special" href="javascript:void(0)">
                         <i class="material-icons">person</i>
                         <p>
@@ -44,7 +43,7 @@
                     </a>
                 </li>
 
-		<li class="nav-item dropdown">
+		<li class="nav-item dropdown mr-2">
                     <a class="nav-link special" href="javascript:void(0)" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img [src]="selectedLanguage.flag" class="flag-icon position-left" alt="">
             {{'LAYOUT.' + selectedLanguage.description.toString().toUpperCase() | translate}}

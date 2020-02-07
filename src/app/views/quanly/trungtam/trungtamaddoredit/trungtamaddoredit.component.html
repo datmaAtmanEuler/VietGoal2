@@ -1,0 +1,135 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light pt-mt-3">
+        <p class="h4 mb-4">Center Information</p>
+        <form>
+            <div class="form-group row">
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.MaTrungTam"
+                        class="form-control" placeholder="Ma Trung Tam">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TenTrungTam"
+                        class="form-control" placeholder="Ten Trung Tam">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TinhThanh" 
+                    class="form-control">
+                        <option value="" disabled selected>Tinh, Thanh</option>
+                        <option value="tinh1">tinh1</option>
+                    </select>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.QuanHuyen" 
+                    class="form-control">
+                        <option value="" disabled selected>Quan, Huyen</option>
+                        <option value="quan1">quan1</option>
+                    </select>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.PhuongXa" 
+                    class="form-control">
+                        <option value="" disabled selected>Phuong, Xa</option>
+                        <option value="xa1">xa1</option>
+                    </select>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DiaChi"
+                        class="form-control" placeholder="Dia Chi">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DienThoai"
+                        class="form-control" placeholder="Dien thoai">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.NgayThanhLap"
+                        class="form-control" placeholder="Ngay Thanh Lap">
+                </div>
+                <div class="col-md-12 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DTKhuonVien"
+                        class="form-control" placeholder="DT Khuong Vien">
+                </div>
+                <div class="col-md-12 alert" role="alert">
+                    <div class="form-check" style="text-align: left;">
+                        <input class="form-check-input" [ngModelOptions]="{standalone: true}" type="checkbox" [(ngModel)]="trungtam.isHienThi" id="mdb-checkbox-1" tabindex="0">
+                        <label class="form-check-label" for="mdb-checkbox-1">Hiển Thị</label>
+                    </div>
+                </div>
+                <div class="col-md-12 alert" role="alert">
+                    <textarea [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.GhiChu"
+                        class="form-control" placeholder="Ghi Chu"></textarea>
+                </div>
+            </div>
+
+        </form>
+        <button *ngIf="popup" class="btn my-button-create mr-3" (click)="closeMe()" alt=''>Close</button>
+        <button class="btn my-button-create" (click)="UpdateTrungtam()" alt=''>Update</button>
+    </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+        <p class="h4 mb-4">Center Information</p>
+        <form>
+            <div class="form-group row">
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.MaTrungTam"
+                        class="form-control" placeholder="Ma Trung Tam">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TenTrungTam"
+                        class="form-control" placeholder="Ten Trung Tam">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TinhThanh" 
+                    class="form-control">
+                        <option value="" disabled selected>Tinh, Thanh</option>
+                        <option value="tinh1">tinh1</option>
+                    </select>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.QuanHuyen" 
+                    class="form-control">
+                        <option value="" disabled selected>Quan, Huyen</option>
+                        <option value="quan1">quan1</option>
+                    </select>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.PhuongXa" 
+                    class="form-control">
+                        <option value="" disabled selected>Phuong, Xa</option>
+                        <option value="xa1">xa1</option>
+                    </select>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DiaChi"
+                        class="form-control" placeholder="Dia Chi">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DienThoai"
+                        class="form-control" placeholder="Dien thoai">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.NgayThanhLap"
+                        class="form-control" placeholder="Ngay Thanh Lap">
+                </div>
+                <div class="col-md-12 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DTKhuonVien"
+                        class="form-control" placeholder="DT Khuong Vien">
+                </div>
+                <div class="col-md-12 alert" role="alert">
+                    <div class="form-check" style="text-align: left;">
+                        <input class="form-check-input" [ngModelOptions]="{standalone: true}" type="checkbox" [(ngModel)]="trungtam.isHienThi" id="mdb-checkbox-1" tabindex="0">
+                        <label class="form-check-label" for="mdb-checkbox-1">Hiển Thị</label>
+                    </div>
+                </div>
+                <div class="col-md-12 alert" role="alert">
+                    <textarea [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.GhiChu"
+                        class="form-control" placeholder="Ghi Chu"></textarea>
+                </div>
+            </div>
+
+        </form>
+        <button class="btn my-button-create mr-3" (click)="ReturnList()" alt=''>Back</button>
+        <button class="btn my-button-create" (click)="UpdateTrungtam()" alt=''>Update</button>
+    </div>
+
+
+

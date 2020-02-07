@@ -1,0 +1,40 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light p-5">
+        <p class="h4 mb-4">Province Information</p>
+        <form>
+            <div class="form-group row">
+                <div class="col-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.MaProvince"
+                        class="form-control" placeholder="Ma Province">
+                </div>
+                <div class="col-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.ProvinceName"
+                        class="form-control" placeholder="ProvinceName">
+                </div>
+            </div>
+
+        </form>
+        <button *ngIf="popup" class="btn my-button-create mr-3" (click)="closeMe()" alt=''>Close</button>
+        <button class="btn my-button-create" (click)="UpdateProvince()" alt=''>Update</button>
+    </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+        <p class="h4 mb-4">Province Information</p>
+        <form>
+            <div class="form-group row">
+                <div class="col-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.MaProvince"
+                        class="form-control" placeholder="Ma Province">
+                </div>
+                <div class="col-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.ProvinceName"
+                        class="form-control" placeholder="ProvinceName">
+                </div>
+            </div>
+
+        </form>
+        <button class="btn my-button-create mr-3" (click)="ReturnList()" alt=''>Back</button>
+        <button class="btn my-button-create" (click)="UpdateProvince()" alt=''>Update</button>
+</div>
+
+

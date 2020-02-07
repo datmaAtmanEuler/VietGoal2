@@ -14,8 +14,8 @@
             </div>
 
         </form>
-        <button *ngIf="popup" class="btn my-button-create mr-3" (click)="closeMe()" alt=''>Close</button>
-        <button class="btn my-button-create" (click)="UpdateProvince()" alt=''>Update</button>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
+        <button class="btn btn-info" (click)="UpdateProvince()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
     </div>
 </div>
 <div class="text-center border border-light p-5" *ngIf="!popup">
@@ -33,8 +33,8 @@
             </div>
 
         </form>
-        <button class="btn my-button-create mr-3" (click)="ReturnList()" alt=''>Back</button>
-        <button class="btn my-button-create" (click)="UpdateProvince()" alt=''>Update</button>
+        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"</button>
+        <button class="btn btn btn-info" (click)="UpdateProvince()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
 </div>
 
 

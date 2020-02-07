@@ -10,6 +10,7 @@ import { ProvinceEditComponent } from '../../views/danhmuc/provinces/provinceedi
 import { TrungtamComponent } from '../../views/quanly/trungtam/trungtam.component';
 import { TrungtamaddoreditComponent  } from '../../views/quanly/trungtam/trungtamaddoredit/trungtamaddoredit.component';
 
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
 
@@ -23,6 +24,7 @@ import {
 } from '@angular/material';
 @NgModule({
   imports: [
+    NgbModalModule,
     TranslateModule,
     CommonModule,
     RouterModule.forChild(AdminLayoutRoutes),

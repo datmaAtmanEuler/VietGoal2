@@ -1,7 +1,13 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
+import {LANGUAGES } from '../../app.static';
+import { AppState } from '../../app-state.service';
+import { AuthenticationService } from '../../services/authentication.service';
+
+import { Register } from '../../models/register';
 
 @Component({
   selector: 'app-navbar',
@@ -11,14 +17,25 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
     private listTitles: any[];
     location: Location;
-      mobile_menu_visible: any = 0;
+    mobile_menu_visible: any = 0;
     private toggleButton: any;
     private sidebarVisible: boolean;
+    selectedLanguage: any;
+    currentUser: Register;
 
-    constructor(location: Location,  private element: ElementRef, private router: Router) {
-      this.location = location;
-          this.sidebarVisible = false;
-    }
+    constructor(location: Location, private element: ElementRef, private router: Router,public translate: TranslateService,
+        private appState: AppState, private authenticationService: AuthenticationService) {
+	const _this = this;
+	this.location = location;
+        this.sidebarVisible = false;
+	this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+	this.selectedLanguage = this.appState.locale || null;
+        this.translate.onLangChange.subscribe(
+            () => {
+                _this.selectedLanguage = _this.appState.locale;
+            }
+        );
+  }
 
     ngOnInit(){
       this.listTitles = ROUTES.filter(listTitle => listTitle);
@@ -121,5 +138,20 @@ export class NavbarComponent implements OnInit {
           }
       }
       return 'Dashboard';
+    }
+
+    get languages() {
+        return LANGUAGES;
+    }
+
+    updateLanguage(language: any) {
+        this.appState.locale = language;
+        this.translate.use(language.code);
+        this.selectedLanguage = this.appState.locale;
+    }
+
+    logout() {
+  	  this.authenticationService.logout();
+      this.router.navigate(['/login']);
     }
 }

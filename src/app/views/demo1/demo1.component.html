@@ -1,0 +1,17 @@
+<div class="main-content">
+<div class="container-fluid">
+      <div class="card card-stats">
+                <div class="card-header">
+        	<h1>{{data.title}}</h1> 
+	        <ul>
+		            <li *ngFor="let item of data.items; let i = index" >
+
+                        <span>{{ i + 1}}</span><br/>
+			            <span>{{ item.name | uppercase }}</span><br />
+			            <span>{{  item.cost }}</span><br/>			
+		            </li>
+	            </ul>            
+                </div>
+	    </div>
+  </div>  
+</div>

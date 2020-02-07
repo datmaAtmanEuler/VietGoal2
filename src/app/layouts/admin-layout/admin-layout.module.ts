@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
+import { Demo1Component } from '../../views/demo1/demo1.component';
 
 import {
   MatButtonModule,
@@ -11,7 +12,7 @@ import {
   MatRippleModule,
   MatFormFieldModule,
   MatTooltipModule,
-  MatSelectModule
+  MatSelectModule,
 } from '@angular/material';
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {
     MatTooltipModule,
   ],
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    Demo1Component
   ]
 })
 

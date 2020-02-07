@@ -1,3 +1,24 @@
+.btn-primary {
+   background-color: #07b0c5 !important;
+}
+a:hover {
+   background-color: #023a54;
+   color: white !important;
+}
+.navbar .collapse .navbar-nav .nav-item .nav-link .notification {
+    top: -10px;
+}
+.dropdown-menu .dropdown-item:hover{
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(2, 58, 84, 0.37);
+    background-color: #023a54;
+}
+.main-content {
+    margin-top: 17px !important;
+}
+.special {
+    background: transparent !important;
+    padding: 0 !important;
+}
 .sidebar .logo:after{
   display: none;
 }

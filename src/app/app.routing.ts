@@ -3,6 +3,7 @@ import { CommonModule, } from '@angular/common';
 import { BrowserModule  } from '@angular/platform-browser';
 import { Routes, RouterModule } from '@angular/router';
 
+import { LoginComponent } from './login/login.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 const routes: Routes =[
@@ -10,6 +11,10 @@ const routes: Routes =[
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
+  },{ path: 'login', children:
+    [
+      { path: '', component: LoginComponent },
+    ]
   }, {
     path: '',
     component: AdminLayoutComponent,

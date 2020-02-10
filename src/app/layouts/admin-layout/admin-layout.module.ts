@@ -22,20 +22,6 @@ import {
   MatTooltipModule,
   MatSelectModule,
 } from '@angular/material';
-import { ChucvuComponent } from 'app/views/danhmuc/chucvu/chucvu.component';
-import { ChucvuaddoreditComponent } from 'app/views/danhmuc/chucvu/chucvuaddoredit/chucvuaddoredit.component';
-import { TrangthailophocComponent } from 'app/views/danhmuc/trangthailophoc/trangthailophoc.component';
-import { TrangthaihocvienComponent } from 'app/views/danhmuc/trangthaihocvien/trangthaihocvien.component';
-import { TrangthailophoceditComponent } from 'app/views/danhmuc/trangthailophoc/trangthailophocedit/trangthailophocedit.component';
-import { TrangthaihocvieneditComponent } from 'app/views/danhmuc/trangthaihocvien/trangthaihocvienedit/trangthaihocvienedit.component';
-import { TrangthaihlvComponent } from 'app/views/danhmuc/trangthaihlv/trangthaihlv.component';
-import { TrangthaihlvEditComponent } from 'app/views/danhmuc/trangthaihlv/trangthaihlv-edit/trangthaihlv-edit.component';
-import { DotthuComponent } from 'app/views/danhmuc/dotthu/dotthu.component';
-import { DotthuEditComponent } from 'app/views/danhmuc/dotthu/dotthu-edit/dotthu-edit.component';
-import { KhoanthuComponent } from 'app/views/danhmuc/khoanthu/khoanthu.component';
-import { KhoanthuEditComponent } from 'app/views/danhmuc/khoanthu/khoanthu-edit/khoanthu-edit.component';
-import { LuatuoiComponent } from 'app/views/danhmuc/luatuoi/luatuoi.component';
-import { LuatuoiEditComponent } from 'app/views/danhmuc/luatuoi/luatuoi-edit/luatuoi-edit.component';
 @NgModule({
   imports: [
     NgbModalModule,
@@ -57,21 +43,7 @@ import { LuatuoiEditComponent } from 'app/views/danhmuc/luatuoi/luatuoi-edit/lua
     ProvincesComponent,
     ProvinceEditComponent,
     TrungtamComponent,
-    TrungtamaddoreditComponent,
-    ChucvuComponent,
-    ChucvuaddoreditComponent,
-    TrangthailophocComponent,
-    TrangthailophoceditComponent,
-    TrangthaihocvienComponent,
-    TrangthaihocvieneditComponent,
-    TrangthaihlvComponent,
-    TrangthaihlvEditComponent,
-    DotthuComponent,
-    DotthuEditComponent,
-    KhoanthuComponent,
-    KhoanthuEditComponent,
-    LuatuoiComponent,
-    LuatuoiEditComponent
+    TrungtamaddoreditComponent
   ]
 })
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Filter } from '../../models/filter';
-import { DotThu } from '../../models/danhmuc/dotthu';
+import { DotThu } from 'app/models/danhmuc/dotthu';
 
 @Injectable({
     providedIn: 'root'

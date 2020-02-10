@@ -71,7 +71,6 @@ a:hover {
 .nav-link{
     margin: 0 !important;
     color: white !important;
-    background: #4caf5033;
     padding: 2px !important;
 }
 .nav-item.active .nav-link{
@@ -212,10 +211,10 @@ footer{
 }
 // format - table
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
-    background-color: #daecf4;
+    background-color: #d9e1e4;
   }
   .table-hover tbody tr:hover > td {
-    background-color: #3da4e4;
+    background-color: #aabbc3;
   }
   td {
     padding: 0px 8px !important;

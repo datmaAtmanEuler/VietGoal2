@@ -1,0 +1,42 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light p-5">
+        <p class="h4 mb-4">Age List Information</p>
+        <form>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 label-middling" for="MaLuaTuoi">Mã lứa tuổi:</label>
+                <div class="col-sm-10">
+                    <input [ngModelOptions]="{standalone: true}" id="MaLuaTuoi" type="text" [(ngModel)]="LuaTuoi.MaLuaTuoi" class="form-control" placeholder="Mã lứa tuổi">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 label-middling" for="TenLuaTuoi">Tên lứa tuổi:</label>
+                <div class="col-sm-10">
+                    <input [ngModelOptions]="{standalone: true}" id="TenLuaTuoi" type="text" [(ngModel)]="LuaTuoi.TenLuaTuoi" class="form-control" placeholder="Tên lứa tuổi">
+                </div>
+            </div>
+
+        </form>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>Close</button>
+        <button class="btn btn btn-info" (click)="UpdateLuaTuoi()" alt=''>Update</button>
+    </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+        <p class="h4 mb-4">Age List Information</p>
+        <form>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 label-middling" for="MaLuaTuoi">Mã lứa tuổi:</label>
+                <div class="col-sm-10">
+                    <input [ngModelOptions]="{standalone: true}" id="MaLuaTuoi" type="text" [(ngModel)]="LuaTuoi.MaLuaTuoi" class="form-control" placeholder="Mã lứa tuổi">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-2 label-middling" for="TenLuaTuoi">Tên lứa tuổi:</label>
+                <div class="col-sm-10">
+                    <input [ngModelOptions]="{standalone: true}" id="TenLuaTuoi" type="text" [(ngModel)]="LuaTuoi.TenLuaTuoi" class="form-control" placeholder="Tên lứa tuổi">
+                </div>
+            </div>
+
+        </form>
+        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>Back</button>
+        <button class="btn btn btn-info" (click)="UpdateLuaTuoi()" alt=''>Update</button>
+    </div>

@@ -12,14 +12,14 @@
               <div class="input-group mb-3">  
                 <div class="input-group-prepend">  
                   <span class="input-group-text">
-			<i class="material-icons">account_box</i>
+			<i title='{{ "AUTH.USERNAME" | translate}}' class="material-icons">account_box</i>
 		  </span>  
                 </div>  
                 <input type="text" name="UserName" [(ngModel)]="username" class="form-control sty1 p-2" placeholder='{{ "AUTH.USERNAME" | translate}}' required>  
               </div>  
               <div class="input-group mb-4">  
                 <div class="input-group-prepend">  
-                  <span class="input-group-text"><i class="material-icons">lock</i></span>  
+                  <span class="input-group-text"><i title='{{ "AUTH.PASSWORD" | translate}}' class="material-icons">lock</i></span>  
                 </div>  
                 <input  type="password" name="Password" [(ngModel)]="password" class="form-control p-2"  
                placeholder='{{ "AUTH.PASSWORD" | translate}}'>  

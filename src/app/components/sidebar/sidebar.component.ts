@@ -16,8 +16,16 @@ export const ROUTES: RouteInfo[] = [
 { path: '/danhmuc/phuongxa', title: 'MESSAGE.NameList.CommunesWardsList',  icon: '', class: '' },
 { path: '/danhmuc/nhomnguoidung', title: 'MESSAGE.NameList.AdministrationOfUserGroups',  icon: '', class: '' },
 { path: '/danhmuc/santap', title: 'MESSAGE.NameList.ManagingTrainingGround',  icon: '', class: '' },
+  { path: '/danhmuc/chucvu', title: 'MESSAGE.NameList.PositionsList',  icon: '', class: '' },
+  { path: '/danhmuc/trangthailophoc', title: 'MESSAGE.NameList.ClassStatusList',  icon: '', class: '' },
+  { path: '/danhmuc/trangthaihocvien', title: 'MESSAGE.NameList.StudentStatusList',  icon: '', class: '' },
+  { path: '/danhmuc/trangthaihlv', title: 'MESSAGE.NameList.CoachStatusList',  icon: '', class: '' },
+  { path: '/danhmuc/dotthu', title: 'MESSAGE.NameList.TermOfCollectionsList',  icon: '', class: '' },
+  { path: '/danhmuc/khoanthu', title: 'MESSAGE.NameList.CollectionsList',  icon: '', class: '' },
+  { path: '/danhmuc/luatuoi', title: 'MESSAGE.NameList.AgesList',  icon: '', class: '' }
+
   ] },
-{ path: '/quanly/trungtam', title: 'MESSAGE.NameList.Manage',  icon: 'dashboard', class: '', childrens: [
+{ path: '/quanly/trungtam', title: 'MESSAGE.NameList.Manage',  icon: 'assignment_ind', class: '', childrens: [
 { path: '/quanly/trungtam', title: 'MESSAGE.NameList.CentralManagement',  icon: '', class: '' }
   ] }
 ];

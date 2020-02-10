@@ -1,0 +1,72 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light p-5">
+        <p class="h4 mb-4">Student Status Information</p>
+        <form>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="SoThuTu">Số Thứ Tự:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="SoThuTu" [(ngModel)]="TrangThaiHocVien.SoThuTu"
+                        class="form-control" placeholder="Số Thứ Tự">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="TenTrangThai">Tên Trạng Thái:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenTrangThai" [(ngModel)]="TrangThaiHocVien.TenTrangThai"
+                        class="form-control" placeholder="Tên Trạng Thái">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="MaTrangThai">Mã Trạng Thái:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaTrangThai" [(ngModel)]="TrangThaiHocVien.MaTrangThai"
+                        class="form-control" placeholder="Mã Trạng Thái">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="MaMau">Mã Màu:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaMau" [(ngModel)]="TrangThaiHocVien.MaMau"
+                        class="form-control" placeholder="Mã Màu">
+                </div>
+            </div>
+        </form>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>Close</button>
+        <button class="btn btn btn-info" (click)="UpdateTTHV()" alt=''>Update</button>
+    </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+        <p class="h4 mb-4">Student Status Information</p>
+        <form>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="SoThuTu">Số Thứ Tự:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="SoThuTu" [(ngModel)]="TrangThaiHocVien.SoThuTu"
+                        class="form-control" placeholder="Số Thứ Tự">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="TenTrangThai">Tên Trạng Thái:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenTrangThai" [(ngModel)]="TrangThaiHocVien.TenTrangThai"
+                        class="form-control" placeholder="Tên Trạng Thái">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="MaTrangThai">Mã Trạng Thái:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaTrangThai" [(ngModel)]="TrangThaiHocVien.MaTrangThai"
+                        class="form-control" placeholder="Mã Trạng Thái">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="MaMau">Mã Màu:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaMau" [(ngModel)]="TrangThaiHocVien.MaMau"
+                        class="form-control" placeholder="Mã Màu">
+                </div>
+            </div>
+        </form>
+        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>Back</button>
+        <button class="btn btn btn-info" (click)="UpdateTTHV()" alt=''>Update</button>
+    </div>

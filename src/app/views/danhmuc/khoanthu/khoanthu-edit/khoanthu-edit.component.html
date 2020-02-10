@@ -1,0 +1,46 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light p-5">
+        <p class="h4 mb-4">Term Of CollectionsList Information</p>
+        <form>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="MaLuaTuoi">Mã khoản thu:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaLuaTuoi" [(ngModel)]="KhoanThu.MaKhoanThu"
+                        class="form-control" placeholder="Mã khoản thu">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="TenLuaTuoi">Tên khoản thu:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenLuaTuoi" [(ngModel)]="KhoanThu.TenKhoanThu"
+                        class="form-control" placeholder="Tên khoản thu">
+                </div>
+            </div>
+
+        </form>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>Close</button>
+        <button class="btn btn btn-info" (click)="UpdateKhoanThu()" alt=''>Update</button>
+    </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+        <p class="h4 mb-4">Term Of CollectionsList Information</p>
+        <form>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="MaLuaTuoi">Mã khoản thu:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaLuaTuoi" [(ngModel)]="KhoanThu.MaKhoanThu"
+                        class="form-control" placeholder="Mã khoản thu">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="TenLuaTuoi">Tên khoản thu:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenLuaTuoi" [(ngModel)]="KhoanThu.TenKhoanThu"
+                        class="form-control" placeholder="Tên khoản thu">
+                </div>
+            </div>
+
+        </form>
+        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>Back</button>
+        <button class="btn btn btn-info" (click)="UpdateKhoanThu()" alt=''>Update</button>
+    </div>

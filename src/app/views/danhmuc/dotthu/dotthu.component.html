@@ -4,32 +4,33 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-warning" style="background: #023a54">
-                        <h4 class="card-title">{{ "MESSAGE.NameList.CollectionsList" | translate }}</h4>
+                        <h4 class="card-title">{{ "MESSAGE.NameList.TermOfCollectionsList" | translate }}</h4>
                     </div>
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-6 input-group form-sm form-1 pl-0">
                         </div>
-                        <div class="col-sm-6 input-group form-sm form-1 pl-0">
-                            <span (click)="add()" class="ml-2 input-group-text" id="basic-text1"><i class="fa fa-plus"
-                                 aria-hidden="true"></i></span>
+                        <div class="col-sm-6 input-group form-sm form-1 pl-0 search-form">
+                            <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Add" type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
+                                <i class="material-icons">add</i>
+                            </button>
                             <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
                                 placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-
                             <div class="input-group-prepend">
-                                <span (click)="reload()" class="input-group-text" id="basic-text1"><i
-                                        class="fa fa-search" aria-hidden="true"></i></span>
+                                <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Search" type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}" class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="card-body table-responsive">
-                                <table class="table table-hover" style="width: 100%">
-                                    <thead class="text-warning">
+                                <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
+                                    <thead>
                                         <tr>
                                             <th>{{ "MESSAGE.NameList.Order" | translate}}</th>
-                                            <th>Mã dợt thu</th>
-                                            <th>Tên dợt thu</th>
+                                            <th>{{ "MESSAGE.NameList.TermOfCollectionCode" | translate}}</th>
+                                            <th>{{ "MESSAGE.NameList.TermOfCollectionName" | translate}}</th>
                                             <th>{{ "MESSAGE.NameList.Action" | translate}}</th>
                                         </tr>
                                     </thead>
@@ -40,11 +41,11 @@
                                                 <td>{{ dt.MaDotThu }}</td>
                                                 <td>{{ dt.TenDotThu }}</td>
                                                 <td class="my-action-item">
-                                                    <button mat-raised-button type="button" (click)="edit(dt.Id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary btn-link btn-sm btn-just-icon mr-2">
+                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(dt.Id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button mat-raised-button type="button" (click)="remove(dt)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link btn-sm btn-just-icon">
-                                                        <i class="material-icons">delete</i>
+                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Remove" type="button" (click)="remove(dt)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                        <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
                                             </tr>

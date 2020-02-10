@@ -11,7 +11,7 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 })
 export class NhomNguoiDungEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('provinceId') provinceId: number;
+	@Input('IdNhom') Idnhom: number;
 	IdNhom: number;
 	nhomnguoidung : NhomNguoiDung = new NhomNguoiDung(0,'');
 
@@ -25,7 +25,7 @@ export class NhomNguoiDungEditComponent implements OnInit {
 	GetNhomById(IdNhom:number)  
 	{  
 		this.nhomnguoidung = this.nhomnguoidungService.getNhom(IdNhom);
-		if (this.nhomnguoidung == null) {
+		if (this.nhomnguoidung == null || this.nhomnguoidung.IdNhom == 0) {
 			this.nhomnguoidung = new NhomNguoiDung(0,'');
 		}
 	}

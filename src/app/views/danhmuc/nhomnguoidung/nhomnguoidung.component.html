@@ -26,7 +26,7 @@
                         <div class="col-12">
                             <div class="card-body table-responsive">
                                 <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
-                                    <thead class="text-warning">
+                                    <thead>
                                         <th width="100px">{{ ("MESSAGE.NameList.Order" | translate) | uppercase }}</th>
                                         <th>{{ ("MESSAGE.NameList.TenNhom" | translate) | uppercase }}</th>
                                         <th width="150px">{{ ("MESSAGE.NameList.Action" | translate) | uppercase }}</th>
@@ -37,12 +37,11 @@
                                                 <td width="100px">{{ i + 1}}</td>
                                                 <td>{{ nhomnguoidung.TenNhom }}</td>
                                                 <td width="150px" class="my-action-item">
-    
-                                                    <button mat-raised-button type="button" (click)="edit(nhomnguoidung.IdNhom)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(nhomnguoidung.IdNhom)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button mat-raised-button type="button" (click)="remove(nhomnguoidung)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
-                                                        <i class="material-icons">delete</i>
+                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Remove" type="button" (click)="remove(nhomnguoidung)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                        <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
                                             </tr>

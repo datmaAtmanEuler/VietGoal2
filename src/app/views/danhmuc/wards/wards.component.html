@@ -26,7 +26,7 @@
                         <div class="col-12">
                             <div class="card-body table-responsive">
                                 <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
-                                    <thead class="text-warning">
+                                    <thead>
                                         <th width="100px">{{ ("MESSAGE.NameList.Order" | translate) | uppercase }}</th>
                                         <th>{{ ("MESSAGE.NameList.WardCode" | translate) | uppercase }}</th>
                                         <th>{{ ("MESSAGE.NameList.WardName" | translate) | uppercase }}</th>
@@ -42,11 +42,11 @@
                                                 <td>{{ ward.DistrictName }}</td>
                                                 <td width="150px" class="my-action-item">
     
-                                                    <button mat-raised-button type="button" (click)="edit(ward.WardId)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(ward.WardId)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button mat-raised-button type="button" (click)="remove(ward)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
-                                                        <i class="material-icons">delete</i>
+                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Remove" type="button" (click)="remove(ward)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                        <i class="material-icons">close</i>
                                                     </button>
                                                 </td>
                                             </tr>

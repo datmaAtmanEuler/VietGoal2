@@ -9,10 +9,24 @@ import { DistrictsComponent } from '../../views/danhmuc/districts/districts.comp
 import { DistrictEditComponent } from '../../views/danhmuc/districts/districtedit/districtedit.component';
 import { WardsComponent } from '../../views/danhmuc/wards/wards.component';
 import { WardEditComponent } from '../../views/danhmuc/wards/wardedit/wardedit.component';
+import { NhomNguoiDungComponent } from '../../views/danhmuc/nhomnguoidung/nhomnguoidung.component';
+import { NhomNguoiDungEditComponent } from '../../views/danhmuc/nhomnguoidung/nhomnguoidungedit/nhomnguoidungedit.component';
+import { SanTapComponent } from '../../views/danhmuc/santap/santap.component';
+import { SanTapEditComponent } from '../../views/danhmuc/santap/santapedit/santapedit.component';
 import { ChucvuComponent } from 'app/views/danhmuc/chucvu/chucvu.component';
 import { ChucvuaddoreditComponent } from 'app/views/danhmuc/chucvu/chucvuaddoredit/chucvuaddoredit.component';
 import { DotthuComponent } from 'app/views/danhmuc/dotthu/dotthu.component';
 import { DotthuEditComponent } from 'app/views/danhmuc/dotthu/dotthu-edit/dotthu-edit.component';
+import { KhoanthuComponent } from 'app/views/danhmuc/khoanthu/khoanthu.component';
+import { KhoanthuEditComponent } from 'app/views/danhmuc/khoanthu/khoanthu-edit/khoanthu-edit.component';
+import { LuatuoiComponent } from 'app/views/danhmuc/luatuoi/luatuoi.component';
+import { LuatuoiEditComponent } from 'app/views/danhmuc/luatuoi/luatuoi-edit/luatuoi-edit.component';
+import { TrangthaihlvComponent } from 'app/views/danhmuc/trangthaihlv/trangthaihlv.component';
+import { TrangthaihlvEditComponent } from 'app/views/danhmuc/trangthaihlv/trangthaihlv-edit/trangthaihlv-edit.component';
+import { TrangthaihocvienComponent } from 'app/views/danhmuc/trangthaihocvien/trangthaihocvien.component';
+import { TrangthaihocvieneditComponent } from 'app/views/danhmuc/trangthaihocvien/trangthaihocvienedit/trangthaihocvienedit.component';
+import { TrangthailophocComponent } from 'app/views/danhmuc/trangthailophoc/trangthailophoc.component';
+import { TrangthailophoceditComponent } from 'app/views/danhmuc/trangthailophoc/trangthailophocedit/trangthailophocedit.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -34,48 +48,58 @@ export const AdminLayoutRoutes: Routes = [
         { path: 'add', component: WardEditComponent },
         { path: 'edit', component: WardEditComponent }
       ]},
+      { path: 'nhomnguoidung',  children: [
+        { path: '', component: NhomNguoiDungComponent },
+        { path: 'add', component: NhomNguoiDungEditComponent },
+        { path: 'edit', component: NhomNguoiDungEditComponent }
+      ]},
+      { path: 'santap',  children: [
+        { path: '', component: SanTapComponent },
+        { path: 'add', component: SanTapEditComponent },
+        { path: 'edit', component: SanTapEditComponent }
+      ]},
       { path: 'chucvu',  children:
       [
         { path: '', component: ChucvuComponent },
         { path: 'add', component: ChucvuaddoreditComponent },
         { path: 'edit', component: ChucvuaddoreditComponent }
       ] },
-      // { path: 'trangthailophoc',  children:
-      // [
-      //   { path: '', component: TrangthailophocComponent },
-      //   { path: 'add', component: TrangthailophoceditComponent },
-      //   { path: 'edit', component: TrangthailophoceditComponent }
-      // ] },
-      // { path: 'trangthaihocvien',  children:
-      // [
-      //   { path: '', component: TrangthaihocvienComponent },
-      //   { path: 'add', component: TrangthaihocvieneditComponent },
-      //   { path: 'edit', component: TrangthaihocvieneditComponent }
-      // ] },
-      // { path: 'trangthaihlv',  children:
-      // [
-      //   { path: '', component: TrangthaihlvComponent },
-      //   { path: 'add', component: TrangthaihlvEditComponent },
-      //   { path: 'edit', component: TrangthaihlvEditComponent }
-      // ] },
+      { path: 'trangthailophoc',  children:
+      [
+        { path: '', component: TrangthailophocComponent },
+        { path: 'add', component: TrangthailophoceditComponent },
+        { path: 'edit', component: TrangthailophoceditComponent }
+      ] },
+      { path: 'trangthaihocvien',  children:
+      [
+        { path: '', component: TrangthaihocvienComponent },
+        { path: 'add', component: TrangthaihocvieneditComponent },
+        { path: 'edit', component: TrangthaihocvieneditComponent }
+      ] },
+      { path: 'trangthaihlv',  children:
+      [
+        { path: '', component: TrangthaihlvComponent },
+        { path: 'add', component: TrangthaihlvEditComponent },
+        { path: 'edit', component: TrangthaihlvEditComponent }
+      ] },
       { path: 'dotthu',  children:
       [
         { path: '', component: DotthuComponent },
         { path: 'add', component: DotthuEditComponent },
         { path: 'edit', component: DotthuEditComponent }
       ] },
-      // { path: 'khoanthu',  children:
-      // [
-      //   { path: '', component: KhoanthuComponent },
-      //   { path: 'add', component: KhoanthuEditComponent },
-      //   { path: 'edit', component: KhoanthuEditComponent }
-      // ] },
-      // { path: 'luatuoi',  children:
-      // [
-      //   { path: '', component: LuatuoiComponent },
-      //   { path: 'add', component: LuatuoiEditComponent },
-      //   { path: 'edit', component: LuatuoiEditComponent }
-      // ] },
+      { path: 'khoanthu',  children:
+      [
+        { path: '', component: KhoanthuComponent },
+        { path: 'add', component: KhoanthuEditComponent },
+        { path: 'edit', component: KhoanthuEditComponent }
+      ] },
+      { path: 'luatuoi',  children:
+      [
+        { path: '', component: LuatuoiComponent },
+        { path: 'add', component: LuatuoiEditComponent },
+        { path: 'edit', component: LuatuoiEditComponent }
+      ] },
     ]
 },
 { 

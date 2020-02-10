@@ -46,7 +46,7 @@ export class TrungtamService {
     constructor() {
     }
 
-    getTrungtamsList(filter: Filter) {
+    getTrungtamsList(filter: null | Filter) {
         const result:Trungtam[] = this.trungtamlist.filter((trungtam: Trungtam) => filter.SearchTerm == '' || (filter.SearchTerm != '' && trungtam.TenTrungTam.toLowerCase().indexOf(filter.SearchTerm.toLowerCase()) != -1));
         return result;
     }

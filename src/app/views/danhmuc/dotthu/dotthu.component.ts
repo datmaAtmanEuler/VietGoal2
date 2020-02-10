@@ -43,7 +43,7 @@ export class DotthuComponent implements OnInit {
     this.DotThu = dotthu;
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-    modalRef.componentInstance.confirmObject = 'Postition';
+    modalRef.componentInstance.confirmObject = 'TermOfCollection';
     modalRef.componentInstance.decide.subscribe(() => {
 	_this.service.deleteDotThu(dotthu.Id);
         _this.reload();

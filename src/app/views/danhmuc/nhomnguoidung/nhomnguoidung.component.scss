@@ -1,43 +1,3 @@
-.classic-admin-card .card-body {
-    color: #fff;
-    margin-bottom: 0;
-    padding: 0.9rem;
-}
-
-.classic-admin-card .card-body p {
-    font-size: 13px;
-    opacity: 0.7;
-    margin-bottom: 0;
-}
-
-.classic-admin-card .card-body h4 {
-    margin-top: 10px;
-}
-
-.classic-admin-card .card-body .float-right .fa {
-    font-size: 3rem;
-    opacity: 0.5;
-}
-
-.classic-admin-card .progress {
-    margin: 0;
-    opacity: 0.7;
-}
-
-.table-ui {
-    border: 1px solid #e0e0e9;
-}
-
-.blue-gradient {
-    background: -webkit-linear-gradient(50deg, #45cafc, #303f9f);
-    background: linear-gradient(40deg, #45cafc, #4285f4);
-}
-
-.card.card-cascade {
-    .view {
-        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15), 0 3px 12px 0 rgba(0, 0, 0, 0.15);
-    }
-}
 .fa.fa-plus {
   color: #05ff0c;
   display: inline-block;
@@ -103,6 +63,63 @@
     box-shadow:         0px 1px 2px 1px #ff7b00;
   }
 }
+
+tbody tr:hover{
+  .my-action-item{
+    opacity: 1;
+  }
+}
+tbody tr{
+  .my-action-item{
+    opacity: 0;
+  }
+}
+.table-pd {
+  padding-top: 5px;
+}
+table {
+  margin: auto;
+  border-collapse: collapse;
+  overflow-x: auto;
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+}
+
+td, th {
+  width: 7%;
+  border: solid rgb(200, 200, 200) 1px;
+  padding: .5rem;
+}
+
+th {
+  background-color: var(--background-default);
+  position: sticky;
+  top: 0;
+  text-align: center;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: rgb(50, 50, 100) solid 2px;
+  border-top: none;
+}
+
+td {
+  white-space: pre-wrap;
+  border-bottom: none;
+  color: rgb(20, 20, 20);
+}
+table.table th, table.table td {
+  padding-top: 0.5rem !important;
+  padding-bottom: 0.5rem !important;
+  border-bottom: 1px solid #c4c4c4;
+}
+.table-wrapper-scroll-y {
+  width: 100%;
+  display: block;
+  position: static;
+  max-height: 600px;
+  overflow-y: auto;
+}
 .style-1::-webkit-scrollbar {
   width: 10px;
   background-color: #F5F5F5;
@@ -119,9 +136,25 @@
   min-height: 700px;
 }
 //Begin - Confirm settings
+.modal-dialog.confirmDialog,.modal-dialog.categoryDialog, .modal-dialog.vendorDialog {
+  top: 100px !important;
+  max-width: 335px;
+  margin: auto;
+}
+.modal-content.confirmDialog .close {
+  position: unset !important;
+  right: 0 !important;
+}
+.modal-title{
+  font-size: 20px !important;
+}
 .btn-button {
   margin: auto;
   margin-bottom: 11px;
+}
+.modal-body.confirmDialog {
+  font-weight: normal;
+  padding: 0;
 }
 .confirm {
   text-align: center;
@@ -161,10 +194,3 @@
   }
 }
 //End - Confirm settings
-
-.material-icons{
-  background: #87CEEB;
-  &:hover{
-      background: rgb(166, 229, 253);
-  }
-}

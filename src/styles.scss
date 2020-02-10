@@ -5,9 +5,6 @@ thead {
 th{
     font-weight: bold !important;	
 }
-.btn-primary {
-   background-color: #07b0c5 !important;
-}
 a:hover {
    background-color: #023a54;
    color: white !important;
@@ -177,4 +174,55 @@ footer{
 }
 .list-group-item {
     padding: 0.15rem 1rem;
+}
+.label-middling{
+  margin: 0;
+  line-height: 37.99px;
+  text-align: left;
+}
+.view-button{
+    color: #000080 !important;
+    :hover{
+        color: #87CEEB;
+    }
+}
+.search-button{
+    color: #DAA520 !important;
+    :hover{
+        color: #FFD700;
+    }
+}
+.add-button{
+    color: green !important;
+    :hover{
+        color: #00FF7F;
+    }
+}
+.edit-button{
+    color: rgb(13, 64, 122) !important;
+    :hover{
+        color: rgb(58, 126, 204) !important;
+    }
+}
+.delete-button{
+    color: #8B0000 !important;
+    :hover{
+        color: #DC143C;
+    }
+}
+// format - table
+.table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+    background-color: #daecf4;
+  }
+  .table-hover tbody tr:hover > td {
+    background-color: #3da4e4;
+  }
+  td {
+    padding: 0px 8px !important;
+  }
+  body{
+      font-size: 13px !important;
+  }
+  body, h1, h2, h3, h4, h5, p, span, label, div {
+    font-family: Arial, Helvetica, sans-serif !important;
 }

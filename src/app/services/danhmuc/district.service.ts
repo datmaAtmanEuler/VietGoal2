@@ -7,8 +7,8 @@ import { Filter } from '../../models/filter';
 })
 export class DistrictService {
     districtsList: any[] = [
-{DistrictId: 1, MaDistrict: 55,DistrictName:'Hoàn Kiếm' ,ProvinceName: 'Thành phố Hà Nội'},
-{DistrictId: 2, MaDistrict: 57,DistrictName:'Tây Hồ', ProvinceName: 'Thành phố Hà Nội'}
+{DistrictId: 1, MaDistrict: 55,DistrictName:'Hoàn Kiếm' ,ProvinceName: 'Thành phố Hà Nội',SoThuTu:0},
+{DistrictId: 2, MaDistrict: 57,DistrictName:'Tây Hồ', ProvinceName: 'Thành phố Hà Nội',SoThuTu:0}
       ];
 
     constructor() {
@@ -21,24 +21,27 @@ export class DistrictService {
     
     getDistrict(id: any): District {
         const result: District[] = this.districtsList.filter((district: District) => district.DistrictId == id);
-	    return new District(result[0].DistrictId, result[0].MaDistrict, result[0].DistrictName, result[0].ProvinceName);
+	    return new District(result[0].DistrictId, result[0].MaDistrict, result[0].DistrictName, result[0].ProvinceName,result[0].SoThuTu);
     }
 
     addOrUpdateDistrict(district: District): boolean {
-        if(district.DistrictId == 0) {
+        if(district && district.DistrictId == 0) {
             if (this.districtsList.filter((pro: District) => pro.MaDistrict == district.MaDistrict).length > 0) {
                 return false;
             }
-            district.DistrictId = this.districtsList.length + 1;
+            district.DistrictId = Math.max.apply(Math, this.districtsList.map((dis: District) => dis.DistrictId)) + 1;
+            district.MaDistrict = Number.parseInt(district.MaDistrict + '');
             this.districtsList.push(district);
         } else {
-            if (this.districtsList.filter((pro: District) => pro.MaDistrict == district.MaDistrict && pro.DistrictId != district.DistrictId).length > 0) {
+            district.MaDistrict = Number.parseInt(district.MaDistrict + '');
+            if (this.districtsList.filter((dis: District) => dis.MaDistrict == district.MaDistrict && dis.DistrictId != district.DistrictId).length > 0) {
                 return false;
             } else {
-                const tempDistrict: District[] = this.districtsList.filter((pro: District) => pro.DistrictId == district.DistrictId);
+                const tempDistrict: District[] = this.districtsList.filter((dis: District) => dis.DistrictId == district.DistrictId);
                 tempDistrict[0].MaDistrict = district.MaDistrict;
                 tempDistrict[0].DistrictName=district.DistrictName;
                 tempDistrict[0].ProvinceName = district.ProvinceName;
+                tempDistrict[0].SoThuTu = district.SoThuTu;
             }
         }
         return true;

@@ -126,27 +126,6 @@ export class NavbarComponent implements OnInit {
         }
     };
 
-    getTitle(){
-      var titlee = this.location.prepareExternalUrl(this.location.path());
-      if(titlee.charAt(0) === '#'){
-          titlee = titlee.slice( 1 );
-      }
-
-      for(var i = 0; i < this.listTitles.length; i++){
-	  if(this.listTitles[i].childrens && this.listTitles[i].childrens.length > 0) {
-		for(var j = 0; j < this.listTitles[i].childrens.length; j++){
-	  		if(this.listTitles[i].childrens[j].path === titlee){
-                  		return this.listTitles[i].childrens[j].title;
-              		}
-	  	}
-	  } 
-	  if(this.listTitles[i].path === titlee){
-             return this.listTitles[i].title;
-	  }
-      }
-      return 'Dashboard';
-    }
-
     get languages() {
         return LANGUAGES;
     }

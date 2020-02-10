@@ -24,7 +24,7 @@ export class ProvinceService {
         return this.http.post(environment.serverUrl_employee + `provinces/save`, province, this.httpOptions);
     }
 
-    deleteProvince(id: any): Observable<any> {
-        return this.http.delete(environment.serverUrl_employee + `provinces/${id, 1}` , this.httpOptions);
+    deleteProvince(id: number, deletedBy: number): Observable<any> {
+        return this.http.delete(environment.serverUrl_employee + `provinces/${id}?deletedBy=${deletedBy}` , this.httpOptions);
     }
 }

@@ -4,12 +4,13 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {HttpHeaders, HttpParams } from '@angular/common/http';
 import { Register } from '../models/register';
+import { environment } from 'environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     currentUserSubject: BehaviorSubject<Register>;
     currentUser: Observable<Register>;
-    serverURL  = 'https://localhost:44349/Api/Login/'; 
+    serverURL  = `${environment.serverUrl}Login/`; 
     header: HttpHeaders;
     constructor(private http: HttpClient) {
         const headerSettings: {[name: string]: string | string[]; } = {};  

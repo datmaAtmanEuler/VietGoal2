@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
@@ -22,13 +22,16 @@ export class NavbarComponent implements OnInit {
     private sidebarVisible: boolean;
     selectedLanguage: any;
     currentUser: Register;
+    @ViewChild('userAvatar', {static: true}) userAvatar: ElementRef;
 
     constructor(location: Location, private element: ElementRef, private router: Router,public translate: TranslateService,
         private appState: AppState, private authenticationService: AuthenticationService) {
 	const _this = this;
 	this.location = location;
         this.sidebarVisible = false;
-	this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+	this.authenticationService.currentUser.subscribe(x => {
+        _this.currentUser = x;
+    });
 	this.selectedLanguage = this.appState.locale || null;
         this.translate.onLangChange.subscribe(
             () => {
@@ -49,6 +52,9 @@ export class NavbarComponent implements OnInit {
            this.mobile_menu_visible = 0;
          }
      });
+     if(this.userAvatar) {
+     this.userAvatar.nativeElement.src = this.currentUser.Avatar;
+     }
     }
 
     sidebarOpen() {

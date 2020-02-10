@@ -51,7 +51,8 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     this.edit(null);
   }
 
-  edit(ID: null | number) {
+  edit(ID: number) {
+    console.log(ID);
     const _this = this;
     const modalRef = this.modalService.open(ProvinceEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;

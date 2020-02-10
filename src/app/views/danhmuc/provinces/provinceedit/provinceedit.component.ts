@@ -20,22 +20,27 @@ export class ProvinceEditComponent implements OnInit {
 
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private provinceService: ProvinceService, private route: ActivatedRoute, private router: Router) {
 		this.ID = this.route.snapshot.queryParams['ID'];
-		this.ID = (this.ID) ? this.ID : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
 	}  
-	GetProvinceById(ID: undefined | number)  
+	GetProvinceById(ID: number)  
 	{  
 		const _this = this;
-		this.provinceService.getProvince(ID).subscribe((province: Province) => {
-			_this.province = province;
-			if (_this.province == null || _this.province.ID == null) {
-				_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null);
-			}
-		});
+		console.log(ID);
+		if(ID){
+			this.provinceService.getProvince(ID).subscribe((province: Province) => {
+				_this.province = province;
+				if (_this.province == null || _this.province.ID == null) {
+					_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null);
+				}
+			});
+		} else {
+			_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null);
+		}
 	}
 	ngOnInit() {
+		console.log(this.ID);
 		this.GetProvinceById(this.ID);  
 	}
 

@@ -31,6 +31,7 @@
                                             <th>{{ "MESSAGE.NameList.Order" | translate}}</th>
                                             <th>{{ "MESSAGE.NameList.StudentStatusName" | translate}}</th>
                                             <th>{{ "MESSAGE.NameList.StudentStatusCode" | translate}}</th>
+                                            <th>{{ "MESSAGE.NameList.Color" | translate}}</th>
                                             <th>{{ "MESSAGE.NameList.Action" | translate}}</th>
                                         </tr>
                                     </thead>
@@ -40,6 +41,7 @@
                                                 <td>{{ util.padIntegerLeftWithZeros(i + 1, 3) }}</td>
                                                 <td>{{ dt.MaTrangThai }}</td>
                                                 <td>{{ dt.TenTrangThai }}</td>
+                                                <td [style.background-color]="dt.MaMau">{{ dt.MaMau }}</td>
                                                 <td class="my-action-item">
                                                     <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(dt.Id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>

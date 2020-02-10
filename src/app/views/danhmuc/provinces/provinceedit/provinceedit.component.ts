@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation  } from '@angular/core';
 import { ProvinceService } from '../../../../services/danhmuc/province.service';
 import { Province } from '../../../../models/danhmuc/province';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
 
 @Component({
@@ -23,7 +22,7 @@ export class ProvinceEditComponent implements OnInit {
 		this.provinceId = this.route.snapshot.queryParams['ProvinceId'];
 		this.provinceId = (this.provinceId) ? this.provinceId : 0;
 		config.backdrop = 'static';
-     		config.keyboard = false;
+     	config.keyboard = false;
 		config.scrollable = false;
 	}  
 	GetProvinceById(provinceId:number)  

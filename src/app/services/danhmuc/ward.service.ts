@@ -7,8 +7,8 @@ import { Filter } from '../../models/filter';
 })
 export class WardService {
     wardsList: any[] = [
-{WardId: 1, MaWard: 25,WardName:'Phường Ngọc Khánh' ,DistrictName: 'Quận Ba Đình'},
-{WardId: 2, MaWard: 28,WardName:'Phường Kim Mã' ,DistrictName: 'Quận Ba Đình'},
+{WardId: 1, MaWard: 25,WardName:'Phường Ngọc Khánh' ,DistrictName: 'Quận Ba Đình',SoThuTu:0},
+{WardId: 2, MaWard: 28,WardName:'Phường Kim Mã' ,DistrictName: 'Quận Ba Đình',SoThuTu:0},
       ];
 
     constructor() {
@@ -21,7 +21,7 @@ export class WardService {
     
     getWard(id: any): Ward {
         const result: Ward[] = this.wardsList.filter((ward: Ward) => ward.WardId == id);
-	    return new Ward(result[0].WardId, result[0].MaWard, result[0].WardName, result[0].DistrictName);
+	    return new Ward(result[0].WardId, result[0].MaWard, result[0].WardName, result[0].DistrictName,result[0].SoThuTu);
     }
 
     addOrUpdateWard(ward: Ward): boolean {

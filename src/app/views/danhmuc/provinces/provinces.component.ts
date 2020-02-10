@@ -5,7 +5,6 @@ import { ProvinceEditComponent } from './provinceedit/provinceedit.component';
 import { Filter } from '../../../models/filter';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
-
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({

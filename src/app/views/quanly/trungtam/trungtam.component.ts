@@ -55,7 +55,6 @@ export class TrungtamComponent implements OnInit {
     modalRef.componentInstance.popup = true;
     modalRef.componentInstance.trungtamId = TrungtamId;
     modalRef.result.then(function(result) {
-	_this.service.deleteTrungtam(TrungtamId);
         _this.reload();
     });
   }

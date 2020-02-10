@@ -35,7 +35,7 @@
                                         <ng-container *ngFor="let nhomnguoidung of NhomNguoiDungList; let i = index;">
                                             <tr>
                                                 <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ province.TenNhom }}</td>
+                                                <td>{{ nhomnguoidung.TenNhom }}</td>
                                                 <td width="150px" class="my-action-item">
     
                                                     <button mat-raised-button type="button" (click)="edit(nhomnguoidung.IdNhom)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">

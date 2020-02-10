@@ -15,7 +15,7 @@ import { Province } from '../../../../models/danhmuc/province';
 export class WardEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('wardId') wardId: number;
-	ward: Ward = new Ward(0, 0,'', '');
+	ward: Ward = new Ward(0, 0,'', '',0);
 	provinceList: Province[] = [];
 	constructor(private provinceService: ProvinceService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
 		this.wardId = this.route.snapshot.queryParams['WardId'];
@@ -24,13 +24,13 @@ export class WardEditComponent implements OnInit {
      		config.keyboard = false;
 		config.scrollable = false;
 
-		this.provinceList = provinceService.getProvincesList(null);
+
 	}  
 	GetWardById(wardId:number)  
 	{  
 		this.ward = this.wardService.getWard(wardId);
 		if (this.ward == null) {
-			this.ward = new Ward(0, 0, '','');
+			this.ward = new Ward(0, 0, '','',0);
 		}
 	}
 	ngOnInit() {

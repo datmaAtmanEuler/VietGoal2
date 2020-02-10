@@ -33,7 +33,7 @@ export class NhomNguoiDungComponent implements OnInit {
     this.nhomnguoidung = nhomnguoidung;
   const _this = this;
   const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-  modalRef.componentInstance.confirmObject = 'Nhom';
+  modalRef.componentInstance.confirmObject = 'NhomNguoiDung';
   modalRef.componentInstance.decide.subscribe(() => {
       _this.deleteNhom();
   });

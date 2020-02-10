@@ -13,7 +13,9 @@ export const ROUTES: RouteInfo[] = [
 { path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.Catalogs',  icon: 'dashboard', class: '', childrens: [
 { path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.ProvincesList',  icon: '', class: '' },
 { path: '/danhmuc/quanhuyen', title: 'MESSAGE.NameList.DistrictsList',  icon: '', class: '' },
-{ path: '/danhmuc/phuongxa', title: 'MESSAGE.NameList.CommunesWardsList',  icon: '', class: '' }
+{ path: '/danhmuc/phuongxa', title: 'MESSAGE.NameList.CommunesWardsList',  icon: '', class: '' },
+{ path: '/danhmuc/nhomnguoidung', title: 'MESSAGE.NameList.AdministrationOfUserGroups',  icon: '', class: '' },
+{ path: '/danhmuc/santap', title: 'MESSAGE.NameList.ManagingTrainingGround',  icon: '', class: '' },
   ] },
 { path: '/quanly/trungtam', title: 'MESSAGE.NameList.Manage',  icon: 'dashboard', class: '', childrens: [
 { path: '/quanly/trungtam', title: 'MESSAGE.NameList.CentralManagement',  icon: '', class: '' }

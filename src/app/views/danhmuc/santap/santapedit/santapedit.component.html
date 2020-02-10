@@ -1,0 +1,97 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light p-5">
+        <p class="h4 mb-4">Yard Information</p>
+       <form>
+            
+        <div class="form-group row">
+            <label class="col-3 label-middling">Mã Sân<span class="text-danger">(*)</span></label>
+            <div class="col-6 label-middling" >
+                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="santap.MaSan"
+                    class="form-control" placeholder="Mã Sân">
+            </div>
+        </div>
+
+        
+        <div class="form-group row">
+            <label class="col-3 label-middling">Tên Sân <span class="text-danger">(*)</span></label>
+            <div class="col-6 label-middling" >
+                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="santap.TenSan"
+                    class="form-control" placeholder="Tên Sân">
+            </div>
+        </div>
+
+            <div class="form-group row">
+                <label class="col-3 label-middling">Trung Tâm<span class="text-danger">(*)</span></label>
+                <div class="col-6 label-middling" >
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="santap.TrungTam"
+                        class="form-control" placeholder="Trung Tâm">
+                        <option value="-1" disabled>--Trung Tâm--</option>
+                    <option *ngFor="let province of provinceList" value={{province.Id}}>{{province.ProvinceName}}
+                    </option>
+                    </select>
+            </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-3 label-middling">Khu Vực<span class="text-danger">(*)</span></label>
+                <div class="col-6 label-middling" >
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="santap.KhuVuc"
+                        class="form-control" placeholder="Khu Vực">
+                        <option value="-1" disabled>--Khu Vực--</option>
+                    <!-- <option *ngFor="let district of districtsList" value={{districts.Id}}>{{district.DistrictName}}
+                    </option> -->
+                    </select>
+            </div>
+            </div>
+
+
+<!-- 
+            <div class="form-group row">
+                <label class="col-3 label-middling">Năm Bắt Đầu HĐ</label>
+                <div class="col-6 label-middling" >
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="santap."
+                        class="form-control" placeholder="Ward Code">
+                </div>
+            </div> -->
+
+            <div class="form-group row">
+                <label class="col-3 label-middling">Địa Chỉ<span class="text-danger">(*)</span></label>
+                <div class="col-6 label-middling" >
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="santap.DiaChi"
+                        class="form-control" placeholder="Địa Chỉ">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-3 label-middling">DT Khuôn Viên</label>
+                <div class="col-6 label-middling" >
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="santap.DTKhuonVien"
+                        class="form-control" placeholder="Diện Tích Khuôn Viên">
+                </div>
+            </div>
+
+            <div class="form-check">
+                <label class="form-check-label">Hiển Thị
+                    <input class="form-check-input" type="checkbox" value="" checked>
+                    <span class="form-check-sign">
+                        <span class="check"></span>
+                    </span>
+                </label>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-3 label-middling">Ghi Chú</label>
+                <div class="col-6 label-middling" >
+                    <input [ngModelOptions]="{standalone: true}" type="textarea" [(ngModel)]="santap.GhiChu"
+                        class="form-control" placeholder="">
+                </div>
+            </div>
+
+        </form>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
+        <button class="btn btn-info" (click)="UpdateSanTap()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
+    </div>
+</div>
+
+
+

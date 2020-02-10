@@ -1,36 +1,20 @@
 <div class="modal-body" *ngIf="popup">
     <div class="text-center border border-light p-5">
-        <p class="h4 mb-4">Province Information</p>
+        <p class="h4 mb-4">UserGroups Information</p>
         <form>
-            <div class="form-group row">
-                <div class="col-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="nhomnguoidung.TenNhom"
-                        class="form-control" placeholder="Tên Nhóm">
+                <div class="form-group row">
+                    <label class="col-3 label-middling">Tên Nhóm<span class="text-danger">(*)</span></label>
+                        <div class="col-9">
+                            <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="nhomnguoidung.TenNhom"
+                                class="form-control" placeholder="Tên Nhóm">
+                        </div>
                 </div>
-            </div>
 
         </form>
         <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
         <button class="btn btn-info" (click)="UpdateProvince()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
     </div>
 </div>
-<div class="text-center border border-light p-5" *ngIf="!popup">
-        <p class="h4 mb-4">Province Information</p>
-        <form>
-            <div class="form-group row">
-                <div class="col-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.MaProvince"
-                        class="form-control" placeholder="Ma Province">
-                </div>
-                <div class="col-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.ProvinceName"
-                        class="form-control" placeholder="ProvinceName">
-                </div>
-            </div>
 
-        </form>
-        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"</button>
-        <button class="btn btn btn-info" (click)="UpdateProvince()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
-</div>
 
 

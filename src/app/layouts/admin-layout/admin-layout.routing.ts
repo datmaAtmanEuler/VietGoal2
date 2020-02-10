@@ -9,6 +9,10 @@ import { DistrictsComponent } from '../../views/danhmuc/districts/districts.comp
 import { DistrictEditComponent } from '../../views/danhmuc/districts/districtedit/districtedit.component';
 import { WardsComponent } from '../../views/danhmuc/wards/wards.component';
 import { WardEditComponent } from '../../views/danhmuc/wards/wardedit/wardedit.component';
+import { NhomNguoiDungComponent } from '../../views/danhmuc/nhomnguoidung/nhomnguoidung.component';
+import { NhomNguoiDungEditComponent } from '../../views/danhmuc/nhomnguoidung/nhomnguoidungedit/nhomnguoidungedit.component';
+import { SanTapComponent } from '../../views/danhmuc/santap/santap.component';
+import { SanTapEditComponent } from '../../views/danhmuc/santap/santapedit/santapedit.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -29,6 +33,16 @@ export const AdminLayoutRoutes: Routes = [
         { path: '', component: WardsComponent },
         { path: 'add', component: WardEditComponent },
         { path: 'edit', component: WardEditComponent }
+      ]},
+      { path: 'nhomnguoidung',  children: [
+        { path: '', component: NhomNguoiDungComponent },
+        { path: 'add', component: NhomNguoiDungEditComponent },
+        { path: 'edit', component: NhomNguoiDungEditComponent }
+      ]},
+      { path: 'santap',  children: [
+        { path: '', component: SanTapComponent },
+        { path: 'add', component: SanTapEditComponent },
+        { path: 'edit', component: SanTapEditComponent }
       ]},
     ]
 },

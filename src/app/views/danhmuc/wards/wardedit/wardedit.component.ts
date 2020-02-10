@@ -21,7 +21,7 @@ export class WardEditComponent implements OnInit {
 		this.wardId = this.route.snapshot.queryParams['WardId'];
 		this.wardId = (this.wardId) ? this.wardId : 0;
 		config.backdrop = 'static';
-     		config.keyboard = false;
+     	config.keyboard = false;
 		config.scrollable = false;
 
 

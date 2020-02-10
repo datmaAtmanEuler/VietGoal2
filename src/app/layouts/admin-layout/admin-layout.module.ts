@@ -13,6 +13,10 @@ import { TrungtamComponent } from '../../views/quanly/trungtam/trungtam.componen
 import { TrungtamaddoreditComponent  } from '../../views/quanly/trungtam/trungtamaddoredit/trungtamaddoredit.component';
 import { WardsComponent } from '../../views/danhmuc/wards/wards.component';
 import { WardEditComponent } from '../../views/danhmuc/wards/wardedit/wardedit.component';
+import { NhomNguoiDungComponent } from '../../views/danhmuc/nhomnguoidung/nhomnguoidung.component';
+import { NhomNguoiDungEditComponent } from '../../views/danhmuc/nhomnguoidung/nhomnguoidungedit/nhomnguoidungedit.component';
+import { SanTapComponent } from '../../views/danhmuc/santap/santap.component';
+import { SanTapEditComponent } from '../../views/danhmuc/santap/santapedit/santapedit.component';
 
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
@@ -26,6 +30,7 @@ import {
   MatTooltipModule,
   MatSelectModule,
 } from '@angular/material';
+
 
 
 @NgModule({
@@ -49,11 +54,15 @@ import {
     ProvincesComponent,
     DistrictsComponent,
     DistrictEditComponent,
+    SanTapComponent,
+    SanTapEditComponent,
     WardsComponent,
     WardEditComponent,
     ProvinceEditComponent,
     TrungtamComponent,
-    TrungtamaddoreditComponent
+    TrungtamaddoreditComponent,
+    NhomNguoiDungComponent,
+    NhomNguoiDungEditComponent
   ]
 })
 

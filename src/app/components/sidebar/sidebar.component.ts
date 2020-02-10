@@ -12,7 +12,14 @@ export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
 { path: '/demo1', title: 'Demo 1',  icon: 'dashboard', class: ''},
 { path: '/nopath', title: 'MESSAGE.NameList.Catalogs',  icon: 'dashboard', class: '', childrens: [
-{ path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.ProvincesList',  icon: '', class: '' }
+{ path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.ProvincesList',  icon: '', class: '' },
+{ path: '/danhmuc/chucvu', title: 'MESSAGE.NameList.PositionsList',  icon: '', class: '' },
+{ path: '/danhmuc/trangthailophoc', title: 'MESSAGE.NameList.ClassStatusList',  icon: '', class: '' },
+{ path: '/danhmuc/trangthaihocvien', title: 'MESSAGE.NameList.StudentStatusList',  icon: '', class: '' },
+{ path: '/danhmuc/trangthaihlv', title: 'MESSAGE.NameList.CoachStatusList',  icon: '', class: '' },
+{ path: '/danhmuc/dotthu', title: 'MESSAGE.NameList.CollectionsList',  icon: '', class: '' },
+{ path: '/danhmuc/khoanthu', title: 'MESSAGE.NameList.TermOfCollectionsList',  icon: '', class: '' },
+{ path: '/danhmuc/luatuoi', title: 'MESSAGE.NameList.AgesList',  icon: '', class: '' }
   ] },
 { path: '/nopath', title: 'MESSAGE.NameList.Manage',  icon: 'dashboard', class: '', childrens: [
 { path: '/quanly/trungtam', title: 'MESSAGE.NameList.CentralManagement',  icon: '', class: '' }

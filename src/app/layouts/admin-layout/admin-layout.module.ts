@@ -70,18 +70,18 @@ import { LuatuoiEditComponent } from 'app/views/danhmuc/luatuoi/luatuoi-edit/lua
     TrungtamaddoreditComponent,
     ChucvuComponent,
     ChucvuaddoreditComponent,
-    // TrangthailophocComponent,
-    // TrangthailophoceditComponent,
-    // TrangthaihocvienComponent,
-    // TrangthaihocvieneditComponent,
-    // TrangthaihlvComponent,
-    // TrangthaihlvEditComponent,
+    TrangthailophocComponent,
+    TrangthailophoceditComponent,
+    TrangthaihocvienComponent,
+    TrangthaihocvieneditComponent,
+    TrangthaihlvComponent,
+    TrangthaihlvEditComponent,
     DotthuComponent,
     DotthuEditComponent,
-    // KhoanthuComponent,
-    // KhoanthuEditComponent,
-    // LuatuoiComponent,
-    // LuatuoiEditComponent
+    KhoanthuComponent,
+    KhoanthuEditComponent,
+    LuatuoiComponent,
+    LuatuoiEditComponent
   ]
 })
 

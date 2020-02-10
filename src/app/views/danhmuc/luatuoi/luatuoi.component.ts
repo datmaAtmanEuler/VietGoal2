@@ -4,24 +4,23 @@ import { UtilsService } from '../../../services/utils.service';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { DotThuService } from 'app/services/danhmuc/dothu.service';
-import { DotThu } from 'app/models/danhmuc/dotthu';
-import { DotthuEditComponent } from './dotthu-edit/dotthu-edit.component';
+import { LuaTuoi } from 'app/models/danhmuc/luatuoi';
+import { LuaTuoiService } from 'app/services/danhmuc/luatuoi.service';
+import { LuatuoiEditComponent } from './luatuoi-edit/luatuoi-edit.component';
 
 @Component({
-  selector: 'app-dotthu',
-  templateUrl: './dotthu.component.html',
-  styleUrls: ['./dotthu.component.scss']
+  selector: 'app-luatuoi',
+  templateUrl: './luatuoi.component.html',
+  styleUrls: ['./luatuoi.component.scss']
 })
-export class DotthuComponent implements OnInit {
+export class LuatuoiComponent implements OnInit {
 
-
-  dotthuList: DotThu[] = [];
-  DotThu: DotThu;
+  LuaTuoiList: LuaTuoi[] = [];
+  LuaTuoi: LuaTuoi;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
-  constructor(public util: UtilsService, config: NgbModalConfig, private service: DotThuService, private router: Router, private modalService: NgbModal) {
+  constructor(public util: UtilsService, config: NgbModalConfig, private service: LuaTuoiService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
@@ -33,30 +32,29 @@ export class DotthuComponent implements OnInit {
   
   reload() {
     const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-    this.dotthuList = this.service.getDotThuList(filter);
+    this.LuaTuoiList = this.service.getLuaTuoiList(filter);
   }
   add() {
     this.edit(null);
   }
 
-  remove(dotthu: DotThu) {
-    this.DotThu = dotthu;
+  remove(LuaTuoi: LuaTuoi) {
+    this.LuaTuoi = LuaTuoi;
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-    modalRef.componentInstance.confirmObject = 'TermOfCollection';
+    modalRef.componentInstance.confirmObject = 'Age';
     modalRef.componentInstance.decide.subscribe(() => {
-	_this.service.deleteDotThu(dotthu.Id);
+	_this.service.deleteLuaTuoi(LuaTuoi.Id);
         _this.reload();
     });
   }
-edit(dothuId: null | number) {
+edit(LuaTuoiid: null | number) {
     const _this = this;
-    const modalRef = this.modalService.open(DotthuEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(LuatuoiEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    modalRef.componentInstance.DotThuId = dothuId;
+    modalRef.componentInstance.LuaTuoiId = LuaTuoiid;
     modalRef.result.then(function(result) {
         _this.reload();
     });
   }
-
 }

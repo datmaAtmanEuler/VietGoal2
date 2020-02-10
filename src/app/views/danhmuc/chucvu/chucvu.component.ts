@@ -34,7 +34,7 @@ export class ChucvuComponent implements OnInit {
     this.chucvu = chucvu;
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-    modalRef.componentInstance.confirmObject = 'Postition';
+    modalRef.componentInstance.confirmObject = 'Position';
     modalRef.componentInstance.decide.subscribe(() => {
 	_this.service.deleteChucvu(chucvu.Id);
         _this.reload();

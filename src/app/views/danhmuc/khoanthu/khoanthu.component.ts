@@ -4,24 +4,23 @@ import { UtilsService } from '../../../services/utils.service';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { DotThuService } from 'app/services/danhmuc/dothu.service';
-import { DotThu } from 'app/models/danhmuc/dotthu';
-import { DotthuEditComponent } from './dotthu-edit/dotthu-edit.component';
+import { KhoanThu } from 'app/models/danhmuc/khoanthu';
+import { KhoanThuService } from 'app/services/danhmuc/khoanthu.service';
+import { KhoanthuEditComponent } from './khoanthu-edit/khoanthu-edit.component';
 
 @Component({
-  selector: 'app-dotthu',
-  templateUrl: './dotthu.component.html',
-  styleUrls: ['./dotthu.component.scss']
+  selector: 'app-khoanthu',
+  templateUrl: './khoanthu.component.html',
+  styleUrls: ['./khoanthu.component.scss']
 })
-export class DotthuComponent implements OnInit {
+export class KhoanthuComponent implements OnInit {
 
-
-  dotthuList: DotThu[] = [];
-  DotThu: DotThu;
+  KhoanThuList: KhoanThu[] = [];
+  KhoanThu: KhoanThu;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
-  constructor(public util: UtilsService, config: NgbModalConfig, private service: DotThuService, private router: Router, private modalService: NgbModal) {
+  constructor(public util: UtilsService, config: NgbModalConfig, private service: KhoanThuService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
@@ -33,27 +32,27 @@ export class DotthuComponent implements OnInit {
   
   reload() {
     const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-    this.dotthuList = this.service.getDotThuList(filter);
+    this.KhoanThuList = this.service.getKhoanThuList(filter);
   }
   add() {
     this.edit(null);
   }
 
-  remove(dotthu: DotThu) {
-    this.DotThu = dotthu;
+  remove(KhoanThu: KhoanThu) {
+    this.KhoanThu = KhoanThu;
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-    modalRef.componentInstance.confirmObject = 'TermOfCollection';
+    modalRef.componentInstance.confirmObject = 'Collection';
     modalRef.componentInstance.decide.subscribe(() => {
-	_this.service.deleteDotThu(dotthu.Id);
+	_this.service.deleteKhoanThu(KhoanThu.Id);
         _this.reload();
     });
   }
-edit(dothuId: null | number) {
+edit(khoanthuid: null | number) {
     const _this = this;
-    const modalRef = this.modalService.open(DotthuEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(KhoanthuEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    modalRef.componentInstance.DotThuId = dothuId;
+    modalRef.componentInstance.KhoanThuId = khoanthuid;
     modalRef.result.then(function(result) {
         _this.reload();
     });

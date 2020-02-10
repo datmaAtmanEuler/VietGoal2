@@ -1,0 +1,44 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light p-5">
+        <p class="h4 mb-4">Class Status Information</p>
+        <form>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="MaTTLH">Mã trạng thái:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaTTLH" [(ngModel)]="TrangThaiLopHoc.MaTTLH"
+                        class="form-control" placeholder="Mã trạng thái lớp học">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="TenTTLH">Tên trạng thái:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenTTLH" [(ngModel)]="TrangThaiLopHoc.TenTTLH"
+                        class="form-control" placeholder="Tên trạng thái lớp học">
+                </div>
+            </div>
+        </form>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>Close</button>
+        <button class="btn btn btn-info" (click)="UpdateTTLH()" alt=''>Update</button>
+    </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+        <p class="h4 mb-4">Class Status Information</p>
+        <form>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="MaTTLH">Mã trạng thái:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaTTLH" [(ngModel)]="TrangThaiLopHoc.MaTTLH"
+                        class="form-control" placeholder="Mã trạng thái lớp học">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3 label-middling" for="TenTTLH">Tên trạng thái:</label>
+                <div class="col-sm-9">
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenTTLH" [(ngModel)]="TrangThaiLopHoc.TenTTLH"
+                        class="form-control" placeholder="Tên trạng thái lớp học">
+                </div>
+            </div>
+        </form>
+        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>Back</button>
+        <button class="btn btn btn-info" (click)="UpdateTTLH()" alt=''>Update</button>
+    </div>

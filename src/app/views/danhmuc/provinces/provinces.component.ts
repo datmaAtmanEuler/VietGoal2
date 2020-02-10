@@ -40,20 +40,23 @@ export class ProvincesComponent implements OnInit {ModalDirective;
 
 
     reload() {
+      const _this = this;
     	const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-      this.provincesList = this.service.getProvincesList(filter);
+      this.service.getProvincesList(filter).subscribe((list: any) => {
+        _this.provincesList = list;
+      });
     }
 
   add() {
     this.edit(null);
   }
 
-  edit(ProvinceId: null | number) {
+  edit(ID: null | number) {
     const _this = this;
     const modalRef = this.modalService.open(ProvinceEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    if (ProvinceId) {
-      modalRef.componentInstance.provinceId = ProvinceId;
+    if (ID) {
+      modalRef.componentInstance.ID = ID;
     }
     modalRef.result.then(function(){
         _this.reload();
@@ -61,7 +64,9 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   }
 
   deleteProvince() {
-    this.service.deleteProvince(this.province.ProvinceId);
-    this.reload();
+    const _this = this;
+    this.service.deleteProvince(this.province.ID).subscribe((rs: any) => {
+      _this.reload();
+    });
   }
 }

@@ -15,14 +15,14 @@
 			<i class="material-icons">account_box</i>
 		  </span>  
                 </div>  
-                <input type="text" name="UserName" [(ngModel)]="username" class="form-control sty1 p-2" placeholder="Email" required>  
+                <input type="text" name="UserName" [(ngModel)]="username" class="form-control sty1 p-2" placeholder='{{ "AUTH.USERNAME" | translate}}' required>  
               </div>  
               <div class="input-group mb-4">  
                 <div class="input-group-prepend">  
                   <span class="input-group-text"><i class="material-icons">lock</i></span>  
                 </div>  
                 <input  type="password" name="Password" [(ngModel)]="password" class="form-control p-2"  
-               placeholder="Password">  
+               placeholder='{{ "AUTH.PASSWORD" | translate}}'>  
               </div>  
               <div>  
                   <p style="color:#E92626;font-size:20px;font-weight:normal" Class="success" align="left">  
@@ -31,7 +31,7 @@
                 </div>  
               <div class="row">  
                 <div class="col-6">  
-                  <button type="submit" class="btn btn-primary px-4">Login</button>  
+                  <button type="submit" class="btn btn-primary px-4">{{ "AUTH.LOG_IN" | translate}}</button>  
                 </div> 
               </div>  
             </form>  

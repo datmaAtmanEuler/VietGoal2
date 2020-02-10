@@ -16,7 +16,7 @@ export const ROUTES: RouteInfo[] = [
 { path: '/danhmuc/quanhuyen', title: 'MESSAGE.NameList.DistrictsList',  icon: '', class: '' },
 { path: '/danhmuc/phuongxa', title: 'MESSAGE.NameList.CommunesWardsList',  icon: '', class: '' }
   ] },
-{ path: '/quanly', title: 'MESSAGE.NameList.Manage',  icon: 'dashboard', class: '', childrens: [
+{ path: '/nopath', title: 'MESSAGE.NameList.Manage',  icon: 'dashboard', class: '', childrens: [
 { path: '/quanly/trungtam', title: 'MESSAGE.NameList.CentralManagement',  icon: '', class: '' }
   ] }
 ];

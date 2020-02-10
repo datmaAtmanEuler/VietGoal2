@@ -225,4 +225,11 @@ footer{
   }
   body, h1, h2, h3, h4, h5, p, span, label, div {
     font-family: Arial, Helvetica, sans-serif !important;
+
+
+.custom-checkbox{
+    label.form-check-label{
+        position: initial;
+    }
+    width: max-content;
 }

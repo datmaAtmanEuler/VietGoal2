@@ -14,26 +14,34 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 
 export class ProvinceEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('provinceId') provinceId: number;
+	@Input('ID') ID: null | number;
 
-	province: Province = new Province(0, 0, '');
+	province: Province = new Province(0, '', '', false, new Date(), null, 1, null, null);
 
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private provinceService: ProvinceService, private route: ActivatedRoute, private router: Router) {
-		this.provinceId = this.route.snapshot.queryParams['ProvinceId'];
-		this.provinceId = (this.provinceId) ? this.provinceId : 0;
+		this.ID = this.route.snapshot.queryParams['ID'];
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
 	}  
-	GetProvinceById(provinceId:number)  
+	GetProvinceById(ID: number)  
 	{  
-		this.province = this.provinceService.getProvince(provinceId);
-		if (this.province == null || this.province.ProvinceId == 0) {
-			this.province = new Province(0, 0, '');
+		const _this = this;
+		console.log(ID);
+		if(ID){
+			this.provinceService.getProvince(ID).subscribe((province: Province) => {
+				_this.province = province;
+				if (_this.province == null || _this.province.ID == null) {
+					_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null);
+				}
+			});
+		} else {
+			_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null);
 		}
 	}
 	ngOnInit() {
-		this.GetProvinceById(this.provinceId);  
+		console.log(this.ID);
+		this.GetProvinceById(this.ID);  
 	}
 
 	ReturnList() {
@@ -41,16 +49,18 @@ export class ProvinceEditComponent implements OnInit {
 	}
 
 	UpdateProvince() {
-		const result: boolean = this.provinceService.addOrUpdateProvince(this.province);
-		if (result) {
-			if(!this.popup) {
-				this.ReturnList();
+		const _this = this;
+		this.provinceService.addOrUpdateProvince(this.province).subscribe((result: any) => {
+			if (result) {
+				if(!_this.popup) {
+					_this.ReturnList();
+				} else {
+					_this.closeMe();
+				}
 			} else {
-				this.closeMe();
+				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			}
-		} else {
-			const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-		}
+		});
 	}
 
 	closeMe() {

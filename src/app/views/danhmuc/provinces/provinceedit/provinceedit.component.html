@@ -5,8 +5,8 @@
                 <div class="form-group row">
                     <label class="col-3 label-middling">Mã Tỉnh Thành <span class="text-danger">(*)</span></label>
                         <div class="col-9">
-                            <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.MaProvince"
-                                class="form-control" placeholder="Ma Province">
+                            <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.ProvinceCode"
+                                class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceCode" |translate}}'>
                         </div>
                 </div>
 
@@ -14,7 +14,7 @@
                     <label class="col-3 label-middling">Tên Tỉnh Thành <span class="text-danger">(*)</span></label>
                     <div class=" col-3 label-middling">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.ProvinceName"
-                        class="form-control" placeholder="ProvinceName">
+                        class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceName" |translate}}'>
                     </div>
                 </div>
             
@@ -31,11 +31,11 @@
                 <div class="col-6 alert" role="alert">
                     
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.MaProvince"
-                        class="form-control" placeholder="Ma Province">
+                        class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceCode" |translate}}'>
                 </div>
                 <div class="col-6 alert" role="alert">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.ProvinceName"
-                        class="form-control" placeholder="ProvinceName">
+                        class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceName" |translate}}'>
                 </div>
             </div>
 
@@ -43,5 +43,3 @@
         <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"</button>
         <button class="btn btn btn-info" (click)="UpdateProvince()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
 </div>
-
-

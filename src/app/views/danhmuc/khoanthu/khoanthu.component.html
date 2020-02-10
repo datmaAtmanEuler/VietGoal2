@@ -9,15 +9,16 @@
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-6 input-group form-sm form-1 pl-0">
                         </div>
-                        <div class="col-sm-6 input-group form-sm form-1 pl-0">
-                            <span (click)="add()" class="ml-2 input-group-text" id="basic-text1"><i class="fa fa-plus"
-                                 aria-hidden="true"></i></span>
+                        <div class="col-sm-6 input-group form-sm form-1 pl-0 search-form">
+                            <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Add" type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
+                                <i class="material-icons">add</i>
+                            </button>
                             <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
                                 placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-
                             <div class="input-group-prepend">
-                                <span (click)="reload()" class="input-group-text" id="basic-text1"><i
-                                        class="fa fa-search" aria-hidden="true"></i></span>
+                                <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Search" type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}" class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                </button>
                             </div>
                         </div>
                     </div>

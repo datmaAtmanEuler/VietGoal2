@@ -10,7 +10,7 @@ declare interface RouteInfo {
 }
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
-{ path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.Catalogs',  icon: 'dashboard', class: '', childrens: [
+{ path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.Catalogs',  icon: 'view_list', class: '', childrens: [
 { path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.ProvincesList',  icon: '', class: '' },
 { path: '/danhmuc/quanhuyen', title: 'MESSAGE.NameList.DistrictsList',  icon: '', class: '' },
 { path: '/danhmuc/phuongxa', title: 'MESSAGE.NameList.CommunesWardsList',  icon: '', class: '' },

@@ -18,8 +18,8 @@ export const ROUTES: RouteInfo[] = [
   { path: '/danhmuc/trangthailophoc', title: 'MESSAGE.NameList.ClassStatusList',  icon: '', class: '' },
   { path: '/danhmuc/trangthaihocvien', title: 'MESSAGE.NameList.StudentStatusList',  icon: '', class: '' },
   { path: '/danhmuc/trangthaihlv', title: 'MESSAGE.NameList.CoachStatusList',  icon: '', class: '' },
-  { path: '/danhmuc/dotthu', title: 'MESSAGE.NameList.CollectionsList',  icon: '', class: '' },
-  { path: '/danhmuc/khoanthu', title: 'MESSAGE.NameList.TermOfCollectionsList',  icon: '', class: '' },
+  { path: '/danhmuc/dotthu', title: 'MESSAGE.NameList.TermOfCollectionsList',  icon: '', class: '' },
+  { path: '/danhmuc/khoanthu', title: 'MESSAGE.NameList.CollectionsList',  icon: '', class: '' },
   { path: '/danhmuc/luatuoi', title: 'MESSAGE.NameList.AgesList',  icon: '', class: '' }
 
   ] },

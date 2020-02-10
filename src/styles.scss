@@ -178,3 +178,11 @@ footer{
 .list-group-item {
     padding: 0.15rem 1rem;
 }
+
+
+.custom-checkbox{
+    label.form-check-label{
+        position: initial;
+    }
+    width: max-content;
+}

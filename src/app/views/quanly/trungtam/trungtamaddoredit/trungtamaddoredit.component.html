@@ -1,6 +1,6 @@
 <div class="modal-body" *ngIf="popup">
-    <div class="text-center border border-light pt-mt-3">
-        <p class="h4 mb-4">Center Information</p>
+    <div class="text-center border border-light p-5">
+        <p class="h4 mb-4">Central Information</p>
         <form>
             <div class="form-group row">
                 <div class="col-md-6 alert" role="alert">
@@ -49,9 +49,18 @@
                         class="form-control" placeholder="DT Khuong Vien">
                 </div>
                 <div class="col-md-12 alert" role="alert">
-                    <div class="form-check" style="text-align: left;">
-                        <input class="form-check-input" [ngModelOptions]="{standalone: true}" type="checkbox" [(ngModel)]="trungtam.isHienThi" id="mdb-checkbox-1" tabindex="0">
+                    <!-- <div class="form-check" style="text-align: left;">
+                        <input class="form-check-input" [ngModelOptions]="{standalone: true}" type="checkbox" [(ngModel)]="trungtam.isHienThi"  tabindex="0">
                         <label class="form-check-label" for="mdb-checkbox-1">Hiển Thị</label>
+                    </div> -->
+                    <div class="form-check custom-checkbox">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <span class="form-check-sign">
+                                <span class="check"></span>
+                            </span>
+                            Hiển thị
+                        </label>
                     </div>
                 </div>
                 <div class="col-md-12 alert" role="alert">
@@ -61,12 +70,12 @@
             </div>
 
         </form>
-        <button *ngIf="popup" class="btn my-button-create mr-3" (click)="closeMe()" alt=''>Close</button>
-        <button class="btn my-button-create" (click)="UpdateTrungtam()" alt=''>Update</button>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
+        <button class="btn btn-info" (click)="UpdateTrungtam()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
     </div>
 </div>
 <div class="text-center border border-light p-5" *ngIf="!popup">
-        <p class="h4 mb-4">Center Information</p>
+        <p class="h4 mb-4">Central Information</p>
         <form>
             <div class="form-group row">
                 <div class="col-md-6 alert" role="alert">
@@ -127,9 +136,8 @@
             </div>
 
         </form>
-        <button class="btn my-button-create mr-3" (click)="ReturnList()" alt=''>Back</button>
-        <button class="btn my-button-create" (click)="UpdateTrungtam()" alt=''>Update</button>
-    </div>
-
+        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"</button>
+        <button class="btn btn btn-info" (click)="UpdateTrungtam()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
+</div>
 
 

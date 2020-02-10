@@ -25,23 +25,23 @@ export class BaiTapEditComponent implements OnInit {
      	config.keyboard = false;
 		config.scrollable = false;
 	}  
-	GetbaiTapById(Idbaitap:number)  
+	GetBaiTapById(Idbaitap:number)  
 	{  
 		this.baitap = this.baitapService.getBaiTap(Idbaitap);
 		if (this.baitap == null || this.baitap.IdBaiTap == 0) {
-			this.baitap = new Province(0, 0, '');
+			this.baitap = new BaiTap(0, 0, '','','','');
 		}
 	}
 	ngOnInit() {
-		this.GetProvinceById(this.provinceId);  
+		this.GetBaiTapById(this.Idbaitap);  
 	}
 
 	ReturnList() {
-		this.router.navigate(['danhmuc/tinhthanh']); 
+		this.router.navigate(['danhmuc/baitap']); 
 	}
 
-	UpdateProvince() {
-		const result: boolean = this.provinceService.addOrUpdateProvince(this.province);
+	UpdateBaiTap() {
+		const result: boolean = this.baitapService.addOrUpdateBaiTap(this.baitap);
 		if (result) {
 			if(!this.popup) {
 				this.ReturnList();

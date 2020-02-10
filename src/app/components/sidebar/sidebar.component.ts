@@ -22,8 +22,9 @@ export const ROUTES: RouteInfo[] = [
   { path: '/danhmuc/trangthaihlv', title: 'MESSAGE.NameList.CoachStatusList',  icon: '', class: '' },
   { path: '/danhmuc/dotthu', title: 'MESSAGE.NameList.TermOfCollectionsList',  icon: '', class: '' },
   { path: '/danhmuc/khoanthu', title: 'MESSAGE.NameList.CollectionsList',  icon: '', class: '' },
-  { path: '/danhmuc/luatuoi', title: 'MESSAGE.NameList.AgesList',  icon: '', class: '' }
-
+  { path: '/danhmuc/luatuoi', title: 'MESSAGE.NameList.AgesList',  icon: '', class: '' },
+  { path: '/danhmuc/baitap', title: 'MESSAGE.NameList.YardArea',  icon: '', class: '' },
+  { path: '/danhmuc/khuvuc', title: 'MESSAGE.NameList.RegionsList',  icon: '', class: '' }
   ] },
 { path: '/quanly/trungtam', title: 'MESSAGE.NameList.Manage',  icon: 'assignment_ind', class: '', childrens: [
 { path: '/quanly/trungtam', title: 'MESSAGE.NameList.CentralManagement',  icon: '', class: '' }

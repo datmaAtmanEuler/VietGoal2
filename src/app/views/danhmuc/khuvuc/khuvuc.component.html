@@ -4,7 +4,7 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-warning" style="background: #023a54">
-                        <h4 class="card-title">{{ "MESSAGE.NameList.YardArea" | translate }}</h4>
+                        <h4 class="card-title">{{ "MESSAGE.NameList.RegionsList" | translate }}</h4>
                     </div>
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-6 input-group form-sm form-1 pl-0">
@@ -28,29 +28,24 @@
                                 <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
                                     <thead>
                                         <th width="100px">{{ ("MESSAGE.NameList.Order" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.YardAreaCode" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.YardAreaName" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.Region" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.Address" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.Note" | translate) | uppercase }}</th>
+                                        <th>{{ ("MESSAGE.NameList.AreaCode" | translate) | uppercase }}</th>
+                                        <th>{{ ("MESSAGE.NameList.AreaName" | translate) | uppercase }}</th>
+                                        <th>{{ ("MESSAGE.NameList.Central" | translate) | uppercase }}</th>
                                         <th width="150px">{{ ("MESSAGE.NameList.Action" | translate) | uppercase }}</th>
                                     </thead>
                                     <tbody>
-                                        <ng-container *ngFor="let baitap of baitapList; let i = index;">
+                                        <ng-container *ngFor="let khuvuc of khuvucList; let i = index;">
                                             <tr>
                                                 <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ baitap.MaBaiTap }}</td>
-                                                <td>{{ baitap.TenBaiTap }}</td>
-                                                <td>{{ baitap.KhuVuc }}</td>
-                                                <td>{{ baitap.DiaChi }}</td>
-                                                <td>{{ baitap.GhiChu }}</td>
-
+                                                <td>{{ khuvuc.MaKhuVuc }}</td>
+                                                <td>{{ khuvuc.TenKhuVuc }}</td>
+                                                <td>{{ khuvuc.TrungTam }}</td>
                                                 <td width="150px" class="my-action-item">
     
-                                                    <button mat-raised-button type="button" (click)="edit(baitap.IdBaiTap)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(khuvuc.IdKhuVuc)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button mat-raised-button type="button" (click)="remove(baitap)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Remove" type="button" (click)="remove(khuvuc)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>

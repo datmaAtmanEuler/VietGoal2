@@ -18,6 +18,8 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
+  currentUser: any;
+
   constructor(config: NgbModalConfig, private service: ProvinceService, private router: Router, private modalService: NgbModal) { 
     config.backdrop = 'static';
     config.keyboard = false;
@@ -25,7 +27,8 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   }
 
   ngOnInit() {
-	this.reload();
+    this.currentUser = localStorage.getItem('currentUser');
+	  this.reload();
   }
 
     remove(province: Province) {
@@ -66,7 +69,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
 
   deleteProvince() {
     const _this = this;
-    this.service.deleteProvince(this.province.ID).subscribe((rs: any) => {
+    this.service.deleteProvince(this.province.ID, this.currentUser.UserId).subscribe((rs: any) => {
       _this.reload();
     });
   }

@@ -14,12 +14,13 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 
 export class ProvinceEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('ID') ID: undefined | number;
+	@Input('ID') ID: null | number;
 
 	province: Province = new Province(0, '', '', false, new Date(), null, 1, null, null);
 
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private provinceService: ProvinceService, private route: ActivatedRoute, private router: Router) {
 		this.ID = this.route.snapshot.queryParams['ID'];
+		this.ID = (this.ID) ? this.ID : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
@@ -29,7 +30,7 @@ export class ProvinceEditComponent implements OnInit {
 		const _this = this;
 		this.provinceService.getProvince(ID).subscribe((province: Province) => {
 			_this.province = province;
-			if (_this.province == null || _this.province.ID == undefined) {
+			if (_this.province == null || _this.province.ID == null) {
 				_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null);
 			}
 		});

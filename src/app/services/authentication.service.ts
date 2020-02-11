@@ -5,12 +5,13 @@ import { map } from 'rxjs/operators';
 import {HttpHeaders, HttpParams } from '@angular/common/http';
 import { Register } from '../models/register';
 import { UtilsService } from './utils.service';
+import { environment } from 'environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     currentUserSubject: BehaviorSubject<Register>;
     currentUser: Observable<Register>;
-    serverURL  = 'https://localhost:44349/Api/Login/'; 
+    serverURL  = `${environment.serverUrl}Login/`; 
     header: HttpHeaders;
     constructor(private http: HttpClient, private utils: UtilsService) {
         const headerSettings: {[name: string]: string | string[]; } = {};  

@@ -21,9 +21,10 @@ import { ComponentsModule } from './components/components.module';
 import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { ConfirmComponent } from './shared/modal/confirm/confirm.component';
+import { environment } from 'environments/environment';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, 'https://localhost:44349/i18n/', '.json');
+  return new TranslateHttpLoader(http, `${environment.serverOriginUrl}i18n/`, '.json');
 }
 
 @NgModule({

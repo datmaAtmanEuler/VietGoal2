@@ -44,6 +44,10 @@ import { KhoanthuComponent } from 'app/views/danhmuc/khoanthu/khoanthu.component
 import { KhoanthuEditComponent } from 'app/views/danhmuc/khoanthu/khoanthu-edit/khoanthu-edit.component';
 import { LuatuoiComponent } from 'app/views/danhmuc/luatuoi/luatuoi.component';
 import { LuatuoiEditComponent } from 'app/views/danhmuc/luatuoi/luatuoi-edit/luatuoi-edit.component';
+import { BaiTapComponent } from '../../views/danhmuc/baitap/baitap.component';
+import { BaiTapEditComponent } from '../../views/danhmuc/baitap/baitapedit/baitapedit.component';
+import { KhuVucEditComponent } from '../../views/danhmuc/khuvuc/khuvucedit/khuvucedit.component';
+import { KhuVucComponent } from '../../views/danhmuc/khuvuc/khuvuc.component';
 
 
 
@@ -90,7 +94,11 @@ import { LuatuoiEditComponent } from 'app/views/danhmuc/luatuoi/luatuoi-edit/lua
     KhoanthuComponent,
     KhoanthuEditComponent,
     LuatuoiComponent,
-    LuatuoiEditComponent
+    LuatuoiEditComponent,
+    BaiTapComponent,
+    BaiTapEditComponent,
+    KhuVucComponent,
+    KhuVucEditComponent
   ]
 })
 

@@ -186,9 +186,9 @@ footer{
     }
 }
 .search-button{
-    color: #DAA520 !important;
+    color: #023a54!important;
     :hover{
-        color: #FFD700;
+        color: #2e82a8;
     }
 }
 .add-button{
@@ -236,4 +236,7 @@ footer{
     .material-icons{
         font-size: 24px!important;
     }    
+}
+.card .card-header-warning .card-icon, .card .card-header-warning:not(.card-header-icon):not(.card-header-text), .card .card-header-warning .card-text {
+    box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(2, 58, 84, 0.6);
 }

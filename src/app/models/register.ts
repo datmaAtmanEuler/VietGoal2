@@ -5,5 +5,6 @@ export class Register {
     Email:string = '';  
     ContactNo:string = '';  
     Address:string = '';
+    Avatar:string = '';
     constructor() {}
 }

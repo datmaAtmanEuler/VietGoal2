@@ -27,6 +27,10 @@ import { TrangthaihocvienComponent } from 'app/views/danhmuc/trangthaihocvien/tr
 import { TrangthaihocvieneditComponent } from 'app/views/danhmuc/trangthaihocvien/trangthaihocvienedit/trangthaihocvienedit.component';
 import { TrangthailophocComponent } from 'app/views/danhmuc/trangthailophoc/trangthailophoc.component';
 import { TrangthailophoceditComponent } from 'app/views/danhmuc/trangthailophoc/trangthailophocedit/trangthailophocedit.component';
+import { BaiTapComponent } from '../../views/danhmuc/baitap/baitap.component';
+import { BaiTapEditComponent } from '../../views/danhmuc/baitap/baitapedit/baitapedit.component';
+import { KhuVucComponent } from '../../views/danhmuc/khuvuc/khuvuc.component';
+import { KhuVucEditComponent } from '../../views/danhmuc/khuvuc/khuvucedit/khuvucedit.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -99,6 +103,18 @@ export const AdminLayoutRoutes: Routes = [
         { path: '', component: LuatuoiComponent },
         { path: 'add', component: LuatuoiEditComponent },
         { path: 'edit', component: LuatuoiEditComponent }
+      ] },
+      { path: 'baitap',  children:
+      [
+        { path: '', component: BaiTapComponent },
+        { path: 'add', component: BaiTapEditComponent },
+        { path: 'edit', component: BaiTapEditComponent }
+      ] },
+      { path: 'khuvuc',  children:
+      [
+        { path: '', component: KhuVucComponent },
+        { path: 'add', component: KhuVucEditComponent },
+        { path: 'edit', component: KhuVucEditComponent }
       ] },
     ]
 },

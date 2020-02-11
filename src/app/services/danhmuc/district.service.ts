@@ -1,11 +1,20 @@
 import { Injectable } from '@angular/core';
 import { District } from '../../models/danhmuc/districts';
 import { Filter } from '../../models/filter';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DistrictService {
+    httpOptions = {  
+          headers: new HttpHeaders({  
+            'Content-Type': 'application/json; charset=utf-8'  
+          })  
+    }; 
+
     districtsList: any[] = [
 {DistrictId: 1, MaDistrict: 55,DistrictName:'Hoàn Kiếm' ,ProvinceName: 'Thành phố Hà Nội',SoThuTu:0},
 {DistrictId: 2, MaDistrict: 57,DistrictName:'Tây Hồ', ProvinceName: 'Thành phố Hà Nội',SoThuTu:0}

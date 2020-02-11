@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { KhuvucService } from '../../../services/danhmuc/khuvuc.service';
 import { KhuVuc } from '../../../models/danhmuc/khuvuc';
 import { KhuVucEditComponent } from './khuvucedit/khuvucedit.component';
-import { Filter } from '../../../models/filter';
+import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';

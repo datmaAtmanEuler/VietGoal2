@@ -15,32 +15,32 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 export class ProvinceEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('ID') ID: null | number;
+	currentUser: any;
 
-	province: Province = new Province(0, '', '', false, new Date(), null, 1, null, null);
+	province: Province = new Province(0, '', '', false, new Date(), null, 1, null, null, null);
 
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private provinceService: ProvinceService, private route: ActivatedRoute, private router: Router) {
 		this.ID = this.route.snapshot.queryParams['ID'];
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}  
 	GetProvinceById(ID: number)  
 	{  
 		const _this = this;
-		console.log(ID);
 		if(ID){
 			this.provinceService.getProvince(ID).subscribe((province: Province) => {
 				_this.province = province;
 				if (_this.province == null || _this.province.ID == null) {
-					_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null);
+					_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null, null);
 				}
 			});
 		} else {
-			_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null);
+			_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null, null);
 		}
 	}
 	ngOnInit() {
-		console.log(this.ID);
 		this.GetProvinceById(this.ID);  
 	}
 
@@ -50,7 +50,7 @@ export class ProvinceEditComponent implements OnInit {
 
 	UpdateProvince() {
 		const _this = this;
-		this.provinceService.addOrUpdateProvince(this.province).subscribe((result: any) => {
+		this.provinceService.addOrUpdateProvince(_this.province, this.currentUser.UserId).subscribe((result: any) => {
 			if (result) {
 				if(!_this.popup) {
 					_this.ReturnList();

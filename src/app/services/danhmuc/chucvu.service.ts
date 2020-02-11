@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Chucvu } from '../../models/danhmuc/Chucvu';
-import { Filter } from '../../models/filter';
+import { Filter } from '../../models/filter/filter';
 
 @Injectable({
   providedIn: 'root'

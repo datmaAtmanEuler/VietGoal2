@@ -8,6 +8,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
+
+import { Filter } from '../../../../models/filter/filter';
+
 @Component({
 	selector: 'app-district-edit',
 	templateUrl: './districtedit.component.html',
@@ -16,26 +19,34 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 })
 export class DistrictEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('districtId') districtId: number;
+	@Input('ID') ID: number;
+	@Input('UserId') UserId: null | number;
 
-	district: District = new District(0, 0,'', '',0);
+	district: District = new District(0, '', 0,'', 0);
+	provincesList: Province[] = [];
 
-	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private districtService: DistrictService, private route: ActivatedRoute, private router: Router) {
-		this.districtId = this.route.snapshot.queryParams['DistrictId'];
-		this.districtId = (this.districtId) ? this.districtId : 0;
+	constructor(public activeModal: NgbActiveModal, private provinceService: ProvinceService, config: NgbModalConfig, private modalService: NgbModal, private districtService: DistrictService, private route: ActivatedRoute, private router: Router) {
+		this.ID = this.route.snapshot.queryParams['ID'];
+		this.ID = (this.ID) ? this.ID : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
 	}  
-	GetDistrictById(districtId:number)  
+	GetDistrictById(ID:number)  
 	{  
-		this.district = this.districtService.getDistrict(districtId);
-		if (this.district == null || this.district.DistrictId==0) {
-			this.district = new District(0, 0, '','',0);
-		}
+		const _this = this;
+		this.provinceService.getProvincesList(new Filter('', null, null)).subscribe((proList: Province[]) => {
+			_this.provincesList = (proList) ? proList : [];
+			_this.districtService.getDistrict(ID).subscribe((district: District) => {
+				_this.district = district;
+				if (_this.district == null || _this.district.ID==0) {
+					_this.district = new District(0, '', 0,'', 0);
+				}
+			});	
+		  });
 	}
 	ngOnInit() {
-		this.GetDistrictById(this.districtId);  
+		this.GetDistrictById(this.ID);  
 	}
 
 	ReturnList() {
@@ -45,17 +56,19 @@ export class DistrictEditComponent implements OnInit {
 
 	
 	UpdateDistrict() {
-		const result: boolean = this.districtService.addOrUpdateDistrict(this.district);
-		if (result) {
-			if(!this.popup) {
-				this.ReturnList();
+		const _this = this;
+		this.districtService.addOrUpdateDistrict(_this.district, this.UserId).subscribe((result: any) => {
+			if (result) {
+				if(!_this.popup) {
+					_this.ReturnList();
+				} else {
+					
+					_this.closeMe();
+				}
 			} else {
-				
-				this.closeMe();
+				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			}
-		} else {
-			const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-		}
+		});
 	}
 
 	closeMe() {

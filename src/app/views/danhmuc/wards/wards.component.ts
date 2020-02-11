@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { WardService } from '../../../services/danhmuc/ward.service';
 import { Ward } from '../../../models/danhmuc/wards';
-import { Filter } from '../../../models/filter';
+import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router'; 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WardEditComponent } from './wardedit/wardedit.component';

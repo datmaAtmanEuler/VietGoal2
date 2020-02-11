@@ -37,12 +37,12 @@
                                         <ng-container *ngFor="let district of districtsList; let i = index;">
                                             <tr>
                                                 <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ district.MaDistrict }}</td>
+                                                <td>{{ district.DistrictCode }}</td>
                                                 <td>{{ district.DistrictName }}</td>
                                                 <td>{{ district.ProvinceName }}</td>
                                                 <td class="my-action-item">
     
-                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(district.DistrictId)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(district.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
                                                     <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Remove" type="button" (click)="remove(district)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">

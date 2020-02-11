@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 // import { HttpClient, HttpHeaders } from '@angular/common/http';
 // import { Observable } from 'rxjs';
 import { ThongBao } from '../../models/quanly/thongbao';
-import { Filter } from '../../models/filter';
+import { Filter } from '../../models/filter/filter';
 @Injectable({
   providedIn: 'root'
 })

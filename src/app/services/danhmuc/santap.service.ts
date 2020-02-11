@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SanTap } from '../../models/danhmuc/santap';
-import { Filter } from '../../models/filter';
+import { Filter } from '../../models/filter/filter';
 
 @Injectable({
   providedIn: 'root'

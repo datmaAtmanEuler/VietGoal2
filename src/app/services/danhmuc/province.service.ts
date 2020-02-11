@@ -26,7 +26,12 @@ export class ProvinceService {
         return this.http.get(environment.serverUrl_employee + `provinces/${id}` , this.httpOptions);
     }
 
-    addOrUpdateProvince(province: Province): Observable<any> {
+    addOrUpdateProvince(province: Province, by: null | number): Observable<any> {
+        if (province.ID != 0 && province.ID) {
+            province.UpdatedBy = by;
+        } else {
+            province.CreatedBy = by;
+        }
         return this.http.post(environment.serverUrl_employee + `provinces/save`, province, this.httpOptions);
     }
 

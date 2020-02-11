@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { Filter } from '../../../models/filter';
+import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router';
 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';

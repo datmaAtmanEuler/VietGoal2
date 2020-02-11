@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { SanTapService } from '../../../services/danhmuc/santap.service';
 import { UtilsService } from '../../../services/utils.service';
 import { SanTap } from '../../../models/danhmuc/santap';
-import { Filter } from '../../../models/filter';
+import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router'; 
 import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';

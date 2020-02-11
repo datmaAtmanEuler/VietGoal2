@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Filter } from '../../../models/filter';
+import { Filter } from '../../../models/filter/filter';
 import { Trungtam } from '../../../models/quanly/trungtam';
 import { TrungtamService } from '../../../services/quanly/trungtam.service';
 import { UtilsService } from '../../../services/utils.service';

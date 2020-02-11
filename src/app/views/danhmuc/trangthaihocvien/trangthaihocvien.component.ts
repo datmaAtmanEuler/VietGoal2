@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Filter } from '../../../models/filter';
+import { Filter } from '../../../models/filter/filter';
 import { UtilsService } from '../../../services/utils.service';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';

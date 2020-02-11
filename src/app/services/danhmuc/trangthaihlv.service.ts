@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Filter } from '../../models/filter';
-import { TrangThaiHLV } from 'app/models/danhmuc/trangthaihlv';
+import { Filter } from '../../models/filter/filter';
+import { TrangThaiHLV } from '../../models/danhmuc/trangthaihlv';
 
 @Injectable({
     providedIn: 'root'

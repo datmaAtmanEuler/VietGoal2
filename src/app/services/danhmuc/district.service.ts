@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { District } from '../../models/danhmuc/districts';
-import { Filter } from '../../models/filter';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -15,51 +14,29 @@ export class DistrictService {
           })  
     }; 
 
-    districtsList: any[] = [
-{DistrictId: 1, MaDistrict: 55,DistrictName:'Hoàn Kiếm' ,ProvinceName: 'Thành phố Hà Nội',SoThuTu:0},
-{DistrictId: 2, MaDistrict: 57,DistrictName:'Tây Hồ', ProvinceName: 'Thành phố Hà Nội',SoThuTu:0}
-      ];
-
-    constructor() {
+    constructor(private http: HttpClient) {
     }
 
-    getDistrictsList(filter: Filter) {
-        const result:District[] = this.districtsList.filter((district: District) => filter.SearchTerm == '' || (filter.SearchTerm != '' && district.DistrictName.toLowerCase().indexOf(filter.SearchTerm.toLowerCase()) != -1));
-	return result;
+    getDistrictsList(filter: any): Observable<any> {
+        let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
+        return this.http.get(environment.serverUrl_employee + 'Districts?' + queryString , this.httpOptions);
     }
     
-    getDistrict(id: any): District {
-        const result: District[] = this.districtsList.filter((district: District) => district.DistrictId == id);
-	    return new District(result[0].DistrictId, result[0].MaDistrict, result[0].DistrictName, result[0].ProvinceName,result[0].SoThuTu);
+    getDistrict(id: any): Observable<any> {
+        return this.http.get(environment.serverUrl_employee + `Districts/${id}` , this.httpOptions);
     }
 
-    addOrUpdateDistrict(district: District): boolean {
-        if(district && district.DistrictId == 0) {
-            if (this.districtsList.filter((pro: District) => pro.MaDistrict == district.MaDistrict).length > 0) {
-                return false;
-            }
-            district.DistrictId = Math.max.apply(Math, this.districtsList.map((dis: District) => dis.DistrictId)) + 1;
-            district.MaDistrict = Number.parseInt(district.MaDistrict + '');
-            this.districtsList.push(district);
+    addOrUpdateDistrict(district: District, by: null | number): Observable<any> {
+        district.SoThuTu = parseInt(district.SoThuTu + '');
+        if (district.ID != 0 && district.ID) {
+            district.UpdatedBy = by;
         } else {
-            district.MaDistrict = Number.parseInt(district.MaDistrict + '');
-            if (this.districtsList.filter((dis: District) => dis.MaDistrict == district.MaDistrict && dis.DistrictId != district.DistrictId).length > 0) {
-                return false;
-            } else {
-                const tempDistrict: District[] = this.districtsList.filter((dis: District) => dis.DistrictId == district.DistrictId);
-                tempDistrict[0].MaDistrict = district.MaDistrict;
-                tempDistrict[0].DistrictName=district.DistrictName;
-                tempDistrict[0].ProvinceName = district.ProvinceName;
-                tempDistrict[0].SoThuTu = district.SoThuTu;
-            }
+            district.CreatedBy = by;
         }
-        return true;
+        return this.http.post(environment.serverUrl_employee + `Districts/save`, district, this.httpOptions);
     }
 
-    deleteDistrict(DistrictId: number) {
-        const id: number = this.districtsList.map((district: District) => district.DistrictId).indexOf(DistrictId);
-        if(id != -1) {
-            this.districtsList.splice(id, 1);
-        }
+    deleteDistrict(id: number, deletedBy: number): Observable<any> {
+        return this.http.delete(environment.serverUrl_employee + `Districts/${id}?deletedBy=${deletedBy}` , this.httpOptions);
     }
 }

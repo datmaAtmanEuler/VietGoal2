@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Ward } from '../../models/danhmuc/wards';
 import { environment } from '../../../environments/environment';
-import { Filter } from '../../models/filter';
+import { Filter } from '../../models/filter/filter';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 

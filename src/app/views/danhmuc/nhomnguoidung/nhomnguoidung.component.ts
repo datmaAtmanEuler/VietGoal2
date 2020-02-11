@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core';
 import { NhomNguoiDungService } from '../../../services/danhmuc/nhomnguoidung.service';
 import { NhomNguoiDung } from '../../../models/danhmuc/nhomnguoidung';
-import { Filter } from '../../../models/filter';
+import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';

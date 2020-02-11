@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProvinceService } from '../../../services/danhmuc/province.service';
 import { Province } from '../../../models/danhmuc/province';
 import { ProvinceEditComponent } from './provinceedit/provinceedit.component';
-import { Filter } from '../../../models/filter';
+import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -27,7 +27,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   }
 
   ngOnInit() {
-    this.currentUser = localStorage.getItem('currentUser');
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	  this.reload();
   }
 

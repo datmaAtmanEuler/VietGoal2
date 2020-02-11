@@ -4,63 +4,69 @@
         <form>
             <div class="form-group row">
                 <label class="col-3 label-middling">Tên Tỉnh Thành <span class="text-danger">(*)</span></label>
-                <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.ProvinceName"
-                        class="form-control" placeholder="Province Name">
-            </div>
+                <div class="col-6 label-middling">
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.ProvinceID"
+                        class="form-control">
+                        <option *ngFor="let province of provincesList; let i = index;" [value]="province.ID">
+                            {{ province.ProvinceName}}</option>
+                    </select>
+                </div>
             </div>
 
             <div class="form-group row">
                 <label class="col-3 label-middling">Mã Quận Huyện</label>
-                <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.Madistrict"
+                <div class="col-6 label-middling">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.DistrictCode"
                         class="form-control" placeholder="Ma District">
-            </div>
                 </div>
+            </div>
             <div class="form-group row">
                 <label class="col-3 label-middling">Tên Quận Huyện<span class="text-danger">(*)</span></label>
-                <div class="col-6 label-middling" >
+                <div class="col-6 label-middling">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.DistrictName"
                         class="form-control" placeholder="District Name">
+                </div>
             </div>
+            <div class="form-group row">
+                <label class="col-3 label-middling">Số Thứ Tự</label>
+                <div class="col-6 label-middling">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.SoThuTu"
+                        class="form-control" placeholder="Số Thứ Tự">
                 </div>
-
-                <div class="form-group row">
-                    <label class="col-3 label-middling">Số Thứ Tự</label>
-                    <div class="col-6 label-middling" >
-                        <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.SoThuTu"
-                            class="form-control" placeholder="Số Thứ Tự">
-                </div>
-                    </div>
-
+            </div>
         </form>
-        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()"
+            alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
         <button class="btn btn-info" (click)="UpdateDistrict()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
     </div>
 </div>
 <div class="text-center border border-light p-5" *ngIf="!popup">
-        <p class="h4 mb-4">District Information</p>
-        <form>
-            <div class="form-group row">
-                <div class="col-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.Madistrict"
-                        class="form-control" placeholder="Ma District">
-                </div>
-
-                <div class="col-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.DistrictName"
-                        class="form-control" placeholder="District Name">
-                </div>
-
-                <div class="col-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.ProvinceName"
-                        class="form-control" placeholder="Province Name">
-                </div>
+    <p class="h4 mb-4">District Information</p>
+    <form>
+        <div class="form-group row">
+            <div class="col-6 alert" role="alert">
+                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.DistrictCode"
+                    class="form-control" placeholder="Ma District">
             </div>
 
-        </form>
-        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"</button>
+            <div class="col-6 alert" role="alert">
+                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.DistrictName"
+                    class="form-control" placeholder="District Name">
+            </div>
+
+            <div class="col-6 alert" role="alert">
+                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.ProvinceName"
+                    class="form-control" placeholder="Province Name">
+            </div>
+
+            <div class="col-6 alert" role="alert">
+                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.SoThuTu"
+                    class="form-control" placeholder="Số thứ tự">
+            </div>
+        </div>
+
+    </form>
+    <button class="btn btn-warning mr-3" (click)="ReturnList()"
+        alt=''>{{"MESSAGE.NameList.Back"</button>
         <button class="btn btn btn-info" (click)="UpdateDistrict()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
 </div>
-
-

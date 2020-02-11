@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Filter } from '../../models/filter';
+import { Filter } from '../../models/filter/filter';
 import { DotThu } from 'app/models/danhmuc/dotthu';
 
 @Injectable({

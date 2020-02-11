@@ -17,8 +17,13 @@
                         class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceName" |translate}}'>
                     </div>
                 </div>
-            
-
+                <div class="form-group row">
+                    <label class="col-3 label-middling">Số Thứ Tự</label>
+                    <div class="col-6 label-middling">
+                        <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.SoThuTu"
+                            class="form-control" placeholder="Số Thứ Tự">
+                    </div>
+                </div>
         </form>
         <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
         <button class="btn btn-info" (click)="UpdateProvince()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>

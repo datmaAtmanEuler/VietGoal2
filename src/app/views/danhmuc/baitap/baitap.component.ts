@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { BaiTapService } from '../../../services/danhmuc/baitap.service';
 import { BaiTap } from '../../../models/danhmuc/baitap';
 import { BaiTapEditComponent } from './baitapedit/baitapedit.component';
-import { Filter } from '../../../models/filter';
+import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';

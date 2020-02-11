@@ -9,12 +9,12 @@ declare interface RouteInfo {
     childrens?: RouteInfo[];
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
-{ path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.Catalogs',  icon: 'view_list', class: '', childrens: [
-{ path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.ProvincesList',  icon: '', class: '' },
-{ path: '/danhmuc/quanhuyen', title: 'MESSAGE.NameList.DistrictsList',  icon: '', class: '' },
-{ path: '/danhmuc/phuongxa', title: 'MESSAGE.NameList.CommunesWardsList',  icon: '', class: '' },
-{ path: '/danhmuc/nhomnguoidung', title: 'MESSAGE.NameList.AdministrationOfUserGroups',  icon: '', class: '' },
+  { path: '/dashboard', title: 'Dashboard',  icon: 'dashboard', class: '' },
+  { path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.Catalogs',  icon: 'view_list', class: '', childrens: [
+  { path: '/danhmuc/tinhthanh', title: 'MESSAGE.NameList.ProvincesList',  icon: '', class: '' , visible: false},
+  { path: '/danhmuc/quanhuyen', title: 'MESSAGE.NameList.DistrictsList',  icon: '', class: '' },
+  { path: '/danhmuc/phuongxa', title: 'MESSAGE.NameList.CommunesWardsList',  icon: '', class: '' },
+  { path: '/danhmuc/nhomnguoidung', title: 'MESSAGE.NameList.AdministrationOfUserGroups',  icon: '', class: '' },
 { path: '/danhmuc/santap', title: 'MESSAGE.NameList.ManagingTrainingGround',  icon: '', class: '' },
   { path: '/danhmuc/chucvu', title: 'MESSAGE.NameList.PositionsList',  icon: '', class: '' },
   { path: '/danhmuc/trangthailophoc', title: 'MESSAGE.NameList.ClassStatusList',  icon: '', class: '' },
@@ -41,14 +41,17 @@ export class SidebarComponent implements OnInit {
   mini: boolean = false;
   dropParent: boolean[] = [];
   @Output('sidebarUpdate') sidebarUpdate = new EventEmitter<boolean>();
-  constructor() { }
+  claims: Claim[] = [];
+
+  constructor() { 
+  }
 
   ngOnInit() {
     this.menuItems = ROUTES.filter(menuItem => menuItem);
     this.dropParent = [];
     const _this = this;
     this.menuItems.forEach(function(mn: any){
-	_this.dropParent.push(false);
+	   _this.dropParent.push(false);
     });
 
   }
@@ -72,5 +75,45 @@ export class SidebarComponent implements OnInit {
 	   	_this.dropParent[ind] = !_this.dropParent[ind];
 	   }
 	});	
+  }
+
+  hasClaimChecking(claimType: any): boolean {
+    let ret: boolean = false;
+
+    // See if an array of values was passed in.
+    if (typeof claimType === 'string') {
+      ret = this.isClaimValid(claimType);
+    }
+    else {
+      let claims: string[] = claimType;
+      if (claims) {
+        for (let index = 0; index < claims.length; index++) {
+          ret = this.isClaimValid(claims[index]);
+          if (ret) {
+            break;
+          }
+        }
+      }
+    }
+
+    return ret;
+  }
+
+  isClaimValid(claimType: string): boolean {
+    let ret: boolean = false;
+    let claimValue: boolean = false;
+
+    if (claimType.indexOf(':') >= 0) {
+      let words: string[] = claimType.split(':');
+      claimType = words[0].toLowerCase();
+      claimValue = JSON.parse(words[1]);
+    }
+    else {
+      claimType = claimType.toLowerCase();
+      claimValue = claimValue ? claimValue : true;
+    }
+    ret = this.claims.find((c: Claim) => c.ClaimType.toLowerCase() == claimType
+          && c.ClaimValue == claimValue) != null;
+    return ret;
   }
 }

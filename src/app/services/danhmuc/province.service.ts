@@ -1,13 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Province } from '../../models/danhmuc/province';
-import { Filter } from '../../models/filter';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProvinceService {
+    httpOptions = {  
+          headers: new HttpHeaders({  
+            'Content-Type': 'application/json; charset=utf-8'  
+          })  
+    }; 
+
     constructor(private http: HttpClient) {
     }
 

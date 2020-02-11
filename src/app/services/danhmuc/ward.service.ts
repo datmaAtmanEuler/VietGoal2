@@ -1,11 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Ward } from '../../models/danhmuc/wards';
+import { environment } from '../../../environments/environment';
 import { Filter } from '../../models/filter';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WardService {
+    httpOptions = {  
+          headers: new HttpHeaders({  
+            'Content-Type': 'application/json; charset=utf-8'  
+          })  
+    }; 
+
     wardsList: any[] = [
 {WardId: 1, MaWard: 25,WardName:'Phường Ngọc Khánh' ,DistrictName: 'Quận Ba Đình',SoThuTu:0},
 {WardId: 2, MaWard: 28,WardName:'Phường Kim Mã' ,DistrictName: 'Quận Ba Đình',SoThuTu:0},

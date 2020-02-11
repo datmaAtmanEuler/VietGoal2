@@ -4,14 +4,16 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import {HttpHeaders, HttpParams } from '@angular/common/http';
 import { Register } from '../models/register';
+import { UtilsService } from './utils.service';
+import { environment } from 'environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthenticationService {
     currentUserSubject: BehaviorSubject<Register>;
     currentUser: Observable<Register>;
-    serverURL  = 'https://localhost:44349/Api/Login/'; 
+    serverURL  = `${environment.serverUrl}Login/`; 
     header: HttpHeaders;
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private utils: UtilsService) {
         const headerSettings: {[name: string]: string | string[]; } = {};  
         this.header = new HttpHeaders(headerSettings); 
         let obj = localStorage.getItem("currentUser");
@@ -32,6 +34,7 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
+    password = this.utils.md5Encode(password);
 	let body: HttpParams = new HttpParams();
     	body = body.append('UserName', username);
     	body = body.append('Password', password);

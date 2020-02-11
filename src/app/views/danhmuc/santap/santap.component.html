@@ -9,7 +9,7 @@
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-6 input-group form-sm form-1 pl-0">
                         </div>
-                        <div class="col-sm-6 input-group form-sm form-1 pl-0">
+                        <div class="col-sm-6 input-group form-sm form-1 pl-0 search-form">
                             <button mat-raised-button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
                                 <i class="material-icons">add</i>
                             </button>
@@ -27,15 +27,15 @@
                             <div class="card-body table-responsive">
                                 <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
                                     <thead>
-                                        <th width="100px">{{ ("MESSAGE.NameList.Order" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.YardCode" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.YardName" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.Central" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.Area" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.Address" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.CampusArea" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.Note" | translate) | uppercase }}</th>
-                                        <th width="150px">{{ ("MESSAGE.NameList.Action" | translate) | uppercase }}</th>
+                                        <th width="100px">{{ ("MESSAGE.NameList.Order" | translate)  }}</th>
+                                        <th>{{ ("MESSAGE.NameList.YardCode" | translate)  }}</th>
+                                        <th>{{ ("MESSAGE.NameList.YardName" | translate)  }}</th>
+                                        <th>{{ ("MESSAGE.NameList.Central" | translate)  }}</th>
+                                        <th>{{ ("MESSAGE.NameList.Area" | translate)  }}</th>
+                                        <th>{{ ("MESSAGE.NameList.Address" | translate)  }}</th>
+                                        <th>{{ ("MESSAGE.NameList.CampusArea" | translate)  }}</th>
+                                        <th>{{ ("MESSAGE.NameList.Note" | translate)  }}</th>
+                                        <th width="150px">{{ ("MESSAGE.NameList.Action" | translate)  }}</th>
                                     </thead>
                                     <tbody>
                                         <ng-container *ngFor="let santap of santapList; let i = index;">

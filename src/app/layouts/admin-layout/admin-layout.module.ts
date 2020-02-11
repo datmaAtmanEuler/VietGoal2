@@ -49,6 +49,7 @@ import { BaiTapEditComponent } from '../../views/danhmuc/baitap/baitapedit/baita
 import { KhuVucEditComponent } from '../../views/danhmuc/khuvuc/khuvucedit/khuvucedit.component';
 import { KhuVucComponent } from '../../views/danhmuc/khuvuc/khuvuc.component';
 
+import { HasClaimDirective } from '../../directives/has-claim.directive';
 
 
 @NgModule({
@@ -98,7 +99,8 @@ import { KhuVucComponent } from '../../views/danhmuc/khuvuc/khuvuc.component';
     BaiTapComponent,
     BaiTapEditComponent,
     KhuVucComponent,
-    KhuVucEditComponent
+    KhuVucEditComponent,
+    HasClaimDirective
   ]
 })
 

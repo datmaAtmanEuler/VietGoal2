@@ -21,10 +21,12 @@ export class TrungtamComponent implements OnInit {
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
+	currentUser: any;
   constructor(public util: UtilsService, config: NgbModalConfig, private service: TrungtamService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
    }
 
   ngOnInit() {
@@ -37,13 +39,31 @@ export class TrungtamComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
     modalRef.componentInstance.confirmObject = 'Central';
     modalRef.componentInstance.decide.subscribe(() => {
-	_this.service.deleteTrungtam(trungtam.Id);
+      _this.service.deleteTrungtam(trungtam.Id, this.currentUser.UserId).subscribe(()=>{
         _this.reload();
+      });
     });
   }
   reload() {
     const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-    this.trungtamList = this.service.getTrungtamsList(filter);
+    this.service.getTrungtamsList(filter).subscribe((list: any) => {
+      this.trungtamList = list.map((listItem) => {
+        return {
+            Id: listItem.ID,
+            MaTrungTam: listItem.CentralCode,
+            TenTrungTam: listItem.CentralName,
+            DiaChi: listItem.Address,
+            DTKhuonVien: listItem.CampusArea,
+            TinhThanh: listItem.ProvinceID,
+            QuanHuyen: listItem.DistrictID,
+            PhuongXa: listItem.WardID,
+            DienThoai: listItem.PhoneNumber,
+            NgayThanhLap: listItem.DateEstablished,
+            GhiChu: listItem.Discription,
+            isHienThi: listItem.Showed
+        }
+      });
+    });
   }
   add() {
     this.edit(null);

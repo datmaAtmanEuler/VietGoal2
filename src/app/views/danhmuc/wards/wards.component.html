@@ -27,19 +27,25 @@
                             <div class="card-body table-responsive">
                                 <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
                                     <thead>
-                                        <th width="100px">{{ ("MESSAGE.NameList.Order" | translate) }}</th>
-                                        <th>{{ ("MESSAGE.NameList.WardCode" | translate) }}</th>
-                                        <th>{{ ("MESSAGE.NameList.WardName" | translate) }}</th>
-                                        <th>{{ ("MESSAGE.NameList.DistrictName" | translate) }}</th>
-                                        <th width="150px">{{ ("MESSAGE.NameList.Action" | translate) }}</th>
+                                        <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
+                                            <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')" (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
+                                                <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                                                     <i class="material-icons asc-sort-icons" *ngIf="sortAbles[colIndex]">
+                                                        {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                                                    </i>
+                                                </span>
+                                            </th>
+                                        </ng-container>
                                     </thead>
                                     <tbody>
                                         <ng-container *ngFor="let ward of wardsList; let i = index;">
                                             <tr>
                                                 <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ ward.WardCode }}</td>
-                                                <td>{{ ward.WardName }}</td>
-                                                <td>{{ ward.DistrictName }}</td>
+                                                <ng-container *ngFor="let colName of columnsName; let colIndex = index">
+                                                    <td *ngIf="colIndex != 0 && colIndex != columnsName.length - 1">
+                                                        {{ getColumnValue(ward, colIndex) }}
+                                                    </td>    
+                                                </ng-container>
                                                 <td width="150px" class="my-action-item">
     
                                                     <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(ward.WardId)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">

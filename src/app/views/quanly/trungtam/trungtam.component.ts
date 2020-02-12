@@ -9,6 +9,8 @@ import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.componen
 
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { TrungtamaddoreditComponent } from './trungtamaddoredit/trungtamaddoredit.component';
+import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import { CentralFilter } from 'app/models/filter/centralfilter';
 
 @Component({
   selector: 'app-trungtam',
@@ -21,7 +23,29 @@ export class TrungtamComponent implements OnInit {
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
-	currentUser: any;
+  currentUser: any;
+  provinceId: null | number = null;
+  districtId: null | number = null;
+  wardId: null | number = null;
+
+  /**
+  * BEGIN SORT SETTINGS
+  */
+ sort: ASCSort = new ASCSort();
+ sortToggles: SORD_DIRECTION[] = [
+   null,
+   SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+   SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+   null
+  ];
+ columnsName: string[] = ['Order', 'CentralName', 'Address', 'CampusArea', 'Note', 'ProvinceName', 'DistrictName', 'WardName',  'Action'];
+ columnsNameMapping: string[] = ['Order', 'CentralName', 'Address', 'CampusArea', 'Note', 'ProvinceID', 'DistrictID', 'WardId', 'Action'];
+ sortAbles: boolean[] = [false, true, true, true, true, true, true, true, false];
+ visibles: boolean[] = [true, true, true, true, true, true, false, false, true];
+ /**
+  * END SORT SETTINGS
+  */
+ 
   constructor(public util: UtilsService, config: NgbModalConfig, private service: TrungtamService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -45,7 +69,7 @@ export class TrungtamComponent implements OnInit {
     });
   }
   reload() {
-    const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
+    const filter: CentralFilter = new CentralFilter(this.searchTerm, this.pageIndex, this.pageSize, this.provinceId, this.districtId, this.wardId, this.sort.SortName, this.sort.SortDirection);
     this.service.getTrungtamsList(filter).subscribe((list: any) => {
       this.trungtamList = list.map((listItem) => {
         return {
@@ -77,5 +101,43 @@ export class TrungtamComponent implements OnInit {
     modalRef.result.then(function(result) {
         _this.reload();
     });
+  }
+  
+  toggleSort(columnIndex: number): void {
+    let toggleState =  this.sortToggles[columnIndex];
+    switch(toggleState) {
+      case SORD_DIRECTION.DEFAULT: 
+      {
+        toggleState = SORD_DIRECTION.ASC;
+        break;
+      }
+      case SORD_DIRECTION.ASC: 
+      {
+        toggleState = SORD_DIRECTION.DESC;
+        break;
+      }
+      default:
+      {
+        toggleState = SORD_DIRECTION.DEFAULT;
+        break;
+      }
+    }
+    this.sortToggles.forEach((s: string, index: number) => {
+      if(index == columnIndex) {
+        this.sortToggles[index] = this.sort.SortDirection = toggleState;
+      } else {
+        this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+      }
+    });
+
+    this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'ID' : this.columnsNameMapping[columnIndex];
+    this.reload();
+  }
+  
+  doNothing(): void {}
+
+  getColumnValue(tt: Trungtam, colIndex: number): any {
+    let obj = Object.keys(tt);
+    return tt[obj[colIndex]];
   }
 }

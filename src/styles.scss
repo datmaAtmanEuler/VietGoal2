@@ -1,9 +1,14 @@
+.asc-sort-icons {
+    vertical-align: middle;
+    float: right;
+  }
 thead {
     background-color: #023a54;
     color: white;
 }
 th{
     font-weight: bold !important;	
+    vertical-align: middle !important;
 }
 a:hover {
    background-color: #023a54;

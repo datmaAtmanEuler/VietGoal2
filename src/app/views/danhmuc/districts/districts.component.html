@@ -30,11 +30,15 @@
                             <div class="card-body table-responsive">
                                 <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
                                     <thead>
-                                        <th width="100px">{{ ("MESSAGE.NameList.Order" | translate)  }}</th>
-                                        <th>{{ ("MESSAGE.NameList.DistrictCode" | translate)  }}</th>
-                                        <th>{{ ("MESSAGE.NameList.DistrictName" | translate)  }}</th>
-                                        <th>{{ ("MESSAGE.NameList.ProvinceName" | translate)  }}</th>
-                                        <th width="150">{{ ("MESSAGE.NameList.Action" | translate)  }}</th>
+                                        <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
+                                            <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')" (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
+                                                <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                                                     <i class="material-icons asc-sort-icons" *ngIf="sortAbles[colIndex]">
+                                                        {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                                                    </i>
+                                                </span>
+                                            </th>
+                                        </ng-container>
                                     </thead>
                                     <tbody>
                                         <ng-container *ngFor="let district of districtsList; let i = index;">

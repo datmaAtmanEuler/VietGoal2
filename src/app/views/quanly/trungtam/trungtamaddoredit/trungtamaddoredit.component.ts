@@ -18,6 +18,7 @@ export class TrungtamaddoreditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('trungtamId') trungtamId: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
+	currentUser: any;
 
 	trungtam: Trungtam = new Trungtam(0,'','','',0,'','','','','','',false);
 
@@ -27,10 +28,25 @@ export class TrungtamaddoreditComponent implements OnInit {
 		config.backdrop = 'static';
      		config.keyboard = false;
 		config.scrollable = false;
+		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}  
 	GetTrungtamById(Id:number)  
 	{  
-		this.trungtam = this.TrungtamService.getTrungtam((Id) ? Id : this.trungtamId);
+		this.TrungtamService.getTrungtam((Id) ? Id : this.trungtamId).subscribe((aTrungTam) => {
+			this.trungtam.Id = aTrungTam.ID;
+			this.trungtam.MaTrungTam = aTrungTam.CentralCode;
+			this.trungtam.TenTrungTam = aTrungTam.CentralName;
+			this.trungtam.DiaChi = aTrungTam.Address;
+			this.trungtam.DTKhuonVien = aTrungTam.CampusArea;
+			this.trungtam.TinhThanh = aTrungTam.ProvinceID;
+			this.trungtam.QuanHuyen = aTrungTam.DistrictID;
+			this.trungtam.PhuongXa = aTrungTam.WardID;
+			this.trungtam.DienThoai = aTrungTam.PhoneNumber;
+			this.trungtam.NgayThanhLap = aTrungTam.DateEstablished;
+			this.trungtam.GhiChu = aTrungTam.Discription;
+			this.trungtam.isHienThi = aTrungTam.Showed;
+			
+		});
 		if (this.trungtam == null || this.trungtam.Id == 0) {
 			this.trungtam = new Trungtam(0,'','','',0,'','','','','','',false);
 		}
@@ -45,16 +61,17 @@ export class TrungtamaddoreditComponent implements OnInit {
 	}
 
 	UpdateTrungtam() {
-		const result: boolean = this.TrungtamService.addOrUpdateTrungtam(this.trungtam);
-		if (result) {
-			if(!this.popup) {
-				this.ReturnList();
-			} else {
-				this.closeMe();
-			}
-		} else {
-			const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-		}
+		this.TrungtamService.addOrUpdateTrungtam(this.trungtam, this.currentUser.UserId).subscribe(
+			() => {
+				if(!this.popup) {
+					this.ReturnList();
+				} else {
+					this.closeMe();
+				}
+			},
+			() => {
+				this.modalService.open(ConfirmComponent, { size: 'lg' });
+			});
 	}
 	
 	closeMe() {

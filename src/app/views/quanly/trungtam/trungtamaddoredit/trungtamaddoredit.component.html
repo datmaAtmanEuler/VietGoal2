@@ -15,21 +15,24 @@
                     <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TinhThanh" 
                     class="form-control">
                         <option value="" disabled selected>Tinh, Thanh</option>
-                        <option value="tinh1">tinh1</option>
+                        <option value="1">TPHCM</option>
+                        <option value="2">Hà Nội</option>
                     </select>
                 </div>
                 <div class="col-md-6 alert" role="alert">
                     <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.QuanHuyen" 
                     class="form-control">
                         <option value="" disabled selected>Quan, Huyen</option>
-                        <option value="quan1">quan1</option>
+                        <option value="1">Quận 1</option>
+                        <option value="2">Quận 2</option>
                     </select>
                 </div>
                 <div class="col-md-6 alert" role="alert">
                     <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.PhuongXa" 
                     class="form-control">
                         <option value="" disabled selected>Phuong, Xa</option>
-                        <option value="xa1">xa1</option>
+                        <option value="1">Phường 1</option>
+                        <option value="2">Phường 2</option>
                     </select>
                 </div>
                 <div class="col-md-6 alert" role="alert">
@@ -55,7 +58,7 @@
                     </div> -->
                     <div class="form-check custom-checkbox">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" value="" checked>
+                            <input class="form-check-input" type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="trungtam.isHienThi" value="" checked>
                             <span class="form-check-sign">
                                 <span class="check"></span>
                             </span>

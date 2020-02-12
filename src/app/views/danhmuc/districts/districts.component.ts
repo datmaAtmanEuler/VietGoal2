@@ -30,7 +30,7 @@ export class DistrictsComponent implements OnInit {
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
   columnsName: string[] = ['Order', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
-  columnsNameMapping: string[] = this.columnsName;
+  columnsNameMapping: string[] = ['ID', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
   sortAbles: boolean[] = [false, true, true, true, false];
   /**
    * END SORT SETTINGS

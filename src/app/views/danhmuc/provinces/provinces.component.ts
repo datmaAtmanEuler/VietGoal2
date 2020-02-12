@@ -27,7 +27,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
   columnsName: string[] = ['Order', 'ProvinceCode', 'ProvinceName', 'Action'];
-  columnsNameMapping: string[] = this.columnsName;
+  columnsNameMapping: string[] = ['ID', 'ProvinceCode', 'ProvinceName', 'Action'];
   sortAbles: boolean[] = [false, true, true, false];
   /**
    * END SORT SETTINGS

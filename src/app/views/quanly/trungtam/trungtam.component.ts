@@ -39,7 +39,7 @@ export class TrungtamComponent implements OnInit {
    null
   ];
  columnsName: string[] = ['Order', 'CentralName', 'Address', 'CampusArea', 'Note', 'ProvinceName', 'DistrictName', 'WardName',  'Action'];
- columnsNameMapping: string[] = ['Order', 'CentralName', 'Address', 'CampusArea', 'Note', 'ProvinceID', 'DistrictID', 'WardId', 'Action'];
+ columnsNameMapping: string[] = ['ID', 'CentralName', 'Address', 'CampusArea', 'Note', 'ProvinceID', 'DistrictID', 'WardId', 'Action'];
  sortAbles: boolean[] = [false, true, true, true, true, true, true, true, false];
  visibles: boolean[] = [true, true, true, true, true, true, false, false, true];
  /**

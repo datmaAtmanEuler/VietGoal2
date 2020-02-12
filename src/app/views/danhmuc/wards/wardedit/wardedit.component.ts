@@ -4,8 +4,9 @@ import { Ward } from '../../../../models/danhmuc/wards';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
-import { ProvinceService } from '../../../../services/danhmuc/province.service';
-import { Province } from '../../../../models/danhmuc/province';
+import { DistrictService } from '../../../../services/danhmuc/district.service';
+import { District } from '../../../../models/danhmuc/districts';
+import { DistrictFilter } from '../../../../models/filter/districtfilter';
 @Component({
 	selector: 'app-ward-edit',
 	templateUrl: './wardedit.component.html',
@@ -14,27 +15,36 @@ import { Province } from '../../../../models/danhmuc/province';
 })
 export class WardEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('wardId') wardId: number;
-	ward: Ward = new Ward(0, 0,'', '',0);
-	provinceList: Province[] = [];
-	constructor(private provinceService: ProvinceService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
-		this.wardId = this.route.snapshot.queryParams['WardId'];
-		this.wardId = (this.wardId) ? this.wardId : 0;
+	@Input('ID') ID: number;
+	@Input('UserId') UserId: null | number;
+	ward: Ward = new Ward(0, '', '', 0,false, new Date(), null, 1, null, null, null);
+	districtList: District[] = [];
+	constructor(private districtService: DistrictService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
+		this.ID = this.route.snapshot.queryParams['ID'];
+		this.ID = (this.ID) ? this.ID : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
-
-
 	}  
-	GetWardById(wardId:number)  
+
+
+	GetWardById(ID:number)  
 	{  
-		this.ward = this.wardService.getWard(wardId);
-		if (this.ward == null) {
-			this.ward = new Ward(0, 0, '','',0);
-		}
+		
+		const _this = this;
+		this.districtService.getDistrictsList(new DistrictFilter('', null, null,null)).subscribe((disList: District[]) => {
+			_this.districtList = (disList) ? disList : [];
+			_this.wardService.getWard(ID).subscribe((ward: Ward) => {
+				_this.ward = ward;
+				if (_this.ward == null || _this.ward.ID==0) {
+					_this.ward = new Ward(0, '', '',0, false, new Date(), null, 1, null, null, null);
+				}
+			});	
+		  });
 	}
+	
 	ngOnInit() {
-		this.GetWardById(this.wardId);  
+		this.GetWardById(this.ID);  
 	
 	}
 
@@ -44,17 +54,20 @@ export class WardEditComponent implements OnInit {
 	}
 
 	UpdateWard() {
-		const result: boolean = this.wardService.addOrUpdateWard(this.ward);
-		if (result) {
-			if(!this.popup) {
-				this.ReturnList();
+		const _this = this;
+		 this.wardService.addOrUpdateWard(_this.ward, this.UserId).subscribe((result : any)=>{
+			if (result) {
+				if(!_this.popup) {
+					
+					_this.ReturnList();
+				} else {
+				
+					_this.closeMe();
+				}
 			} else {
-			
-				this.closeMe();
+				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			}
-		} else {
-			const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-		}
+		 });
 	}
 
 	closeMe() {

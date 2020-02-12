@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { DistrictService } from '../../../services/danhmuc/district.service';
 import { ProvinceService } from '../../../services/danhmuc/province.service';
 import { District } from '../../../models/danhmuc/districts';

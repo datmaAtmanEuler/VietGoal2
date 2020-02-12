@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Ward } from '../../models/danhmuc/wards';
 import { environment } from '../../../environments/environment';
-import { Filter } from '../../models/filter/filter';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -15,48 +14,32 @@ export class WardService {
           })  
     }; 
 
-    wardsList: any[] = [
-{WardId: 1, MaWard: 25,WardName:'Phường Ngọc Khánh' ,DistrictName: 'Quận Ba Đình',SoThuTu:0},
-{WardId: 2, MaWard: 28,WardName:'Phường Kim Mã' ,DistrictName: 'Quận Ba Đình',SoThuTu:0},
-      ];
-
-    constructor() {
+ 
+    constructor(private http: HttpClient) {
     }
 
-    getWardsList(filter: Filter) {
-        const result:Ward[] = this.wardsList.filter((ward: Ward) => filter.SearchTerm == '' || (filter.SearchTerm != '' && ward.WardName.toLowerCase().indexOf(filter.SearchTerm.toLowerCase()) != -1));
-	return result;
+    getWardsList(filter: any): Observable<any> {
+       let queryString = Object.keys(filter).map(key=>key + '=' + filter[key]).join('&');
+       return this.http.get(environment.serverUrl_employee + 'Wards?' + queryString , this.httpOptions);
     }
     
-    getWard(id: any): Ward {
-        const result: Ward[] = this.wardsList.filter((ward: Ward) => ward.WardId == id);
-	    return new Ward(result[0].WardId, result[0].MaWard, result[0].WardName, result[0].DistrictName,result[0].SoThuTu);
+    getWard(id: any): Observable<any> {
+        return this.http.get(environment.serverUrl_employee + `wards/${id}`, this.httpOptions);
     }
 
-    addOrUpdateWard(ward: Ward): boolean {
-        if(ward.WardId == 0) {
-            if (this.wardsList.filter((war: Ward) => war.MaWard == ward.MaWard).length > 0) {
-                return false;
-            }
-            ward.WardId = this.wardsList.length + 1;
-            this.wardsList.push(ward);
-        } else {
-            if (this.wardsList.filter((war: Ward) => war.MaWard == ward.MaWard && war.WardId != ward.WardId).length > 0) {
-                return false;
-            } else {
-                const tempWard: Ward[] = this.wardsList.filter((war: Ward) => war.WardId == ward.WardId);
-                tempWard[0].MaWard = ward.MaWard;
-                tempWard[0].DistrictName=ward.DistrictName;
-                tempWard[0].WardName = ward.WardName;
-            }
+    addOrUpdateWard(ward: Ward , by: null | number): Observable<any> {
+        ward.SoThuTu = parseInt(ward.SoThuTu + '');
+        if(ward.ID != 0 && ward.ID){
+            ward.UpdatedBy = by;
+        }else
+        {
+            ward.CreatedBy = by;
         }
-        return true;
+        return this.http.post(environment.serverUrl_employee + `Wards/save`,ward, this.httpOptions);
     }
-
-    deleteWard(WardId: number) {
-        const id: number = this.wardsList.map((ward: Ward) => ward.WardId).indexOf(WardId);
-        if(id != -1) {
-            this.wardsList.splice(id, 1);
-        }
+    
+  deleteWard(id: number , deleteBy : number): Observable<any> {
+       
+        return this.http.delete(environment.serverUrl_employee + `wards/${id}?deleteBy=${deleteBy}`, this.httpOptions);
     }
 }

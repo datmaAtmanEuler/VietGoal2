@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { WardService } from '../../../services/danhmuc/ward.service';
 import { Ward } from '../../../models/danhmuc/wards';
-import { Filter } from '../../../models/filter/filter';
+import { WardFilter } from '../../../models/filter/wardfilter';
 import { Router } from '@angular/router'; 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WardEditComponent } from './wardedit/wardedit.component';
@@ -17,15 +17,17 @@ export class WardsComponent implements OnInit {
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
+  currentUser: any;
   constructor(private modalService: NgbModal,private service: WardService, private router: Router) { }
 
   ngOnInit() {
-	this.reload();
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+	  this.reload();
   }
 
   remove(ward: Ward) {
     this.ward = ward;
-  const _this = this;
+    const _this = this;
   const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
   modalRef.componentInstance.confirmObject = 'Ward';
   modalRef.componentInstance.decide.subscribe(() => {
@@ -34,20 +36,24 @@ export class WardsComponent implements OnInit {
 }
 
   reload() {
-	const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-  this.wardsList = this.service.getWardsList(filter);
+    const _this = this
+	const filter: WardFilter = new WardFilter(this.searchTerm, this.pageIndex, this.pageSize,null);
+  this.service.getWardsList(filter).subscribe((list:any)=>{
+    _this.wardsList = list;
+  })
   }
 
   add() {
     this.edit(null);
   }
 
-  edit(WardId: null | number) {
+  edit(ID: null | number) {
     const _this = this;
     const modalRef = this.modalService.open(WardEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    if (WardId) {
-      modalRef.componentInstance.wardId = WardId;
+    if (ID) {
+      modalRef.componentInstance.ID = ID;
+      modalRef.componentInstance.UserId = _this.currentUser.UserId;
     }
     modalRef.result.then(function(){
       _this.reload();
@@ -55,7 +61,9 @@ export class WardsComponent implements OnInit {
   }
 
   deleteWard() {
-    this.service.deleteWard(this.ward.WardId);
-    this.reload();
+    const _this = this;
+    this.service.deleteWard(this.ward.ID, this.currentUser.UserID).subscribe((rs:any)=>{
+      this.reload();
+    }); 
   }
 }

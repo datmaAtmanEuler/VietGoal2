@@ -22,7 +22,7 @@ export class DistrictEditComponent implements OnInit {
 	@Input('ID') ID: number;
 	@Input('UserId') UserId: null | number;
 
-	district: District = new District(0, '', 0,'', 0);
+	district: District = new District(0, '', '',0, false, new Date(), null, 1, null, null, null);
 	provincesList: Province[] = [];
 
 	constructor(public activeModal: NgbActiveModal, private provinceService: ProvinceService, config: NgbModalConfig, private modalService: NgbModal, private districtService: DistrictService, private route: ActivatedRoute, private router: Router) {
@@ -40,7 +40,7 @@ export class DistrictEditComponent implements OnInit {
 			_this.districtService.getDistrict(ID).subscribe((district: District) => {
 				_this.district = district;
 				if (_this.district == null || _this.district.ID==0) {
-					_this.district = new District(0, '', 0,'', 0);
+					_this.district =new District(0, '', '',0, false, new Date(), null, 1, null, null, null);
 				}
 			});	
 		  });

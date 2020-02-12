@@ -27,17 +27,17 @@
                             <div class="card-body table-responsive">
                                 <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
                                     <thead>
-                                        <th width="100px">{{ ("MESSAGE.NameList.Order" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.WardCode" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.WardName" | translate) | uppercase }}</th>
-                                        <th>{{ ("MESSAGE.NameList.DistrictName" | translate) | uppercase }}</th>
-                                        <th width="150px">{{ ("MESSAGE.NameList.Action" | translate) | uppercase }}</th>
+                                        <th width="100px">{{ ("MESSAGE.NameList.Order" | translate) }}</th>
+                                        <th>{{ ("MESSAGE.NameList.WardCode" | translate) }}</th>
+                                        <th>{{ ("MESSAGE.NameList.WardName" | translate) }}</th>
+                                        <th>{{ ("MESSAGE.NameList.DistrictName" | translate) }}</th>
+                                        <th width="150px">{{ ("MESSAGE.NameList.Action" | translate) }}</th>
                                     </thead>
                                     <tbody>
                                         <ng-container *ngFor="let ward of wardsList; let i = index;">
                                             <tr>
                                                 <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ ward.MaWard }}</td>
+                                                <td>{{ ward.WardCode }}</td>
                                                 <td>{{ ward.WardName }}</td>
                                                 <td>{{ ward.DistrictName }}</td>
                                                 <td width="150px" class="my-action-item">

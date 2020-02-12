@@ -4,16 +4,16 @@ export class Trungtam{
     TenTrungTam: string;
     DiaChi: string;
     DTKhuonVien: number;
-    TinhThanh: string;
-    QuanHuyen: string;
-    PhuongXa: string;
+    TinhThanh: number;
+    QuanHuyen: number;
+    PhuongXa: number;
     DienThoai: string;
     NgayThanhLap: string;
     GhiChu: string;
     isHienThi: boolean;
     
-    constructor(Id: number, MaTrungTam: string, TenTrungTam: string, DiaChi: string, DTKhuonVien: number, TinhThanh: string,
-    QuanHuyen: string, PhuongXa: string, DienThoai: string, NgayThanhLap: string, GhiChu: string, isHienThi: boolean){
+    constructor(Id: number, MaTrungTam: string, TenTrungTam: string, DiaChi: string, DTKhuonVien: number, TinhThanh: number,
+    QuanHuyen: number, PhuongXa: number, DienThoai: string, NgayThanhLap: string, GhiChu: string, isHienThi: boolean){
         this.Id = Id;
         this.MaTrungTam = MaTrungTam;
         this.TenTrungTam = TenTrungTam;

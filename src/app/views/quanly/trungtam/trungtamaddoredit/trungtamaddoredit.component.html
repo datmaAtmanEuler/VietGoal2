@@ -5,51 +5,49 @@
             <div class="form-group row">
                 <div class="col-md-6 alert" role="alert">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.MaTrungTam"
-                        class="form-control" placeholder="Ma Trung Tam">
+                        class="form-control" placeholder="{{'MESSAGE.NameList.CentralCode' |translate}}">
                 </div>
                 <div class="col-md-6 alert" role="alert">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TenTrungTam"
-                        class="form-control" placeholder="Ten Trung Tam">
+                        class="form-control" placeholder="{{'MESSAGE.NameList.CentralName' |translate}}">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TinhThanh" 
+                    <select [ngModelOptions]="{standalone: true}" type="text" (change)="changeProvince(trungtam.TinhThanh)" [(ngModel)]="trungtam.TinhThanh" 
                     class="form-control">
-                        <option value="" disabled selected>Tinh, Thanh</option>
-                        <option value="1">TPHCM</option>
-                        <option value="2">Hà Nội</option>
+                        <option value="0" disabled selected>{{"MESSAGE.NameList.Province" |translate}}</option>
+                        
+                        <option *ngFor="let tinh of listprovince" value="{{tinh.ID}}">{{tinh.ProvinceName}}</option>
                     </select>
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.QuanHuyen" 
+                    <select [ngModelOptions]="{standalone: true}" type="text" (change)="changeDistrict(trungtam.QuanHuyen)" [(ngModel)]="trungtam.QuanHuyen" 
                     class="form-control">
-                        <option value="" disabled selected>Quan, Huyen</option>
-                        <option value="1">Quận 1</option>
-                        <option value="2">Quận 2</option>
+                        <option value="0" disabled selected>{{"MESSAGE.NameList.District" |translate}}</option>
+                        <option *ngFor="let district of listdistrict" value="{{district.ID}}">{{district.DistrictName}}</option>
                     </select>
                 </div>
                 <div class="col-md-6 alert" role="alert">
                     <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.PhuongXa" 
                     class="form-control">
-                        <option value="" disabled selected>Phuong, Xa</option>
-                        <option value="1">Phường 1</option>
-                        <option value="2">Phường 2</option>
+                        <option value="0" disabled selected>{{"MESSAGE.NameList.Ward" |translate}}</option>
+                        <option *ngFor="let ward of listward" value="{{ward.ID}}">{{ward.WardName}}</option>
                     </select>
                 </div>
                 <div class="col-md-6 alert" role="alert">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DiaChi"
-                        class="form-control" placeholder="Dia Chi">
+                        class="form-control" placeholder="{{'MESSAGE.NameList.Address' |translate}}">
                 </div>
                 <div class="col-md-6 alert" role="alert">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DienThoai"
-                        class="form-control" placeholder="Dien thoai">
+                        class="form-control" placeholder="{{'MESSAGE.phone_holder' |translate}}">
                 </div>
                 <div class="col-md-6 alert" role="alert">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.NgayThanhLap"
-                        class="form-control" placeholder="Ngay Thanh Lap">
+                        class="form-control" placeholder="Ngày Thành Lập">
                 </div>
                 <div class="col-md-12 alert" role="alert">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DTKhuonVien"
-                        class="form-control" placeholder="DT Khuong Vien">
+                        class="form-control" placeholder="{{'MESSAGE.NameList.CampusArea' |translate}}">
                 </div>
                 <div class="col-md-12 alert" role="alert">
                     <!-- <div class="form-check" style="text-align: left;">
@@ -68,7 +66,7 @@
                 </div>
                 <div class="col-md-12 alert" role="alert">
                     <textarea [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.GhiChu"
-                        class="form-control" placeholder="Ghi Chu"></textarea>
+                        class="form-control" placeholder="{{'MESSAGE.NameList.Note' |translate}}"></textarea>
                 </div>
             </div>
 
@@ -139,7 +137,7 @@
             </div>
 
         </form>
-        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"</button>
+        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"}}</button>
         <button class="btn btn btn-info" (click)="UpdateTrungtam()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
 </div>
 

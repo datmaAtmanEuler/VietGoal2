@@ -12,12 +12,25 @@
                         class="form-control" placeholder="{{'MESSAGE.NameList.CentralName' |translate}}">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <select [ngModelOptions]="{standalone: true}" type="text" (change)="changeProvince(trungtam.TinhThanh)" [(ngModel)]="trungtam.TinhThanh" 
+                    <!-- <select [ngModelOptions]="{standalone: true}" type="text" (change)="changeProvince(trungtam.TinhThanh)" [(ngModel)]="trungtam.TinhThanh" 
                     class="form-control">
                         <option value="0" disabled selected>{{"MESSAGE.NameList.Province" |translate}}</option>
                         
                         <option *ngFor="let tinh of listprovince" value="{{tinh.ID}}">{{tinh.ProvinceName}}</option>
-                    </select>
+                    </select> -->
+                    <mat-form-field>
+                        <input matInput (focus)="onFocusProvince()" placeholder="{{'MESSAGE.NameList.Province' |translate}}" aria-label="State" [matAutocomplete]="auto" [formControl]="searchProvincesCtrl">
+                        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="changeProvince(searchProvincesCtrl.value)" [displayWith]="displayFn">
+                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                <mat-spinner></mat-spinner>
+                            </mat-option>
+                            <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let province of listprovince" [value]="province">
+                              <span [class]="province.nofind ? 'nofind' : ''">{{province.ProvinceName}}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
+                      </mat-form-field>
                 </div>
                 <div class="col-md-6 alert" role="alert">
                     <select [ngModelOptions]="{standalone: true}" type="text" (change)="changeDistrict(trungtam.QuanHuyen)" [(ngModel)]="trungtam.QuanHuyen" 
@@ -88,11 +101,23 @@
                         class="form-control" placeholder="Ten Trung Tam">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TinhThanh" 
+                    <!-- <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TinhThanh" 
                     class="form-control">
                         <option value="" disabled selected>Tinh, Thanh</option>
                         <option value="tinh1">tinh1</option>
-                    </select>
+                    </select> -->
+                    
+                    <mat-form-field>
+                        <input matInput placeholder="{{'MESSAGE.NameList.Province' |translate}}" aria-label="State" [matAutocomplete]="auto" [formControl]="searchProvincesCtrl">
+                        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                          <mat-option *ngIf="isLoading" class="is-loading">Loading...</mat-option>
+                          <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let province of listprovince" [value]="province">
+                                <span [class]="province.nofind ? 'nofind' : ''">{{province.ProvinceName}}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
+                      </mat-form-field>
                 </div>
                 <div class="col-md-6 alert" role="alert">
                     <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.QuanHuyen" 

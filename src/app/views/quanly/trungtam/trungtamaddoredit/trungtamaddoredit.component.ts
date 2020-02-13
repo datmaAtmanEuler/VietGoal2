@@ -99,7 +99,6 @@ export class TrungtamaddoreditComponent implements OnInit {
 		}
 	}
 	onFocusProvince(){
-		console.log((event.target as HTMLInputElement).value);
 		this.listprovince = [];
 		this.searchProvincesCtrl.setValue('')
 	}

@@ -7,6 +7,10 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy} from '@angular/common';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 import {CookieModule} from 'ngx-cookie';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import {LoginComponent} from './login/login.component';
@@ -39,6 +43,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild,Input,Output , EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output , EventEmitter, ViewEncapsulation } from '@angular/core';
 import { WardService } from '../../../../services/danhmuc/ward.service';
 import { Ward } from '../../../../models/danhmuc/wards';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,6 +7,10 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 import { DistrictService } from '../../../../services/danhmuc/district.service';
 import { District } from '../../../../models/danhmuc/districts';
 import { DistrictFilter } from '../../../../models/filter/districtfilter';
+import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { SORD_DIRECTION } from "../../../../models/sort";
+import { FormControl } from '@angular/forms';
+
 @Component({
 	selector: 'app-ward-edit',
 	templateUrl: './wardedit.component.html',
@@ -18,7 +22,24 @@ export class WardEditComponent implements OnInit {
 	@Input('ID') ID: number;
 	@Input('UserId') UserId: null | number;
 	ward: Ward = new Ward(0, '', '', 0,false, new Date(), null, 1, null, null, null);
-	districtList: District[] = [];
+
+	/**
+	*  Search with autocomplete
+	* ---------------------------
+	*/
+
+	/**
+	* District
+	*/
+	searchDistrictsCtrl = new FormControl();
+  	filteredDistricts: any;
+
+	/**
+	* ---------------------------
+	*/
+
+  	isLoading = false;
+
 	constructor(private districtService: DistrictService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
 		this.ID = this.route.snapshot.queryParams['ID'];
 		this.ID = (this.ID) ? this.ID : 0;
@@ -32,20 +53,29 @@ export class WardEditComponent implements OnInit {
 	{  
 		
 		const _this = this;
-		this.districtService.getDistrictsList(new DistrictFilter('', null, null,null)).subscribe((disList: District[]) => {
-			_this.districtList = (disList) ? disList : [];
-			_this.wardService.getWard(ID).subscribe((ward: Ward) => {
-				_this.ward = ward;
-				if (_this.ward == null || _this.ward.ID==0) {
-					_this.ward = new Ward(0, '', '',0, false, new Date(), null, 1, null, null, null);
-				}
-			});	
-		  });
 	}
-	
+
 	ngOnInit() {
+		const _this = this;
+		this.searchDistrictsCtrl.valueChanges
+		  .pipe(
+	        debounceTime(300),
+	        tap(() => this.isLoading = true),
+	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, null, 'DistrictName', SORD_DIRECTION.ASC))
+	        .pipe(
+	          finalize(() => this.isLoading = false),
+	          )
+	        )
+	      )
+	      .subscribe(data => {
+	      	if (data == undefined || data == null) {
+	          _this.filteredDistricts = [];
+	        } else {
+	          _this.filteredDistricts = data;
+	        }
+	        _this.checkDistricts();
+	      });
 		this.GetWardById(this.ID);  
-	
 	}
 
 	ReturnList() {
@@ -72,5 +102,26 @@ export class WardEditComponent implements OnInit {
 
 	closeMe() {
 		this.activeModal.close();
+	}
+
+	displayFn(district: District) {
+		if (district) {
+			return district;
+		}
+		return null;
+	}
+
+	updateSelectedDistrict(event: any) {
+		const selectedDistricts = this.filteredDistricts.filter((district: District) => district.DistrictName == event.option.value);
+		if(selectedDistricts.length > 0) {
+			this.ward.DistrictId = selectedDistricts[0].ID;
+			console.log(this.ward);
+		}
+	}
+
+	checkDistricts() {
+		if(this.filteredDistricts.length < 1) {
+			this.searchDistrictsCtrl.setValue('');
+		}
 	}
 }

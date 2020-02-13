@@ -30,6 +30,10 @@ import {
   MatTooltipModule,
   MatSelectModule,
 } from '@angular/material';
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
 import { ChucvuComponent } from 'app/views/danhmuc/chucvu/chucvu.component';
 import { ChucvuaddoreditComponent } from 'app/views/danhmuc/chucvu/chucvuaddoredit/chucvuaddoredit.component';
 import { DotthuComponent } from 'app/views/danhmuc/dotthu/dotthu.component';
@@ -66,6 +70,8 @@ import { HasClaimDirective } from '../../directives/has-claim.directive';
     MatInputModule,
     MatSelectModule,
     MatTooltipModule,
+    MatAutocompleteModule,
+    MatProgressSpinnerModule,
   ],
   declarations: [
     DashboardComponent,

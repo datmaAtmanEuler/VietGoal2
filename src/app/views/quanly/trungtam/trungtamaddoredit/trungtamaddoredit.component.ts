@@ -10,9 +10,11 @@ import { ProvinceService } from 'app/services/danhmuc/province.service';
 import { Filter } from 'app/models/filter/filter';
 import { DistrictFilter } from 'app/models/filter/districtfilter';
 import { DistrictService } from 'app/services/danhmuc/district.service';
-import { District } from 'app/models/danhmuc/districts';
-import { WardService } from 'app/services/danhmuc/ward.service';
 import { HttpClient } from '@angular/common/http';
+
+
+import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-trungtamaddoredit',
@@ -31,8 +33,13 @@ export class TrungtamaddoreditComponent implements OnInit {
 	listward: any;
 	trungtam: Trungtam = new Trungtam(0,'','','',null,0,0,0,'','','',true);
 
+	searchProvincesCtrl = new FormControl();
+
+	isLoading = false;
+	errorMsg: string;
+
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private TrungtamService: TrungtamService, private route: ActivatedRoute, private router: Router,
-		private provinceService: ProvinceService, private districtService: DistrictService, private wardService: WardService, private http: HttpClient) {
+		private provinceService: ProvinceService, private districtService: DistrictService, private http: HttpClient) {
 		this.trungtamId = this.route.snapshot.queryParams['Id'];
 		this.trungtamId = (this.trungtamId) ? this.trungtamId : 0;
 		config.backdrop = 'static';
@@ -40,7 +47,10 @@ export class TrungtamaddoreditComponent implements OnInit {
 		config.scrollable = false;
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-		this.getProvince();
+		// this.getProvince();
+	}
+	displayFn(user): string {
+		return user && user.ProvinceName && !user.nofind ? user.ProvinceName : '';
 	}
 	getProvince(){
 		this.provinceService.getProvincesList(new Filter('', 1, 100)).subscribe((list)=>{
@@ -88,7 +98,38 @@ export class TrungtamaddoreditComponent implements OnInit {
 			this.trungtam = new Trungtam(0,'','','',null,0,0,0,'','','',true);
 		}
 	}
+	onFocusProvince(){
+		this.listprovince = [];
+		this.searchProvincesCtrl.setValue('')
+	}
 	ngOnInit() {
+		this.searchProvincesCtrl.valueChanges
+		  .pipe(
+			debounceTime(500),
+			tap(() => {
+			  this.errorMsg = "";
+			  this.listprovince = [{ProvinceName: 'Not Found', nofind: true}];
+			  this.isLoading = true;
+			}),
+			switchMap(value => this.provinceService.getProvincesList(new Filter(value, 1, 100))
+			  .pipe(
+				finalize(() => {
+				  this.isLoading = false
+				}),
+			  )
+			)
+		  )
+		  .subscribe(data => {
+			if (data == undefined) {
+			  this.errorMsg = 'error';
+			  this.listprovince = [{ProvinceName: 'Not Found', nofind: true}];
+			} else {
+			  this.errorMsg = "";
+			  this.listprovince = data.length ? data : [{ProvinceName: 'Not Found', nofind: true}];
+			}
+	 
+			console.log(this.listprovince);
+		  });
 		this.GetTrungtamById(this.trungtamId);  
 	}
 

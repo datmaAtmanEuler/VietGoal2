@@ -9,7 +9,7 @@
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-6 input-group form-sm form-1 pl-0">
                         </div>
-                        <div class="col-sm-6 input-group form-sm form-1 pl-0">
+                        <div class="col-sm-6 input-group form-sm form-1 pl-0 search-form">
                             <button mat-raised-button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
                                 <i class="material-icons">add</i>
                             </button>
@@ -48,10 +48,10 @@
                                                 </ng-container>
                                                 <td width="150px" class="my-action-item">
     
-                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(ward.WardId)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <button  type="button" (click)="edit(ward.WardId)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Remove" type="button" (click)="remove(ward)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                    <button  type="button" (click)="remove(ward)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>

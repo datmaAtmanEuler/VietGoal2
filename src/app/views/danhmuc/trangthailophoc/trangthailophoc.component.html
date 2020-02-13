@@ -10,13 +10,13 @@
                         <div class="col-sm-6 input-group form-sm form-1 pl-0">
                         </div>
                         <div class="col-sm-6 input-group form-sm form-1 pl-0 search-form">
-                            <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Add" type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
+                            <button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
                                 <i class="material-icons">add</i>
                             </button>
                             <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
                                 placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
                             <div class="input-group-prepend">
-                                <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Search" type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}" class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
+                                <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}" class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
                                     <i class="material-icons">search</i>
                                 </button>
                             </div>
@@ -41,10 +41,10 @@
                                                 <td>{{ dt.MaTTLH }}</td>
                                                 <td>{{ dt.TenTTLH }}</td>
                                                 <td class="my-action-item">
-                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(dt.Id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <button type="button" (click)="edit(dt.Id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Remove" type="button" (click)="remove(dt)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                    <button type="button" (click)="remove(dt)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>

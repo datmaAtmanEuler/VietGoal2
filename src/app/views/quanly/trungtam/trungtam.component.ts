@@ -35,13 +35,13 @@ export class TrungtamComponent implements OnInit {
  sortToggles: SORD_DIRECTION[] = [
    null,
    SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
-   SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
    null
   ];
- columnsName: string[] = ['Order', 'CentralName', 'Address', 'CampusArea', 'Note', 'ProvinceName', 'DistrictName', 'WardName',  'Action'];
- columnsNameMapping: string[] = ['ID', 'CentralName', 'Address', 'CampusArea', 'Note', 'ProvinceID', 'DistrictID', 'WardId', 'Action'];
- sortAbles: boolean[] = [false, true, true, true, true, true, true, true, false];
- visibles: boolean[] = [true, true, true, true, true, true, false, false, true];
+ columnsName: string[] = ['Order', 'CentralName', 'Address', 'CampusArea', 'Note', 'Action'];
+ columnsNameMapping: string[] = ['ID', 'CentralName', 'Address', 'CampusArea', 'Discription', 'Action'];
+ columnsNameVi = ['','TenTrungTam','DiaChi','DTKhuonVien','GhiChu','']
+ sortAbles: boolean[] = [false, true, true, true, true, false];
+ visibles: boolean[] = [true, true, true, true, true, true];
  /**
   * END SORT SETTINGS
   */
@@ -137,7 +137,8 @@ export class TrungtamComponent implements OnInit {
   doNothing(): void {}
 
   getColumnValue(tt: Trungtam, colIndex: number): any {
-    let obj = Object.keys(tt);
-    return tt[obj[colIndex]];
+    // let obj = Object.keys(tt);
+    // return tt[obj[colIndex]];
+    return tt[this.columnsNameVi[colIndex]];
   }
 }

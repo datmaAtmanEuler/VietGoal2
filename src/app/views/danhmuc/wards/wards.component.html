@@ -48,10 +48,10 @@
                                                 </ng-container>
                                                 <td width="150px" class="my-action-item">
     
-                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Edit" type="button" (click)="edit(ward.WardId)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <button  type="button" (click)="edit(ward.WardId)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button mat-raised-button [matTooltipPosition]="'above'" matTooltip="Remove" type="button" (click)="remove(ward)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                    <button  type="button" (click)="remove(ward)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>

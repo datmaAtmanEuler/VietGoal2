@@ -34,6 +34,8 @@ export class TrungtamaddoreditComponent implements OnInit {
 	trungtam: Trungtam = new Trungtam(0,'','','',null,0,0,0,'','','',true);
 
 	searchProvincesCtrl = new FormControl();
+	searchDistrictsCtrl = new FormControl();
+	searchWardsCtrl = new FormControl();
 
 	isLoading = false;
 	errorMsg: string;
@@ -43,14 +45,14 @@ export class TrungtamaddoreditComponent implements OnInit {
 		this.trungtamId = this.route.snapshot.queryParams['Id'];
 		this.trungtamId = (this.trungtamId) ? this.trungtamId : 0;
 		config.backdrop = 'static';
-     		config.keyboard = false;
+		config.keyboard = false;
 		config.scrollable = false;
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 		// this.getProvince();
 	}
 	displayFn(user): string {
-		return user && user.ProvinceName && !user.nofind ? user.ProvinceName : '';
+		return user && user.ProvinceName && !user.notfound ? user.ProvinceName : (user.notfound ? user.notfound : '');
 	}
 	getProvince(){
 		this.provinceService.getProvincesList(new Filter('', 1, 100)).subscribe((list)=>{
@@ -79,8 +81,8 @@ export class TrungtamaddoreditComponent implements OnInit {
 	GetTrungtamById(Id:number)  
 	{  
 		this.TrungtamService.getTrungtam((Id) ? Id : this.trungtamId).subscribe((aTrungTam) => {
-			this.changeProvince(aTrungTam.ProvinceID);
-			this.changeDistrict(aTrungTam.DistrictID);
+			// this.changeProvince(aTrungTam.ProvinceID);
+			// this.changeDistrict(aTrungTam.DistrictID);
 			this.trungtam.Id = aTrungTam.ID;
 			this.trungtam.MaTrungTam = aTrungTam.CentralCode;
 			this.trungtam.TenTrungTam = aTrungTam.CentralName;
@@ -100,7 +102,7 @@ export class TrungtamaddoreditComponent implements OnInit {
 	}
 	onFocusProvince(){
 		this.listprovince = [];
-		this.searchProvincesCtrl.setValue('')
+		this.searchProvincesCtrl.setValue('');
 	}
 	ngOnInit() {
 		this.searchProvincesCtrl.valueChanges
@@ -108,7 +110,7 @@ export class TrungtamaddoreditComponent implements OnInit {
 			debounceTime(500),
 			tap(() => {
 			  this.errorMsg = "";
-			  this.listprovince = [{ProvinceName: 'Not Found', nofind: true}];
+			  this.listprovince = [{notfound: 'Not Found'}];
 			  this.isLoading = true;
 			}),
 			switchMap(value => this.provinceService.getProvincesList(new Filter(value, 1, 100))
@@ -122,10 +124,10 @@ export class TrungtamaddoreditComponent implements OnInit {
 		  .subscribe(data => {
 			if (data == undefined) {
 			  this.errorMsg = 'error';
-			  this.listprovince = [{ProvinceName: 'Not Found', nofind: true}];
+			  this.listprovince = [{notfound: 'Not Found'}];
 			} else {
 			  this.errorMsg = "";
-			  this.listprovince = data.length ? data : [{ProvinceName: 'Not Found', nofind: true}];
+			  this.listprovince = data.length ? data : [{notfound: 'Not Found'}];
 			}
 	 
 			console.log(this.listprovince);

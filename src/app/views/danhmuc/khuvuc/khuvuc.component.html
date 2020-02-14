@@ -25,6 +25,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card-body table-responsive">
+                                <div class="vietgoal-table-settings style-1">
                                 <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
                                     <thead>
                                         <th width="100px">{{ ("MESSAGE.NameList.Order" | translate) | uppercase }}</th>
@@ -52,7 +53,12 @@
                                             </tr>
                                         </ng-container>
                                     </tbody>
-                                </table>
+                                </table></div>
+                                <mat-paginator [length]="100"
+                                            [pageSize]="pageSize"
+                                            [pageSizeOptions]="pageSizesList"
+                                            (page)="pageEvent($event)">
+                                </mat-paginator>
                             </div>
                         </div>
                     </div>

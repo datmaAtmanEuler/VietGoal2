@@ -103,7 +103,7 @@ export class TrungtamaddoreditComponent implements OnInit {
 			  this.listprovince = [];
 			  this.isLoading = true;
 			}),
-			switchMap(value => this.provinceService.getProvincesList(new Filter(value, 1, 100))
+			switchMap(value => this.provinceService.getProvincesList({'SearchTerm': value, 'PageIndex': 1, 'PageSize':10, 'SortName': 'ID', 'SortDirection': 'ASC'})
 			  .pipe(
 				finalize(() => {
 				  this.isLoading = false

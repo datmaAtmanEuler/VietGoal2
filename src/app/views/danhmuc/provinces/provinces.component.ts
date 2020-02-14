@@ -7,6 +7,10 @@ import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+
+import {TranslateService} from '@ngx-translate/core';
+import { elementAt } from 'rxjs/operators';
 
 @Component({
   selector: 'app-provinces',
@@ -18,8 +22,10 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   province: Province;
   searchTerm:string = '';
   pageIndex:number = 1;
-  pageSize:number = 20;
+  pageSizesList: Number[] = [5, 10, 20, 100];
+  pageSize:number = this.pageSizesList[3];
   currentUser: any;
+  loading: boolean = true;
   
   /**
    * BEGIN SORT SETTINGS
@@ -33,15 +39,45 @@ export class ProvincesComponent implements OnInit {ModalDirective;
    * END SORT SETTINGS
    */
 
-  constructor(config: NgbModalConfig, private service: ProvinceService, private router: Router, private modalService: NgbModal) { 
+  constructor(private translate: TranslateService, 
+              private matCus: MatPaginatorIntl,
+              config: NgbModalConfig,
+              private service: ProvinceService,
+              private router: Router,
+              private modalService: NgbModal) { 
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
+    this.updateMatTableLabel();
+    translate.onLangChange.subscribe((a: any) => {
+      this.updateMatTableLabel();
+      matCus.changes.next();
+    });
+  }
+
+  updateMatTableLabel() {
+    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
+    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
+        if (length === 0 || pageSize === 0) {
+          return this.translate.instant('MESSAGE.NameList.NoRecord');
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
+      }
   }
 
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	  this.reload();
+  }
+  
+  pageEvent(variable: any){
+    console.log(variable);
+    this.pageIndex = variable.pageIndex+1;
+    this.pageSize = variable.pageSize;
+    this.reload();
   }
 
     remove(province: Province) {
@@ -57,10 +93,21 @@ export class ProvincesComponent implements OnInit {ModalDirective;
 
     reload() {
       const _this = this;
-    	const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize, this.sort.SortName, this.sort.SortDirection);
-      this.service.getProvincesList(filter).subscribe((list: any) => {
-        _this.provincesList = list;
-      });
+      const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize, this.sort.SortName, this.sort.SortDirection);
+      this.loading = true;
+      _this.provincesList = [];
+      this.service.getProvincesList(filter).subscribe(
+          (list: any) => {
+            setTimeout(() => {
+              _this.provincesList = (list) ? list : [];
+              _this.loading = false;
+            }, 500);
+          },
+          (err: any) => {
+            _this.provincesList = [];
+            _this.loading = false;
+          }
+      );
     }
 
   add() {

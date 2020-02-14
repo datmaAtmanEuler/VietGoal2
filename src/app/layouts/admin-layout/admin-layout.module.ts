@@ -54,6 +54,7 @@ import { KhuVucEditComponent } from '../../views/danhmuc/khuvuc/khuvucedit/khuvu
 import { KhuVucComponent } from '../../views/danhmuc/khuvuc/khuvuc.component';
 
 import { HasClaimDirective } from '../../directives/has-claim.directive';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 @NgModule({
@@ -71,7 +72,7 @@ import { HasClaimDirective } from '../../directives/has-claim.directive';
     MatSelectModule,
     MatTooltipModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule,
+    MatProgressSpinnerModule,MatPaginatorModule
   ],
   declarations: [
     DashboardComponent,

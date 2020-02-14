@@ -1,9 +1,22 @@
 export class NhomNguoiDung {
-	IdNhom: number;
-    TenNhom: string;
+	ID: null | number;
+	AdministrationOfUserGroupName: string;
+	Deleted: boolean;
+    CreatedDate: null | Date;
+    UpdatedDate: null | Date;
+    CreatedBy: null | number;
+    UpdatedBy: null | number;
+	DeletedBy: null | number;
     
-	constructor(IdNhom: number, TenNhom: string) {
-	this.IdNhom = IdNhom;
-	this.TenNhom = TenNhom;	
+	constructor(ID: null | number, AdministrationOfUserGroupName: string, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
+		UpdatedBy: null | number, DeletedBy: null | number) {
+			this.ID = ID;
+			this.AdministrationOfUserGroupName = AdministrationOfUserGroupName;
+			this.Deleted = Deleted;
+			this.CreatedDate = CreatedDate;
+			this.UpdatedDate = UpdatedDate;
+			this.CreatedBy = CreatedBy;
+			this.UpdatedBy = UpdatedBy;
+			this.DeletedBy = DeletedBy;
 }
 }

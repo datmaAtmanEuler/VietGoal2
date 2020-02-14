@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { NhomNguoiDungEditComponent } from './nhomnguoidungedit/nhomnguoidungedit.component';
+import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
 
 @Component({
   selector: 'app-nhomnguoidung',
@@ -19,6 +20,18 @@ export class NhomNguoiDungComponent implements OnInit {
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
+  currentUser: any;
+    /**
+   * BEGIN SORT SETTINGS
+   */
+  sort: ASCSort = new ASCSort();
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
+  columnsName: string[] = ['Order', 'ProvinceCode', 'ProvinceName', 'Action'];
+  columnsNameMapping: string[] = ['ID', 'ProvinceCode', 'ProvinceName', 'Action'];
+  sortAbles: boolean[] = [false, true, true, false];
+  /**
+   * END SORT SETTINGS
+   */
   constructor(config: NgbModalConfig, private service: NhomNguoiDungService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -39,10 +52,13 @@ export class NhomNguoiDungComponent implements OnInit {
   });
 }
 
-  reload() {
-	const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-  this.NhomNguoiDungList = this.service.getNhomList(filter);
-  }
+reload() {
+  const _this = this;
+  const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize, this.sort.SortName, this.sort.SortDirection);
+  this.service.getNhomList(filter).subscribe((list: any) => {
+    _this.nhomnguoidung = list;
+  });
+}
 
   add() {
     this.edit(null);
@@ -62,7 +78,42 @@ export class NhomNguoiDungComponent implements OnInit {
 
 
   deleteNhom() {
-    this.service.deleteNhom(this.nhomnguoidung.IdNhom);
+    const _this = this;
+    this.service.deleteNhom(this.nhomnguoidung.ID, this.currentUser.UserId).subscribe((rs: any) => {
+      _this.reload();
+    });
+  }
+  toggleSort(columnIndex: number): void {
+    let toggleState =  this.sortToggles[columnIndex];
+    switch(toggleState) {
+      case SORD_DIRECTION.DEFAULT: 
+      {
+        toggleState = SORD_DIRECTION.ASC;
+        break;
+      }
+      case SORD_DIRECTION.ASC: 
+      {
+        toggleState = SORD_DIRECTION.DESC;
+        break;
+      }
+      default:
+      {
+        toggleState = SORD_DIRECTION.DEFAULT;
+        break;
+      }
+    }
+    this.sortToggles.forEach((s: string, index: number) => {
+      if(index == columnIndex) {
+        this.sortToggles[index] = this.sort.SortDirection = toggleState;
+      } else {
+        this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+      }
+    });
+
+    this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'ID' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
+  
+  doNothing(): void {}
 }
+

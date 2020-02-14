@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, Output , EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, Input, Output , ChangeDetectorRef, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { WardService } from '../../../../services/danhmuc/ward.service';
 import { Ward } from '../../../../models/danhmuc/wards';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -17,7 +17,7 @@ import { FormControl } from '@angular/forms';
 	styleUrls: ['./wardedit.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
-export class WardEditComponent implements OnInit {
+export class WardEditComponent implements OnInit, AfterViewInit {
 	@Input('popup') popup: boolean;
 	@Input('ID') ID: number;
 	@Input('UserId') UserId: null | number;
@@ -40,7 +40,7 @@ export class WardEditComponent implements OnInit {
 
   	isLoading = false;
 
-	constructor(private districtService: DistrictService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
+	constructor(private cd: ChangeDetectorRef, private districtService: DistrictService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
 		this.ID = this.route.snapshot.queryParams['ID'];
 		this.ID = (this.ID) ? this.ID : 0;
 		config.backdrop = 'static';
@@ -54,6 +54,10 @@ export class WardEditComponent implements OnInit {
 		
 		const _this = this;
 	}
+
+	ngAfterViewInit() {
+        this.cd.detectChanges();
+    }
 
 	ngOnInit() {
 		const _this = this;

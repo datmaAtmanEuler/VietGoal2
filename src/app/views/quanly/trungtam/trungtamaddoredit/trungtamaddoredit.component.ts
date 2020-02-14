@@ -10,9 +10,12 @@ import { ProvinceService } from 'app/services/danhmuc/province.service';
 import { Filter } from 'app/models/filter/filter';
 import { DistrictFilter } from 'app/models/filter/districtfilter';
 import { DistrictService } from 'app/services/danhmuc/district.service';
-import { District } from 'app/models/danhmuc/districts';
-import { WardService } from 'app/services/danhmuc/ward.service';
 import { HttpClient } from '@angular/common/http';
+
+
+import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-trungtamaddoredit',
@@ -31,46 +34,48 @@ export class TrungtamaddoreditComponent implements OnInit {
 	listward: any;
 	trungtam: Trungtam = new Trungtam(0,'','','',null,0,0,0,'','','',true);
 
+	searchProvincesCtrl = new FormControl();
+	searchDistrictsCtrl = new FormControl();
+	searchWardsCtrl = new FormControl();
+
+	isLoading = false;
+	errorMsg: string;
+
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private TrungtamService: TrungtamService, private route: ActivatedRoute, private router: Router,
-		private provinceService: ProvinceService, private districtService: DistrictService, private wardService: WardService, private http: HttpClient) {
+		private provinceService: ProvinceService, private districtService: DistrictService, private http: HttpClient) {
 		this.trungtamId = this.route.snapshot.queryParams['Id'];
 		this.trungtamId = (this.trungtamId) ? this.trungtamId : 0;
 		config.backdrop = 'static';
-     		config.keyboard = false;
+		config.keyboard = false;
 		config.scrollable = false;
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-		this.getProvince();
+		// this.getProvince();
 	}
-	getProvince(){
-		this.provinceService.getProvincesList(new Filter('', 1, 100)).subscribe((list)=>{
-			this.listprovince = list;
-		});
+	displayProvinceFn(user): string {
+		return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
+	}
+	displayDistrictFn(user): string {
+		return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
+	}
+	displayWardFn(user): string {
+		return user && user.WardName && !user.notfound ? user.WardName : '';
 	}
 	changeProvince(provinceID){
 		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, provinceID)).subscribe((list)=>{
-			if(this.listdistrict){
-				this.trungtam.QuanHuyen = 0;
-				if(this.listward){
-					this.trungtam.PhuongXa = 0;
-				}
-			}
 			this.listdistrict = list;
 		});
 	}
 	changeDistrict(districtID){
 		this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=&DistrictID=${districtID}&SortName=&SortDirection=&PageIndex=1&PageSize=20`).subscribe((list)=>{
-			if(this.listward){
-				this.trungtam.PhuongXa = 0;
-			}
 			this.listward = list;
 		});
 	}
 	GetTrungtamById(Id:number)  
 	{  
 		this.TrungtamService.getTrungtam((Id) ? Id : this.trungtamId).subscribe((aTrungTam) => {
-			this.changeProvince(aTrungTam.ProvinceID);
-			this.changeDistrict(aTrungTam.DistrictID);
+			// this.changeProvince(aTrungTam.ProvinceID);
+			// this.changeDistrict(aTrungTam.DistrictID);
 			this.trungtam.Id = aTrungTam.ID;
 			this.trungtam.MaTrungTam = aTrungTam.CentralCode;
 			this.trungtam.TenTrungTam = aTrungTam.CentralName;
@@ -89,15 +94,110 @@ export class TrungtamaddoreditComponent implements OnInit {
 		}
 	}
 	ngOnInit() {
+		this.searchProvincesCtrl.valueChanges
+		  .pipe(
+			startWith(''),
+			debounceTime(500),
+			tap(() => {
+			  this.errorMsg = "";
+			  this.listprovince = [];
+			  this.isLoading = true;
+			}),
+			switchMap(value => this.provinceService.getProvincesList(new Filter(value, 1, 100))
+			  .pipe(
+				finalize(() => {
+				  this.isLoading = false
+				}),
+			  )
+			)
+		  )
+		  .subscribe(data => {
+			if (data == undefined) {
+			  this.errorMsg = 'error';
+			  this.listprovince = [{notfound: 'Not Found'}];
+			} else {
+			  this.errorMsg = "";
+			  this.listprovince = data.length ? data : [{notfound: 'Not Found'}];
+			}
+	 
+			});
+		this.searchDistrictsCtrl.valueChanges.pipe(
+			startWith(''),
+			debounceTime(500),
+			tap(() => {
+				this.errorMsg = "";
+				this.listdistrict = [];
+				this.isLoading = true;
+			}),
+			switchMap(value => this.districtService.getDistrictsList(new DistrictFilter(value, 1, 100, this.provinceIDfilted()))
+				.pipe(
+					finalize(() => {
+						this.isLoading = false
+					}),
+				)
+			)
+		)
+		.subscribe(data => {
+			if (data == undefined) {
+				this.errorMsg = 'error';
+				this.listdistrict = [{notfound: 'Not Found'}];
+			} else {
+				this.errorMsg = "";
+				this.listdistrict = data.length ? data : [{notfound: 'Not Found'}];
+			}
+	
+		});
+		this.searchWardsCtrl.valueChanges.pipe(
+			startWith(''),
+			debounceTime(500),
+			tap(() => {
+				this.errorMsg = "";
+				this.listward = [];
+				this.isLoading = true;
+			}),
+			switchMap(value => this.wardObservableFilter(value)
+				.pipe(
+					finalize(() => {
+						this.isLoading = false
+					}),
+				)
+			)
+		)
+		.subscribe(data => {
+			if (data == undefined) {
+				this.errorMsg = 'error';
+				this.listward = [{notfound: 'Not Found'}];
+			} else {
+				this.errorMsg = "";
+				this.listward = data.length ? data : [{notfound: 'Not Found'}];
+			}
+	
+		});
 		this.GetTrungtamById(this.trungtamId);  
 	}
-
+	provinceIDfilted(){
+		if(this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined) {
+			return this.searchProvincesCtrl.value.ID
+		}else{
+			return 0;
+		}
+	}
+	wardObservableFilter(value: any): Observable<any>{
+		if(this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined) {
+			return this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=${value}&DistrictID=${this.searchDistrictsCtrl.value.ID}&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
+		}else{
+			return this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
+		}
+	}
 	ReturnList() {
 		this.router.navigate(['quanly/trungtam']); 
 
 	}
 
 	UpdateTrungtam() {
+		console.log(this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined ? this.searchProvincesCtrl.value.ID : 'a');
+		console.log(this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined ? this.searchDistrictsCtrl.value.ID : 'b');
+		console.log(this.searchWardsCtrl.value && this.searchWardsCtrl.value.ID != undefined ? this.searchWardsCtrl.value.ID : 'c');
 		this.TrungtamService.addOrUpdateTrungtam(this.trungtam, this.currentUser.UserId).subscribe(
 			() => {
 				if(!this.popup) {

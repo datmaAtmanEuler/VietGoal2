@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { Demo1Component } from '../../views/demo1/demo1.component';
 import { ProvincesComponent } from '../../views/danhmuc/provinces/provinces.component';
+import { CategoriesComponent } from '../../views/controlmanagement/categories/categories.component';
+import { CategoryEditComponent } from '../../views/controlmanagement/categories/categoryedit/categoryedit.component';
 import { DistrictsComponent } from '../../views/danhmuc/districts/districts.component';
 import { DistrictEditComponent } from '../../views/danhmuc/districts/districtedit/districtedit.component';
 import { ProvinceEditComponent } from '../../views/danhmuc/provinces/provinceedit/provinceedit.component';
@@ -75,8 +76,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatProgressSpinnerModule,MatPaginatorModule
   ],
   declarations: [
+    CategoriesComponent,
+    CategoryEditComponent,
     DashboardComponent,
-    Demo1Component,
     ProvincesComponent,
     DistrictsComponent,
     DistrictEditComponent,

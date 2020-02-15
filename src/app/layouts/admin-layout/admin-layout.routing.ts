@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { Demo1Component } from '../../views/demo1/demo1.component';
+import { CategoriesComponent } from '../../views/controlmanagement/categories/categories.component';
+import { CategoryEditComponent } from '../../views/controlmanagement/categories/categoryedit/categoryedit.component';
 import { ProvincesComponent } from '../../views/danhmuc/provinces/provinces.component';
 import { ProvinceEditComponent } from '../../views/danhmuc/provinces/provinceedit/provinceedit.component';
 import { TrungtamComponent } from '../../views/quanly/trungtam/trungtam.component';
@@ -34,8 +35,7 @@ import { KhuVucEditComponent } from '../../views/danhmuc/khuvuc/khuvucedit/khuvu
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
-    { path: 'demo1',      component: Demo1Component },
-{ path: 'danhmuc', children:
+    { path: 'danhmuc', children:
     [
       { path: 'tinhthanh',  children: [
         { path: '', component: ProvincesComponent },
@@ -127,6 +127,19 @@ export const AdminLayoutRoutes: Routes = [
           { path: '', component: TrungtamComponent },
           { path: 'add', component: TrungtamaddoreditComponent },
           { path: 'edit', component: TrungtamaddoreditComponent }
+        ] 
+      }
+    ]
+},
+{ 
+    path: 'controlmanagement',
+    children:[
+      { 
+        path: 'categories',
+        children: [
+          { path: '', component: CategoriesComponent },
+          { path: 'add', component: CategoryEditComponent },
+          { path: 'edit', component: CategoryEditComponent }
         ] 
       }
     ]

@@ -23,7 +23,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
-  pageSize:number = this.pageSizesList[3];
+  pageSize:number = this.pageSizesList[1];
   currentUser: any;
   loading: boolean = true;
   

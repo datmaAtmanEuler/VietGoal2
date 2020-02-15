@@ -11,6 +11,8 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { TrungtamaddoreditComponent } from './trungtamaddoredit/trungtamaddoredit.component';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { CentralFilter } from 'app/models/filter/centralfilter';
+import { MatPaginatorIntl } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-trungtam',
@@ -22,11 +24,14 @@ export class TrungtamComponent implements OnInit {
   trungtam: Trungtam;
   searchTerm:string = '';
   pageIndex:number = 1;
-  pageSize:number = 20;
+  pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize:number = this.pageSizesList[3];
   currentUser: any;
   provinceId: null | number = null;
   districtId: null | number = null;
   wardId: null | number = null;
+  Total:number;
+  loading: boolean;
 
   /**
   * BEGIN SORT SETTINGS
@@ -46,15 +51,32 @@ export class TrungtamComponent implements OnInit {
   * END SORT SETTINGS
   */
  
-  constructor(public util: UtilsService, config: NgbModalConfig, private service: TrungtamService, private router: Router, private modalService: NgbModal) {
+  constructor(private translate: TranslateService, private matCus: MatPaginatorIntl, public util: UtilsService, config: NgbModalConfig, private service: TrungtamService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
-		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
+    this.updateMatTableLabel();
+    translate.onLangChange.subscribe((a: any) => {
+      this.updateMatTableLabel();
+      matCus.changes.next();
+    });
    }
-
   ngOnInit() {
     this.reload();
+  }
+  updateMatTableLabel() {
+    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
+    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
+        if (length === 0 || pageSize === 0) {
+          return this.translate.instant('MESSAGE.NameList.NoRecord');
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
+      }
   }
 
   remove(trungtam: Trungtam) {
@@ -68,25 +90,36 @@ export class TrungtamComponent implements OnInit {
       });
     });
   }
+  pageEvent(variable: any){
+    this.pageIndex = variable.pageIndex+1;
+    this.pageSize = variable.pageSize;
+    this.reload();
+  }
   reload() {
     const filter: CentralFilter = new CentralFilter(this.searchTerm, this.pageIndex, this.pageSize, this.provinceId, this.districtId, this.wardId, this.sort.SortName, this.sort.SortDirection);
+    this.loading = true;
+    this.trungtamList = [];
     this.service.getTrungtamsList(filter).subscribe((list: any) => {
-      this.trungtamList = list.map((listItem) => {
-        return {
-            Id: listItem.ID,
-            MaTrungTam: listItem.CentralCode,
-            TenTrungTam: listItem.CentralName,
-            DiaChi: listItem.Address,
-            DTKhuonVien: listItem.CampusArea,
-            TinhThanh: listItem.ProvinceID,
-            QuanHuyen: listItem.DistrictID,
-            PhuongXa: listItem.WardID,
-            DienThoai: listItem.PhoneNumber,
-            NgayThanhLap: listItem.DateEstablished,
-            GhiChu: listItem.Discription,
-            isHienThi: listItem.Showed
-        }
-      });
+      this.Total = (list && list[0]) ? list[0].Total : 0;
+      setTimeout(() => {
+        this.loading = false;
+        this.trungtamList = list.map((listItem) => {
+          return {
+              Id: listItem.ID,
+              MaTrungTam: listItem.CentralCode,
+              TenTrungTam: listItem.CentralName,
+              DiaChi: listItem.Address,
+              DTKhuonVien: listItem.CampusArea,
+              TinhThanh: listItem.ProvinceID,
+              QuanHuyen: listItem.DistrictID,
+              PhuongXa: listItem.WardID,
+              DienThoai: listItem.PhoneNumber,
+              NgayThanhLap: listItem.DateEstablished,
+              GhiChu: listItem.Discription,
+              isHienThi: listItem.Showed
+          }
+        });
+      }, 500);
     });
   }
   add() {

@@ -22,8 +22,8 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   province: Province;
   searchTerm:string = '';
   pageIndex:number = 1;
-  pageSizesList: Number[] = [5, 10, 20, 100];
-  pageSize:number = this.pageSizesList[3];
+  pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize:number = this.pageSizesList[1];
   currentUser: any;
   loading: boolean = true;
   

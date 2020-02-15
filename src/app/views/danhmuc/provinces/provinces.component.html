@@ -63,6 +63,7 @@
                             <mat-paginator [length]="(provincesList && provincesList[0]) ? provincesList[0].Total : 0"
                                         [pageSize]="pageSize"
                                         [pageSizeOptions]="pageSizesList"
+                                        [showFirstLastButtons]="true"
                                         (page)="pageEvent($event)">
                             </mat-paginator>
                         </div>

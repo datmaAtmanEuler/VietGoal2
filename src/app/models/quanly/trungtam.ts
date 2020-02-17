@@ -1,30 +1,27 @@
 export class Trungtam{
     Id: number;
-    MaTrungTam: string;
-    TenTrungTam: string;
-    DiaChi: string;
-    DTKhuonVien: number;
-    TinhThanh: number;
-    QuanHuyen: number;
-    PhuongXa: number;
-    DienThoai: string;
-    NgayThanhLap: string;
-    GhiChu: string;
-    isHienThi: boolean;
+    CentralCode: string;
+    CentralName: string;
+    Address: string;
+    Area: number;
+    WardId: number;
+    Phone: string;
+    EstablishedDate: string;
+    Visible: boolean;
+    Description: string;
+    CreatedBy: number;
+    UpdatedBy: number;
     
-    constructor(Id: number, MaTrungTam: string, TenTrungTam: string, DiaChi: string, DTKhuonVien: number, TinhThanh: number,
-    QuanHuyen: number, PhuongXa: number, DienThoai: string, NgayThanhLap: string, GhiChu: string, isHienThi: boolean){
+    constructor(Id: number, CentralCode: string, CentralName: string, Address: string, Area: number, WardId: number, Phone: string, EstablishedDate: string, Description: string, Visible: boolean){
         this.Id = Id;
-        this.MaTrungTam = MaTrungTam;
-        this.TenTrungTam = TenTrungTam;
-        this.DiaChi = DiaChi;
-        this.DTKhuonVien = DTKhuonVien;
-        this.TinhThanh = TinhThanh;
-        this.QuanHuyen = QuanHuyen;
-        this.PhuongXa = PhuongXa;
-        this.DienThoai = DienThoai;
-        this.NgayThanhLap = NgayThanhLap;
-        this.GhiChu = GhiChu;
-        this.isHienThi = isHienThi;
+        this.CentralCode = CentralCode;
+        this.CentralName = CentralName;
+        this.Address = Address;
+        this.Area = Area;
+        this.WardId = WardId;
+        this.Phone = Phone;
+        this.EstablishedDate = EstablishedDate;
+        this.Description = Description;
+        this.Visible = Visible;
     }
 }

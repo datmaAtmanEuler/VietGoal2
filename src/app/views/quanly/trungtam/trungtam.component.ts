@@ -20,7 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./trungtam.component.scss']
 })
 export class TrungtamComponent implements OnInit {
-  trungtamList:Trungtam[] = [];
+  trungtamList: any[] = [];
   trungtam: Trungtam;
   searchTerm:string = '';
   pageIndex:number = 1;
@@ -44,7 +44,7 @@ export class TrungtamComponent implements OnInit {
   ];
  columnsName: string[] = ['Order', 'CentralName', 'Address', 'CampusArea', 'Note', 'Action'];
  columnsNameMapping: string[] = ['ID', 'CentralName', 'Address', 'CampusArea', 'Discription', 'Action'];
- columnsNameVi = ['','TenTrungTam','DiaChi','DTKhuonVien','GhiChu','']
+ columnsNameVi = ['','CentralName','Address','CampusArea','Discription','']
  sortAbles: boolean[] = [false, true, true, true, true, false];
  visibles: boolean[] = [true, true, true, true, true, true];
  /**
@@ -103,22 +103,7 @@ export class TrungtamComponent implements OnInit {
       this.Total = (list && list[0]) ? list[0].Total : 0;
       setTimeout(() => {
         this.loading = false;
-        this.trungtamList = list.map((listItem) => {
-          return {
-              Id: listItem.ID,
-              MaTrungTam: listItem.CentralCode,
-              TenTrungTam: listItem.CentralName,
-              DiaChi: listItem.Address,
-              DTKhuonVien: listItem.CampusArea,
-              TinhThanh: listItem.ProvinceID,
-              QuanHuyen: listItem.DistrictID,
-              PhuongXa: listItem.WardID,
-              DienThoai: listItem.PhoneNumber,
-              NgayThanhLap: listItem.DateEstablished,
-              GhiChu: listItem.Discription,
-              isHienThi: listItem.Showed
-          }
-        });
+        this.trungtamList = list || [];
       }, 500);
     });
   }

@@ -1,11 +1,13 @@
 export class TrangThaiHLV{
     Id: number;
-    TenTrangThai: string;
-    MaTrangThai: string;
+    CoachStatusName: string;
+    CoachStatusCode: string;
+    CreatedBy: number;
+    UpdatedBy: number;
 
-    constructor(Id: number, MaTrangThai: string ,TenTrangThai: string){
+    constructor(Id: number, CoachStatusCode: string ,CoachStatusName: string){
         this.Id = Id;
-        this.TenTrangThai = TenTrangThai;
-        this.MaTrangThai = MaTrangThai;
+        this.CoachStatusName = CoachStatusName;
+        this.CoachStatusCode = CoachStatusCode;
     }
 }

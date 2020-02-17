@@ -1,11 +1,13 @@
 export class TrangThaiLopHoc{
     Id: number;
-    TenTTLH: string;
-    MaTTLH: string;
+    ClassStatusName: string;
+    ClassStatusCode: string;
+    CreatedBy: number;
+    UpdatedBy: number;
 
-    constructor(Id: number, MaTTLH:string ,TenTTLH: string){
+    constructor(Id: number, ClassStatusCode:string ,ClassStatusName: string){
         this.Id = Id;
-        this.TenTTLH = TenTTLH;
-        this.MaTTLH = MaTTLH;
+        this.ClassStatusName = ClassStatusName;
+        this.ClassStatusCode = ClassStatusCode;
     }
 }

@@ -1,13 +1,15 @@
 export class Chucvu{
-    Id: number;
-    MaChucVu: string;
-    TenChucVu: string;
-    SoThuTu: number;
+    ID: number;
+    PositionCode: string;
+    PositionName: string;
+    DisplayOrder: number;
+    CreatedBy: number;
+    UpdatedBy: number;
 
-    constructor(Id: number, MaChucVu: string, TenChucVu: string, SoThuTu: number){
-        this.Id = Id;
-        this.MaChucVu = MaChucVu;
-        this.TenChucVu = TenChucVu;
-        this.SoThuTu = SoThuTu;
+    constructor(ID: number, PositionCode: string, PositionName: string, DisplayOrder: number){
+        this.ID = ID;
+        this.PositionCode = PositionCode;
+        this.PositionName = PositionName;
+        this.DisplayOrder = DisplayOrder;
     }
 }

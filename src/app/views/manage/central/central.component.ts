@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Filter } from '../../../models/filter/filter';
 import { Central } from '../../../models/manage/central';
 import { CentralService } from '../../../services/manage/central.service';
 import { UtilsService } from '../../../services/utils.service';

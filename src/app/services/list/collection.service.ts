@@ -34,10 +34,10 @@ export class CollectionService {
         } else {
             Collection.UpdatedBy = by;
         }
-        return this.http.post(environment.serverUrl + `Centrals`, Collection, this.httpOptions);
+        return this.http.post(environment.serverUrl + `Collections`, Collection, this.httpOptions);
     }
 
     deleteCollection(CollectionId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Centrals/${CollectionId}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.serverUrl + `Collections/${CollectionId}?deletedBy=${deletedBy}` , this.httpOptions);
     }
 }

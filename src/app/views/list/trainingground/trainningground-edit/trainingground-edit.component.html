@@ -1,0 +1,73 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light">
+        <p class="h4 mb-4">TrainingGround Information</p>
+        <form>
+                <div class="form-group row">
+                    <label class="col-5 label-middling">TrainingGround Code<span class="text-danger">(*)</span></label>
+                        <div class="col-7">
+                            <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trainingground.TrainingGroundCode                            "
+                                class="form-control" placeholder='{{"MESSAGE.NameList.TrainingGroundCode" |translate}}'>
+                        </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-5 label-middling">TrainingGround Name<span class="text-danger">(*)</span></label>
+                    <div class=" col-7 label-middling">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trainingground.TrainingGroundName"
+                        class="form-control" placeholder='{{"MESSAGE.NameList.TrainingGroundName" |translate}}'>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-3 label-middling">Area<span class="text-danger">(*)</span></label>
+                    <div class="col-6 label-middling">
+                        <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trainingground.AreaId"
+                            class="form-control">
+                            <option *ngFor="let area of areasList; let i = index;" [value]="area.Id">
+                                {{ area.AreaName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-3 label-middling">Yard<span class="text-danger">(*)</span></label>
+                    <div class="col-6 label-middling">
+                        <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trainingground.YardId"
+                            class="form-control">
+                            <option *ngFor="let yard of yardsList; let i = index;" [value]="yard.Id">
+                                {{ area.YardName}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-5 label-middling">Description<span class="text-danger">(*)</span></label>
+                    <div class=" col-7 label-middling">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trainingground.Description"
+                        class="form-control" placeholder='{{"MESSAGE.NameList.Description" |translate}}'>
+                    </div>
+                </div>
+
+        </form>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
+        <button class="btn btn-info" (click)="UpdateTrainingGround()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
+    </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+        <p class="h4 mb-4">TrainingGround Information</p>
+        <form>
+            <div class="form-group row">
+                <div class="col-6 alert" role="alert">
+                    
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trainingground.TrainingGroundCode"
+                        class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceCode" |translate}}'>
+                </div>
+                <div class="col-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trainingground.TrainingGroundName"
+                        class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceName" |translate}}'>
+                </div>
+            </div>
+        </form>
+        <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"</button>
+        <button class="btn btn btn-info" (click)="UpdateTrainingGround()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
+</div>

@@ -1,36 +1,37 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { Demo1Component } from '../../views/demo1/demo1.component';
-import { ProvincesComponent } from '../../views/danhmuc/provinces/provinces.component';
-import { ProvinceEditComponent } from '../../views/danhmuc/provinces/provinceedit/provinceedit.component';
-import { TrungtamComponent } from '../../views/quanly/trungtam/trungtam.component';
-import { TrungtamaddoreditComponent  } from '../../views/quanly/trungtam/trungtamaddoredit/trungtamaddoredit.component';
-import { DistrictsComponent } from '../../views/danhmuc/districts/districts.component';
-import { DistrictEditComponent } from '../../views/danhmuc/districts/districtedit/districtedit.component';
-import { WardsComponent } from '../../views/danhmuc/wards/wards.component';
-import { WardEditComponent } from '../../views/danhmuc/wards/wardedit/wardedit.component';
-import { NhomNguoiDungComponent } from '../../views/danhmuc/nhomnguoidung/nhomnguoidung.component';
-import { NhomNguoiDungEditComponent } from '../../views/danhmuc/nhomnguoidung/nhomnguoidungedit/nhomnguoidungedit.component';
-import { SanTapComponent } from '../../views/danhmuc/santap/santap.component';
-import { SanTapEditComponent } from '../../views/danhmuc/santap/santapedit/santapedit.component';
-import { ChucvuComponent } from 'app/views/danhmuc/chucvu/chucvu.component';
-import { ChucvuaddoreditComponent } from 'app/views/danhmuc/chucvu/chucvuaddoredit/chucvuaddoredit.component';
-import { DotthuComponent } from 'app/views/danhmuc/dotthu/dotthu.component';
-import { DotthuEditComponent } from 'app/views/danhmuc/dotthu/dotthu-edit/dotthu-edit.component';
-import { KhoanthuComponent } from 'app/views/danhmuc/khoanthu/khoanthu.component';
-import { KhoanthuEditComponent } from 'app/views/danhmuc/khoanthu/khoanthu-edit/khoanthu-edit.component';
-import { LuatuoiComponent } from 'app/views/danhmuc/luatuoi/luatuoi.component';
-import { LuatuoiEditComponent } from 'app/views/danhmuc/luatuoi/luatuoi-edit/luatuoi-edit.component';
-import { TrangthaihlvComponent } from 'app/views/danhmuc/trangthaihlv/trangthaihlv.component';
-import { TrangthaihlvEditComponent } from 'app/views/danhmuc/trangthaihlv/trangthaihlv-edit/trangthaihlv-edit.component';
-import { TrangthaihocvienComponent } from 'app/views/danhmuc/trangthaihocvien/trangthaihocvien.component';
-import { TrangthaihocvieneditComponent } from 'app/views/danhmuc/trangthaihocvien/trangthaihocvienedit/trangthaihocvienedit.component';
-import { TrangthailophocComponent } from 'app/views/danhmuc/trangthailophoc/trangthailophoc.component';
-import { TrangthailophoceditComponent } from 'app/views/danhmuc/trangthailophoc/trangthailophocedit/trangthailophocedit.component';
-import { BaiTapComponent } from '../../views/danhmuc/baitap/baitap.component';
-import { BaiTapEditComponent } from '../../views/danhmuc/baitap/baitapedit/baitapedit.component';
-import { KhuVucComponent } from '../../views/danhmuc/khuvuc/khuvuc.component';
-import { KhuVucEditComponent } from '../../views/danhmuc/khuvuc/khuvucedit/khuvucedit.component';
+import { ProvincesComponent } from '../../views/list/provinces/provinces.component';
+import { ProvinceEditComponent } from '../../views/list/provinces/provinceedit/provinceedit.component';
+import { CentralComponent } from '../../views/manage/central/central.component';
+import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
+import { DistrictsComponent } from '../../views/list/districts/districts.component';
+import { DistrictEditComponent } from '../../views/list/districts/districtedit/districtedit.component';
+import { WardsComponent } from '../../views/list/wards/wards.component';
+import { WardEditComponent } from '../../views/list/wards/wardedit/wardedit.component';
+import { NhomNguoiDungComponent } from '../../views/list/nhomnguoidung/nhomnguoidung.component';
+import { NhomNguoiDungEditComponent } from '../../views/list/nhomnguoidung/nhomnguoidungedit/nhomnguoidungedit.component';
+import { YardComponent } from '../../views/list/yard/yards.component';
+import { YardEditComponent } from '../../views/list/yard/yard-edit/yard-edit.component';
+import { ChucvuComponent } from 'app/views/list/chucvu/chucvu.component';
+import { ChucvuaddoreditComponent } from 'app/views/list/chucvu/chucvuaddoredit/chucvuaddoredit.component';
+import { DotthuComponent } from 'app/views/list/dotthu/dotthu.component';
+import { DotthuEditComponent } from 'app/views/list/dotthu/dotthu-edit/dotthu-edit.component';
+import { KhoanthuComponent } from 'app/views/list/khoanthu/khoanthu.component';
+import { KhoanthuEditComponent } from 'app/views/list/khoanthu/khoanthu-edit/khoanthu-edit.component';
+import { LuatuoiComponent } from 'app/views/list/luatuoi/luatuoi.component';
+import { LuatuoiEditComponent } from 'app/views/list/luatuoi/luatuoi-edit/luatuoi-edit.component';
+import { TrangthaihlvComponent } from 'app/views/list/trangthaihlv/trangthaihlv.component';
+import { TrangthaihlvEditComponent } from 'app/views/list/trangthaihlv/trangthaihlv-edit/trangthaihlv-edit.component';
+import { TrangthaihocvienComponent } from 'app/views/list/trangthaihocvien/trangthaihocvien.component';
+import { TrangthaihocvieneditComponent } from 'app/views/list/trangthaihocvien/trangthaihocvienedit/trangthaihocvienedit.component';
+import { TrangthailophocComponent } from 'app/views/list/trangthailophoc/trangthailophoc.component';
+import { TrangthailophoceditComponent } from 'app/views/list/trangthailophoc/trangthailophocedit/trangthailophocedit.component';
+import { TrainingGroundsComponent } from '../../views/list/trainingground/traininggrounds.component';
+import { TrainingGroundEditComponent } from '../../views/list/trainingground/trainningground-edit/trainingground-edit.component';
+import { AreaComponent } from '../../views/list/area/areas.component';
+import { AreaEditComponent } from '../../views/list/area/area-edit/area-edit.component';
+
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -58,9 +59,9 @@ export const AdminLayoutRoutes: Routes = [
         { path: 'edit', component: NhomNguoiDungEditComponent }
       ]},
       { path: 'santap',  children: [
-        { path: '', component: SanTapComponent },
-        { path: 'add', component: SanTapEditComponent },
-        { path: 'edit', component: SanTapEditComponent }
+        { path: '', component: YardComponent },
+        { path: 'add', component: YardEditComponent },
+        { path: 'edit', component: YardEditComponent }
       ]},
       { path: 'chucvu',  children:
       [
@@ -106,15 +107,15 @@ export const AdminLayoutRoutes: Routes = [
       ] },
       { path: 'baitap',  children:
       [
-        { path: '', component: BaiTapComponent },
-        { path: 'add', component: BaiTapEditComponent },
-        { path: 'edit', component: BaiTapEditComponent }
+        { path: '', component: TrainingGroundsComponent },
+        { path: 'add', component: TrainingGroundEditComponent },
+        { path: 'edit', component: TrainingGroundEditComponent }
       ] },
       { path: 'khuvuc',  children:
       [
-        { path: '', component: KhuVucComponent },
-        { path: 'add', component: KhuVucEditComponent },
-        { path: 'edit', component: KhuVucEditComponent }
+        { path: '', component: AreaComponent },
+        { path: 'add', component: AreaEditComponent },
+        { path: 'edit', component: AreaEditComponent }
       ] },
     ]
 },
@@ -124,9 +125,9 @@ export const AdminLayoutRoutes: Routes = [
       { 
         path: 'trungtam',
         children: [
-          { path: '', component: TrungtamComponent },
-          { path: 'add', component: TrungtamaddoreditComponent },
-          { path: 'edit', component: TrungtamaddoreditComponent }
+          { path: '', component: CentralComponent },
+          { path: 'add', component: CentralEditComponent },
+          { path: 'edit', component: CentralEditComponent }
         ] 
       }
     ]

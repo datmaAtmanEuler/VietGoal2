@@ -39,16 +39,21 @@
   </div>
     <ul class="nav">
         <li routerLinkActive="active" *ngFor="let menuItem of menuItems; let i = index;" class="{{menuItem.class}} nav-item">
-            <a (click)="xulyDropParents(i)" [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[menuItem.path]">
+            <a *ngIf="!(menuItem && menuItem.childrens && menuItem.childrens.length > 0)" (click)="xulyDropParents(i)" [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[menuItem.path]">
                 <i class="material-icons">{{menuItem.icon}}</i>
-                <p>{{menuItem.title | translate}}
-                    <i *ngIf="menuItem && menuItem.childrens && menuItem.childrens.length > 0" [ngClass]="{'icon-lenxuong-an': mini, 'icon-lenxuong-down': dropParent[i]}" class="icon-lenxuong material-icons icon-image-preview">chevron_left</i>
+                <p>{{menuItem.title | translate}} 
                 </p>
             </a>
+            <a *ngIf="menuItem && menuItem.childrens && menuItem.childrens.length > 0" (click)="xulyDropParents(i)" [ngClass]="{'nav-link-mini': mini}" class="nav-link">
+                <i class="material-icons">{{menuItem.icon}}</i>
+                <p>{{menuItem.title | translate}} 
+                    <i [ngClass]="{'icon-lenxuong-an': mini, 'icon-lenxuong-down': dropParent[i]}" class="icon-lenxuong material-icons icon-image-preview">chevron_left</i>
+                </p>
+            </a>
+            
         <ul [ngClass]="{'children-menu-item-none': mini || !dropParent[i]}" class="children-menu-item" *ngIf="menuItem && menuItem.childrens && menuItem.childrens.length > 0">
             <li routerLinkActive="active" *ngFor="let childMenuItem of menuItem.childrens" class="{{childMenuItem.class}} nav-item">
                 <a  [ngClass]="{'nav-link-mini': mini}" class="nav-link" [routerLink]="[childMenuItem.path]">
-                    <i class="material-icons"></i>
                     <p class="pl-3">{{childMenuItem.title | translate}}</p>
                 </a>
             </li>

@@ -34,20 +34,6 @@ import {
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
-import { ChucvuComponent } from 'app/views/list/chucvu/chucvu.component';
-import { ChucvuaddoreditComponent } from 'app/views/list/chucvu/chucvuaddoredit/chucvuaddoredit.component';
-import { DotthuComponent } from 'app/views/list/dotthu/dotthu.component';
-import { DotthuEditComponent } from 'app/views/list/dotthu/dotthu-edit/dotthu-edit.component';
-import { TrangthailophocComponent } from 'app/views/list/trangthailophoc/trangthailophoc.component';
-import { TrangthailophoceditComponent } from 'app/views/list/trangthailophoc/trangthailophocedit/trangthailophocedit.component';
-import { TrangthaihocvienComponent } from 'app/views/list/trangthaihocvien/trangthaihocvien.component';
-import { TrangthaihocvieneditComponent } from 'app/views/list/trangthaihocvien/trangthaihocvienedit/trangthaihocvienedit.component';
-import { TrangthaihlvComponent } from 'app/views/list/trangthaihlv/trangthaihlv.component';
-import { TrangthaihlvEditComponent } from 'app/views/list/trangthaihlv/trangthaihlv-edit/trangthaihlv-edit.component';
-import { KhoanthuComponent } from 'app/views/list/khoanthu/khoanthu.component';
-import { KhoanthuEditComponent } from 'app/views/list/khoanthu/khoanthu-edit/khoanthu-edit.component';
-import { LuatuoiComponent } from 'app/views/list/luatuoi/luatuoi.component';
-import { LuatuoiEditComponent } from 'app/views/list/luatuoi/luatuoi-edit/luatuoi-edit.component';
 import { TrainingGroundsComponent } from '../../views/list/trainingground/traininggrounds.component';
 import { TrainingGroundEditComponent } from '../../views/list/trainingground/trainningground-edit/trainingground-edit.component';
 import { AreaComponent } from '../../views/list/area/areas.component';
@@ -57,6 +43,20 @@ import { HasClaimDirective } from '../../directives/has-claim.directive';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { CategoriesComponent } from '../../views/controlmanagement/categories/categories.component';
 import { CategoryEditComponent } from '../../views/controlmanagement/categories/categoryedit/categoryedit.component';
+import { PositionComponent } from 'app/views/list/position/position.component';
+import { PositionEditComponent } from 'app/views/list/position/position-edit/position-edit.component';
+import { ClassStatusComponent } from 'app/views/list/classstatus/classstatus.component';
+import { ClassStatusEditComponent } from 'app/views/list/classstatus/classstatus-edit/classstatus-edit.component';
+import { StudentStatusComponent } from 'app/views/list/studentstatus/studentstatus.component';
+import { StudentStatusEditComponent } from 'app/views/list/studentstatus/studentstatus-edit/studentstatus-edit.component';
+import { CoachStatusComponent } from 'app/views/list/coachstatus/coachstatus.component';
+import { CoachStatusEditComponent } from 'app/views/list/coachstatus/CoachStatus-edit/CoachStatus-edit.component';
+import { CollectionComponent } from 'app/views/list/collections/collection.component';
+import { CollectionEditComponent } from 'app/views/list/collections/collection-edit/collection-edit.component';
+import { FeeComponent } from 'app/views/list/fees/fee.component';
+import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.component';
+import { AgeComponent } from 'app/views/list/ages/age.component';
+import { AgeEditComponent } from 'app/views/list/ages/Age-edit/Age-edit.component';
 
 
 @NgModule({
@@ -92,20 +92,20 @@ import { CategoryEditComponent } from '../../views/controlmanagement/categories/
     CentralEditComponent,
     NhomNguoiDungComponent,
     NhomNguoiDungEditComponent,
-    ChucvuComponent,
-    ChucvuaddoreditComponent,
-    TrangthailophocComponent,
-    TrangthailophoceditComponent,
-    TrangthaihocvienComponent,
-    TrangthaihocvieneditComponent,
-    TrangthaihlvComponent,
-    TrangthaihlvEditComponent,
-    DotthuComponent,
-    DotthuEditComponent,
-    KhoanthuComponent,
-    KhoanthuEditComponent,
-    LuatuoiComponent,
-    LuatuoiEditComponent,
+    PositionComponent,
+    PositionEditComponent,
+    ClassStatusComponent,
+    ClassStatusEditComponent,
+    StudentStatusComponent,
+    StudentStatusEditComponent,
+    CoachStatusComponent,
+    CoachStatusEditComponent,
+    CollectionComponent,
+    CollectionEditComponent,
+    FeeComponent,
+    FeeEditComponent,
+    AgeComponent,
+    AgeEditComponent,
     TrainingGroundsComponent,
     TrainingGroundEditComponent,
     AreaComponent,

@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { Demo1Component } from '../../views/demo1/demo1.component';
 import { ProvincesComponent } from '../../views/list/provinces/provinces.component';
 import { ProvinceEditComponent } from '../../views/list/provinces/provinceedit/provinceedit.component';
 import { CentralComponent } from '../../views/manage/central/central.component';
@@ -13,26 +12,26 @@ import { NhomNguoiDungComponent } from '../../views/list/nhomnguoidung/nhomnguoi
 import { NhomNguoiDungEditComponent } from '../../views/list/nhomnguoidung/nhomnguoidungedit/nhomnguoidungedit.component';
 import { YardComponent } from '../../views/list/yard/yards.component';
 import { YardEditComponent } from '../../views/list/yard/yard-edit/yard-edit.component';
-import { ChucvuComponent } from 'app/views/list/chucvu/chucvu.component';
-import { ChucvuaddoreditComponent } from 'app/views/list/chucvu/chucvuaddoredit/chucvuaddoredit.component';
-import { DotthuComponent } from 'app/views/list/dotthu/dotthu.component';
-import { DotthuEditComponent } from 'app/views/list/dotthu/dotthu-edit/dotthu-edit.component';
-import { KhoanthuComponent } from 'app/views/list/khoanthu/khoanthu.component';
-import { KhoanthuEditComponent } from 'app/views/list/khoanthu/khoanthu-edit/khoanthu-edit.component';
-import { LuatuoiComponent } from 'app/views/list/luatuoi/luatuoi.component';
-import { LuatuoiEditComponent } from 'app/views/list/luatuoi/luatuoi-edit/luatuoi-edit.component';
-import { TrangthaihlvComponent } from 'app/views/list/trangthaihlv/trangthaihlv.component';
-import { TrangthaihlvEditComponent } from 'app/views/list/trangthaihlv/trangthaihlv-edit/trangthaihlv-edit.component';
-import { TrangthaihocvienComponent } from 'app/views/list/trangthaihocvien/trangthaihocvien.component';
-import { TrangthaihocvieneditComponent } from 'app/views/list/trangthaihocvien/trangthaihocvienedit/trangthaihocvienedit.component';
-import { TrangthailophocComponent } from 'app/views/list/trangthailophoc/trangthailophoc.component';
-import { TrangthailophoceditComponent } from 'app/views/list/trangthailophoc/trangthailophocedit/trangthailophocedit.component';
 import { TrainingGroundsComponent } from '../../views/list/trainingground/traininggrounds.component';
 import { TrainingGroundEditComponent } from '../../views/list/trainingground/trainningground-edit/trainingground-edit.component';
 import { AreaComponent } from '../../views/list/area/areas.component';
 import { AreaEditComponent } from '../../views/list/area/area-edit/area-edit.component';
 import { CategoriesComponent } from '../../views/controlmanagement/categories/categories.component';
 import { CategoryEditComponent } from '../../views/controlmanagement/categories/categoryedit/categoryedit.component';
+import { PositionEditComponent } from 'app/views/list/position/position-edit/position-edit.component';
+import { PositionComponent } from 'app/views/list/position/position.component';
+import { ClassStatusEditComponent } from 'app/views/list/classstatus/classstatus-edit/classstatus-edit.component';
+import { ClassStatusComponent } from 'app/views/list/classstatus/classstatus.component';
+import { StudentStatusComponent } from 'app/views/list/studentstatus/studentstatus.component';
+import { StudentStatusEditComponent } from 'app/views/list/studentstatus/studentstatus-edit/studentstatus-edit.component';
+import { CoachStatusComponent } from 'app/views/list/coachstatus/coachstatus.component';
+import { CoachStatusEditComponent } from 'app/views/list/coachstatus/CoachStatus-edit/CoachStatus-edit.component';
+import { CollectionComponent } from 'app/views/list/collections/collection.component';
+import { CollectionEditComponent } from 'app/views/list/collections/collection-edit/collection-edit.component';
+import { FeeComponent } from 'app/views/list/fees/fee.component';
+import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.component';
+import { AgeComponent } from 'app/views/list/ages/age.component';
+import { AgeEditComponent } from 'app/views/list/ages/Age-edit/Age-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -66,45 +65,45 @@ export const AdminLayoutRoutes: Routes = [
       ]},
       { path: 'chucvu',  children:
       [
-        { path: '', component: ChucvuComponent },
-        { path: 'add', component: ChucvuaddoreditComponent },
-        { path: 'edit', component: ChucvuaddoreditComponent }
+        { path: '', component: PositionComponent },
+        { path: 'add', component: PositionEditComponent },
+        { path: 'edit', component: PositionEditComponent }
       ] },
       { path: 'trangthailophoc',  children:
       [
-        { path: '', component: TrangthailophocComponent },
-        { path: 'add', component: TrangthailophoceditComponent },
-        { path: 'edit', component: TrangthailophoceditComponent }
+        { path: '', component: ClassStatusComponent },
+        { path: 'add', component: ClassStatusEditComponent },
+        { path: 'edit', component: ClassStatusEditComponent }
       ] },
       { path: 'trangthaihocvien',  children:
       [
-        { path: '', component: TrangthaihocvienComponent },
-        { path: 'add', component: TrangthaihocvieneditComponent },
-        { path: 'edit', component: TrangthaihocvieneditComponent }
+        { path: '', component: StudentStatusComponent },
+        { path: 'add', component: StudentStatusEditComponent },
+        { path: 'edit', component: StudentStatusEditComponent }
       ] },
       { path: 'trangthaihlv',  children:
       [
-        { path: '', component: TrangthaihlvComponent },
-        { path: 'add', component: TrangthaihlvEditComponent },
-        { path: 'edit', component: TrangthaihlvEditComponent }
+        { path: '', component: CoachStatusComponent },
+        { path: 'add', component: CoachStatusEditComponent },
+        { path: 'edit', component: CoachStatusEditComponent }
       ] },
       { path: 'dotthu',  children:
       [
-        { path: '', component: DotthuComponent },
-        { path: 'add', component: DotthuEditComponent },
-        { path: 'edit', component: DotthuEditComponent }
+        { path: '', component: CollectionComponent },
+        { path: 'add', component: CollectionEditComponent },
+        { path: 'edit', component: CollectionEditComponent }
       ] },
       { path: 'khoanthu',  children:
       [
-        { path: '', component: KhoanthuComponent },
-        { path: 'add', component: KhoanthuEditComponent },
-        { path: 'edit', component: KhoanthuEditComponent }
+        { path: '', component: FeeComponent },
+        { path: 'add', component: FeeEditComponent },
+        { path: 'edit', component: FeeEditComponent }
       ] },
       { path: 'luatuoi',  children:
       [
-        { path: '', component: LuatuoiComponent },
-        { path: 'add', component: LuatuoiEditComponent },
-        { path: 'edit', component: LuatuoiEditComponent }
+        { path: '', component: AgeComponent },
+        { path: 'add', component: AgeEditComponent },
+        { path: 'edit', component: AgeEditComponent }
       ] },
       { path: 'baitap',  children:
       [

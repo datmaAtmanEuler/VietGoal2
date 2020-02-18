@@ -10,8 +10,6 @@ import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.componen
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { CentralFilter } from 'app/models/filter/centralfilter';
-import { MatPaginatorIntl } from '@angular/material';
-import { TranslateService } from '@ngx-translate/core';
 import { FormControl } from '@angular/forms';
 import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { ProvinceService } from 'app/services/list/province.service';

@@ -18,6 +18,7 @@ import { DistrictFilter } from 'app/models/filter/districtfilter';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { CentralEditComponent } from './central-edit/central-edit.component';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 @Component({
   selector: 'app-Central',
@@ -73,6 +74,8 @@ export class CentralComponent implements OnInit {
   ngOnInit() {
     this.reload();
     this.filtersEventsBinding();
+    const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+    new PerfectScrollbar(vgscroll);
   }
 
   filtersEventsBinding() {
@@ -167,7 +170,7 @@ export class CentralComponent implements OnInit {
     this.reload();
   }
   reload() {
-
+    this.filter.SearchTerm = this.searchTerm;
     this.loading = true;
     this.CentralList = [];
     this.service.getCentralsList(this.filter).subscribe((list: any) => {

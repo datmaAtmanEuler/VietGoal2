@@ -42,17 +42,17 @@ export class ScheduleComponent implements OnInit {
         utilsService.loadPaginatorLabels();
     }
     reload() {
-        // this.schedulesList = this.service.getListScheduledemo();
-        const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-        this.loading = true;
-        this.schedulesList = [];
-        this.service.getSchedulesList(filter).subscribe((list: any) => {
-            this.Total = (list && list[0]) ? list[0].Total : 0;
-            setTimeout(() => {
-                this.loading = false;
-                this.schedulesList = list || [];
-            }, 500);
-        });
+        this.schedulesList = this.service.getListScheduledemo();
+        // const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
+        // this.loading = true;
+        // this.schedulesList = [];
+        // this.service.getSchedulesList(filter).subscribe((list: any) => {
+        //     this.Total = (list && list[0]) ? list[0].Total : 0;
+        //     setTimeout(() => {
+        //         this.loading = false;
+        //         this.schedulesList = list || [];
+        //     }, 500);
+        // });
     }
 
     ngOnInit() {

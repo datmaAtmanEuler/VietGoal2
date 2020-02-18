@@ -5,20 +5,24 @@
                 <div class="card">
                     <div class="card-header card-header-warning" style="background: #023a54">
                         <h4 class="card-title">{{ "MESSAGE.NameList.Schedule" | translate }}</h4>
+                        <button (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-success btn-round btn-just-icon adding-btn">
+                            <i class="material-icons">add</i>
+                        </button>
                     </div>
-                    <div class="row pt-3 pl-2 pr-3">
-                        <div class="col-sm-6 input-group form-sm form-1 pl-0">
-                        </div>
-                        <div class="col-sm-6 input-group form-sm form-1 pl-0 search-form">
-                            <button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
-                                <i class="material-icons">add</i>
-                            </button>
-                            <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
-                                placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                            <div class="input-group-prepend">
-                                <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}" class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                </button>
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="offset-sm-8 col-sm-4 input-group form-sm form-1 search-form">
+                                        <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                                            placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
+                                        <div class="input-group-prepend">
+                                            <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}" class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">search</i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -26,8 +30,8 @@
                         <div class="col-12">
                             <div class="card-body table-responsive">
                                 <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
-                                <div class="vietgoal-table-settings style-1">
-                                <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
+                                <div class="vietgoal-table-settings vg-scroll">
+                                <table class="table table-condensed table-striped table-bordered table-hover">
                                     <thead>
                                         <ng-container
                                             *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
@@ -36,7 +40,7 @@
                                                 (click)="paginationSettings.sortAbles[colIndex] ? utilsService.toggleSort(colIndex,paginationSettings.sortToggles ,paginationSettings.sort ,paginationSettings.columnsNameMapping ,reload()) : utilsService.doNothing()">
                                                 <span
                                                     style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
-                                                    <i class="material-icons asc-sort-icons"
+                                                    <i style="float: none;" class="material-icons asc-sort-icons"
                                                         *ngIf="paginationSettings.sortAbles[colIndex]">
                                                         {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
                                                     </i>

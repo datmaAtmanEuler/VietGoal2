@@ -11,6 +11,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 
 import {TranslateService} from '@ngx-translate/core';
 import { elementAt } from 'rxjs/operators';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 @Component({
   selector: 'app-provinces',
@@ -70,7 +71,10 @@ export class ProvincesComponent implements OnInit {ModalDirective;
 
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	  this.reload();
+    this.reload();
+    
+    const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+    new PerfectScrollbar(vgscroll);
   }
   
   pageEvent(variable: any){

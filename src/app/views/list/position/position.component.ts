@@ -15,7 +15,7 @@ import { PositionEditComponent } from './position-edit/position-edit.component';
   styleUrls: ['./position.component.scss']
 })
 export class PositionComponent implements OnInit {
-  PositionList: Position[] = [];
+  positionList: Position[] = [];
   Position: Position;
   searchTerm: string = '';
   pageIndex: number = 1;
@@ -49,12 +49,12 @@ export class PositionComponent implements OnInit {
     const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
     // this.PositionList = this.service.getPositionList(filter);
     this.loading = true;
-    this.PositionList = [];
+    this.positionList = [];
     this.service.getPositionList(filter).subscribe((list: any) => {
       this.Total = (list && list[0]) ? list[0].Total : 0;
       setTimeout(() => {
         this.loading = false;
-        this.PositionList = list || [];
+        this.positionList = list || [];
       }, 500);
     });
   }

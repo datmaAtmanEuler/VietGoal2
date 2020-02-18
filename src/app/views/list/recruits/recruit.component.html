@@ -61,7 +61,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <mat-paginator [length]="(recruitsList && recruitsList[0]) ? recruitsList[0].Total : 0"
+                            <mat-paginator [length]="(recruitsList && recruitsList[0] && recruitsList[0].Total) ? recruitsList[0].Total : 0"
                                         [pageSize]="pageSize"
                                         [pageSizeOptions]="pageSizesList"
                                         (page)="pageEvent($event)">

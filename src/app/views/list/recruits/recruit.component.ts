@@ -17,8 +17,8 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
   styleUrls: ['./recruit.component.scss']
 })
 export class RecruitComponent implements OnInit {
-  recruitsList:Recruit[] = [];
-  recruit: Recruit;
+  recruitsList:any[] = [];
+  recruit: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];

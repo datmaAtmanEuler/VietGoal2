@@ -25,13 +25,13 @@ import { ClassStatusComponent } from 'app/views/list/classstatus/classstatus.com
 import { StudentStatusComponent } from 'app/views/list/studentstatus/studentstatus.component';
 import { StudentStatusEditComponent } from 'app/views/list/studentstatus/studentstatus-edit/studentstatus-edit.component';
 import { CoachStatusComponent } from 'app/views/list/coachstatus/coachstatus.component';
-import { CoachStatusEditComponent } from 'app/views/list/coachstatus/CoachStatus-edit/CoachStatus-edit.component';
+import { CoachStatusEditComponent } from 'app/views/list/coachstatus/coachstatus-edit/coachstatus-edit.component';
 import { CollectionComponent } from 'app/views/list/collections/collection.component';
 import { CollectionEditComponent } from 'app/views/list/collections/collection-edit/collection-edit.component';
 import { FeeComponent } from 'app/views/list/fees/fee.component';
 import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.component';
 import { AgeComponent } from 'app/views/list/ages/age.component';
-import { AgeEditComponent } from 'app/views/list/ages/Age-edit/Age-edit.component';
+import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.component';
 import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
 
 

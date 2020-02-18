@@ -39,7 +39,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <ng-container *ngFor="let cv of chucvuList; let i = index;">
+                      <ng-container *ngFor="let cv of positionList; let i = index;">
                         <tr>
                           <td>{{ i + 1 }}</td>
                           <td>{{ cv.PositionCode }}</td>
@@ -60,8 +60,8 @@
                     </tbody>
                   </table>
                 </div>
-                <mat-paginator [length]="100" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
-                  [showFirstLastButtons]="true" (page)="pageEvent($event)">
+                <mat-paginator [length]="100" [pageSize]="pageSize" [pageSizeOptions]="[1,2]"
+                  [showFirstLastButtons]="true" >
                 </mat-paginator>
               </div>
             </div>

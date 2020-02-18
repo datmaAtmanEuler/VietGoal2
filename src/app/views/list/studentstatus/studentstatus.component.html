@@ -38,7 +38,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <ng-container *ngFor="let dt of TrangThaiHocVienList; let i = index;">
+                                        <ng-container *ngFor="let dt of StudentStatusList; let i = index;">
                                             <tr>
                                                 <td>{{ util.padIntegerLeftWithZeros(i + 1, 3) }}</td>
                                                 <td>{{ dt.StudentStatusCode }}</td>
@@ -58,9 +58,9 @@
                                 </table></div>
                                 <mat-paginator [length]="100"
                                             [pageSize]="pageSize"
-                                            [pageSizeOptions]="pageSizesList"
+                                            [pageSizeOptions]="[2,3]"
                                         [showFirstLastButtons]="true"
-                                            (page)="pageEvent($event)">
+                                            >
                                 </mat-paginator>
                             </div>
                         </div>

@@ -14,9 +14,11 @@ import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
   styleUrls: ['./areas.component.scss']
 })
 export class AreaComponent implements OnInit {ModalDirective;
-  areasList:Area[] = [];
-  area: Area;
+  areasList:any[] = [];
+  area: any;
   searchTerm:string = '';
+  loading: boolean = false;
+  
   pageIndex:number = 1;
   pageSize:number = 20;
   currentUser: any;

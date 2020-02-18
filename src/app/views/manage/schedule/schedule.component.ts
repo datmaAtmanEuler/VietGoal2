@@ -55,6 +55,7 @@ export class ScheduleComponent implements OnInit {
         //     }, 500);
         // });
     }
+    add(){}
 
     ngOnInit() {
         this.reload();

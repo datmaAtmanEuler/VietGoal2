@@ -6,7 +6,7 @@ import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.componen
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CoachStatus } from 'app/models/list/coachstatus';
 import { CoachStatusService } from 'app/services/list/coachstatus.service';
-import { CoachStatusEditComponent } from './CoachStatus-edit/CoachStatus-edit.component';
+import { CoachStatusEditComponent } from './coachstatus-edit/coachstatus-edit.component';
 @Component({
   selector: 'app-coachstatus',
   templateUrl: './coachstatus.component.html',

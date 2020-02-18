@@ -62,11 +62,11 @@
                                         </ng-container>
                                     </tbody>    
                                 </table></div>
-                                <mat-paginator [length]="Total"
+                                <mat-paginator [length]="(areasList && areasList[0] && areasList[0].Total) ? areasList[0].Total : 0"
                                             [pageSize]="pageSize"
-                                            [pageSizeOptions]="pageSizesList"
+                                            [pageSizeOptions]="[1,23]"
                                         [showFirstLastButtons]="true"
-                                            (page)="pageEvent($event)">
+                                            >
                                 </mat-paginator>
                             </div>
                         </div>

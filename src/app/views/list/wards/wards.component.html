@@ -62,9 +62,9 @@
                                 </table></div>
                                 <mat-paginator [length]="100"
                                             [pageSize]="pageSize"
-                                            [pageSizeOptions]="pageSizesList"
+                                            [pageSizeOptions]="[1,2]"
                                         [showFirstLastButtons]="true"
-                                            (page)="pageEvent($event)">
+                                            >
                                 </mat-paginator>
                             </div>
                         </div>

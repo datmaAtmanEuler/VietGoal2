@@ -6,7 +6,7 @@ import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.componen
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Age } from 'app/models/list/age';
 import { AgeService } from 'app/services/list/age.service';
-import { AgeEditComponent } from './Age-edit/Age-edit.component';
+import { AgeEditComponent } from './age-edit/age-edit.component';
 
 @Component({
   selector: 'app-age',

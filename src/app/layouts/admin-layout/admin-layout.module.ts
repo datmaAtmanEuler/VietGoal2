@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { Demo1Component } from '../../views/demo1/demo1.component';
 import { ProvincesComponent } from '../../views/list/provinces/provinces.component';
 import { DistrictsComponent } from '../../views/list/districts/districts.component';
 import { DistrictEditComponent } from '../../views/list/districts/districtedit/districtedit.component';
@@ -50,14 +49,18 @@ import { ClassStatusEditComponent } from 'app/views/list/classstatus/classstatus
 import { StudentStatusComponent } from 'app/views/list/studentstatus/studentstatus.component';
 import { StudentStatusEditComponent } from 'app/views/list/studentstatus/studentstatus-edit/studentstatus-edit.component';
 import { CoachStatusComponent } from 'app/views/list/coachstatus/coachstatus.component';
-import { CoachStatusEditComponent } from 'app/views/list/coachstatus/CoachStatus-edit/CoachStatus-edit.component';
+import { CoachStatusEditComponent } from 'app/views/list/coachstatus/coachstatus-edit/coachstatus-edit.component';
 import { CollectionComponent } from 'app/views/list/collections/collection.component';
 import { CollectionEditComponent } from 'app/views/list/collections/collection-edit/collection-edit.component';
 import { FeeComponent } from 'app/views/list/fees/fee.component';
 import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.component';
+import {RecruitComponent} from 'app/views/list/recruits/recruit.component';
 import { AgeComponent } from 'app/views/list/ages/age.component';
-import { AgeEditComponent } from 'app/views/list/ages/Age-edit/Age-edit.component';
+
 import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
+import { from } from 'rxjs';
+import { RecruitEditComponent } from 'app/views/list/recruits/recruit-edit/recruit-edit.component';
+import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.component';
 
 @NgModule({
   imports: [
@@ -105,13 +108,16 @@ import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component'
     FeeComponent,
     FeeEditComponent,
     AgeComponent,
-    AgeEditComponent,
     TrainingGroundsComponent,
     TrainingGroundEditComponent,
     AreaComponent,
     AreaEditComponent,
     HasClaimDirective,
-    ScheduleComponent
+    ScheduleComponent,
+    RecruitEditComponent,
+    RecruitComponent,
+    CoachStatusEditComponent,
+    AgeEditComponent
   ]
 })
 

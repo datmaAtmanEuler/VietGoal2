@@ -60,7 +60,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <mat-paginator [length]="(categoriesList && categoriesList[0]) ? categoriesList[0].Total : 0"
+                            <mat-paginator [length]="(categoriesList && categoriesList[0] && categoriesList[0].Total) ? categoriesList[0].Total : 0"
                                         [pageSize]="pageSize"
                                         [pageSizeOptions]="pageSizesList"
                                         [showFirstLastButtons]="true"

@@ -19,8 +19,8 @@ import PerfectScrollbar from 'perfect-scrollbar';
   styleUrls: ['./provinces.component.scss']
 })
 export class ProvincesComponent implements OnInit {ModalDirective;
-  provincesList:Province[] = [];
-  province: Province;
+  provincesList:any[] = [];
+  province: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];

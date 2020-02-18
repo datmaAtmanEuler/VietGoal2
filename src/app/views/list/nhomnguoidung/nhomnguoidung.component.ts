@@ -15,7 +15,7 @@ import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
 })
 export class NhomNguoiDungComponent implements OnInit {
 
-  NhomNguoiDungList:NhomNguoiDung[] = [];
+  nhomnguoidungList:NhomNguoiDung[] = [];
   nhomnguoidung: NhomNguoiDung;
   searchTerm:string = '';
   pageIndex:number = 1;

@@ -18,8 +18,8 @@ import { elementAt } from 'rxjs/operators';
   styleUrls: ['./categories.component.scss']
 })
 export class CategoriesComponent implements OnInit {ModalDirective;
-  categoriesList: Category[] = [];
-  category: Category;
+  categoriesList: any[] = [];
+  category: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];

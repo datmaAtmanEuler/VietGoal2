@@ -29,7 +29,7 @@ export class PositionService {
     }
 
     addOrUpdatePosition(Position: Position, by: null | number): Observable<any> {
-        if(Position.ID == 0) {
+        if(Position.Id == 0) {
             Position.CreatedBy = by;
         } else {
             Position.UpdatedBy = by;

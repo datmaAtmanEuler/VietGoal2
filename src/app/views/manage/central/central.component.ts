@@ -83,7 +83,7 @@ export class CentralComponent implements OnInit {
         startWith(''),
         debounceTime(500),
         tap(() => {
-          this.errorMsg = "";
+          this.errorMsg = "ko loi";
           this.listprovince = [];
           this.isLoading = true;
         }),

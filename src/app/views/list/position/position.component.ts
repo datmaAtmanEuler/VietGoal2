@@ -40,7 +40,7 @@ export class PositionComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
     modalRef.componentInstance.confirmObject = 'Position';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deletePosition(Position.ID, this.currentUser.UserId).subscribe(()=>{
+      _this.service.deletePosition(Position.Id, this.currentUser.UserId).subscribe(()=>{
         _this.reload();
       });
     });

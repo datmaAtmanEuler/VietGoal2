@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { UtilsService } from 'app/services/utils.service';
-import { TranslateService } from '@ngx-translate/core';
-import { MatPaginatorIntl } from '@angular/material/paginator';
 import { Schedule } from 'app/models/schedule';
 import { ScheduleService } from 'app/services/schedule.service';
 import { Filter } from 'app/models/filter/filter';

@@ -1,11 +1,13 @@
 export class LuaTuoi{
     Id: number;
-    TenLuaTuoi: string;
-    MaLuaTuoi: string;
+    AgeName: string;
+    AgeCode: string;
+    CreatedBy: number;
+    UpdatedBy: number;
 
-    constructor(Id: number, MaLuaTuoi:string ,TenLuaTuoi: string){
+    constructor(Id: number, AgeCode:string ,AgeName: string){
         this.Id = Id;
-        this.TenLuaTuoi = TenLuaTuoi;
-        this.MaLuaTuoi = MaLuaTuoi;
+        this.AgeName = AgeName;
+        this.AgeCode = AgeCode;
     }
 }

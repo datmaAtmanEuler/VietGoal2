@@ -1,11 +1,13 @@
 export class DotThu{
     Id: number;
-    TenDotThu: string;
-    MaDotThu: string;
+    CollectionName: string;
+    CollectionCode: string;
+    CreatedBy: number;
+    UpdatedBy: number;
 
-    constructor(Id: number, MaDotThu:string ,TenDotThu: string){
+    constructor(Id: number, CollectionCode:string ,CollectionName: string){
         this.Id = Id;
-        this.TenDotThu = TenDotThu;
-        this.MaDotThu = MaDotThu;
+        this.CollectionName = CollectionName;
+        this.CollectionCode = CollectionCode;
     }
 }

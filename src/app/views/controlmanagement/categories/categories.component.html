@@ -4,13 +4,13 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-warning" style="background: #023a54">
-                        <h4 class="card-title">{{ "MESSAGE.NameList.ProvincesList" | translate }}</h4>
+                        <h4 class="card-title">{{ "MESSAGE.NameList.CategoriesList" | translate }}</h4>
                     </div>
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-8 input-group form-sm form-1 pl-0">
                         </div>
                         <div class="col-sm-4 input-group form-sm form-1 pl-0 pull-right search-form">
-                            <button mat-raised-button *hasClaim="['CanAddProvinces']" type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
+                            <button mat-raised-button *hasClaim="['CanAddCategories']" type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
                                 <i class="material-icons">add</i>
                             </button>
                             <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
@@ -41,16 +41,16 @@
                                             </ng-container>
                                         </thead>
                                         <tbody>
-                                            <ng-container *ngFor="let province of provincesList; let i = index;">
+                                            <ng-container *ngFor="let category of categoriesList; let i = index;">
                                                 <tr>
                                                     <td width="100px">{{ i + 1}}</td>
-                                                    <td>{{ province.ProvinceCode }}</td>
-                                                    <td>{{ province.ProvinceName }}</td>
+                                                    <td>{{ category.CategoryCode }}</td>
+                                                    <td>{{ category.CategoryName }}</td>
                                                     <td width="150px" class="my-action-item">
-                                                        <button mat-raised-button type="button" *hasClaim="['CanEditProvinces']" (click)="edit(province.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                        <button mat-raised-button type="button" *hasClaim="['CanEditCategories']" (click)="edit(category.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                             <i class="material-icons">edit</i>
                                                         </button>
-                                                        <button mat-raised-button *hasClaim="['CanDeleteProvinces']" type="button" (click)="remove(province)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                        <button mat-raised-button *hasClaim="['CanDeleteCategories']" type="button" (click)="remove(category)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                             <i class="material-icons">close</i>
                                                         </button>
                                                     </td>
@@ -60,7 +60,7 @@
                                     </table>
                                 </div>
                             </div>
-                            <mat-paginator [length]="(provincesList && provincesList[0]) ? provincesList[0].Total : 0"
+                            <mat-paginator [length]="(categoriesList && categoriesList[0]) ? categoriesList[0].Total : 0"
                                         [pageSize]="pageSize"
                                         [pageSizeOptions]="pageSizesList"
                                         [showFirstLastButtons]="true"

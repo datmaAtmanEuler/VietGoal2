@@ -1,11 +1,13 @@
 export class KhoanThu{
     Id: number;
-    TenKhoanThu: string;
-    MaKhoanThu: string;
+    FeeName: string;
+    FeeCode: string;
+    CreatedBy: number;
+    UpdatedBy: number;
 
-    constructor(Id: number, MaKhoanThu:string ,TenKhoanThu: string){
+    constructor(Id: number, FeeCode:string ,FeeName: string){
         this.Id = Id;
-        this.TenKhoanThu = TenKhoanThu;
-        this.MaKhoanThu = MaKhoanThu;
+        this.FeeName = FeeName;
+        this.FeeCode = FeeCode;
     }
 }

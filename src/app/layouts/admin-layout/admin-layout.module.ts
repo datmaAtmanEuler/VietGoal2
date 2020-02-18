@@ -55,6 +55,8 @@ import { AreaEditComponent } from '../../views/list/area/area-edit/area-edit.com
 
 import { HasClaimDirective } from '../../directives/has-claim.directive';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import { CategoriesComponent } from '../../views/controlmanagement/categories/categories.component';
+import { CategoryEditComponent } from '../../views/controlmanagement/categories/categoryedit/categoryedit.component';
 
 
 @NgModule({
@@ -75,8 +77,9 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatProgressSpinnerModule,MatPaginatorModule
   ],
   declarations: [
+    CategoriesComponent,
+    CategoryEditComponent,
     DashboardComponent,
-    Demo1Component,
     ProvincesComponent,
     DistrictsComponent,
     DistrictEditComponent,

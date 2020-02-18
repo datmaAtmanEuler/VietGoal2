@@ -1,5 +1,5 @@
 <div class="wrapper">
-    <div [ngClass]="{'mini-sidebar': mini}" class="sidebar" data-color="danger" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
+    <div [ngClass]="{'mini-sidebar': mini}" class="sidebar" style="background: rgba(200, 200, 200, 0.2)" data-color="danger" data-background-color="white" data-image="./assets/img/sidebar-1.jpg">
         <app-sidebar (sidebarUpdate)="updateSidebar($event)"></app-sidebar>
         <div class="sidebar-background" style="background-image: url(./assets/img/sidebar-2.jpg)"></div>
     </div>

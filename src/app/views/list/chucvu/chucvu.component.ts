@@ -15,16 +15,20 @@ import { ChucvuaddoreditComponent } from './chucvuaddoredit/chucvuaddoredit.comp
   styleUrls: ['./chucvu.component.scss']
 })
 export class ChucvuComponent implements OnInit {
-  chucvuList:Chucvu[] = [];
+  chucvuList: Chucvu[] = [];
   chucvu: Chucvu;
-  searchTerm:string = '';
-  pageIndex:number = 1;
-  pageSize:number = 20;
+  searchTerm: string = '';
+  pageIndex: number = 1;
+  currentUser: any;
+  pageSize: number = 20;
+  Total:number;
+  loading: boolean;
   constructor(public util: UtilsService, config: NgbModalConfig, private service: ChucvuService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
-   }
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  }
 
   ngOnInit() {
     this.reload();
@@ -36,13 +40,23 @@ export class ChucvuComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
     modalRef.componentInstance.confirmObject = 'Position';
     modalRef.componentInstance.decide.subscribe(() => {
-	_this.service.deleteChucvu(chucvu.Id);
+      _this.service.deleteChucvu(chucvu.ID, this.currentUser.UserId).subscribe(()=>{
         _this.reload();
+      });
     });
   }
   reload() {
     const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-    this.chucvuList = this.service.getChucvuList(filter);
+    // this.chucvuList = this.service.getChucvuList(filter);
+    this.loading = true;
+    this.chucvuList = [];
+    this.service.getChucvuList(filter).subscribe((list: any) => {
+      this.Total = (list && list[0]) ? list[0].Total : 0;
+      setTimeout(() => {
+        this.loading = false;
+        this.chucvuList = list || [];
+      }, 500);
+    });
   }
   add() {
     this.edit(null);
@@ -53,8 +67,8 @@ export class ChucvuComponent implements OnInit {
     const modalRef = this.modalService.open(ChucvuaddoreditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
     modalRef.componentInstance.chucvuId = chucvuId;
-    modalRef.result.then(function(result) {
-        _this.reload();
+    modalRef.result.then(function (result) {
+      _this.reload();
     });
   }
 }

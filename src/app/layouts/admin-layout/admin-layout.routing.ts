@@ -31,12 +31,13 @@ import { TrainingGroundsComponent } from '../../views/list/trainingground/traini
 import { TrainingGroundEditComponent } from '../../views/list/trainingground/trainningground-edit/trainingground-edit.component';
 import { AreaComponent } from '../../views/list/area/areas.component';
 import { AreaEditComponent } from '../../views/list/area/area-edit/area-edit.component';
+import { CategoriesComponent } from '../../views/controlmanagement/categories/categories.component';
+import { CategoryEditComponent } from '../../views/controlmanagement/categories/categoryedit/categoryedit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
-    { path: 'demo1',      component: Demo1Component },
-{ path: 'danhmuc', children:
+    { path: 'danhmuc', children:
     [
       { path: 'tinhthanh',  children: [
         { path: '', component: ProvincesComponent },
@@ -128,6 +129,19 @@ export const AdminLayoutRoutes: Routes = [
           { path: '', component: CentralComponent },
           { path: 'add', component: CentralEditComponent },
           { path: 'edit', component: CentralEditComponent }
+        ] 
+      }
+    ]
+},
+{ 
+    path: 'controlmanagement',
+    children:[
+      { 
+        path: 'categories',
+        children: [
+          { path: '', component: CategoriesComponent },
+          { path: 'add', component: CategoryEditComponent },
+          { path: 'edit', component: CategoryEditComponent }
         ] 
       }
     ]

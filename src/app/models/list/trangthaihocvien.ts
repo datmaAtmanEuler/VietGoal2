@@ -1,15 +1,17 @@
 export class TrangThaiHocVien{
     Id: number;
-    SoThuTu: number;
-    TenTrangThai: string;
-    MaTrangThai: string;
-    MaMau: string;
+    DisplayOrder: number;
+    StudentStatusName: string;
+    StudentStatusCode: string;
+    StudentStatusColor: string;
+    CreatedBy: number;
+    UpdatedBy: number;
 
-    constructor(Id: number, SoThuTu: number, TenTrangThai: string, MaTrangThai: string, MaMau: string) {
+    constructor(Id: number, DisplayOrder: number, StudentStatusName: string, StudentStatusCode: string, StudentStatusColor: string) {
         this.Id = Id;
-        this.SoThuTu = SoThuTu;
-        this.TenTrangThai = TenTrangThai;
-        this.MaTrangThai = MaTrangThai;
-        this.MaMau = MaMau;
+        this.DisplayOrder = DisplayOrder;
+        this.StudentStatusName = StudentStatusName;
+        this.StudentStatusCode = StudentStatusCode;
+        this.StudentStatusColor = StudentStatusColor;
     }
 }

@@ -28,6 +28,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card-body table-responsive">
+                                <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
                                 <div class="vietgoal-table-settings style-1">
                                 <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
                                     <thead>
@@ -59,11 +60,12 @@
                                                 </td>
                                             </tr>
                                         </ng-container>
-                                    </tbody>
+                                    </tbody>    
                                 </table></div>
-                                <mat-paginator [length]="100"
+                                <mat-paginator [length]="Total"
                                             [pageSize]="pageSize"
                                             [pageSizeOptions]="pageSizesList"
+                                        [showFirstLastButtons]="true"
                                             (page)="pageEvent($event)">
                                 </mat-paginator>
                             </div>

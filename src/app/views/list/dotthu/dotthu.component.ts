@@ -18,6 +18,8 @@ export class DotthuComponent implements OnInit {
 
   dotthuList: DotThu[] = [];
   DotThu: DotThu;
+  loading: boolean;
+  Total: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
@@ -33,7 +35,16 @@ export class DotthuComponent implements OnInit {
   
   reload() {
     const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-    this.dotthuList = this.service.getDotThuList(filter);
+    // this.dotthuList = this.service.getDotThuList(filter);
+    this.loading = true;
+    this.dotthuList = [];
+    this.service.getDotThuList(filter).subscribe((list: any) => {
+      this.Total = (list && list[0]) ? list[0].Total : 0;
+      setTimeout(() => {
+        this.loading = false;
+        this.dotthuList = list || [];
+      }, 500);
+    });
   }
   add() {
     this.edit(null);

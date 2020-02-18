@@ -32,7 +32,7 @@ export class CentralEditComponent implements OnInit {
 	listprovince: any;
 	listdistrict: any;
 	listward: any;
-	Central: Central = new Central(0, '', '', '', null, 0, '', '', '', true);
+	central: Central = new Central(0, '', '', '', null, 0, '', '', '', true);
 
 	searchProvincesCtrl = new FormControl();
 	searchDistrictsCtrl = new FormControl();
@@ -74,10 +74,10 @@ export class CentralEditComponent implements OnInit {
 	GetCentralById(Id: number) {
 		this.CentralService.getCentral((Id) ? Id : this.CentralId).subscribe(
 			(aCentral) => {
-				this.Central = aCentral || new Central(0, '', '', '', null, 0, '', '', '', true);
+				this.central = aCentral || new Central(0, '', '', '', null, 0, '', '', '', true);
 			},
 			() => {
-				this.Central = new Central(0, '', '', '', null, 0, '', '', '', true);
+				this.central = new Central(0, '', '', '', null, 0, '', '', '', true);
 			}
 		);
 	}
@@ -186,7 +186,7 @@ export class CentralEditComponent implements OnInit {
 		console.log(this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined ? this.searchProvincesCtrl.value.ID : 'a');
 		console.log(this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined ? this.searchDistrictsCtrl.value.ID : 'b');
 		console.log(this.searchWardsCtrl.value && this.searchWardsCtrl.value.ID != undefined ? this.searchWardsCtrl.value.ID : 'c');
-		this.CentralService.addOrUpdateCentral(this.Central, this.currentUser.UserId).subscribe(
+		this.CentralService.addOrUpdateCentral(this.central, this.currentUser.UserId).subscribe(
 			() => {
 				if (!this.popup) {
 					this.ReturnList();

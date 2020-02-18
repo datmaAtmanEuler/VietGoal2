@@ -4,11 +4,11 @@
         <form>
             <div class="form-group row">
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.MaTrungTam"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.CentralCode"
                         class="form-control" placeholder="{{'MESSAGE.NameList.CentralCode' |translate}}">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TenTrungTam"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.CentralName"
                         class="form-control" placeholder="{{'MESSAGE.NameList.CentralName' |translate}}">
                 </div>
                 <div class="col-md-6 alert" role="alert">
@@ -54,25 +54,25 @@
                     </mat-autocomplete>
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DiaChi"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.DiaChi"
                         class="form-control" placeholder="{{'MESSAGE.NameList.Address' |translate}}">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DienThoai"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.DienThoai"
                         class="form-control" placeholder="{{'MESSAGE.phone_holder' |translate}}">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.NgayThanhLap"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.NgayThanhLap"
                         class="form-control" placeholder="Ngày Thành Lập">
                 </div>
                 <div class="col-md-12 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DTKhuonVien"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.DTKhuonVien"
                         class="form-control" placeholder="{{'MESSAGE.NameList.CampusArea' |translate}}">
                 </div>
                 <div class="col-md-12 alert" role="alert">
                     <div class="form-check custom-checkbox">
                         <label class="form-check-label">
-                            <input class="form-check-input" type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="trungtam.isHienThi" value="" checked>
+                            <input class="form-check-input" type="checkbox" [ngModelOptions]="{standalone: true}" [(ngModel)]="central.isHienThi" value="" checked>
                             <span class="form-check-sign">
                                 <span class="check"></span>
                             </span>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="col-md-12 alert" role="alert">
-                    <textarea [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.GhiChu"
+                    <textarea [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.GhiChu"
                         class="form-control" placeholder="{{'MESSAGE.NameList.Note' |translate}}"></textarea>
                 </div>
             </div>
@@ -96,15 +96,15 @@
         <form>
             <div class="form-group row">
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.MaTrungTam"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.CentralName"
                         class="form-control" placeholder="Ma Trung Tam">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TenTrungTam"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.TenTrungTam"
                         class="form-control" placeholder="Ten Trung Tam">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <!-- <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.TinhThanh" 
+                    <!-- <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.TinhThanh" 
                     class="form-control">
                         <option value="" disabled selected>Tinh, Thanh</option>
                         <option value="tinh1">tinh1</option>
@@ -126,43 +126,43 @@
                       </mat-form-field>
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.QuanHuyen" 
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.QuanHuyen" 
                     class="form-control">
                         <option value="" disabled selected>Quan, Huyen</option>
                         <option value="quan1">quan1</option>
                     </select>
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.PhuongXa" 
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.PhuongXa" 
                     class="form-control">
                         <option value="" disabled selected>Phuong, Xa</option>
                         <option value="xa1">xa1</option>
                     </select>
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DiaChi"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.DiaChi"
                         class="form-control" placeholder="Dia Chi">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DienThoai"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.DienThoai"
                         class="form-control" placeholder="Dien thoai">
                 </div>
                 <div class="col-md-6 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.NgayThanhLap"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.NgayThanhLap"
                         class="form-control" placeholder="Ngay Thanh Lap">
                 </div>
                 <div class="col-md-12 alert" role="alert">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.DTKhuonVien"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.DTKhuonVien"
                         class="form-control" placeholder="DT Khuong Vien">
                 </div>
                 <div class="col-md-12 alert" role="alert">
                     <div class="form-check" style="text-align: left;">
-                        <input class="form-check-input" [ngModelOptions]="{standalone: true}" type="checkbox" [(ngModel)]="trungtam.isHienThi" id="mdb-checkbox-1" tabindex="0">
+                        <input class="form-check-input" [ngModelOptions]="{standalone: true}" type="checkbox" [(ngModel)]="central.isHienThi" id="mdb-checkbox-1" tabindex="0">
                         <label class="form-check-label" for="mdb-checkbox-1">Hiển Thị</label>
                     </div>
                 </div>
                 <div class="col-md-12 alert" role="alert">
-                    <textarea [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="trungtam.GhiChu"
+                    <textarea [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.GhiChu"
                         class="form-control" placeholder="Ghi Chu"></textarea>
                 </div>
             </div>

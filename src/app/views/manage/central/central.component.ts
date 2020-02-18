@@ -42,7 +42,6 @@ export class CentralComponent implements OnInit {
   searchWardsCtrl = new FormControl();
 
   isLoading = false;
-  errorMsg: string;
   /**
   * BEGIN SORT SETTINGS
   */
@@ -83,7 +82,6 @@ export class CentralComponent implements OnInit {
         startWith(''),
         debounceTime(500),
         tap(() => {
-          this.errorMsg = "";
           this.listprovince = [];
           this.isLoading = true;
         }),
@@ -97,10 +95,8 @@ export class CentralComponent implements OnInit {
       )
       .subscribe(data => {
         if (data == undefined) {
-          this.errorMsg = 'error';
           this.listprovince = [{ notfound: 'Not Found' }];
         } else {
-          this.errorMsg = "";
           this.listprovince = data.length ? data : [{ notfound: 'Not Found' }];
         }
 
@@ -109,7 +105,6 @@ export class CentralComponent implements OnInit {
       startWith(''),
       debounceTime(500),
       tap(() => {
-        this.errorMsg = "";
         this.listdistrict = [];
         this.isLoading = true;
       }),
@@ -123,10 +118,8 @@ export class CentralComponent implements OnInit {
     )
       .subscribe(data => {
         if (data == undefined) {
-          this.errorMsg = 'error';
           this.listdistrict = [{ notfound: 'Not Found' }];
         } else {
-          this.errorMsg = "";
           this.listdistrict = data.length ? data : [{ notfound: 'Not Found' }];
         }
 
@@ -135,7 +128,6 @@ export class CentralComponent implements OnInit {
       startWith(''),
       debounceTime(500),
       tap(() => {
-        this.errorMsg = "";
         this.listward = [];
         this.isLoading = true;
       }),
@@ -149,10 +141,8 @@ export class CentralComponent implements OnInit {
     )
       .subscribe(data => {
         if (data == undefined) {
-          this.errorMsg = 'error';
           this.listward = [{ notfound: 'Not Found' }];
         } else {
-          this.errorMsg = "";
           this.listward = data.length ? data : [{ notfound: 'Not Found' }];
         }
 

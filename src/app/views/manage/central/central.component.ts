@@ -31,14 +31,10 @@ export class CentralComponent implements OnInit {
   CentralList: any[] = [];
   Central: Central;
   searchTerm: string = '';
-  pageIndex: number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize: number = this.pageSizesList[3];
   pageSizeFilter: number = 20;
   currentUser: any;
-  provinceId: null | number = null;
-  districtId: null | number = null;
-  wardId: null | number = null;
   Total: number;
   listprovince: any;
   listdistrict: any;
@@ -68,7 +64,7 @@ export class CentralComponent implements OnInit {
   /**
    * END SORT SETTINGS
    */
-  filter: CentralFilter = new CentralFilter(this.searchTerm, this.pageIndex, this.pageSize, this.provinceId, this.districtId, this.wardId, this.paginationSettings.sort.SortName, this.paginationSettings.sort.SortDirection);
+  filter: CentralFilter = new CentralFilter(this.searchTerm, 1, this.pageSize, null, null, null, this.paginationSettings.sort.SortName, this.paginationSettings.sort.SortDirection);
 
   constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: CentralService, private router: Router, private modalService: NgbModal,
     private provinceService: ProvinceService, private districtService: DistrictService, private http: HttpClient) {
@@ -178,8 +174,9 @@ export class CentralComponent implements OnInit {
     });
   }
   pageEvent(variable: any) {
-    this.pageIndex = variable.pageIndex + 1;
-    this.pageSize = variable.pageSize;
+    this.filter = new CentralFilter(this.searchTerm, 1, this.pageSize, null, null, null, this.paginationSettings.sort.SortName, this.paginationSettings.sort.SortDirection);
+    this.filter.PageIndex = variable.pageIndex + 1;
+    this.filter.PageSize = variable.pageSize;
     this.reload();
   }
   reload() {

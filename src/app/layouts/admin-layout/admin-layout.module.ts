@@ -57,7 +57,7 @@ import { FeeComponent } from 'app/views/list/fees/fee.component';
 import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.component';
 import { AgeComponent } from 'app/views/list/ages/age.component';
 import { AgeEditComponent } from 'app/views/list/ages/Age-edit/Age-edit.component';
-
+import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
 
 @NgModule({
   imports: [
@@ -110,7 +110,8 @@ import { AgeEditComponent } from 'app/views/list/ages/Age-edit/Age-edit.componen
     TrainingGroundEditComponent,
     AreaComponent,
     AreaEditComponent,
-    HasClaimDirective
+    HasClaimDirective,
+    ScheduleComponent
   ]
 })
 

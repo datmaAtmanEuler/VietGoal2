@@ -61,8 +61,7 @@ export class CentralComponent implements OnInit {
       null
     ],
     columnsName: ['Order', 'CentralName', 'Address', 'CampusArea', 'Note', 'Action'],
-    columnsNameMapping: ['ID', 'CentralName', 'Address', 'CampusArea', 'Discription', 'Action'],
-    columnsNameVi: ['', 'CentralName', 'Address', 'CampusArea', 'Discription', ''],
+    columnsNameMapping: ['Id', 'CentralName', 'Address', 'CampusArea', 'Discription', 'Action'],
     sortAbles: [false, true, true, true, true, false],
     visibles: [true, true, true, true, true, true]
   }
@@ -71,18 +70,13 @@ export class CentralComponent implements OnInit {
    */
   filter: CentralFilter = new CentralFilter(this.searchTerm, this.pageIndex, this.pageSize, this.provinceId, this.districtId, this.wardId, this.paginationSettings.sort.SortName, this.paginationSettings.sort.SortDirection);
 
-  constructor(public utilsService: UtilsService, private translate: TranslateService, private matCus: MatPaginatorIntl, config: NgbModalConfig, private service: CentralService, private router: Router, private modalService: NgbModal,
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: CentralService, private router: Router, private modalService: NgbModal,
     private provinceService: ProvinceService, private districtService: DistrictService, private http: HttpClient) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
-    utilsService.updateMatTableLabel();
-    translate.onLangChange.subscribe((a: any) => {
-      utilsService.updateMatTableLabel();
-      matCus.changes.next();
-    });
+    utilsService.loadPaginatorLabels();
   }
   ngOnInit() {
     this.reload();

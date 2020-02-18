@@ -17,9 +17,9 @@ export class ClassStatusComponent implements OnInit {
 
   ClassStatusList: ClassStatus[] = [];
   ClassStatus: ClassStatus;
-  searchTerm:string = '';
-  pageIndex:number = 1;
-  pageSize:number = 20;
+  searchTerm: string = '';
+  pageIndex: number = 1;
+  pageSize: number = 20;
   currentUser: any;
   loading: boolean;
   Total: any;
@@ -28,12 +28,12 @@ export class ClassStatusComponent implements OnInit {
     config.keyboard = false;
     config.scrollable = false;
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-   }
+  }
 
   ngOnInit() {
     this.reload();
   }
-  
+
   reload() {
     const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
     this.loading = true;
@@ -61,13 +61,13 @@ export class ClassStatusComponent implements OnInit {
       });
     });
   }
-edit(ClassStatusid: null | number) {
+  edit(ClassStatusid: null | number) {
     const _this = this;
     const modalRef = this.modalService.open(ClassStatusEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
     modalRef.componentInstance.ClassStatusId = ClassStatusid;
-    modalRef.result.then(function(result) {
-        _this.reload();
+    modalRef.result.then(function (result) {
+      _this.reload();
     });
   }
 }

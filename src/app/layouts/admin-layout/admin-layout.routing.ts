@@ -32,6 +32,7 @@ import { FeeComponent } from 'app/views/list/fees/fee.component';
 import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.component';
 import { AgeComponent } from 'app/views/list/ages/age.component';
 import { AgeEditComponent } from 'app/views/list/ages/Age-edit/Age-edit.component';
+import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -128,6 +129,14 @@ export const AdminLayoutRoutes: Routes = [
           { path: '', component: CentralComponent },
           { path: 'add', component: CentralEditComponent },
           { path: 'edit', component: CentralEditComponent }
+        ] 
+      },
+      { 
+        path: 'thoikhoabieu',
+        children: [
+          { path: '', component: ScheduleComponent },
+          // { path: 'add', component: CentralEditComponent },
+          // { path: 'edit', component: CentralEditComponent }
         ] 
       }
     ]

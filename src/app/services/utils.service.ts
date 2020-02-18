@@ -79,6 +79,17 @@ export class UtilsService {
   doNothing(): void { }
 
   getColumnValue(obj: any, colIndex: number, columnsNameVi: any[]): any {
+    console.log('load');
+    console.log(obj);
+    console.log(colIndex);
+    console.log(columnsNameVi);
     return obj[columnsNameVi[colIndex]];
+  }
+  loadPaginatorLabels(){
+    this.updateMatTableLabel();
+    this.translate.onLangChange.subscribe((a: any) => {
+      this.updateMatTableLabel();
+      this.matCus.changes.next();
+    });
   }
 }  

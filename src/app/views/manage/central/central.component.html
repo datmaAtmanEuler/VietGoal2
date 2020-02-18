@@ -104,14 +104,14 @@
                                             </ng-container>
                                         </thead>
                                         <tbody>
-                                            <ng-container *ngFor="let tt of trungtamList; let i = index;">
+                                            <ng-container *ngFor="let tt of CentralList; let i = index;">
                                                 <tr>
                                                     <td>{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
                                                     <ng-container
                                                         *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
                                                         <td
                                                             *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
-                                                            {{ utilsService.getColumnValue(tt, colIndex, paginationSettings.columnsNameVi) }}
+                                                            {{ utilsService.getColumnValue(tt, colIndex, paginationSettings.columnsNameMapping) }}
                                                         </td>
                                                     </ng-container>
                                                     <td class="my-action-item">

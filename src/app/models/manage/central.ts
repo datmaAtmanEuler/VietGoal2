@@ -1,8 +1,13 @@
-export class Central{
+export class Class{
     Id: number;
-    CentralCode: string;
-    CentralName: string;
-    Address: string;
+    ClassCode: string;
+    ClassName: string;
+    AreaId: number;
+    YardId: number;
+    TraningGroundId: number;
+    DisplayOrder: number;
+    ManagerId: number;
+    CoachId: number;
     Area: number;
     WardId: number;
     Phone: string;
@@ -12,10 +17,10 @@ export class Central{
     CreatedBy: number;
     UpdatedBy: number;
     
-    constructor(Id: number, CentralCode: string, CentralName: string, Address: string, Area: number, WardId: number, Phone: string, EstablishedDate: string, Description: string, Visible: boolean){
+    constructor(Id: number, ClassCode: string, ClassName: string, Address: string, Area: number, WardId: number, Phone: string, EstablishedDate: string, Description: string, Visible: boolean){
         this.Id = Id;
-        this.CentralCode = CentralCode;
-        this.CentralName = CentralName;
+        this.ClassCode = ClassCode;
+        this.ClassName = ClassName;
         this.Address = Address;
         this.Area = Area;
         this.WardId = WardId;

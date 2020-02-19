@@ -317,3 +317,15 @@ footer{
 .vg-scroll{
     position: relative;
 }
+.children-menu-item li{
+    position: relative;
+    &:before {
+        content: 'brightness_1';
+        font-family: 'Material Icons';
+        position: absolute;
+        font-size: 10px;
+        top: 50%;
+        left: -18px;
+        transform: translateY(-50%);
+    }
+}

@@ -14,7 +14,7 @@ import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-boots
 export class ProvinceImportComponent implements OnInit {
 	currentUser: any;
 	_files: any = null;
-	disable: boolean = true;
+	disabled: boolean = true;
 	errorsList: any[] = [];
 	successList: any[] = [];
 
@@ -46,7 +46,7 @@ export class ProvinceImportComponent implements OnInit {
 
 
 	finishUpload(fileUploadResult: any) {
-		this.disable = false;
+		this.disabled = false;
 		const _this = this;
 		if(fileUploadResult && fileUploadResult.length > 0) {
 			this.importViewModel.FileDinhKem = [];

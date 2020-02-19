@@ -11,7 +11,7 @@
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.CentralName"
                         class="form-control" placeholder="{{'MESSAGE.NameList.CentralName' |translate}}">
                 </div>
-                <div class="col-md-6 alert" role="alert">
+                <div class="col-md-6  alert" role="alert">
                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Province' |translate}}"  [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
                     <mat-autocomplete #provinceAC="matAutocomplete" (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)" [displayWith]="displayProvinceFn">
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">

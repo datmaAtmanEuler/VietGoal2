@@ -8,6 +8,7 @@ import { ProvincesComponent } from '../../views/list/provinces/provinces.compone
 import { DistrictsComponent } from '../../views/list/districts/districts.component';
 import { DistrictEditComponent } from '../../views/list/districts/districtedit/districtedit.component';
 import { ProvinceEditComponent } from '../../views/list/provinces/provinceedit/provinceedit.component';
+import { ProvinceImportComponent } from 'app/views/list/provinces/province-import/province-import.component';
 import { CentralComponent } from '../../views/manage/central/central.component';
 import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
 import { WardsComponent } from '../../views/list/wards/wards.component';
@@ -17,6 +18,7 @@ import { NhomNguoiDungEditComponent } from '../../views/list/nhomnguoidung/nhomn
 import { YardComponent } from '../../views/list/yard/yards.component';
 import { YardEditComponent } from '../../views/list/yard/yard-edit/yard-edit.component';
 
+import { FileUploadModule } from '../../shared/file-upload/file-upload.module';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -64,6 +66,7 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
 
 @NgModule({
   imports: [
+    FileUploadModule,
     NgbModalModule,
     TranslateModule,
     CommonModule,
@@ -77,7 +80,8 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
     MatSelectModule,
     MatTooltipModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule,MatPaginatorModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
   declarations: [
     CategoriesComponent,
@@ -91,6 +95,7 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
     WardsComponent,
     WardEditComponent,
     ProvinceEditComponent,
+    ProvinceImportComponent,
     CentralComponent,
     CentralEditComponent,
     NhomNguoiDungComponent,
@@ -118,7 +123,8 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
     RecruitComponent,
     CoachStatusEditComponent,
     AgeEditComponent
-  ]
+  ],
+  entryComponents: [ProvinceImportComponent],
 })
 
 export class AdminLayoutModule {}

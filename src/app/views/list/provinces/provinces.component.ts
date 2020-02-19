@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProvinceService } from '../../../services/list/province.service';
 import { Province } from '../../../models/list/province';
 import { ProvinceEditComponent } from './provinceedit/provinceedit.component';
+import { ProvinceImportComponent } from './province-import/province-import.component';
 import { Filter } from '../../../models/filter/filter';
 import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
 import { Router } from '@angular/router'; 
@@ -169,4 +170,22 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   }
   
   doNothing(): void {}
+
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(ProvinceImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Provinces_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
 }

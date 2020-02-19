@@ -3,6 +3,7 @@ import { Province } from '../../models/list/province';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { ImportViewModel } from '../../models/importviewmodel';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,13 @@ export class ProvinceService {
 
     deleteProvince(id: number, deletedBy: number): Observable<any> {
         return this.http.delete(environment.serverUrl_employee + `provinces/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    }
+
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `provinces/import`, importViewModel , this.httpOptions);
     }
 }

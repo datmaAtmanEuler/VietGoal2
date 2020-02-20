@@ -8,8 +8,8 @@ import { DistrictsComponent } from '../../views/list/districts/districts.compone
 import { DistrictEditComponent } from '../../views/list/districts/districtedit/districtedit.component';
 import { WardsComponent } from '../../views/list/wards/wards.component';
 import { WardEditComponent } from '../../views/list/wards/wardedit/wardedit.component';
-import { UserGroupComponent } from '../../views/list/usergroups/usergroup.component';
-import { UserGroupEditComponent } from '../../views/list/usergroups/usergroup-edit/usergroup-edit.component';
+import { NhomNguoiDungComponent } from '../../views/list/nhomnguoidung/nhomnguoidung.component';
+import { NhomNguoiDungEditComponent } from '../../views/list/nhomnguoidung/nhomnguoidungedit/nhomnguoidungedit.component';
 import { YardComponent } from '../../views/list/yard/yards.component';
 import { YardEditComponent } from '../../views/list/yard/yard-edit/yard-edit.component';
 import { TrainingGroundsComponent } from '../../views/list/trainingground/traininggrounds.component';
@@ -33,8 +33,6 @@ import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.componen
 import { AgeComponent } from 'app/views/list/ages/age.component';
 import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.component';
 import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
-import { ClassComponent } from '../../views/manage/class/class.component';
-import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -57,9 +55,9 @@ export const AdminLayoutRoutes: Routes = [
         { path: 'edit', component: WardEditComponent }
       ]},
       { path: 'nhomnguoidung',  children: [
-        { path: '', component: UserGroupComponent },
-        { path: 'add', component: UserGroupEditComponent },
-        { path: 'edit', component: UserGroupEditComponent }
+        { path: '', component: NhomNguoiDungComponent },
+        { path: 'add', component: NhomNguoiDungEditComponent },
+        { path: 'edit', component: NhomNguoiDungEditComponent }
       ]},
       { path: 'santap',  children: [
         { path: '', component: YardComponent },
@@ -140,15 +138,7 @@ export const AdminLayoutRoutes: Routes = [
           // { path: 'add', component: CentralEditComponent },
           // { path: 'edit', component: CentralEditComponent }
         ] 
-      },
-      { 
-        path: 'class',
-        children: [
-          { path: '', component: ClassComponent },
-          { path: 'add', component: ClassEditComponent },
-          { path: 'edit', component: ClassEditComponent }
-        ] 
-      },
+      }
     ]
 },
 { 

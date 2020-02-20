@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
-import { UserGroup } from '../../models/list/usergroup';
+import { NhomNguoiDung } from '../../models/list/nhomnguoidung';
+import { Filter } from '../../models/filter/filter';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class UserGroupService {
+export class NhomNguoiDungService {
     httpOptions = {  
         headers: new HttpHeaders({  
           'Content-Type': 'application/json; charset=utf-8'  
@@ -24,13 +25,13 @@ export class UserGroupService {
         return this.http.get(environment.serverUrl_employee + `AdministrationOfUserGroups/${id}`,this.httpOptions);
     }
 
-    addOrUpdateNhom(usergroup: UserGroup , by: null | number): Observable<any> {
-        if(usergroup.Id != 0 && usergroup.Id){
-            usergroup.UpdatedBy = by;
+    addOrUpdateNhom(nhomnguoidung: NhomNguoiDung , by: null | number): Observable<any> {
+        if(nhomnguoidung.ID != 0 && nhomnguoidung.ID){
+            nhomnguoidung.UpdatedBy = by;
         }else{
-            usergroup.CreatedBy = by;
+            nhomnguoidung.CreatedBy = by;
         }
-        return this.http.post(environment.serverUrl_employee + `AdministrationOfUserGroups/save`,usergroup,this.httpOptions);
+        return this.http.post(environment.serverUrl_employee + `AdministrationOfUserGroups/save`,nhomnguoidung,this.httpOptions);
     }
 
     deleteNhom(id: number , deleteBy : number): Observable<any> {

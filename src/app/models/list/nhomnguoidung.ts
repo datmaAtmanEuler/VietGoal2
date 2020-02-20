@@ -1,5 +1,5 @@
-export class UserGroup {
-	Id: null | number;
+export class NhomNguoiDung {
+	ID: null | number;
 	AdministrationOfUserGroupName: string;
 	Deleted: boolean;
     CreatedDate: null | Date;
@@ -8,9 +8,9 @@ export class UserGroup {
     UpdatedBy: null | number;
 	DeletedBy: null | number;
     
-	constructor(Id: null | number, AdministrationOfUserGroupName: string, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
+	constructor(ID: null | number, AdministrationOfUserGroupName: string, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
 		UpdatedBy: null | number, DeletedBy: null | number) {
-			this.Id = Id;
+			this.ID = ID;
 			this.AdministrationOfUserGroupName = AdministrationOfUserGroupName;
 			this.Deleted = Deleted;
 			this.CreatedDate = CreatedDate;

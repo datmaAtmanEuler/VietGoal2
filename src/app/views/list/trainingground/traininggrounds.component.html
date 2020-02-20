@@ -7,58 +7,19 @@
                         <h4 class="card-title">{{ "MESSAGE.NameList.YardArea" | translate }}</h4>
                     </div>
                     <div class="row pt-3 pl-2 pr-3">
-                        <div class="col-sm-9 input-group form-sm form-1 pl-0">
-                            <div class="row" style="padding-left: 50px;">
-
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
-                                        [matAutocomplete]="AreasAC" [formControl]="searchAressCtrl">
-                                    <mat-autocomplete #AresAC="matAutocomplete"
-                                        (optionSelected)="changeAres(searchAressCtrl.value.ID)"
-                                        [displayWith]="displayAresFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Areas of listarea" [value]="AreaId">
-                                                <span *ngIf="!Ares.notfound">{{Areas.AreasName}}</span>
-                                                <span *ngIf="Ares.notfound" class="nofind">{{Areas.notfound}}</span>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-                                </div>
-                                
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
-                                        [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
-                                    <mat-autocomplete #YardAC="matAutocomplete"
-                                        (optionSelected)="changeDistrict(searchYardsCtrl.value.ID)"
-                                        [displayWith]="displayYardFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Yard of listYard" [value]="YardId">
-                                                <span *ngIf="!Yard.notfound">{{Yard.YardName}}</span>
-                                                <span *ngIf="Yard.notfound" class="nofind">{{Yard.notfound}}</span>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-                                </div>
-                                
-                            </div>
+                        <div class="col-sm-6 input-group form-sm form-1 pl-0">
                         </div>
-                        <div class="col-sm-3 input-group form-sm form-1 pl-0 search-form search-form">
-                            <button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}"
-                                class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
+                        <div class="col-sm-6 input-group form-sm form-1 pl-0 search-form">
+
+                            
+                            <button mat-raised-button  type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
                                 <i class="material-icons">add</i>
                             </button>
+
                             <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
                                 placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
                             <div class="input-group-prepend">
-                                <button type="button" (click)="reload()"
-                                    title="{{ 'MESSAGE.NameList.Search' | translate}}"
-                                    class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
+                                <button mat-raised-button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}" class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
                                     <i class="material-icons">search</i>
                                 </button>
                             </div>

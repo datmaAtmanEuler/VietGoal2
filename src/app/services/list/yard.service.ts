@@ -27,7 +27,7 @@ export class YardService {
     }
 
     addOrUpdateYard(yard: Yard, by: null | number): Observable<any> {
-        yard.DisplayOrder = parseInt(yard.DisplayOrder + '');
+        yard.SoThuTu = parseInt(yard.SoThuTu + '');
         if (yard.Id != 0 && yard.Id) {
             yard.UpdatedBy = by;
         } else {

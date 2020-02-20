@@ -1,6 +1,6 @@
 import { Component, OnInit, Input,ViewEncapsulation } from '@angular/core';
-import { UserGroupService } from '../../../../services/list/usergroup.service';
-import { UserGroup } from '../../../../models/list/usergroup';
+import { UserGroupService } from '../../../../services/acl/usergroup.service';
+import { UserGroup } from '../../../../models/acl/usergroup';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';

@@ -1,6 +1,6 @@
 import { Component, OnInit} from '@angular/core';
-import { UserGroupService } from '../../../services/list/usergroup.service';
-import { UserGroup } from '../../../models/list/usergroup';
+import { UserGroupService } from '../../../services/acl/usergroup.service';
+import { UserGroup } from '../../../models/acl/usergroup';
 import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';

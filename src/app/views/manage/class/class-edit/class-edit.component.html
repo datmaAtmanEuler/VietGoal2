@@ -1,5 +1,6 @@
 <div class="modal-body" *ngIf="popup">
     <div class="text-center border border-light p-5">
+<<<<<<< Updated upstream
         <p class="h4 mb-4">Central Information duy</p>
         <form>
             <div class="form-group row">
@@ -14,18 +15,36 @@
                 <div class="col-md-6 alert" role="alert">
                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Province' |translate}}"  [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
                     <mat-autocomplete #provinceAC="matAutocomplete" (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)" [displayWith]="displayProvinceFn">
+=======
+        <p class="h4 mb-4">Class Information</p>
+        <form>
+            <div class="form-group row">
+                <div class="col-md-6 alert" role="alert">
+                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
+                        [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
+                    <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
+                        [displayWith]="displayAreaFn">
+>>>>>>> Stashed changes
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                             <mat-spinner></mat-spinner>
                         </mat-option>
                         <ng-container *ngIf="!isLoading">
+<<<<<<< Updated upstream
                         <mat-option *ngFor="let province of listprovince" [value]="province">
                             <span *ngIf="!province.notfound">{{province.ProvinceName}}</span>
                             <span *ngIf="province.notfound" class="nofind">{{province.notfound}}</span>
                         </mat-option>
+=======
+                            <mat-option *ngFor="let area of areasList" [value]="area">
+                                <span *ngIf="area">{{area.AreaName}}</span>
+                                <span *ngIf="!area" class="nofind">Not found</span>
+                            </mat-option>
+>>>>>>> Stashed changes
                         </ng-container>
                     </mat-autocomplete>
                 </div>
                 <div class="col-md-6 alert" role="alert">
+<<<<<<< Updated upstream
                     <input class="form-control" placeholder="{{'MESSAGE.NameList.District' |translate}}"  [matAutocomplete]="districtAC" [formControl]="searchDistrictsCtrl">
                     <mat-autocomplete #districtAC="matAutocomplete" (optionSelected)="changeDistrict(searchDistrictsCtrl.value.ID)" [displayWith]="displayDistrictFn">
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
@@ -36,10 +55,25 @@
                             <span *ngIf="!district.notfound">{{district.DistrictName}}</span>
                             <span *ngIf="district.notfound" class="nofind">{{district.notfound}}</span>
                         </mat-option>
+=======
+                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
+                        [matAutocomplete]="yardAC" [formControl]="searchYardsCtrl">
+                    <mat-autocomplete #yardAC="matAutocomplete" (optionSelected)="changeYard(searchYardsCtrl.value.ID)"
+                        [displayWith]="displayYardFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let yard of yardsList" [value]="yard">
+                                <span *ngIf="yard">{{yard.YardName}}</span>
+                                <span *ngIf="!yard" class="nofind">Not found</span>
+                            </mat-option>
+>>>>>>> Stashed changes
                         </ng-container>
                     </mat-autocomplete>
                 </div>
                 <div class="col-md-6 alert" role="alert">
+<<<<<<< Updated upstream
                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Ward' |translate}}"  [matAutocomplete]="wardAC" [formControl]="searchWardsCtrl">
                     <mat-autocomplete #wardAC="matAutocomplete" [displayWith]="displayWardFn">
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
@@ -50,10 +84,24 @@
                             <span *ngIf="!ward.notfound">{{ward.WardName}}</span>
                             <span *ngIf="ward.notfound" class="nofind">{{ward.notfound}}</span>
                         </mat-option>
+=======
+                    <input class="form-control" placeholder="{{'MESSAGE.NameList.TrainingGround' |translate}}"
+                        [matAutocomplete]="trainingGroundAC" [formControl]="searchTrainingGroundsCtrl">
+                    <mat-autocomplete #trainingGroundAC="matAutocomplete" [displayWith]="displayTrainingGroundFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let trainingGround of trainingGroundsList" [value]="trainingGround">
+                                <span *ngIf="trainingGround">{{trainingGround.TrainingGroundName}}</span>
+                                <span *ngIf="!trainingGround" class="nofind">"Not found"</span>
+                            </mat-option>
+>>>>>>> Stashed changes
                         </ng-container>
                     </mat-autocomplete>
                 </div>
                 <div class="col-md-6 alert" role="alert">
+<<<<<<< Updated upstream
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="central.DiaChi"
                         class="form-control" placeholder="{{'MESSAGE.NameList.Address' |translate}}">
                 </div>
@@ -173,3 +221,99 @@
 </div>
 
 
+=======
+                    <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="class.DisplayOrder"
+                        class="form-control" placeholder="{{'MESSAGE.NameList.DisplayOrder' |translate}}">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="class.ClassCode"
+                        class="form-control" placeholder="{{'MESSAGE.NameList.ClassCode' |translate}}">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="class.ClassName"
+                        class="form-control" placeholder="{{'MESSAGE.NameList.ClassName' |translate}}">
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input class="form-control" placeholder="Manager" [matAutocomplete]="managerAC"
+                        [formControl]="searchManagersCtrl">
+                    <mat-autocomplete #managerAC="matAutocomplete" [displayWith]="displayManagerFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let manager of managersList" [value]="manager">
+                                <span *ngIf="manager">{{manager.UserName}}</span>
+                                <span *ngIf="!manager" class="nofind">Not found</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input class="form-control" placeholder="Main coach" [matAutocomplete]="mainCoachAC"
+                        [formControl]="searchMainCoachsCtrl">
+                    <mat-autocomplete #mainCoachAC="matAutocomplete" [displayWith]="displayMainCoachFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let mainCoach of mainCoachsList" [value]="mainCoach">
+                                <span *ngIf="mainCoach">{{mainCoach.UserName}}</span>
+                                <span *ngIf="!mainCoach" class="nofind">Not found</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input class="form-control" placeholder="Vice coach" [matAutocomplete]="viceCoachAC"
+                        [formControl]="searchViceCoachsCtrl">
+                    <mat-autocomplete #viceCoachAC="matAutocomplete" [displayWith]="displayViceCoachFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let viceCoach of viceCoachsList" [value]="viceCoach">
+                                <span *ngIf="viceCoach">{{viceCoach.UserName}}</span>
+                                <span *ngIf="!viceCoach" class="nofind">Not found</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <input class="form-control" placeholder="Ages" [matAutocomplete]="ageAC"
+                        [formControl]="searchAgesCtrl">
+                    <mat-autocomplete #ageAC="matAutocomplete" [displayWith]="displayAgeFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let age of agesList" [value]="age">
+                                <span *ngIf="age">{{age.AgeName}}</span>
+                                <span *ngIf="!age" class="nofind">Not found</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="class.Week">
+                        <option>---- Select week ----</option>
+                        <ng-container *ngFor="let week of weeksList">
+                            <option [value]="week">{{ weeksListName[week - 1] }}</option>
+                        </ng-container>
+                    </select>
+                </div>
+                <div class="col-md-6 alert" role="alert">
+                    <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="class.ShiftDay">
+                        <option>---- Select shift day ----</option>
+                        <ng-container *ngFor="let shiftDay of shiftDaysList">
+                            <option [value]="shiftDay">{{ shiftDaysListName[shiftDay - 1] }}</option>
+                        </ng-container>
+                    </select>
+                </div>
+            </div>
+        </form>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()"
+            alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
+        <button class="btn btn-info" (click)="UpdateClass()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
+    </div>
+</div>
+>>>>>>> Stashed changes

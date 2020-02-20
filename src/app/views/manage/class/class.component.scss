@@ -1,4 +1,5 @@
 .classic-admin-card .card-body {
+<<<<<<< Updated upstream
   color: #fff;
   margin-bottom: 0;
   padding: 0.9rem;
@@ -161,3 +162,167 @@ height: 38px;
 }
 }
 //End - Confirm settings
+=======
+    color: #fff;
+    margin-bottom: 0;
+    padding: 0.9rem;
+  }
+  
+  .classic-admin-card .card-body p {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-bottom: 0;
+  }
+  
+  .classic-admin-card .card-body h4 {
+    margin-top: 10px;
+  }
+  
+  .classic-admin-card .card-body .float-right .fa {
+    font-size: 3rem;
+    opacity: 0.5;
+  }
+  
+  .classic-admin-card .progress {
+    margin: 0;
+    opacity: 0.7;
+  }
+  
+  .table-ui {
+    border: 1px solid #e0e0e9;
+  }
+  
+  .blue-gradient {
+    background: -webkit-linear-gradient(50deg, #45cafc, #303f9f);
+    background: linear-gradient(40deg, #45cafc, #4285f4);
+  }
+  
+  .card.card-cascade {
+    .view {
+        box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.15), 0 3px 12px 0 rgba(0, 0, 0, 0.15);
+    }
+  }
+  .fa.fa-plus {
+  color: #05ff0c;
+  display: inline-block;
+  margin: 3px 0px;
+  width: 25px;
+  height: 25px;
+  padding-top: 6px;
+  text-align: center;
+  border-radius: 50%;
+  &:hover {
+    color: white;
+    cursor: pointer;
+    &:active {
+      color: white;
+    }
+    background: green;
+    -webkit-box-shadow: 0px 1px 2px 1px #05ff0c;
+    -moz-box-shadow:    0px 1px 2px 1px #05ff0c;
+    box-shadow:         0px 1px 2px 1px #05ff0c;
+  }
+  }
+  
+  .fa.fa-pen {
+  color: #007bff;
+  display: inline-block;
+  margin: 3px 0px;
+  width: 25px;
+  height: 25px;
+  padding-top: 6px;
+  text-align: center;
+  border-radius: 50%;
+  &:hover {
+    color: white;
+    cursor: pointer;
+    &:active {
+      color: white;
+    }
+    background: #0d47a1;
+    -webkit-box-shadow: 0px 1px 2px 1px #007bff;
+    -moz-box-shadow:    0px 1px 2px 1px #007bff;
+    box-shadow:         0px 1px 2px 1px #007bff;
+  }
+  }
+  
+  .fa.fa-trash {
+  color: #ff7b00;
+  display: inline-block;
+  margin: 3px 0px;
+  width: 25px;
+  height: 25px;
+  padding-top: 6px;
+  text-align: center;
+  border-radius: 50%;
+  &:hover {
+    color: white;
+    cursor: pointer;
+    &:active {
+      color: white;
+    }
+    background: #ff0000;
+    -webkit-box-shadow: 0px 1px 2px 1px #ff7b00;
+    -moz-box-shadow:    0px 1px 2px 1px #ff7b00;
+    box-shadow:         0px 1px 2px 1px #ff7b00;
+  }
+  }
+  .style-1::-webkit-scrollbar {
+  width: 10px;
+  background-color: #F5F5F5;
+  height: 10px;
+  }
+  .style-1::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  }
+  .style-1::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  background-color: #F5F5F5;
+  }
+  .my-employees-area{
+  min-height: 700px;
+  }
+  //Begin - Confirm settings
+  .btn-button {
+  margin: auto;
+  margin-bottom: 11px;
+  }
+  .confirm {
+  text-align: center;
+  margin-bottom: 0;
+  font-weight: 500;
+  font-size: 28px;
+  color: #000000;
+  }
+  .button-save {
+  cursor: pointer;
+  margin: 0.375rem;
+  color: white;
+  border: 1px solid #3BC7EF;
+  background: #337ab7;
+  border-radius: 4px;
+  width: 129px;
+  height: 38px;
+  &:hover {
+    -webkit-box-shadow: 0px 1px 2px 1px #26c3cc;
+    -moz-box-shadow:    0px 1px 2px 1px #26c3cc;
+    box-shadow:         0px 1px 2px 1px #26c3cc;
+  }
+  }
+  .button-cancel {
+  cursor: pointer;
+  margin: 0.375rem;
+  color: white;
+  border: 1px solid #3BC7EF;
+  background: red;
+  border-radius: 4px;
+  width: 129px;
+  height: 38px;
+  &:hover {
+    -webkit-box-shadow: 0px 1px 2px 1px #26c3cc;
+    -moz-box-shadow:    0px 1px 2px 1px #26c3cc;
+    box-shadow:         0px 1px 2px 1px #26c3cc;
+  }
+  }
+  //End - Confirm settings
+>>>>>>> Stashed changes

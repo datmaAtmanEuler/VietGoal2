@@ -19,13 +19,13 @@ export class ClassService {
     constructor(private http: HttpClient) {
     }
 
-    getClasssList(filter: any): Observable<any>  {
+    getClassList(filter: any): Observable<any>  {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.serverUrl + 'Classs?' + queryString , this.httpOptions);
+        return this.http.get(environment.serverUrl + 'Class?' + queryString , this.httpOptions);
     }
     
     getClass(id: any): Observable<any>  {
-        return this.http.get(environment.serverUrl + `Classs/${id}` , this.httpOptions);
+        return this.http.get(environment.serverUrl + `Class/${id}` , this.httpOptions);
     }
 
     addOrUpdateClass(Class: Class, by: null | number): Observable<any> {
@@ -34,10 +34,10 @@ export class ClassService {
         } else {
             Class.UpdatedBy = by;
         }
-        return this.http.post(environment.serverUrl + `Classs`, Class, this.httpOptions);
+        return this.http.post(environment.serverUrl + `Class/save`, Class, this.httpOptions);
     }
 
     deleteClass(ClassId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Classs/${ClassId}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.serverUrl + `Class/${ClassId}?deletedBy=${deletedBy}` , this.httpOptions);
     }
 }

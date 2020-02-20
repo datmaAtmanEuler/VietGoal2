@@ -56,7 +56,7 @@ export class YardComponent implements OnInit {
 
 reload() {
   const _this = this;
-  const filter: YardFilter = new YardFilter(this.searchTerm, this.pageIndex, this.pageSize, null,null, this.sort.SortName, this.sort.SortDirection);
+  const filter: YardFilter = new YardFilter(this.searchTerm, this.pageIndex, this.pageSize,null, this.sort.SortName, this.sort.SortDirection);
   _this.service.getYardsList(filter).subscribe((yardList: Yard[]) => {
     _this.yardsList = yardList;
   });

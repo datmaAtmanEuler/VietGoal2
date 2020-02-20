@@ -26,7 +26,7 @@ export class YardEditComponent implements OnInit {
 	searchCentralsCtrl = new FormControl();
 	searchAreasCtrl = new FormControl();
 	isLoading = false;
-	yard: Yard = new Yard(0,'', '', 0,0,null,'','',null,null,null,null,0,0,0,0);
+	yard: Yard = {};
 
 	constructor( config: NgbModalConfig, private modalService: NgbModal,public activeModal: NgbActiveModal, private trungtamService: CentralService, private santapService: YardService, private route: ActivatedRoute, private router: Router) {
 		this.Id = this.route.snapshot.queryParams['Id'];

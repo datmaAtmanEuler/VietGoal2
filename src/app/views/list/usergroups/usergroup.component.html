@@ -10,7 +10,7 @@
                         <div class="col-sm-8 input-group form-sm form-1 pl-0">
                         </div>
                         <div class="col-sm-4 input-group form-sm form-1 pl-0 pull-right search-form">
-                            <button mat-raised-button *hasClaim="['CanAddAdministrationOfUserGroups']" type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2 mat-raised-button">
+                            <button mat-raised-button *hasClaim="['CanAddUserGroup']" type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2 mat-raised-button">
                                 <i class="material-icons">add</i>
                             </button>
                             <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
@@ -38,15 +38,15 @@
                                         </ng-container>
                                     </thead>
                                     <tbody>
-                                        <ng-container *ngFor="let nhomnguoidung of nhomnguoidungList; let i = index;">
+                                        <ng-container *ngFor="let usergroup of usergroupList; let i = index;">
                                             <tr>
                                                 <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ nhomnguoidung.TenNhomNguoiDung }}</td>
+                                                <td>{{ usergroup.AdministrationOfUserGroupName }}</td>
                                                 <td width="150px" class="my-action-item">
-                                                    <button mat-raised-button type="button" *hasClaim="['CanEditAdministrationOfUserGroups']" (click)="edit(nhomnguoidung.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <button mat-raised-button type="button" *hasClaim="['CanEditAdministrationOfUserGroups']" (click)="edit(usergroup.Id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
-                                                    <button mat-raised-button *hasClaim="['CanDeleteAdministrationOfUserGroups']" type="button" (click)="remove(nhomnguoidung)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                    <button mat-raised-button *hasClaim="['CanDeleteAdministrationOfUserGroups']" type="button" (click)="remove(usergroup)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                         <i class="material-icons">close</i>
                                                     </button>
                                                 </td>

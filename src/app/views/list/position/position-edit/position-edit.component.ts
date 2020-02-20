@@ -16,7 +16,7 @@ export class PositionEditComponent implements OnInit {
 	@Input() PositionId: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
 
-	Position: Position = new Position(0, '', '', 0);
+	position: Position = new Position(0, '', '', 0);
 	currentUser: any;
 
 	constructor(public activeModal: NgbActiveModal, private PositionService: PositionService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
@@ -30,10 +30,10 @@ export class PositionEditComponent implements OnInit {
 	GetPositionById(PositionId: number) {
 		this.PositionService.getPosition((PositionId) ? PositionId : this.PositionId).subscribe(
 			(object) => {
-				this.Position = object || new Position(0, '', '', 0);
+				this.position = object || new Position(0, '', '', 0);
 			},
 			() => {
-				this.Position = new Position(0, '', '', 0);
+				this.position = new Position(0, '', '', 0);
 			}
 		);
 	}
@@ -47,7 +47,7 @@ export class PositionEditComponent implements OnInit {
 	}
 
 	UpdatePosition() {
-		this.PositionService.addOrUpdatePosition(this.Position, this.currentUser.UserId).subscribe(
+		this.PositionService.addOrUpdatePosition(this.position, this.currentUser.UserId).subscribe(
 			() => {
 				if (!this.popup) {
 					this.ReturnList();

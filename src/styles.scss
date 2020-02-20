@@ -58,6 +58,9 @@ a:hover {
 .nav-link.nav-link-mini{
     padding: 2px 8px !important;
 }
+.children-menu-item{
+    list-style: none;
+}
 .children-menu-item-none{
     display: none;
 }
@@ -323,9 +326,14 @@ footer{
         content: 'brightness_1';
         font-family: 'Material Icons';
         position: absolute;
-        font-size: 10px;
+        font-size: 7px;
         top: 50%;
         left: -18px;
         transform: translateY(-50%);
     }
+}
+.btn.btn-success.btn-round.btn-just-icon.adding-btn.adding-btn{
+    position: absolute;
+    top: 3px;
+    right: 14px;
 }

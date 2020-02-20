@@ -8,15 +8,17 @@ import { ProvincesComponent } from '../../views/list/provinces/provinces.compone
 import { DistrictsComponent } from '../../views/list/districts/districts.component';
 import { DistrictEditComponent } from '../../views/list/districts/districtedit/districtedit.component';
 import { ProvinceEditComponent } from '../../views/list/provinces/provinceedit/provinceedit.component';
+import { ProvinceImportComponent } from 'app/views/list/provinces/province-import/province-import.component';
 import { CentralComponent } from '../../views/manage/central/central.component';
 import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
 import { WardsComponent } from '../../views/list/wards/wards.component';
 import { WardEditComponent } from '../../views/list/wards/wardedit/wardedit.component';
-import { NhomNguoiDungComponent } from '../../views/list/nhomnguoidung/nhomnguoidung.component';
-import { NhomNguoiDungEditComponent } from '../../views/list/nhomnguoidung/nhomnguoidungedit/nhomnguoidungedit.component';
+import { UserGroupComponent } from '../../views/list/usergroups/usergroup.component';
+import { UserGroupEditComponent } from '../../views/list/usergroups/usergroup-edit/usergroup-edit.component';
 import { YardComponent } from '../../views/list/yard/yards.component';
 import { YardEditComponent } from '../../views/list/yard/yard-edit/yard-edit.component';
 
+import { FileUploadModule } from '../../shared/file-upload/file-upload.module';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -61,9 +63,12 @@ import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component'
 import { from } from 'rxjs';
 import { RecruitEditComponent } from 'app/views/list/recruits/recruit-edit/recruit-edit.component';
 import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.component';
+import { ClassComponent } from '../../views/manage/class/class.component';
+import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 
 @NgModule({
   imports: [
+    FileUploadModule,
     NgbModalModule,
     TranslateModule,
     CommonModule,
@@ -77,9 +82,12 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
     MatSelectModule,
     MatTooltipModule,
     MatAutocompleteModule,
-    MatProgressSpinnerModule,MatPaginatorModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
   declarations: [
+    ClassComponent,
+    ClassEditComponent,
     CategoriesComponent,
     CategoryEditComponent,
     DashboardComponent,
@@ -91,10 +99,11 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
     WardsComponent,
     WardEditComponent,
     ProvinceEditComponent,
+    ProvinceImportComponent,
     CentralComponent,
     CentralEditComponent,
-    NhomNguoiDungComponent,
-    NhomNguoiDungEditComponent,
+    UserGroupComponent,
+    UserGroupEditComponent,
     PositionComponent,
     PositionEditComponent,
     ClassStatusComponent,
@@ -118,7 +127,8 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
     RecruitComponent,
     CoachStatusEditComponent,
     AgeEditComponent
-  ]
+  ],
+  entryComponents: [ProvinceImportComponent],
 })
 
 export class AdminLayoutModule {}

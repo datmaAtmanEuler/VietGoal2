@@ -10,19 +10,21 @@
                         <div class="col-sm-9 input-group form-sm form-1 pl-0">
                             <div class="row" style="padding-left: 50px;">
 
+                                
+
                                 <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
-                                        [matAutocomplete]="AreasAC" [formControl]="searchAressCtrl">
-                                    <mat-autocomplete #AresAC="matAutocomplete"
-                                        (optionSelected)="changeAres(searchAressCtrl.value.ID)"
-                                        [displayWith]="displayAresFn">
+                                        [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
+                                    <mat-autocomplete #AreaAC="matAutocomplete"
+                                        (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
+                                        [displayWith]="displayAreaFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Areas of listarea" [value]="AreaId">
-                                                <span *ngIf="!Ares.notfound">{{Areas.AreasName}}</span>
-                                                <span *ngIf="Ares.notfound" class="nofind">{{Areas.notfound}}</span>
+                                            <mat-option *ngFor="let area of areasList" [value]="area">
+                                                <span *ngIf="!Area.notfound">{{Areas.AreasName}}</span>
+                                                <span *ngIf="Area.notfound" class="nofind">{{Areas.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
@@ -92,7 +94,7 @@
                                                 <td>{{ traininground.Description }}</td>
                                                 <td class="my-action-item">
     
-                                                    <button mat-raised-button  type="button" (click)="edit(traininground.Id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <button mat-raised-button  type="button" (click)="edit(traininground.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                         <i class="material-icons">edit</i>
                                                     </button>
                                                     <button mat-raised-button  type="button" (click)="remove(traininground)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">

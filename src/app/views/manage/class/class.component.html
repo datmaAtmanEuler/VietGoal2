@@ -4,8 +4,9 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-warning" style="background: #023a54">
-                        <h4 class="card-title">{{ "MESSAGE.NameList.Yard" | translate }}</h4>
+                        <h4 class="card-title">{{ "MESSAGE.NameList.CentralManagement" | translate }}</h4>
                     </div>
+
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-9 input-group form-sm form-1 pl-0">
                             <div class="row" style="padding-left: 50px;">
@@ -29,23 +30,43 @@
                                 </div>
                                 
                                 <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"
-                                        [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
-                                    <mat-autocomplete #CentralAC="matAutocomplete"
-                                        (optionSelected)="changeDistrict(searchCentralsCtrl.value.ID)"
-                                        [displayWith]="displayCentralFn">
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
+                                        [matAutocomplete]="yardAC" [formControl]="searchYardsCtrl">
+                                    <mat-autocomplete #yardAC="matAutocomplete"
+                                        (optionSelected)="changeDistrict(searchYardsCtrl.value.ID)"
+                                        [displayWith]="displayYardFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Central of listCentral" [value]="CentralId">
-                                                <span *ngIf="!Central.notfound">{{Central.CentralName}}</span>
-                                                <span *ngIf="Central.notfound" class="nofind">{{Central.notfound}}</span>
+                                            <mat-option *ngFor="let yard of listyard" [value]="YardId">
+                                                <span *ngIf="!yard.notfound">{{yard.DistrictName}}</span>
+                                                <span *ngIf="yard.notfound" class="nofind">{{yard.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
-                                
+                                <div class="col-sm-4">
+                                    <input class="form-control"
+                                        placeholder="{{'MESSAGE.NameList.TrainingGround' |translate}}"
+                                        [matAutocomplete]="traininggroundAC" [formControl]="searchTrainingGroundsCtrl">
+                                    <mat-autocomplete #traininggroundAC="matAutocomplete"
+                                        (optionSelected)="changeWard(searchTrainingGroundsCtrl.value.ID)"
+                                        [displayWith]="displayTrainingGroundFn">
+                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                            <mat-spinner></mat-spinner>
+                                        </mat-option>
+                                        <ng-container *ngIf="!isLoading">
+                                            <mat-option *ngFor="let trainingground of listtrainingground"
+                                                [value]="TrainingGroundId">
+                                                <span
+                                                    *ngIf="!trainingground.notfound">{{trainingground.WardName}}</span>
+                                                <span *ngIf="trainingground.notfound"
+                                                    class="nofind">{{trainingground.notfound}}</span>
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-autocomplete>
+                                </div>
                             </div>
                         </div>
                         <div class="col-sm-3 input-group form-sm form-1 pl-0 search-form search-form">
@@ -64,50 +85,48 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="row">
                         <div class="col-12">
                             <div class="card-body table-responsive">
-                                <div class="vietgoal-table-settings style-1">
+                                <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
+                                <div class="vietgoal-table-settings vg-scroll">
                                     <table class="table table-condensed table-striped table-bordered table-hover"
                                         style="width: 100%">
                                         <thead>
-                                            <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
-                                                <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')"
-                                                    (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
+                                            <ng-container
+                                                *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
+                                                <th *ngIf="paginationSettings.visibles[colIndex]"
+                                                    [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
+                                                    (click)="paginationSettings.sortAbles[colIndex] ? utilsService.toggleSort(colIndex,paginationSettings.sortToggles ,paginationSettings.sort ,paginationSettings.columnsNameMapping ,reload()) : utilsService.doNothing()">
                                                     <span
                                                         style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
                                                         <i class="material-icons asc-sort-icons"
-                                                            *ngIf="sortAbles[colIndex]">
-                                                            {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                                                            *ngIf="paginationSettings.sortAbles[colIndex]">
+                                                            {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
                                                         </i>
                                                     </span>
                                                 </th>
                                             </ng-container>
                                         </thead>
                                         <tbody>
-                                            <ng-container *ngFor="let yard of yardsList; let i = index;">
+                                            <ng-container *ngFor="let tt of ClassList; let i = index;">
                                                 <tr>
-                                                    <td width="100px">{{ i + 1}}</td>
-                                                    <td>{{ yard.YardCode }}</td>
-                                                    <td>{{ yard.YardName }}</td>
-                                                    <td>{{ yard.CentralName }}</td>
-                                                    <td>{{ yard.Year }}</td>
-                                                    <td>{{ yard.Address }}</td>
-                                                    <td>Diện tích</td>
-                                                    <td>Ghi chú</td>
+                                                    <td>{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
+                                                    <ng-container
+                                                        *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
+                                                        <td
+                                                            *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
+                                                            {{ utilsService.getColumnValue(tt, colIndex, paginationSettings.columnsNameMapping) }}
+                                                        </td>
+                                                    </ng-container>
                                                     <td class="my-action-item">
-
-                                                        <button mat-raised-button *hasClaim="['CanEditYards']"
-                                                            type="button" (click)="edit(yard.ID)"
-                                                            title="{{ 'MESSAGE.NameList.Edit' | translate}}"
-                                                            class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                        <button type="button" (click)="edit(tt.Id)"
+                                                            class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
                                                             <i class="material-icons">edit</i>
                                                         </button>
-                                                        <button mat-raised-button *hasClaim="['CanDeleteYards']"
-                                                            type="button" (click)="remove(yard)"
-                                                            title="{{ 'MESSAGE.NameList.Delete' | translate}}"
-                                                            class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                        <button type="button" (click)="remove(tt)"
+                                                            class="btn btn-danger btn-link btn-sm delete-button btn-just-icon">
                                                             <i class="material-icons">close</i>
                                                         </button>
                                                     </td>
@@ -116,7 +135,10 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <mat-paginator [length]="100" [pageSize]="pageSize" [pageSizeOptions]="[1,2]">
+                                <mat-paginator
+                                    [length]="Total"
+                                    [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                    [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                 </mat-paginator>
                             </div>
                         </div>
@@ -125,3 +147,4 @@
             </div>
         </div>
     </div>
+</div> 

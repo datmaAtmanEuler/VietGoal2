@@ -1,22 +1,22 @@
 import { Component, OnInit} from '@angular/core';
-import { NhomNguoiDungService } from '../../../services/list/nhomnguoidung.service';
-import { NhomNguoiDung } from '../../../models/list/nhomnguoidung';
+import { UserGroupService } from '../../../services/list/usergroup.service';
+import { UserGroup } from '../../../models/list/usergroup';
 import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import { NhomNguoiDungEditComponent } from './nhomnguoidungedit/nhomnguoidungedit.component';
+import { UserGroupEditComponent } from './usergroup-edit/usergroup-edit.component';
 import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
 
 @Component({
-  selector: 'app-nhomnguoidung',
-  templateUrl: './nhomnguoidung.component.html',
-  styleUrls: ['./nhomnguoidung.component.scss']
+  selector: 'app-usergroup',
+  templateUrl: './usergroup.component.html',
+  styleUrls: ['./usergroup.component.scss']
 })
-export class NhomNguoiDungComponent implements OnInit {
+export class UserGroupComponent implements OnInit {
 
-  nhomnguoidungList:NhomNguoiDung[] = [];
-  nhomnguoidung: NhomNguoiDung;
+  usergroupList:UserGroup[] = [];
+  usergroup: UserGroup;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
@@ -32,7 +32,7 @@ export class NhomNguoiDungComponent implements OnInit {
   /**
    * END SORT SETTINGS
    */
-  constructor(config: NgbModalConfig, private service: NhomNguoiDungService, private router: Router, private modalService: NgbModal) {
+  constructor(config: NgbModalConfig, private service: UserGroupService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
@@ -42,11 +42,11 @@ export class NhomNguoiDungComponent implements OnInit {
 	this.reload();
   }
 
-  remove(nhomnguoidung: NhomNguoiDung) {
-    this.nhomnguoidung = nhomnguoidung;
+  remove(usergroup: UserGroup) {
+    this.usergroup = usergroup;
   const _this = this;
   const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-  modalRef.componentInstance.confirmObject = 'NhomNguoiDung';
+  modalRef.componentInstance.confirmObject = 'Usergroup';
   modalRef.componentInstance.decide.subscribe(() => {
       _this.deleteNhom();
   });
@@ -56,7 +56,7 @@ reload() {
   const _this = this;
   const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize, this.sort.SortName, this.sort.SortDirection);
   this.service.getNhomList(filter).subscribe((list: any) => {
-    _this.nhomnguoidung = list;
+    _this.usergroup = list;
   });
 }
 
@@ -66,7 +66,7 @@ reload() {
 
   edit(IdNhom: null | number) {
     const _this = this;
-    const modalRef = this.modalService.open(NhomNguoiDungEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(UserGroupEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
     if (IdNhom) {
       modalRef.componentInstance.Idnhom = IdNhom;
@@ -79,7 +79,7 @@ reload() {
 
   deleteNhom() {
     const _this = this;
-    this.service.deleteNhom(this.nhomnguoidung.ID, this.currentUser.UserId).subscribe((rs: any) => {
+    this.service.deleteNhom(this.usergroup.Id, this.currentUser.UserId).subscribe((rs: any) => {
       _this.reload();
     });
   }

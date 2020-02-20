@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AreaService } from '../../../services/list/area.service';
+import { CentralService } from '../../../services/manage/central.service';
 import { Area } from '../../../models/list/area';
 import { AreaEditComponent } from './area-edit/area-edit.component';
 import { AreaFilter } from '../../../models/filter/areafilter';
@@ -16,9 +17,10 @@ import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 export class AreaComponent implements OnInit {ModalDirective;
   areasList:any[] = [];
   area: any;
+  centralList: any[]=[];
+  central: any;
   searchTerm:string = '';
   loading: boolean = false;
-  
   pageIndex:number = 1;
   pageSize:number = 20;
   currentUser: any;
@@ -27,13 +29,13 @@ export class AreaComponent implements OnInit {ModalDirective;
    */
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
-  columnsName: string[] = ['Order', 'AreaCode', 'AreaName', 'CentralName', 'Action'];
-  columnsNameMapping: string[] = ['ID', 'AreaCode', 'AreaName', 'CentralName', 'Action'];
+  columnsName: string[] = ['Order', 'AreaCode', 'AreaName', 'Central', 'Action'];
+  columnsNameMapping: string[] = ['ID', 'AreaCode', 'AreaName', 'Central', 'Action'];
   sortAbles: boolean[] = [false, true, true, true, false];
   /**
    * END SORT SETTINGS
    */
-  constructor(config: NgbModalConfig, private service: AreaService, private router: Router, private modalService: NgbModal) { 
+  constructor(config: NgbModalConfig, private service: AreaService, private router: Router, private modalService: NgbModal,private centralService: CentralService) { 
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
@@ -57,7 +59,7 @@ export class AreaComponent implements OnInit {ModalDirective;
 
     reload() {
       const _this = this;
-      const filter: AreaFilter = new AreaFilter(this.searchTerm, this.pageIndex, this.pageSize, null, this.sort.SortName, this.sort.SortDirection);
+      const filter: AreaFilter = new AreaFilter('', this.pageIndex, this.pageSize, null, 'AreaCode', 'ASC');
       _this.service.getAreasList(filter).subscribe((areaList: Area[]) => {
         _this.areasList = areaList;
       });

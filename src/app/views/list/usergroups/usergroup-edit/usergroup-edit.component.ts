@@ -1,22 +1,22 @@
 import { Component, OnInit, Input,ViewEncapsulation } from '@angular/core';
-import { NhomNguoiDungService } from '../../../../services/list/nhomnguoidung.service';
-import { NhomNguoiDung } from '../../../../models/list/nhomnguoidung';
+import { UserGroupService } from '../../../../services/acl/usergroup.service';
+import { UserGroup } from '../../../../models/acl/usergroup';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
 @Component({
-	selector: 'app-nhomnguoidung-edit',
-	templateUrl: './nhomnguoidungedit.component.html',
-	styleUrls: ['./nhomnguoidungedit.component.scss'],
+	selector: 'app-usergroup-edit',
+	templateUrl: './usergroup-edit.component.html',
+	styleUrls: ['./usergroup-edit.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
-export class NhomNguoiDungEditComponent implements OnInit {
+export class UserGroupEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('ID') ID: number;
 	currentUser: any;
-	nhomnguoidung : NhomNguoiDung = new NhomNguoiDung(0, '', false, new Date(), null, 1, null, null);
+	usergroup : UserGroup = new UserGroup(0, '', false, new Date(), null, 1, null, null);
 
-	constructor(public activeModal: NgbActiveModal,config: NgbModalConfig, private modalService: NgbModal,private nhomnguoidungService: NhomNguoiDungService, private route: ActivatedRoute, private router: Router) {
+	constructor(public activeModal: NgbActiveModal,config: NgbModalConfig, private modalService: NgbModal,private usergroupService: UserGroupService, private route: ActivatedRoute, private router: Router) {
 		this.ID = this.route.snapshot.queryParams['ID'];
 		this.ID = (this.ID) ? this.ID : 0;
 		config.backdrop = 'static';
@@ -28,14 +28,14 @@ export class NhomNguoiDungEditComponent implements OnInit {
 	{  
 		const _this = this;
 		if(ID){
-			this.nhomnguoidungService.getNhomList(ID).subscribe((nhomnguoidung: NhomNguoiDung) => {
-				_this.nhomnguoidung = nhomnguoidung;
-				if (_this.nhomnguoidung == null || _this.nhomnguoidung.ID == null) {
-					_this.nhomnguoidung = new NhomNguoiDung(0, '', false, new Date(), null, 1, null, null);
+			this.usergroupService.getNhomList(ID).subscribe((usergroup: UserGroup) => {
+				_this.usergroup = usergroup;
+				if (_this.usergroup == null || _this.usergroup.Id == null) {
+					_this.usergroup = new UserGroup(0, '', false, new Date(), null, 1, null, null);
 				}
 			});
 		} else {
-			_this.nhomnguoidung = new NhomNguoiDung(0, '', false, new Date(), null, 1, null, null);
+			_this.usergroup = new UserGroup(0, '', false, new Date(), null, 1, null, null);
 		}
 	}
 	ngOnInit() {
@@ -49,7 +49,7 @@ export class NhomNguoiDungEditComponent implements OnInit {
 
 	UpdateNhom() {
 		const _this = this;
-		this.nhomnguoidungService.addOrUpdateNhom(_this.nhomnguoidung, this.currentUser.UserId).subscribe((result: any) => {
+		this.usergroupService.addOrUpdateNhom(_this.usergroup, this.currentUser.UserId).subscribe((result: any) => {
 			if (result) {
 				if(!_this.popup) {
 					_this.ReturnList();

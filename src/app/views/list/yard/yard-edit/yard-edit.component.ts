@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
 import { FormControl } from '@angular/forms';
-import { Filter } from '../../../../models/filter/filter';
+import { CentralFilter } from '../../../../models/filter/centralfilter';
 import { from } from 'rxjs';
 
 @Component({
@@ -21,15 +21,14 @@ export class YardEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('Id') Id: number;
 	@Input('UserId') UserId: null | number;
-	listcentral: any;
-	listarea: any;
-	trungtamList: Central[] = [];
+	centralList: any;
+	arealist: any;
 	searchCentralsCtrl = new FormControl();
 	searchAreasCtrl = new FormControl();
 	isLoading = false;
-	yard: Yard = new Yard(0,'', '', 0,0,null,'','',null,null,null,null,0,0,0,0);
+	yard: Yard = new Yard (0,'', '', 0,0,null,'','',null,null,null,null,0,0,0,0);
 
-	constructor( config: NgbModalConfig, private modalService: NgbModal,public activeModal: NgbActiveModal, private trungtamService: CentralService, private santapService: YardService, private route: ActivatedRoute, private router: Router) {
+	constructor( config: NgbModalConfig, private modalService: NgbModal,public activeModal: NgbActiveModal, private centralService: CentralService, private santapService: YardService, private route: ActivatedRoute, private router: Router) {
 		this.Id = this.route.snapshot.queryParams['Id'];
 		this.Id = (this.Id) ? this.Id : 0;
 		config.backdrop = 'static';
@@ -44,15 +43,15 @@ export class YardEditComponent implements OnInit {
 		return user && user.AreaName && !user.notfound ? user.AreaName : '';
 	}
 	changeCentral(centralId){
-		this.trungtamService.getCentralsList(new Filter('', 1, 100, centralId)).subscribe((list)=>{
-			this.listarea = list;
+		this.centralService.getCentralsList(new CentralFilter('', 1, 100,null,null,null, '','ASC')).subscribe((list)=>{
+			this.arealist = list;
 		});
 	}
-	GetDistrictById(Id:number)  
+	GeYardById(Id:number)  
 	{  
 		const _this = this;
-		this.trungtamService.getCentralsList(new Filter('', null, null)).subscribe((ttList: Central[]) => {
-			_this.trungtamList = (ttList) ? ttList : [];
+		this.centralService.getCentralsList(new CentralFilter('', 1, 100,null,null,null, '','ASC')).subscribe((ttList: Central[]) => {
+			_this.centralList = (ttList) ? ttList : [];
 			_this.santapService.getYard(Id).subscribe((yard: Yard) => {
 				_this.yard = yard;
 				if (_this.yard == null || _this.yard.Id==0) {
@@ -63,7 +62,7 @@ export class YardEditComponent implements OnInit {
 	}
 	ngOnInit() {
 		
-		this.GetDistrictById(this.Id);  
+		this.GeYardById(this.Id);  
 	}
 
 	ReturnList() {
@@ -72,7 +71,7 @@ export class YardEditComponent implements OnInit {
 	}
 
 	
-	UpdateDistrict() {
+	UpdateYard() {
 		const _this = this;
 		this.santapService.addOrUpdateYard(_this.yard, this.UserId).subscribe((result: any) => {
 			if (result) {

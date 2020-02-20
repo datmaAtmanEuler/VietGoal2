@@ -5,6 +5,9 @@
                 <div class="card">
                     <div class="card-header card-header-warning" style="background: #023a54">
                         <h4 class="card-title">{{ "MESSAGE.NameList.CentralManagement" | translate }}</h4>
+                        <button (click)="openImport()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-success btn-round adding-btn">
+                            import
+                        </button>
                         <button (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-success btn-round btn-just-icon adding-btn">
                             <i class="material-icons">add</i>
                         </button>

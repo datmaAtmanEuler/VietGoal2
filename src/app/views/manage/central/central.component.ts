@@ -19,6 +19,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { CentralEditComponent } from './central-edit/central-edit.component';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { CentralImportComponent } from './central-import/central-import.component';
 
 @Component({
   selector: 'app-Central',
@@ -236,5 +237,12 @@ export class CentralComponent implements OnInit {
     } else {
       return this.http.get(`${environment.serverUrl}Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
     }
+  }
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(CentralImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
   }
 }

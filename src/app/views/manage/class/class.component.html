@@ -10,72 +10,59 @@
                         <div class="col-sm-9 input-group form-sm form-1 pl-0">
                             <div class="row" style="padding-left: 50px;">
                                 <div class="col-sm-4">
-<<<<<<< Updated upstream
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Province' |translate}}"
-                                        [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
-                                    <mat-autocomplete #provinceAC="matAutocomplete"
-                                        (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)"
-                                        [displayWith]="displayProvinceFn">
-=======
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
                                         [matAutocomplete]="AreaAC" [formControl]="searchAreasCtrl">
                                     <mat-autocomplete #AreaAC="matAutocomplete"
                                         (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
                                         [displayWith]="displayAresFn">
->>>>>>> Stashed changes
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-<<<<<<< Updated upstream
-                                            <mat-option *ngFor="let province of listprovince" [value]="province">
-                                                <span *ngIf="!province.notfound">{{province.ProvinceName}}</span>
-                                                <span *ngIf="province.notfound"
-                                                    class="nofind">{{province.notfound}}</span>
-=======
-                                            <mat-option *ngFor="let area of areasList" [value]="area.ID">
+                                            <mat-option *ngFor="let area of areasList" [value]="area">
                                                 <span *ngIf="!area.notfound">{{area.AreaName}}</span>
                                                 <span *ngIf="area.notfound" class="nofind">{{ 'Not found' }}</span>
->>>>>>> Stashed changes
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.District' |translate}}"
-                                        [matAutocomplete]="districtAC" [formControl]="searchDistrictsCtrl">
-                                    <mat-autocomplete #districtAC="matAutocomplete"
-                                        (optionSelected)="changeDistrict(searchDistrictsCtrl.value.ID)"
-                                        [displayWith]="displayDistrictFn">
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.YardName' |translate}}"
+                                        [matAutocomplete]="yardAC" [formControl]="searchYardsCtrl">
+                                    <mat-autocomplete #yardAC="matAutocomplete"
+                                        (optionSelected)="changeYard(searchYardsCtrl.value.ID)"
+                                        [displayWith]="displayYardFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let district of listdistrict" [value]="district">
-                                                <span *ngIf="!district.notfound">{{district.DistrictName}}</span>
-                                                <span *ngIf="district.notfound"
-                                                    class="nofind">{{district.notfound}}</span>
+                                            <mat-option *ngFor="let yard of yarddsList" [value]="yard">
+                                                <span *ngIf="!yard.notfound">{{yard.YardName}}</span>
+                                                <span *ngIf="yard.notfound"
+                                                    class="nofind">{{yard.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
+
                                 <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Ward' |translate}}"
-                                        [matAutocomplete]="wardAC" [formControl]="searchWardsCtrl">
-                                    <mat-autocomplete #wardAC="matAutocomplete"
-                                        (optionSelected)="changeWard(searchWardsCtrl.value.ID)"
-                                        [displayWith]="displayWardFn">
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.TrainingGround' |translate}}"
+                                        [matAutocomplete]="traininggroundAC" [formControl]="searchTrainingGroundsCtrl">
+                                    <mat-autocomplete #traininggroundAC="matAutocomplete"
+                                        (optionSelected)="changeTrainingGround(searchTrainingGroundsCtrl.value.ID)"
+                                        [displayWith]="displayTrainingGroundFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let ward of listward" [value]="ward">
-                                                <span *ngIf="!ward.notfound">{{ward.WardName}}</span>
-                                                <span *ngIf="ward.notfound" class="nofind">{{ward.notfound}}</span>
+                                            <mat-option *ngFor="let trainingground of traininggroundsList" [value]="trainingground">
+                                                <span *ngIf="!trainingground.notfound">{{trainingground.TrainingGroundName}}</span>
+                                                <span *ngIf="trainingground.notfound" class="nofind">{{trainingground.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
+                                
                             </div>
                         </div>
                         <div class="col-sm-3 input-group form-sm form-1 pl-0 search-form search-form">

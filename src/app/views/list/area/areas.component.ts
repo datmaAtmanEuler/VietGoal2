@@ -59,7 +59,7 @@ export class AreaComponent implements OnInit {ModalDirective;
 
     reload() {
       const _this = this;
-      const filter: AreaFilter = new AreaFilter(this.searchTerm, this.pageIndex, this.pageSize, null, this.sort.SortName, this.sort.SortDirection);
+      const filter: AreaFilter = new AreaFilter('', this.pageIndex, this.pageSize, null, 'AreaCode', 'ASC');
       _this.service.getAreasList(filter).subscribe((areaList: Area[]) => {
         _this.areasList = areaList;
       });

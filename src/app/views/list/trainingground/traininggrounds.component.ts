@@ -16,6 +16,10 @@ import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 export class TrainingGroundsComponent implements OnInit {ModalDirective;
   trainingroundsList:TrainingGround[] = [];
   traininground: any;
+  areasList:any[] = [];
+  area: any;
+  yardsList: any[]=[];
+  yard: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSize:number = 20;
@@ -26,8 +30,8 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
    */
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT, null];
-  columnsName: string[] = ['Order', 'TrainingGroundCode','TrainingGroundName', 'YardName', 'AreaName','Address','Description','Action'];
-  columnsNameMapping: string[] = ['ID', 'TrainingGroundCode','TrainingGroundName', 'YardName', 'AreaName','Address','Description','Action'];
+  columnsName: string[] = ['Order', 'YardAreaCode','TrainingGroundName', 'YardName', 'AreaName','Address','Note','Action'];
+  columnsNameMapping: string[] = ['ID', 'YardAreaCode','TrainingGroundName', 'YardName', 'AreaName','Address','Note','Action'];
   sortAbles: boolean[] = [false, true, true, true,true,true,true, false];
   /**
    * END SORT SETTINGS
@@ -56,7 +60,7 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
 
 reload() {
   const _this = this;
-  const filter: TrainingGroundFilter = new TrainingGroundFilter(this.searchTerm, this.pageIndex, this.pageSize, null,null, this.sort.SortName, this.sort.SortDirection);
+  const filter: TrainingGroundFilter = new TrainingGroundFilter('', this.pageIndex, this.pageSize, null,null,'YardAreaCode','ASC');
   _this.service.getTrainingGroundsList(filter).subscribe((traininground: TrainingGround[]) => {
     _this.traininground = traininground;
   });

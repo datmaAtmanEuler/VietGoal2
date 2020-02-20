@@ -14,10 +14,10 @@ export class Yard {
     CreatedBy: null | number;
     UpdatedBy: null | number;
 	DeletedBy: null | number;
-	SoThuTu : null | number;
+	DisplayOrder : null | number;
 	
 	constructor(Id: number, YardCode: string,  YardName: string,CentralId: null | number, AreaId: null | number,  StartYearContract: Date, Address: string, Areas:string, Visible: boolean, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
-		UpdatedBy: null | number, DeletedBy: null | number, SoThuTu: null | number) {
+		UpdatedBy: null | number, DeletedBy: null | number, DisplayOrder: null | number) {
 		this.Id = Id;
 		this.YardCode = YardCode;
         this.CentralId = CentralId;
@@ -33,6 +33,6 @@ export class Yard {
 		this.CreatedBy = CreatedBy;
 		this.UpdatedBy = UpdatedBy;
 		this.DeletedBy = DeletedBy;
-		this.SoThuTu = SoThuTu;
+		this.DisplayOrder = DisplayOrder;
 	}
 }

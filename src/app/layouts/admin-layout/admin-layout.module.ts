@@ -13,8 +13,8 @@ import { CentralComponent } from '../../views/manage/central/central.component';
 import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
 import { WardsComponent } from '../../views/list/wards/wards.component';
 import { WardEditComponent } from '../../views/list/wards/wardedit/wardedit.component';
-import { NhomNguoiDungComponent } from '../../views/list/nhomnguoidung/nhomnguoidung.component';
-import { NhomNguoiDungEditComponent } from '../../views/list/nhomnguoidung/nhomnguoidungedit/nhomnguoidungedit.component';
+import { UserGroupComponent } from '../../views/list/usergroups/usergroup.component';
+import { UserGroupEditComponent } from '../../views/list/usergroups/usergroup-edit/usergroup-edit.component';
 import { YardComponent } from '../../views/list/yard/yards.component';
 import { YardEditComponent } from '../../views/list/yard/yard-edit/yard-edit.component';
 
@@ -63,6 +63,8 @@ import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component'
 import { from } from 'rxjs';
 import { RecruitEditComponent } from 'app/views/list/recruits/recruit-edit/recruit-edit.component';
 import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.component';
+import { ClassComponent } from '../../views/manage/class/class.component';
+import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 
 @NgModule({
   imports: [
@@ -84,6 +86,8 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
     MatPaginatorModule
   ],
   declarations: [
+    ClassComponent,
+    ClassEditComponent,
     CategoriesComponent,
     CategoryEditComponent,
     DashboardComponent,
@@ -98,8 +102,8 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
     ProvinceImportComponent,
     CentralComponent,
     CentralEditComponent,
-    NhomNguoiDungComponent,
-    NhomNguoiDungEditComponent,
+    UserGroupComponent,
+    UserGroupEditComponent,
     PositionComponent,
     PositionEditComponent,
     ClassStatusComponent,

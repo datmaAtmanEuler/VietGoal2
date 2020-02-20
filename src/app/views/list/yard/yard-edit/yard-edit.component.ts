@@ -21,9 +21,8 @@ export class YardEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('Id') Id: number;
 	@Input('UserId') UserId: null | number;
-	listcentral: any;
-	listarea: any;
-	trungtamList: Central[] = [];
+	centralList: any;
+	arealist: any;
 	searchCentralsCtrl = new FormControl();
 	searchAreasCtrl = new FormControl();
 	isLoading = false;
@@ -45,14 +44,14 @@ export class YardEditComponent implements OnInit {
 	}
 	changeCentral(centralId){
 		this.trungtamService.getCentralsList(new Filter('', 1, 100, centralId)).subscribe((list)=>{
-			this.listarea = list;
+			this.arealist = list;
 		});
 	}
-	GetDistrictById(Id:number)  
+	GeYardById(Id:number)  
 	{  
 		const _this = this;
 		this.trungtamService.getCentralsList(new Filter('', null, null)).subscribe((ttList: Central[]) => {
-			_this.trungtamList = (ttList) ? ttList : [];
+			_this.centralList = (ttList) ? ttList : [];
 			_this.santapService.getYard(Id).subscribe((yard: Yard) => {
 				_this.yard = yard;
 				if (_this.yard == null || _this.yard.Id==0) {
@@ -63,7 +62,7 @@ export class YardEditComponent implements OnInit {
 	}
 	ngOnInit() {
 		
-		this.GetDistrictById(this.Id);  
+		this.GeYardById(this.Id);  
 	}
 
 	ReturnList() {
@@ -72,7 +71,7 @@ export class YardEditComponent implements OnInit {
 	}
 
 	
-	UpdateDistrict() {
+	UpdateYard() {
 		const _this = this;
 		this.santapService.addOrUpdateYard(_this.yard, this.UserId).subscribe((result: any) => {
 			if (result) {

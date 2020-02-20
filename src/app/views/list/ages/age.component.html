@@ -6,19 +6,36 @@
                     <div class="card-header card-header-warning" style="background: #023a54">
                         <h4 class="card-title">{{ "MESSAGE.NameList.AgesList" | translate }}</h4>
                     </div>
-                    <div class="row pt-3 pl-2 pr-3">
-                        <div class="col-sm-6 input-group form-sm form-1 pl-0">
-                        </div>
-                        <div class="col-sm-6 input-group form-sm form-1 pl-0 search-form">
-                            <button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
-                                <i class="material-icons">add</i>
-                            </button>
-                            <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
-                                placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                            <div class="input-group-prepend">
-                                <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}" class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                </button>
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="offset-sm-8 col-sm-4 search-form">
+                                        <div class="row">
+                                            <div class="col-12 ta-r">
+                                                <button class="btn btn-vietgoal btn-sm mr-2"
+                                                    (click)="openImport()">Import</button>
+                                                <button class="btn btn-vietgoal btn-sm mr-2"
+                                                    (click)="downloadTemplate()">Mẫu Import</button>
+                                                <button mat-raised-button type="button" (click)="add()"
+                                                    title="{{ 'MESSAGE.NameList.Create' | translate}}"
+                                                    class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
+                                                    <i class="material-icons">add</i>
+                                                </button>
+                                            </div>
+                                            <div class="col-12 input-group form-sm ">
+                                                <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                                                    placeholder="{{ 'MESSAGE.NameList.Search' | translate }}"
+                                                    aria-label="Search">
+                                                <button type="button" (click)="reload()"
+                                                    title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                                                    class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
+                                                    <i class="material-icons">search</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,6 +1,8 @@
+<div id="head-sidebar">
+    <button class="thugon" (click)="toggle()"><i class="material-icons icon-image-preview">dehaze</i>
+    </button>
+</div>
 <div class="sidebar-wrapper" [ngClass]="{'mini-sidebar': mini}">
-  <button class="thugon" (click)="toggle()"><i class="material-icons icon-image-preview">dehaze</i>
-  </button>
   <div *ngIf="isMobileMenu()">
     <ul class="nav navbar-nav nav-mobile-menu">
         <li class="nav-item">

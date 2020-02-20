@@ -63,6 +63,7 @@ import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component'
 import { from } from 'rxjs';
 import { RecruitEditComponent } from 'app/views/list/recruits/recruit-edit/recruit-edit.component';
 import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.component';
+import { CentralImportComponent } from 'app/views/manage/central/central-import/central-import.component';
 import { ClassComponent } from '../../views/manage/class/class.component';
 import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 
@@ -126,9 +127,13 @@ import { ClassEditComponent } from '../../views/manage/class/class-edit/class-ed
     RecruitEditComponent,
     RecruitComponent,
     CoachStatusEditComponent,
-    AgeEditComponent
+    AgeEditComponent,
+    CentralImportComponent
   ],
-  entryComponents: [ProvinceImportComponent],
+  entryComponents: [
+    ProvinceImportComponent,
+    CentralImportComponent
+  ],
 })
 
 export class AdminLayoutModule {}

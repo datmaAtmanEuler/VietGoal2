@@ -43,7 +43,7 @@ a:hover {
   display: none;
 }
 .sidebar .nav {
-    margin-top: 25px !important;
+    margin-top: 0px !important;
 }
 .mini-sidebar{
     width: 45px !important;
@@ -71,14 +71,22 @@ a:hover {
 .icon-lenxuong-down{
    transform: rotate(-90deg) !important;
 }
-.thugon{
-    position: absolute;
-    background: transparent;
-    right: 5px;
-    border: none;
-    color: white;
-    &:hover{
-       color: #c4c4c4;
+#head-sidebar{
+    background-color: #023a54;
+    position: relative;
+    height: 40px;
+    z-index: 100;
+    margin-top: 50px;
+    .thugon{
+        position: absolute;
+        top: 5px;
+        background: transparent;
+        right: 5px;
+        border: none;
+        color: white;
+        &:hover{
+           color: #c4c4c4;
+        }
     }
 }
 .icon-lenxuong-an{
@@ -127,7 +135,6 @@ img.logo-default{
     color: white !important;
     background-color: #023a54 !important;
     z-index: 1;
-    top: 52px;
     height: calc(100vh - 50px) !important;
 }
 .sidebar-background, .sidebar{

@@ -324,6 +324,9 @@ footer{
     box-shadow: none!important;
     font-weight: bold;
 }
+.sidebar li > a{
+    cursor: pointer;
+}
 .vg-scroll{
     position: relative;
 }
@@ -343,4 +346,22 @@ footer{
     position: absolute;
     top: 3px;
     right: 14px;
+}
+.ta-r{
+    text-align: right;
+}
+.btn.btn-vietgoal{
+    color: #fff;
+    background-color: #023a54;
+    border-color: #023a54;
+    box-shadow: 0 2px 2px 0 rgba(2, 58, 84, 0.14), 0 3px 1px -2px rgba(2, 58, 84, 0.2), 0 1px 5px 0 rgba(2, 58, 84, 0.12);
+    // box-shadow: 0 2px 2px 0 rgba(156, 39, 176, 0.14), 0 3px 1px -2px rgba(156, 39, 176, 0.2), 0 1px 5px 0 rgba(156, 39, 176, 0.12);
+}
+.btn.btn-vietgoal:hover {
+    box-shadow: 0 14px 26px -12px rgba(2, 58, 84, 0.42), 0 4px 23px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(2, 58, 84, 0.2);
+}
+.btn.btn-vietgoal:hover {
+    color: #fff;
+    background-color: #033349;
+    border-color: #033349;
 }

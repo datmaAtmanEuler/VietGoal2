@@ -6,21 +6,37 @@
                     <div class="card-header card-header-warning" style="background: #023a54">
                         <h4 class="card-title">{{ "MESSAGE.NameList.ProvincesList" | translate }}</h4>
                     </div>
-                    <div class="row pt-3 pl-2 pr-3">
-                        <div class="col-sm-7 input-group form-sm form-1 pl-0">
-                        </div>
-                        <div class="col-sm-5 input-group form-sm form-1 pl-0 pull-right search-form">
-                            <span class="btn btn-primary btn-sm mr-2" (click)="openImport()">Import</span>
-                            <span class="btn btn-primary btn-sm mr-2" (click)="downloadTemplate()">Mẫu Import</span>
-                            <button mat-raised-button *hasClaim="['CanAddProvinces']" type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
-                                <i class="material-icons">add</i>
-                            </button>
-                            <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
-                                placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                            <div class="input-group-prepend">
-                                <button mat-raised-button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}" class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                </button>
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="offset-sm-8 col-sm-4 search-form">
+                                        <div class="row">
+                                            <div class="col-12 ta-r">
+                                                <button class="btn btn-vietgoal btn-sm mr-2"
+                                                    (click)="openImport()">Import</button>
+                                                <button class="btn btn-vietgoal btn-sm mr-2"
+                                                    (click)="downloadTemplate()">Mẫu Import</button>
+                                                <button mat-raised-button type="button" (click)="add()"
+                                                    title="{{ 'MESSAGE.NameList.Create' | translate}}"
+                                                    *hasClaim="['CanAddProvinces']"
+                                                    class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
+                                                    <i class="material-icons">add</i>
+                                                </button>
+                                            </div>
+                                            <div class="col-12 input-group form-sm ">
+                                                <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                                                    placeholder="{{ 'MESSAGE.NameList.Search' | translate }}"
+                                                    aria-label="Search">
+                                                <button type="button" (click)="reload()"
+                                                    title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                                                    class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
+                                                    <i class="material-icons">search</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -29,13 +45,17 @@
                             <div class="card-body table-responsive">
                                 <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
                                 <div class="vietgoal-table-settings vg-scroll">
-                                    
-                                    <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
+
+                                    <table class="table table-condensed table-striped table-bordered table-hover"
+                                        style="width: 100%">
                                         <thead>
                                             <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
-                                                <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')" (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
-                                                    <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
-                                                         <i class="material-icons asc-sort-icons" *ngIf="sortAbles[colIndex]">
+                                                <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')"
+                                                    (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
+                                                    <span
+                                                        style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                                                        <i class="material-icons asc-sort-icons"
+                                                            *ngIf="sortAbles[colIndex]">
                                                             {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
                                                         </i>
                                                     </span>
@@ -49,10 +69,16 @@
                                                     <td>{{ province.ProvinceCode }}</td>
                                                     <td>{{ province.ProvinceName }}</td>
                                                     <td width="150px" class="my-action-item">
-                                                        <button mat-raised-button type="button" *hasClaim="['CanEditProvinces']" (click)="edit(province.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                        <button mat-raised-button type="button"
+                                                            *hasClaim="['CanEditProvinces']" (click)="edit(province.ID)"
+                                                            title="{{ 'MESSAGE.NameList.Edit' | translate}}"
+                                                            class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                             <i class="material-icons">edit</i>
                                                         </button>
-                                                        <button mat-raised-button *hasClaim="['CanDeleteProvinces']" type="button" (click)="remove(province)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                        <button mat-raised-button *hasClaim="['CanDeleteProvinces']"
+                                                            type="button" (click)="remove(province)"
+                                                            title="{{ 'MESSAGE.NameList.Delete' | translate}}"
+                                                            class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                             <i class="material-icons">close</i>
                                                         </button>
                                                     </td>
@@ -62,11 +88,10 @@
                                     </table>
                                 </div>
                             </div>
-                            <mat-paginator [length]="(provincesList && provincesList[0] && provincesList[0].Total) ? provincesList[0].Total : 0"
-                                        [pageSize]="pageSize"
-                                        [pageSizeOptions]="pageSizesList"
-                                        [showFirstLastButtons]="true"
-                                        (page)="pageEvent($event)">
+                            <mat-paginator
+                                [length]="(provincesList && provincesList[0] && provincesList[0].Total) ? provincesList[0].Total : 0"
+                                [pageSize]="pageSize" [pageSizeOptions]="pageSizesList" [showFirstLastButtons]="true"
+                                (page)="pageEvent($event)">
                             </mat-paginator>
                         </div>
                     </div>

@@ -5,80 +5,102 @@
                 <div class="card">
                     <div class="card-header card-header-warning" style="background: #023a54">
                         <h4 class="card-title">{{ "MESSAGE.NameList.CentralManagement" | translate }}</h4>
-                        <button (click)="openImport()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-success btn-round adding-btn">
-                            import
-                        </button>
-                        <button (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-success btn-round btn-just-icon adding-btn">
-                            <i class="material-icons">add</i>
-                        </button>
                     </div>
-                    <div class="row pt-3 pl-2 pr-3">
-                        <div class="col-sm-9 input-group form-sm form-1 pl-0">
-                            <div class="row" style="padding-left: 50px;">
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Province' |translate}}"
-                                        [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
-                                    <mat-autocomplete #provinceAC="matAutocomplete"
-                                        (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)"
-                                        [displayWith]="displayProvinceFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let province of listprovince" [value]="province">
-                                                <span *ngIf="!province.notfound">{{province.ProvinceName}}</span>
-                                                <span *ngIf="province.notfound"
-                                                    class="nofind">{{province.notfound}}</span>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <input class="form-control"
+                                                    placeholder="{{'MESSAGE.NameList.Province' |translate}}"
+                                                    [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
+                                                <mat-autocomplete #provinceAC="matAutocomplete"
+                                                    (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)"
+                                                    [displayWith]="displayProvinceFn">
+                                                    <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                        <mat-spinner></mat-spinner>
+                                                    </mat-option>
+                                                    <ng-container *ngIf="!isLoading">
+                                                        <mat-option *ngFor="let province of listprovince"
+                                                            [value]="province">
+                                                            <span
+                                                                *ngIf="!province.notfound">{{province.ProvinceName}}</span>
+                                                            <span *ngIf="province.notfound"
+                                                                class="nofind">{{province.notfound}}</span>
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-autocomplete>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input class="form-control"
+                                                    placeholder="{{'MESSAGE.NameList.District' |translate}}"
+                                                    [matAutocomplete]="districtAC" [formControl]="searchDistrictsCtrl">
+                                                <mat-autocomplete #districtAC="matAutocomplete"
+                                                    (optionSelected)="changeDistrict(searchDistrictsCtrl.value.ID)"
+                                                    [displayWith]="displayDistrictFn">
+                                                    <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                        <mat-spinner></mat-spinner>
+                                                    </mat-option>
+                                                    <ng-container *ngIf="!isLoading">
+                                                        <mat-option *ngFor="let district of listdistrict"
+                                                            [value]="district">
+                                                            <span
+                                                                *ngIf="!district.notfound">{{district.DistrictName}}</span>
+                                                            <span *ngIf="district.notfound"
+                                                                class="nofind">{{district.notfound}}</span>
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-autocomplete>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <input class="form-control"
+                                                    placeholder="{{'MESSAGE.NameList.Ward' |translate}}"
+                                                    [matAutocomplete]="wardAC" [formControl]="searchWardsCtrl">
+                                                <mat-autocomplete #wardAC="matAutocomplete"
+                                                    (optionSelected)="changeWard(searchWardsCtrl.value.ID)"
+                                                    [displayWith]="displayWardFn">
+                                                    <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                        <mat-spinner></mat-spinner>
+                                                    </mat-option>
+                                                    <ng-container *ngIf="!isLoading">
+                                                        <mat-option *ngFor="let ward of listward" [value]="ward">
+                                                            <span *ngIf="!ward.notfound">{{ward.WardName}}</span>
+                                                            <span *ngIf="ward.notfound"
+                                                                class="nofind">{{ward.notfound}}</span>
+                                                        </mat-option>
+                                                    </ng-container>
+                                                </mat-autocomplete>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 search-form">
+                                        <div class="row">
+                                            <div class="col-12 ta-r">
+                                                <button class="btn btn-vietgoal btn-sm mr-2"
+                                                    (click)="openImport()">Import</button>
+                                                <button class="btn btn-vietgoal btn-sm mr-2"
+                                                    (click)="downloadTemplate()">Mẫu Import</button>
+                                                <button mat-raised-button type="button" (click)="add()"
+                                                    title="{{ 'MESSAGE.NameList.Create' | translate}}"
+                                                    class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
+                                                    <i class="material-icons">add</i>
+                                                </button>
+                                            </div>
+                                            <div class="col-12 input-group form-sm ">
+                                                <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                                                    placeholder="{{ 'MESSAGE.NameList.Search' | translate }}"
+                                                    aria-label="Search">
+                                                <button type="button" (click)="reload()"
+                                                    title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                                                    class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
+                                                    <i class="material-icons">search</i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.District' |translate}}"
-                                        [matAutocomplete]="districtAC" [formControl]="searchDistrictsCtrl">
-                                    <mat-autocomplete #districtAC="matAutocomplete"
-                                        (optionSelected)="changeDistrict(searchDistrictsCtrl.value.ID)"
-                                        [displayWith]="displayDistrictFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let district of listdistrict" [value]="district">
-                                                <span *ngIf="!district.notfound">{{district.DistrictName}}</span>
-                                                <span *ngIf="district.notfound"
-                                                    class="nofind">{{district.notfound}}</span>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Ward' |translate}}"
-                                        [matAutocomplete]="wardAC" [formControl]="searchWardsCtrl">
-                                    <mat-autocomplete #wardAC="matAutocomplete"
-                                        (optionSelected)="changeWard(searchWardsCtrl.value.ID)"
-                                        [displayWith]="displayWardFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let ward of listward" [value]="ward">
-                                                <span *ngIf="!ward.notfound">{{ward.WardName}}</span>
-                                                <span *ngIf="ward.notfound" class="nofind">{{ward.notfound}}</span>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-3 input-group form-sm form-1 pl-0 search-form search-form">
-                            <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
-                                placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                            <div class="input-group-prepend">
-                                <button type="button" (click)="reload()"
-                                    title="{{ 'MESSAGE.NameList.Search' | translate}}"
-                                    class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                </button>
                             </div>
                         </div>
                     </div>

@@ -29,7 +29,7 @@ import { Observable } from 'rxjs';
         return this.http.get(environment.serverUrl + `CoachStatus/${id}` , this.httpOptions);
     }
 
-    addOrUpdateCoachStatus(CoachStatus: CoachStatus, by: null | number): Observable<any> {
+    addOrUpdateCoachStatus(CoachStatus: CoachStatus): Observable<any> {
         if (CoachStatus.id == 0) {
             return this.http.post(environment.serverUrl + 'CoachStatus', CoachStatus, this.httpOptions);
         } else {

@@ -44,7 +44,7 @@ export class CoachStatusComponent implements OnInit {
     const filter = {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
-      sortName: 'ageName',
+      sortName: 'coachStatusName',
       sortDirection: 0
     };
     this.loading = true;

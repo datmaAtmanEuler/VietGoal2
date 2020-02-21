@@ -30,7 +30,7 @@ export class ClassStatusService {
         return this.http.get(environment.serverUrl + `ClassStatus/${id}`, this.httpOptions);
     }
 
-    addOrUpdateClassStatus(ClassStatus: ClassStatus, by: null | number): Observable<any> {
+    addOrUpdateClassStatus(ClassStatus: ClassStatus): Observable<any> {
         if (ClassStatus.id == 0) {
             return this.http.post(environment.serverUrl + 'ClassStatus', ClassStatus, this.httpOptions);
         } else {

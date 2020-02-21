@@ -47,7 +47,7 @@ export class CoachStatusEditComponent implements OnInit {
 	}
 
 	UpdateTTHLV() {
-		this.CoachStatusService.addOrUpdateCoachStatus(this.CoachStatus, this.currentUser.UserId).subscribe(
+		this.CoachStatusService.addOrUpdateCoachStatus(this.CoachStatus).subscribe(
 			() => {
 				if (!this.popup) {
 					this.ReturnList();

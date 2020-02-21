@@ -49,7 +49,7 @@ export class StudentStatusEditComponent implements OnInit {
 	}
 
 	UpdateTTHV() {
-		this.StudentStatusService.addOrUpdateStudentStatus(this.StudentStatus, this.currentUser.UserId).subscribe(
+		this.StudentStatusService.addOrUpdateStudentStatus(this.StudentStatus).subscribe(
 			() => {
 				if (!this.popup) {
 					this.ReturnList();

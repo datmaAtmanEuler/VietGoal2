@@ -5,10 +5,10 @@ export class DistrictFilter {
     PageSize: number = 0;
     SearchTerm: string = '';
     ProvinceId: null | number = null;
-    SortName: string = 'ID';
+    SortName: string = 'Id';
     SortDirection: string = SORD_DIRECTION.DEFAULT;
 
-    constructor(searchTerm: string, pageIndex: number, pageSize: number, ProvinceId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.DEFAULT) {
+    constructor(searchTerm: string, pageIndex: number, pageSize: number, ProvinceId: null | number, sN: string = 'Id', sD: string = SORD_DIRECTION.DEFAULT) {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;
         this.PageSize = pageSize;

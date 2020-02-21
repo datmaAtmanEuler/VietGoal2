@@ -35,7 +35,7 @@ export class DistrictEditComponent implements OnInit {
 	GetDistrictById(ID:number)  
 	{  
 		const _this = this;
-		this.provinceService.getProvincesList(new Filter('', null, null)).subscribe((proList: Province[]) => {
+		this.provinceService.getProvincesList(new Filter(null,1,100, 'Id','ASC')).subscribe((proList: Province[]) => {
 			_this.provincesList = (proList) ? proList : [];
 			_this.districtService.getDistrict(ID).subscribe((district: District) => {
 				_this.district = district;

@@ -13,7 +13,7 @@ export class AgeService {
             'Content-Type': 'application/json; charset=utf-8'
         })
     };
-    ttlhList: Age[];
+    
     constructor(private http: HttpClient) {
     }
 
@@ -32,10 +32,9 @@ export class AgeService {
         } else {
             return this.http.put(environment.serverUrl + `Ages/${Age.id}`, Age, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Ages/${Age.Id}`, Age, this.httpOptions);
     }
 
-    deleteAge(AgeId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `Ages/${AgeId}` , this.httpOptions);
+    deleteAge(AgeId: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `Ages/${AgeId}`, this.httpOptions);
     }
 }

@@ -66,8 +66,8 @@
                                             <ng-container *ngFor="let province of provincesList; let i = index;">
                                                 <tr>
                                                     <td width="100px">{{ i + 1}}</td>
-                                                    <td>{{ province.ProvinceCode }}</td>
-                                                    <td>{{ province.ProvinceName }}</td>
+                                                    <td>{{ province.provinceCode }}</td>
+                                                    <td>{{ province.provinceName }}</td>
                                                     <td width="150px" class="my-action-item">
                                                         <button mat-raised-button type="button"
                                                             *hasClaim="['CanEditProvinces']" (click)="edit(province.ID)"
@@ -88,10 +88,8 @@
                                     </table>
                                 </div>
                             </div>
-                            <mat-paginator
-                                [length]="(provincesList && provincesList[0] && provincesList[0].Total) ? provincesList[0].Total : 0"
-                                [pageSize]="pageSize" [pageSizeOptions]="pageSizesList" [showFirstLastButtons]="true"
-                                (page)="pageEvent($event)">
+                            <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                [showFirstLastButtons]="true" (page)="pageEvent($event)">
                             </mat-paginator>
                         </div>
                     </div>

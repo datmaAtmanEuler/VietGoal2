@@ -63,16 +63,16 @@ export class AgeComponent implements OnInit {
     this.edit(null);
   }
 
-  // remove(id) {
-  //   const _this = this;
-  //   const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-  //   modalRef.componentInstance.confirmObject = 'Age';
-  //   modalRef.componentInstance.decide.subscribe(() => {
-  //     _this.service.deleteAge(id).subscribe(() => {
-  //       _this.reload();
-  //     });
-  //   });
-  // }
+  remove(id) {
+    const _this = this;
+    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    modalRef.componentInstance.confirmObject = 'Age';
+    modalRef.componentInstance.decide.subscribe(() => {
+      _this.service.deleteAge(id).subscribe(() => {
+        _this.reload();
+      });
+    });
+  }
   edit(Ageid: null | number) {
     const _this = this;
     const modalRef = this.modalService.open(AgeEditComponent, { size: 'lg' });

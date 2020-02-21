@@ -66,7 +66,8 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
 import { CentralImportComponent } from 'app/views/manage/central/central-import/central-import.component';
 import { ClassComponent } from '../../views/manage/class/class.component';
 import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
-import { DistrictImportComponent } from 'app/views/list/districts/districts-import/district-import.component';
+import { DistrictImportComponent } from '../../views/list/districts/districts-import/district-import.component';
+import { WardImportComponent } from '../../views/list/wards/wards-import/ward-import.component';
 
 @NgModule({
   imports: [
@@ -130,12 +131,14 @@ import { DistrictImportComponent } from 'app/views/list/districts/districts-impo
     CoachStatusEditComponent,
     AgeEditComponent,
     CentralImportComponent,
-    DistrictImportComponent
+    DistrictImportComponent,
+    WardImportComponent
   ],
   entryComponents: [
     ProvinceImportComponent,
     CentralImportComponent,
-    DistrictImportComponent
+    DistrictImportComponent,
+    WardImportComponent
   ],
 })
 

@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { ImportViewModel } from '../../models/importviewmodel';
+import { Filter } from '../../models/filter/filter';
 
 @Injectable({
   providedIn: 'root'

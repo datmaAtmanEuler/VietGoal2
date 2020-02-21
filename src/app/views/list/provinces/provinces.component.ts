@@ -96,38 +96,38 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     }
 
 
-
     reload() {
-      const filter = {
-        pageIndex: this.pageIndex,
-        pageSize: this.pageSize,
-        sortName: 'ProvinceCode',
-        sortDirection: 0
-      };
+      const _this = this;
+      const filter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'Id','ASC');
       this.loading = true;
-      this.provincesList = [];
-      this.service.getProvincesList(filter).subscribe((response: any) => {
-        const list = response.results ? response.results : [];
-        this.Total = (response && response.rowCount) ? response.rowCount : 0;
-        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-        setTimeout(() => {
-          this.loading = false;
-          this.provincesList = list || [];
-        }, 500);
-      });
+      _this.provincesList = [];
+      this.service.getProvincesList(filter).subscribe(
+          (response: any) => {
+            const list = response.results ? response.results : [];
+            this.Total = (response && response.rowCount) ? response.rowCount : 0;
+            this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+            setTimeout(() => {
+              _this.provincesList = (list) ? list : [];
+              _this.loading = false;
+            }, 500);
+          },
+          (err: any) => {
+            _this.provincesList = [];
+            _this.loading = false;
+          }
+      );
     }
 
   add() {
     this.edit(null);
   }
-  
 
-  edit(provinceid: null | number) {
+  edit(ID: number) {
     const _this = this;
     const modalRef = this.modalService.open(ProvinceEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    if (provinceid) {
-      modalRef.componentInstance.ProvinceId = provinceid;
+    if (ID) {
+      modalRef.componentInstance.ID = ID;
     }
     modalRef.result.then(function(){
         _this.reload();
@@ -168,7 +168,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
       }
     });
 
-    this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'ID' : this.columnsNameMapping[columnIndex];
+    this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'provinceName' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
   
@@ -178,6 +178,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     const _this = this;
     const modalRef = this.modalService.open(ProvinceImportComponent, { size: 'lg' });
     modalRef.result.then(function(importModel: any){
+        console.log(importModel);
     });
   }
 

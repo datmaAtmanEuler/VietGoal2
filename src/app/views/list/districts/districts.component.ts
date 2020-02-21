@@ -4,7 +4,6 @@ import { ProvinceService } from '../../../services/list/province.service';
 import { District } from '../../../models/list/districts';
 import { DistrictFilter } from '../../../models/filter/districtfilter';
 import { Router } from '@angular/router'; 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DistrictEditComponent } from './districtedit/districtedit.component';
 import { UtilsService } from '../../../services/utils.service';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
@@ -12,6 +11,10 @@ import { Province } from 'app/models/list/province';
 import { Filter } from 'app/models/filter/filter';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { DistrictImportComponent } from './districts-import/district-import.component';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import {TranslateService} from '@ngx-translate/core';
+import PerfectScrollbar from 'perfect-scrollbar';
 @Component({
   selector: 'app-districts',
   templateUrl: './districts.component.html',
@@ -22,9 +25,12 @@ export class DistrictsComponent implements OnInit {
   district: District;
   searchTerm:string = '';
   pageIndex:number = 1;
-  pageSize:number = 20;
+  pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize:number = this.pageSizesList[1];
   currentUser: any;
-
+  loading: boolean = true;
+  Total: any;
+  firstRowOnPage: any;
   /**
    * BEGIN SORT SETTINGS
    */
@@ -37,11 +43,35 @@ export class DistrictsComponent implements OnInit {
    * END SORT SETTINGS
    */
 
-  constructor(public util: UtilsService, private service: DistrictService, private router: Router, private modalService: NgbModal) { }
+  constructor(private translate: TranslateService, public util: UtilsService, private service: DistrictService, private router: Router, 
+    private matCus: MatPaginatorIntl,config: NgbModalConfig,private modalService: NgbModal) { 
+      config.backdrop = 'static';
+      config.keyboard = false;
+      config.scrollable = false;
+      this.updateMatTableLabel();
+      translate.onLangChange.subscribe((a: any) => {
+        this.updateMatTableLabel();
+        matCus.changes.next();
+      });
+    }
 
+  updateMatTableLabel() {
+    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
+    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
+        if (length === 0 || pageSize === 0) {
+          return this.translate.instant('MESSAGE.NameList.NoRecord');
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
+      }
+  }
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	  this.reload();
+    this.reload();
+    const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+    new PerfectScrollbar(vgscroll);
   }
 
   remove(district: District) {
@@ -53,14 +83,32 @@ export class DistrictsComponent implements OnInit {
         _this.deleteDistrict();
     });
 }
-
-  reload() {
-    const _this = this;
-    const filter: DistrictFilter = new DistrictFilter(this.searchTerm, this.pageIndex, this.pageSize, null, this.sort.SortName, this.sort.SortDirection);
-    _this.service.getDistrictsList(filter).subscribe((districtList: District[]) => {
-      _this.districtsList = districtList;
-    });
-  }
+pageEvent(variable: any){
+  this.pageIndex = variable.pageIndex+1;
+  this.pageSize = variable.pageSize;
+  this.reload();
+}
+reload() {
+  const _this = this;
+  const filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
+  this.loading = true;
+  _this.districtsList = [];
+  this.service.getDistrictsList(filter).subscribe(
+      (response: any) => {
+        const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        setTimeout(() => {
+          _this.districtsList = (list) ? list : [];
+          _this.loading = false;
+        }, 500);
+      },
+      (err: any) => {
+        _this.districtsList = [];
+        _this.loading = false;
+      }
+  );
+}
 
   add() {
     this.edit(null);
@@ -123,7 +171,7 @@ export class DistrictsComponent implements OnInit {
     const _this = this;
     const modalRef = this.modalService.open(DistrictImportComponent, { size: 'lg' });
     modalRef.result.then(function(importModel: any){
-        console.log(importModel);
+       
     });
   }
 

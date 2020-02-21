@@ -66,29 +66,34 @@
                                         <ng-container *ngFor="let district of districtsList; let i = index;">
                                             <tr>
                                                 <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ district.DistrictCode }}</td>
-                                                <td>{{ district.DistrictName }}</td>
-                                                <td>{{ district.ProvinceName }}</td>
+                                                <td>{{ district.districtCode }}</td>
+                                                <td>{{ district.districtName }}</td>
+                                                <td>{{ district.provinceId }}</td>
                                                 <td class="my-action-item">
     
-                                                    <button mat-raised-button *hasClaim="['CanEditDistricts']" type="button" (click)="edit(district.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
-                                                        <i class="material-icons">edit</i>
-                                                    </button>
-                                                    <button mat-raised-button *hasClaim="['CanDeleteDistricts']" type="button" (click)="remove(district)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
-                                                        <i class="material-icons">close</i>
-                                                    </button>
+                                                    <button mat-raised-button type="button"
+                                                    *hasClaim="['CanEditDistricts']" (click)="edit(district.ID)"
+                                                    title="{{ 'MESSAGE.NameList.Edit' | translate}}"
+                                                    class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                    <i class="material-icons">edit</i>
+                                                </button>
+                                                <button mat-raised-button *hasClaim="['CanDeleteDistricts']"
+                                                    type="button" (click)="remove(district)"
+                                                    title="{{ 'MESSAGE.NameList.Delete' | translate}}"
+                                                    class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                    <i class="material-icons">close</i>
+                                                </button>
                                                 </td>
                                             </tr>
                                         </ng-container>
                                     </tbody>
-                                </table></div>
-                                <mat-paginator [length]="100"
-                                            [pageSize]="pageSize"
-                                            [pageSizeOptions]="[1,2,3]"
-                                        [showFirstLastButtons]="true"
-                                            >
-                                </mat-paginator>
+                                </table>
                             </div>
+                               
+                            </div>
+                            <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                            [showFirstLastButtons]="true" (page)="pageEvent($event)">
+                          </mat-paginator>
                         </div>
                     </div>
                 </div>

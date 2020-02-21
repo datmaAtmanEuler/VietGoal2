@@ -3,10 +3,14 @@ import { WardService } from '../../../services/list/ward.service';
 import { Ward } from '../../../models/list/wards';
 import { WardFilter } from '../../../models/filter/wardfilter';
 import { Router } from '@angular/router'; 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { WardEditComponent } from './wardedit/wardedit.component';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import {TranslateService} from '@ngx-translate/core';
+import PerfectScrollbar from 'perfect-scrollbar';
+import { WardImportComponent } from './wards-import/ward-import.component';
 @Component({
   selector: 'app-wards',
   templateUrl: './wards.component.html',
@@ -17,8 +21,12 @@ export class WardsComponent implements OnInit {
   ward: Ward;
   searchTerm:string = '';
   pageIndex:number = 1;
-  pageSize:number = 20;
+  pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize:number = this.pageSizesList[1];
   currentUser: any;
+  loading: boolean = true;
+  Total: any;
+  firstRowOnPage: any;
   provinceId: null | number = null;
   districtId: null | number = null;
 
@@ -26,38 +34,84 @@ export class WardsComponent implements OnInit {
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
-  columnsName: string[] = ['Order', 'WardCode', 'WardName', 'ProvinceName', 'DistrictName', 'Action'];
-  columnsNameMapping: string[] = ['Order', 'WardCode', 'WardName', 'ProvinceID', 'DistrictID', 'Action'];
-  sortAbles: boolean[] = [false, true, true, true, true, false];
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
+  columnsName: string[] = ['Order', 'WardCode', 'WardName',  'DistrictName', 'Action'];
+  columnsNameMapping: string[] = ['ID', 'WardCode', 'WardName',  'DistrictName', 'Action'];
+  sortAbles: boolean[] = [false, true, true, true, false];
   /**
    * END SORT SETTINGS
    */
 
-  constructor(private modalService: NgbModal,private service: WardService, private router: Router) { }
+  constructor(private translate: TranslateService, private service: WardService, private router: Router,
+    private matCus: MatPaginatorIntl,config: NgbModalConfig,
+    private modalService: NgbModal) { 
+      config.backdrop = 'static';
+      config.keyboard = false;
+      config.scrollable = false;
+      this.updateMatTableLabel();
+      translate.onLangChange.subscribe((a: any) => {
+        this.updateMatTableLabel();
+        matCus.changes.next();
+      });
+    }
 
-  ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-	  this.reload();
+    ngOnInit() {
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      this.reload();
+      const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+      new PerfectScrollbar(vgscroll);
+    }
+
+  updateMatTableLabel() {
+    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
+    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
+        if (length === 0 || pageSize === 0) {
+          return this.translate.instant('MESSAGE.NameList.NoRecord');
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
+      }
   }
 
   remove(ward: Ward) {
     this.ward = ward;
     const _this = this;
-  const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-  modalRef.componentInstance.confirmObject = 'Ward';
-  modalRef.componentInstance.decide.subscribe(() => {
-      _this.deleteWard();
-  });
+    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    modalRef.componentInstance.confirmObject = 'Wards';
+    modalRef.componentInstance.decide.subscribe(() => {
+        _this.deleteWard();
+    });
 }
 
-  reload() {
-    const _this = this
-	  const filter: WardFilter = new WardFilter(this.searchTerm, this.pageIndex, this.pageSize, this.provinceId, this.districtId, this.sort.SortName, this.sort.SortDirection);
-    this.service.getWardsList(filter).subscribe((list:any)=>{
-    _this.wardsList = list;
-  })
-  }
+pageEvent(variable: any){
+  this.pageIndex = variable.pageIndex+1;
+  this.pageSize = variable.pageSize;
+  this.reload();
+}
+
+reload() {
+  const _this = this;
+  const filter: WardFilter = new WardFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
+  this.loading = true;
+  _this.wardsList = [];
+  this.service.getWardsList(filter).subscribe(
+      (response: any) => {
+        const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        setTimeout(() => {
+          _this.wardsList = (list) ? list : [];
+          _this.loading = false;
+        }, 500);
+      },
+      (err: any) => {
+        _this.wardsList = [];
+        _this.loading = false;
+      }
+  );
+}
 
   add() {
     this.edit(null);
@@ -115,9 +169,22 @@ export class WardsComponent implements OnInit {
   }
   
   doNothing(): void {}
+  
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(WardImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
 
-  getColumnValue(ward: Ward, colIndex: number): any {
-    let obj = Object.keys(ward);
-    return ward[obj[colIndex]];
+  downloadTemplate() {
+    var fileName = 'Districts_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
   }
 }

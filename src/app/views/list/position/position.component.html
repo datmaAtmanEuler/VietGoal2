@@ -52,15 +52,15 @@
                     <tbody>
                       <ng-container *ngFor="let cv of positionList; let i = index;">
                         <tr>
-                          <td>{{ i + 1 }}</td>
-                          <td>{{ cv.PositionCode }}</td>
-                          <td>{{ cv.TenChucVu }}</td>
+                          <td>{{ firstRowOnPage + i }}</td>
+                          <td>{{ cv.positionCode }}</td>
+                        <td>{{ cv.positionName }}</td>
                           <td class="my-action-item">
-                            <button type="button" (click)="edit(cv.Id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}"
+                            <button type="button" (click)="edit(cv.id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                               class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                               <i class="material-icons">edit</i>
                             </button>
-                            <button type="button" (click)="remove(cv)"
+                            <button type="button" (click)="remove(cv.id)"
                               title="{{ 'MESSAGE.NameList.Delete' | translate}}"
                               class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                               <i class="material-icons">close</i>
@@ -71,8 +71,8 @@
                     </tbody>
                   </table>
                 </div>
-                <mat-paginator [length]="100" [pageSize]="pageSize" [pageSizeOptions]="[1,2]"
-                  [showFirstLastButtons]="true">
+                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                  [showFirstLastButtons]="true" (page)="pageEvent($event)">
                 </mat-paginator>
               </div>
             </div>

@@ -17,7 +17,7 @@ export class AgeService {
     constructor(private http: HttpClient) {
     }
 
-    getAgeList(filter: any): Observable<any>{
+    getAgeList(filter: any): Observable<any> {
         let queryString = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
         return this.http.get(environment.apiUrl + 'Ages', this.httpOptions);
     }
@@ -26,11 +26,11 @@ export class AgeService {
         return this.http.get(environment.apiUrl + `Ages/${id}` , this.httpOptions);
     }
 
-    addOrUpdateAge(Age: Age, by: null | number): Observable<any> {
-        if(Age.Id == 0) {
-            Age.CreatedBy = by;
+    addOrUpdateAge(Age: any, by: null | number): Observable<any> {
+        if (Age.id == 0) {
+            return this.http.post(environment.serverUrl + 'Ages', Age, this.httpOptions);
         } else {
-            Age.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `Ages/${Age.id}`, Age, this.httpOptions);
         }
         return this.http.post(environment.apiUrl + `Ages/${Age.Id}`, Age, this.httpOptions);
     }

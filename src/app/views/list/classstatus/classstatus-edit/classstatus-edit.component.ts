@@ -48,7 +48,7 @@ export class ClassStatusEditComponent implements OnInit {
 	}
 
 	UpdateTTLH() {
-		this.ClassStatusService.addOrUpdateClassStatus(this.ClassStatus, this.currentUser.UserId).subscribe(
+		this.ClassStatusService.addOrUpdateClassStatus(this.ClassStatus).subscribe(
 			() => {
 				if (!this.popup) {
 					this.ReturnList();

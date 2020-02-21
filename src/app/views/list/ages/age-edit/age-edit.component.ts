@@ -6,62 +6,69 @@ import { Age } from 'app/models/list/age';
 import { AgeService } from 'app/services/list/age.service';
 
 @Component({
-  selector: 'app-age-edit',
-  templateUrl: './age-edit.component.html',
-  styleUrls: ['./age-edit.component.scss']
+	selector: 'app-age-edit',
+	templateUrl: './age-edit.component.html',
+	styleUrls: ['./age-edit.component.scss']
 })
 export class AgeEditComponent implements OnInit {
-	
+
 	@Input() popup: boolean;
 	@Input() AgeId: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
 
-	Age: Age = new Age(0,'','');
+	age: any;
 	currentUser: any;
 
-	constructor(public activeModal: NgbActiveModal, private AgeService: AgeService, config: NgbModalConfig , private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
+	constructor(public activeModal: NgbActiveModal, private AgeService: AgeService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
 		this.AgeId = this.route.snapshot.queryParams['Id'];
 		this.AgeId = (this.AgeId) ? this.AgeId : 0;
 		config.backdrop = 'static';
-     		config.keyboard = false;
+		config.keyboard = false;
 		config.scrollable = false;
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	}  
-	GetAgeById(AgeId:number)  
-	{  
+	}
+	GetAgeById(AgeId: number) {
 		this.AgeService.getAge((AgeId) ? AgeId : this.AgeId).subscribe(
 			(object) => {
-				this.Age = object || new Age(0, '', '');
+				this.age = object || new Age(0, '', '');
 			},
 			() => {
-				this.Age = new Age(0, '', '');
+				this.age = new Age(0, '', '');
 			}
 		);
 	}
 	ngOnInit() {
-		this.GetAgeById(this.AgeId);  
+		if (this.AgeId !== null) {
+			this.GetAgeById(this.AgeId);
+		} else {
+			this.age = {
+				"id": 0,
+				"ageCode": "",
+				"ageName": ""
+			}
+		}
 	}
 
 	ReturnList() {
-		this.router.navigate(['danhmuc/Age']); 
+		this.router.navigate(['danhmuc/Age']);
 
 	}
 
 	UpdateAge() {
-		this.AgeService.addOrUpdateAge(this.Age, this.currentUser.UserId).subscribe(
+		this.AgeService.addOrUpdateAge(this.age, 0).subscribe(
 			() => {
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
 					this.closeMe();
 				}
-			},
-			() => {
-				this.modalService.open(ConfirmComponent, { size: 'lg' });
 			}
+			// () => {
+			// 	this.modalService.open(ConfirmComponent, { size: 'lg' });
+			// }
 		);
 	}
-	
+
 	closeMe() {
 		this.activeModal.close();
 	}

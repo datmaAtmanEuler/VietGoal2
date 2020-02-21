@@ -30,16 +30,15 @@ import { Observable } from 'rxjs';
         return this.http.get(environment.serverUrl + `StudentStatus/${id}` , this.httpOptions);
     }
 
-    addOrUpdateStudentStatus(StudentStatus: StudentStatus, by: null | number): Observable<any> {
-        if(StudentStatus.Id == 0) {
-            StudentStatus.CreatedBy = by;
+    addOrUpdateStudentStatus(StudentStatus: StudentStatus): Observable<any> {
+        if (StudentStatus.id == 0) {
+            return this.http.post(environment.serverUrl + 'StudentStatus', StudentStatus, this.httpOptions);
         } else {
-            StudentStatus.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `StudentStatus/${StudentStatus.id}`, StudentStatus, this.httpOptions);
         }
-        return this.http.post(environment.serverUrl + `StudentStatus`, StudentStatus, this.httpOptions);
     }
 
-    deleteStudentStatus(StudentStatusId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `StudentStatus/${StudentStatusId}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteStudentStatus(StudentStatusId: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `StudentStatus/${StudentStatusId}` , this.httpOptions);
     }
   }

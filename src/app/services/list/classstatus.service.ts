@@ -30,16 +30,15 @@ export class ClassStatusService {
         return this.http.get(environment.serverUrl + `ClassStatus/${id}`, this.httpOptions);
     }
 
-    addOrUpdateClassStatus(ClassStatus: ClassStatus, by: null | number): Observable<any> {
-        if (ClassStatus.Id == 0) {
-            ClassStatus.CreatedBy = by;
+    addOrUpdateClassStatus(ClassStatus: ClassStatus): Observable<any> {
+        if (ClassStatus.id == 0) {
+            return this.http.post(environment.serverUrl + 'ClassStatus', ClassStatus, this.httpOptions);
         } else {
-            ClassStatus.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `ClassStatus/${ClassStatus.id}`, ClassStatus, this.httpOptions);
         }
-        return this.http.post(environment.serverUrl + `ClassStatus`, ClassStatus, this.httpOptions);
     }
 
-    deleteClassStatus(ClassStatusId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `ClassStatus/${ClassStatusId}?deletedBy=${deletedBy}`, this.httpOptions);
+    deleteClassStatus(ClassStatusId: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `ClassStatus/${ClassStatusId}`, this.httpOptions);
     }
 }

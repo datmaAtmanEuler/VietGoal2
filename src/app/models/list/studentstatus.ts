@@ -1,17 +1,15 @@
 export class StudentStatus{
-    Id: number;
-    DisplayOrder: number;
-    StudentStatusName: string;
-    StudentStatusCode: string;
-    StudentStatusColor: string;
-    CreatedBy: number;
-    UpdatedBy: number;
+    id: number;
+    displayOrder: number;
+    studentStatusName: string;
+    studentStatusCode: string;
+    studentStatusColor: string;
 
-    constructor(Id: number, DisplayOrder: number, StudentStatusName: string, StudentStatusCode: string, StudentStatusColor: string) {
-        this.Id = Id;
-        this.DisplayOrder = DisplayOrder;
-        this.StudentStatusName = StudentStatusName;
-        this.StudentStatusCode = StudentStatusCode;
-        this.StudentStatusColor = StudentStatusColor;
+    constructor(id: number, displayOrder: number, studentStatusName: string, studentStatusCode: string, studentStatusColor: string) {
+        this.id = id;
+        this.displayOrder = displayOrder;
+        this.studentStatusName = studentStatusName;
+        this.studentStatusCode = studentStatusCode;
+        this.studentStatusColor = studentStatusColor;
     }
 }

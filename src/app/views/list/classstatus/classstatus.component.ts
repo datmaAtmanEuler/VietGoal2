@@ -19,10 +19,12 @@ export class ClassStatusComponent implements OnInit {
   ClassStatus: ClassStatus;
   searchTerm: string = '';
   pageIndex: number = 1;
-  pageSize: number = 20;
+  pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize: number = this.pageSizesList[1];
   currentUser: any;
   loading: boolean;
   Total: any;
+  firstRowOnPage: any;
   constructor(public util: UtilsService, config: NgbModalConfig, private service: ClassStatusService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -34,12 +36,25 @@ export class ClassStatusComponent implements OnInit {
     this.reload();
   }
 
+  pageEvent(pageE: any) {
+    this.pageIndex = pageE.pageIndex + 1;
+    this.pageSize = pageE.pageSize;
+    this.reload();
+  }
   reload() {
-    const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
+    
+    const filter = {
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
+      sortName: 'classStatusName',
+      sortDirection: 0
+    };
     this.loading = true;
     this.ClassStatusList = [];
-    this.service.getClassStatusList(filter).subscribe((list: any) => {
-      this.Total = (list && list[0]) ? list[0].Total : 0;
+    this.service.getClassStatusList(filter).subscribe((response: any) => {
+      const list = response.results ? response.results : [];
+      this.Total = (response && response.rowCount) ? response.rowCount : 0;
+      this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
       setTimeout(() => {
         this.loading = false;
         this.ClassStatusList = list || [];
@@ -50,13 +65,12 @@ export class ClassStatusComponent implements OnInit {
     this.edit(null);
   }
 
-  remove(ClassStatus: ClassStatus) {
-    this.ClassStatus = ClassStatus;
+  remove(id: any) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
     modalRef.componentInstance.confirmObject = 'ClassStatus';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deleteClassStatus(ClassStatus.Id, this.currentUser.UserId).subscribe(() => {
+      _this.service.deleteClassStatus(id).subscribe(() => {
         _this.reload();
       });
     });

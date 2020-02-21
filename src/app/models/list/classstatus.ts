@@ -1,13 +1,12 @@
 export class ClassStatus{
-    Id: number;
-    ClassStatusName: string;
-    ClassStatusCode: string;
-    CreatedBy: number;
-    UpdatedBy: number;
+    id: number;
+    classStatusName: string;
+    classStatusCode: string;
 
-    constructor(Id: number, ClassStatusCode:string ,ClassStatusName: string){
-        this.Id = Id;
-        this.ClassStatusName = ClassStatusName;
-        this.ClassStatusCode = ClassStatusCode;
+    constructor(id: number, classStatusCode:string ,classStatusName: string){
+        this.id = id;
+        this.classStatusName = classStatusName;
+        this.classStatusCode = classStatusCode;
     }
 }
+

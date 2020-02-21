@@ -57,16 +57,16 @@
                                         <tbody>
                                             <ng-container *ngFor="let dt of ClassStatusList; let i = index;">
                                                 <tr>
-                                                    <td>{{ util.padIntegerLeftWithZeros(i + 1, 3) }}</td>
-                                                    <td>{{ dt.ClassStatusCode }}</td>
-                                                    <td>{{ dt.ClassStatusName }}</td>
+                                                    <td>{{firstRowOnPage + i }}</td>
+                                                    <td>{{ dt.classStatusName }}</td>
+                                                    <td>{{ dt.classStatusCode }}</td>
                                                     <td class="my-action-item">
-                                                        <button type="button" (click)="edit(dt.Id)"
+                                                        <button type="button" (click)="edit(dt.id)"
                                                             title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                                                             class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                             <i class="material-icons">edit</i>
                                                         </button>
-                                                        <button type="button" (click)="remove(dt)"
+                                                        <button type="button" (click)="remove(dt.id)"
                                                             title="{{ 'MESSAGE.NameList.Delete' | translate}}"
                                                             class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                             <i class="material-icons">close</i>
@@ -77,8 +77,8 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <mat-paginator [length]="100" [pageSize]="pageSize" [pageSizeOptions]="[1,2]"
-                                    [showFirstLastButtons]="true">
+                                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                  [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                 </mat-paginator>
                             </div>
                         </div>

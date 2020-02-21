@@ -28,7 +28,8 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
   loading: boolean = true;
-  
+  Total: any;
+  firstRowOnPage: any;
   /**
    * BEGIN SORT SETTINGS
    */
@@ -95,23 +96,25 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     }
 
 
+
     reload() {
-      const _this = this;
-      const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize, this.sort.SortName, this.sort.SortDirection);
+      const filter = {
+        pageIndex: this.pageIndex,
+        pageSize: this.pageSize,
+        sortName: 'ProvinceCode',
+        sortDirection: 0
+      };
       this.loading = true;
-      _this.provincesList = [];
-      this.service.getProvincesList(filter).subscribe(
-          (list: any) => {
-            setTimeout(() => {
-              _this.provincesList = (list) ? list : [];
-              _this.loading = false;
-            }, 500);
-          },
-          (err: any) => {
-            _this.provincesList = [];
-            _this.loading = false;
-          }
-      );
+      this.provincesList = [];
+      this.service.getProvincesList(filter).subscribe((response: any) => {
+        const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        setTimeout(() => {
+          this.loading = false;
+          this.provincesList = list || [];
+        }, 500);
+      });
     }
 
   add() {

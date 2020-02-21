@@ -20,9 +20,9 @@ export class ProvinceService {
 
     getProvincesList(filter: any): Observable<any> {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'Provinces?' , this.httpOptions);
+        return this.http.get(environment.apiUrl + 'Provinces' , this.httpOptions);
     }
-    
+
     getProvince(id: any): Observable<any> {
         return this.http.get(environment.apiUrl + `Provinces/${id}` , this.httpOptions);
     }

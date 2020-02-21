@@ -4,7 +4,7 @@ import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/cor
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {AppState} from './app-state.service';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HttpHeaders, HttpParams } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { APP_BASE_HREF, LocationStrategy, HashLocationStrategy} from '@angular/common';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -27,10 +27,9 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { ConfirmComponent } from './shared/modal/confirm/confirm.component';
 import { environment } from 'environments/environment';
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, `${environment.serverOriginUrl}i18n/`, '.json');
+export function HttpLoaderFactory(httpClient: HttpClient) {
+  return new TranslateHttpLoader(httpClient, `${environment.apiOriginalUrl}i18n/`, '.json');
 }
-
 @NgModule({
   imports: [
     ComponentsModule,

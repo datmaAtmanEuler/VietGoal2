@@ -1,0 +1,35 @@
+<div class="modal-body">
+    <div class="text-center border border-light">
+        <p class="h4 mb-4">District Information</p>
+        <form>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6">
+                        <app-upload [By]="1" (success)="finishUpload($event)"></app-upload>
+                    </div>
+                </div>
+                <p class=" control-label">Kết quả import </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div id="result_success" *ngIf="successList.length > 0">
+                            <p>{{ successList.length + ' records added/updated' }}</p>
+                            <ng-container *ngFor="let success of successList;">
+                                <span>{{ success.DisplayOrder + ' - ' + success.Description }}</span><br/>
+                            </ng-container>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div id="result_error" *ngIf="errorsList.length > 0">
+                            <p>{{ errorsList.length + ' records import failed' }}</p>
+                            <ng-container *ngFor="let error of errorsList;">
+                                <span>{{ error.DisplayOrder + ' - ' + error.Description }}</span><br/>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <button class="btn btn-warning mr-3" (click)="closeMe(null)" alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
+        <button class="btn btn-info" (click)="ImportDistrict()" [disabled]="disabled" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
+    </div>
+</div>

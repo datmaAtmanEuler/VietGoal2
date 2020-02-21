@@ -3,6 +3,7 @@ import { District } from '../../models/list/districts';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ImportViewModel } from '../../models/importviewmodel';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +34,18 @@ export class DistrictService {
         } else {
             district.CreatedBy = by;
         }
-        return this.http.post(environment.serverUrl_employee + `Districts/save`, district, this.httpOptions);
+        return this.http.post(environment.serverUrl_employee + `Districts?`, district, this.httpOptions);
+        
     }
 
     deleteDistrict(id: number, deletedBy: number): Observable<any> {
         return this.http.delete(environment.serverUrl_employee + `Districts/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    }
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `districts/import`, importViewModel , this.httpOptions);
     }
 }

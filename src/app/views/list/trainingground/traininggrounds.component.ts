@@ -60,7 +60,7 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
 
 reload() {
   const _this = this;
-  const filter: TrainingGroundFilter = new TrainingGroundFilter('', this.pageIndex, this.pageSize, null,null,'YardAreaCode','ASC');
+  const filter: TrainingGroundFilter = new TrainingGroundFilter('', this.pageIndex, this.pageSize, null,null,this.sort.SortName,'ASC');
   _this.service.getTrainingGroundsList(filter).subscribe((traininground: TrainingGround[]) => {
     _this.traininground = traininground;
   });

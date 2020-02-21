@@ -11,6 +11,7 @@ import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.componen
 import { Province } from 'app/models/list/province';
 import { Filter } from 'app/models/filter/filter';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import { DistrictImportComponent } from './districts-import/district-import.component';
 @Component({
   selector: 'app-districts',
   templateUrl: './districts.component.html',
@@ -117,4 +118,22 @@ export class DistrictsComponent implements OnInit {
   }
   
   doNothing(): void {}
+  
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(DistrictImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Districts_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
 }

@@ -17,25 +17,24 @@ export class AgeService {
     constructor(private http: HttpClient) {
     }
 
-    getAgeList(filter: any): Observable<any>{
+    getAgeList(filter: any): Observable<any> {
         let queryString = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
         return this.http.get(environment.serverUrl + 'Ages?' + queryString, this.httpOptions);
     }
 
     getAge(id: any): Observable<any> {
-        return this.http.get(environment.serverUrl + `Ages/${id}` , this.httpOptions);
+        return this.http.get(environment.serverUrl + `Ages/${id}`, this.httpOptions);
     }
 
-    addOrUpdateAge(Age: Age, by: null | number): Observable<any> {
-        if(Age.Id == 0) {
-            Age.CreatedBy = by;
+    addOrUpdateAge(Age: any, by: null | number): Observable<any> {
+        if (Age.id == 0) {
+            return this.http.post(environment.serverUrl + 'Ages', Age, this.httpOptions);
         } else {
-            Age.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `Ages/${Age.id}`, Age, this.httpOptions);
         }
-        return this.http.post(environment.serverUrl + `Ages`, Age, this.httpOptions);
     }
 
-    deleteAge(AgeId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Ages/${AgeId}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteAge(AgeId: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `Ages/${AgeId}`, this.httpOptions);
     }
 }

@@ -19,7 +19,7 @@ export class AgeService {
 
     getAgeList(filter: any): Observable<any> {
         let queryString = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'Ages', this.httpOptions);
+        return this.http.get(environment.apiUrl + 'Ages?' + queryString, this.httpOptions);
     }
 
     getAge(id: any): Observable<any> {

@@ -30,15 +30,14 @@ import { Observable } from 'rxjs';
     }
 
     addOrUpdateCoachStatus(CoachStatus: CoachStatus, by: null | number): Observable<any> {
-        if(CoachStatus.Id == 0) {
-            CoachStatus.CreatedBy = by;
+        if (CoachStatus.id == 0) {
+            return this.http.post(environment.serverUrl + 'CoachStatus', CoachStatus, this.httpOptions);
         } else {
-            CoachStatus.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `CoachStatus/${CoachStatus.id}`, CoachStatus, this.httpOptions);
         }
-        return this.http.post(environment.serverUrl + `CoachStatus`, CoachStatus, this.httpOptions);
     }
 
-    deleteCoachStatus(CoachStatusId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `CoachStatus/${CoachStatusId}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteCoachStatus(CoachStatusId: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `CoachStatus/${CoachStatusId}` , this.httpOptions);
     }
   }

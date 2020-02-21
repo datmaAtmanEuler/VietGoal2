@@ -63,7 +63,7 @@
                               *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
                               <td
                                   *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
-                                  {{ utilsService.getColumnValue(age, colIndex, paginationSettings.columnsNameMapping) }}
+                                  {{ utilsService.getColumnValue(cv, colIndex, paginationSettings.columnsNameMapping) }}
                               </td>
                           </ng-container>
                           <td class="my-action-item">

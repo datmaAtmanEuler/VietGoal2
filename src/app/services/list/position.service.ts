@@ -28,16 +28,15 @@ export class PositionService {
         return this.http.get(environment.serverUrl + `Positions/${id}` , this.httpOptions);
     }
 
-    addOrUpdatePosition(Position: Position, by: null | number): Observable<any> {
-        if(Position.Id == 0) {
-            Position.CreatedBy = by;
+    addOrUpdatePosition(Position: Position): Observable<any> {
+        if (Position.id == 0) {
+            return this.http.post(environment.serverUrl + 'Positions', Position, this.httpOptions);
         } else {
-            Position.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `Positions/${Position.id}`, Position, this.httpOptions);
         }
-        return this.http.post(environment.serverUrl + `Positions`, Position, this.httpOptions);
     }
 
-    deletePosition(PositionId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Positions/${PositionId}?deletedBy=${deletedBy}` , this.httpOptions);
+    deletePosition(PositionId: number, ): Observable<any> {
+        return this.http.delete(environment.serverUrl + `Positions/${PositionId}` , this.httpOptions);
     }
 }

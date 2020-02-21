@@ -19,9 +19,11 @@ export class PositionComponent implements OnInit {
   Position: Position;
   searchTerm: string = '';
   pageIndex: number = 1;
+  pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize: number = this.pageSizesList[1];
   currentUser: any;
-  pageSize: number = 20;
   Total:number;
+  firstRowOnPage:number;
   loading: boolean;
   constructor(public util: UtilsService, config: NgbModalConfig, private service: PositionService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
@@ -34,24 +36,34 @@ export class PositionComponent implements OnInit {
     this.reload();
   }
 
-  remove(Position: Position) {
-    this.Position = Position;
+  remove(id: any) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
     modalRef.componentInstance.confirmObject = 'Position';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deletePosition(Position.Id, this.currentUser.UserId).subscribe(()=>{
+      _this.service.deletePosition(id).subscribe(()=>{
         _this.reload();
       });
     });
   }
+  pageEvent(pageE: any) {
+    this.pageIndex = pageE.pageIndex + 1;
+    this.pageSize = pageE.pageSize;
+    this.reload();
+  }
   reload() {
-    const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-    // this.PositionList = this.service.getPositionList(filter);
+    const filter = {
+      pageIndex: this.pageIndex,
+      pageSize: this.pageSize,
+      sortName: 'positionName',
+      sortDirection: 0
+    };
     this.loading = true;
     this.positionList = [];
-    this.service.getPositionList(filter).subscribe((list: any) => {
-      this.Total = (list && list[0]) ? list[0].Total : 0;
+    this.service.getPositionList(filter).subscribe((response: any) => {
+      const list = response.results ? response.results : [];
+      this.Total = (response && response.rowCount) ? response.rowCount : 0;
+      this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
       setTimeout(() => {
         this.loading = false;
         this.positionList = list || [];

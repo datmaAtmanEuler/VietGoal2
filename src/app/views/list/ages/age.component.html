@@ -52,7 +52,7 @@
                     <tbody>
                       <ng-container *ngFor="let age of AgeList; let i = index;">
                         <tr>
-                          <td>{{ util.padIntegerLeftWithZeros(firstRowOnPage + i, 3) }}</td>
+                          <td>{{firstRowOnPage + i }}</td>
                           <td>{{ age.ageCode }}</td>
                           <td>{{ age.ageName }}</td>
                           <td class="my-action-item">

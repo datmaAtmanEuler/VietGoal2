@@ -1,15 +1,13 @@
 export class Position{
-    Id: number;
-    PositionCode: string;
-    PositionName: string;
-    DisplayOrder: number;
-    CreatedBy: number;
-    UpdatedBy: number;
+    id: number;
+    positionCode: string;
+    positionName: string;
+    displayOrder: number;
 
-    constructor(Id: number, PositionCode: string, PositionName: string, DisplayOrder: number){
-        this.Id = Id;
-        this.PositionCode = PositionCode;
-        this.PositionName = PositionName;
-        this.DisplayOrder = DisplayOrder;
+    constructor(id: number, positionCode: string, positionName: string, displayOrder: number){
+        this.id = id;
+        this.positionCode = positionCode;
+        this.positionName = positionName;
+        this.displayOrder = displayOrder;
     }
 }

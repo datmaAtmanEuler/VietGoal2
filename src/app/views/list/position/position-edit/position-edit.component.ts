@@ -33,7 +33,7 @@ export class PositionEditComponent implements OnInit {
 				this.position = object || new Position(0, '', '', 0);
 			},
 			() => {
-				this.position = new Position(0, '', '', 0);
+				this.position = new Position(0, '', '',0);
 			}
 		);
 	}
@@ -47,7 +47,7 @@ export class PositionEditComponent implements OnInit {
 	}
 
 	UpdatePosition() {
-		this.PositionService.addOrUpdatePosition(this.position, this.currentUser.UserId).subscribe(
+		this.PositionService.addOrUpdatePosition(this.position).subscribe(
 			() => {
 				if (!this.popup) {
 					this.ReturnList();

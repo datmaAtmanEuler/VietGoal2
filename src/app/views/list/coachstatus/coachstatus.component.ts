@@ -7,6 +7,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CoachStatus } from 'app/models/list/coachstatus';
 import { CoachStatusService } from 'app/services/list/coachstatus.service';
 import { CoachStatusEditComponent } from './coachstatus-edit/coachstatus-edit.component';
+import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 @Component({
   selector: 'app-coachstatus',
   templateUrl: './coachstatus.component.html',
@@ -24,11 +25,24 @@ export class CoachStatusComponent implements OnInit {
   loading: boolean;
   Total: any;
   firstRowOnPage: any;
-  constructor(public util: UtilsService, config: NgbModalConfig, private service: CoachStatusService, private router: Router, private modalService: NgbModal) {
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+      null
+    ],
+    columnsName: ['Order', 'CoachStatusName', 'CoachStatusCode', 'Action'],
+    columnsNameMapping: ['', 'coachStatusName', 'coachStatusCode', ''],
+    sortAbles: [false, true, true, false],
+    visibles: [true, true, true, true]
+  }
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: CoachStatusService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    utilsService.loadPaginatorLabels();
   }
 
   ngOnInit() {

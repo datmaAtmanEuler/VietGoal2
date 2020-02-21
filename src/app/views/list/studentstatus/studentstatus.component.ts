@@ -7,6 +7,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { StudentStatus } from 'app/models/list/studentstatus';
 import { StudentStatusService } from 'app/services/list/studentstatus.service';
 import { StudentStatusEditComponent } from './studentstatus-edit/studentstatus-edit.component';
+import { SORD_DIRECTION, ASCSort } from 'app/models/sort';
 
 
 @Component({
@@ -26,11 +27,24 @@ export class StudentStatusComponent implements OnInit {
   loading: boolean;
   Total: any;
   firstRowOnPage: any;
-  constructor(public util: UtilsService, config: NgbModalConfig, private service: StudentStatusService, private router: Router, private modalService: NgbModal) {
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+      null
+    ],
+    columnsName: ['Order', 'StudentStatusName', 'StudentStatusCode', 'Color', 'Action'],
+    columnsNameMapping: ['', 'studentStatusName', 'studentStatusCode', '', ''],
+    sortAbles: [false, true, true, false],
+    visibles: [true, true, true, true]
+  }
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: StudentStatusService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    utilsService.loadPaginatorLabels();
   }
 
   ngOnInit() {

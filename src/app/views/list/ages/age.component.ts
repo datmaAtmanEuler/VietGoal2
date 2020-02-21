@@ -7,6 +7,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Age } from 'app/models/list/age';
 import { AgeService } from 'app/services/list/age.service';
 import { AgeEditComponent } from './age-edit/age-edit.component';
+import { SORD_DIRECTION, ASCSort } from 'app/models/sort';
 
 @Component({
   selector: 'app-age',
@@ -25,11 +26,25 @@ export class AgeComponent implements OnInit {
   loading: boolean;
   Total: any;
   firstRowOnPage: any;
-  constructor(public util: UtilsService, config: NgbModalConfig, private service: AgeService, private router: Router, private modalService: NgbModal) {
+
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+      null
+    ],
+    columnsName: ['Order', 'AgeCode', 'AgeName', 'Action'],
+    columnsNameMapping: ['', 'ageCode', 'ageName', ''],
+    sortAbles: [false, true, true, false],
+    visibles: [true, true, true, true]
+  }
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: AgeService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    utilsService.loadPaginatorLabels();
   }
 
   ngOnInit() {

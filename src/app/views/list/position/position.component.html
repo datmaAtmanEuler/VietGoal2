@@ -42,19 +42,30 @@
                 <div class="vietgoal-table-settings style-1">
                   <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
                     <thead>
-                      <tr>
-                        <th>{{ "MESSAGE.NameList.Order" | translate}}</th>
-                        <th>{{ "MESSAGE.NameList.PositionCode" | translate}}</th>
-                        <th>{{ "MESSAGE.NameList.PositionName" | translate}}</th>
-                        <th>{{ "MESSAGE.NameList.Action" | translate}}</th>
-                      </tr>
+                      <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
+                        <th *ngIf="paginationSettings.visibles[colIndex]"
+                          [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
+                          (click)="paginationSettings.sortAbles[colIndex] ? utilsService.toggleSort(colIndex,paginationSettings.sortToggles ,paginationSettings.sort ,paginationSettings.columnsNameMapping ,reload()) : utilsService.doNothing()">
+                          <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                            <i style="float: none;" class="material-icons asc-sort-icons"
+                              *ngIf="paginationSettings.sortAbles[colIndex]">
+                              {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                            </i>
+                          </span>
+                        </th>
+                      </ng-container>
                     </thead>
                     <tbody>
                       <ng-container *ngFor="let cv of positionList; let i = index;">
                         <tr>
                           <td>{{ firstRowOnPage + i }}</td>
-                          <td>{{ cv.positionCode }}</td>
-                        <td>{{ cv.positionName }}</td>
+                          <ng-container
+                              *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
+                              <td
+                                  *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
+                                  {{ utilsService.getColumnValue(cv, colIndex, paginationSettings.columnsNameMapping) }}
+                              </td>
+                          </ng-container>
                           <td class="my-action-item">
                             <button type="button" (click)="edit(cv.id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                               class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">

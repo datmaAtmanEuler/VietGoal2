@@ -38,15 +38,7 @@ export class AgeEditComponent implements OnInit {
 		);
 	}
 	ngOnInit() {
-		if (this.AgeId !== null) {
-			this.GetAgeById(this.AgeId);
-		} else {
-			this.age = {
-				"id": 0,
-				"ageCode": "",
-				"ageName": ""
-			}
-		}
+		this.GetAgeById(this.AgeId);
 	}
 
 	ReturnList() {

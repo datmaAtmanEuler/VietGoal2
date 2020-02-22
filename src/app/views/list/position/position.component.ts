@@ -8,6 +8,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PositionService } from 'app/services/list/position.service';
 import { Position } from 'app/models/list/position';
 import { PositionEditComponent } from './position-edit/position-edit.component';
+import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 
 @Component({
   selector: 'app-position',
@@ -25,11 +26,24 @@ export class PositionComponent implements OnInit {
   Total:number;
   firstRowOnPage:number;
   loading: boolean;
-  constructor(public util: UtilsService, config: NgbModalConfig, private service: PositionService, private router: Router, private modalService: NgbModal) {
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+      null
+    ],
+    columnsName: ['Order', 'PositionCode', 'PositionName', 'Action'],
+    columnsNameMapping: ['', 'positionCode', 'positionName', ''],
+    sortAbles: [false, true, true, false],
+    visibles: [true, true, true, true]
+  }
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: PositionService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    utilsService.loadPaginatorLabels();
   }
 
   ngOnInit() {

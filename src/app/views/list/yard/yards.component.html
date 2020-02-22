@@ -10,25 +10,25 @@
                         <div class="col-sm-9 input-group form-sm form-1 pl-0">
                             <div class="row" style="padding-left: 50px;">
 
-                                <div class="col-sm-4">
+                                <!-- <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
-                                        [matAutocomplete]="AreasAC" [formControl]="searchAressCtrl">
-                                    <mat-autocomplete #AresAC="matAutocomplete"
-                                        (optionSelected)="changeAres(searchAressCtrl.value.ID)"
-                                        [displayWith]="displayAresFn">
+                                        [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
+                                    <mat-autocomplete #AreasAC="matAutocomplete"
+                                        (optionSelected)="changeAreas(searchAreasCtrl.value.ID)"
+                                        [displayWith]="displayAreasFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Areas of listarea" [value]="AreaId">
-                                                <span *ngIf="!Ares.notfound">{{Areas.AreasName}}</span>
-                                                <span *ngIf="Ares.notfound" class="nofind">{{Areas.notfound}}</span>
+                                            <mat-option *ngFor="let area of areasList" [value]="area">
+                                                <span *ngIf="!area.notfound">{{area.areaName}}</span>
+                                                <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
-                                </div>
+                                </div> -->
                                 
-                                <div class="col-sm-4">
+                                <!-- <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"
                                         [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
                                     <mat-autocomplete #CentralAC="matAutocomplete"
@@ -38,13 +38,13 @@
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Central of listCentral" [value]="CentralId">
+                                            <mat-option *ngFor="let Central of listCentral" [value]="Central">
                                                 <span *ngIf="!Central.notfound">{{Central.CentralName}}</span>
                                                 <span *ngIf="Central.notfound" class="nofind">{{Central.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
-                                </div>
+                                </div> -->
                                 
                             </div>
                         </div>
@@ -69,11 +69,12 @@
                         <div class="col-12">
                             <div class="card-body table-responsive">
                                 <div class="vietgoal-table-settings style-1">
+                                    <div class="vietgoal-table-settings vg-scroll">
                                     <table class="table table-condensed table-striped table-bordered table-hover"
-                                        style="width: 100%">
+                                        style="width: 200%">
                                         <thead>
                                             <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
-                                                <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')"
+                                                <th [style.width]="(colIndex == 0) ? '50px' : ((colIndex == columnsName.length - 1) ? '100px' : 'auto')"
                                                     (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
                                                     <span
                                                         style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
@@ -88,15 +89,14 @@
                                         <tbody>
                                             <ng-container *ngFor="let yard of yardsList; let i = index;">
                                                 <tr>
-                                                    <td width="100px">{{ i + 1}}</td>
-                                                    <td>{{ yard.YardCode }}</td>
-                                                    <td>{{ yard.YardName }}</td>
-                                                    <td>{{ yard.CentralName }}</td>
-                                                    <td>{{ yard.Year }}</td>
-                                                    <td>{{ yard.Address }}</td>
-                                                    <td>Diện tích</td>
-                                                    <td>Ghi chú</td>
-                                                    <td class="my-action-item">
+                                                    <td>{{ i + 1}}</td>
+                                                    <td>{{ yard.yardCode }}</td>
+                                                    <td>{{ yard.yardName }}</td>
+                                                    <td>{{ yard.areaId }}</td>
+                                                    <td>{{ yard.address }}</td>
+                                                    <td>{{ yard.area }}</td>
+                                                    <td>{{ yard.description }}</td>
+                                                    <td  class="my-action-item">
 
                                                         <button mat-raised-button *hasClaim="['CanEditYards']"
                                                             type="button" (click)="edit(yard.ID)"
@@ -116,7 +116,9 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <mat-paginator [length]="100" [pageSize]="pageSize" [pageSizeOptions]="[1,2]">
+                                </div>
+                                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                    [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                 </mat-paginator>
                             </div>
                         </div>

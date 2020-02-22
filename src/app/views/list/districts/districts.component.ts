@@ -23,6 +23,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 export class DistrictsComponent implements OnInit {
   districtsList:District[] = [];
   district: District;
+  provinceList: Province[]=[];
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];

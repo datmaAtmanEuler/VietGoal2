@@ -19,11 +19,11 @@ export class YardService {
     }
     getYardsList(filter: any): Observable<any> {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.serverUrl_employee + 'Yards?' + queryString , this.httpOptions);
+        return this.http.get(environment.apiUrl + 'Yards?' + queryString , this.httpOptions);
     }
     
     getYard(id: any): Observable<any> {
-        return this.http.get(environment.serverUrl_employee + `Yards/${id}` , this.httpOptions);
+        return this.http.get(environment.apiUrl + `Yards/${id}` , this.httpOptions);
     }
 
     addOrUpdateYard(yard: Yard, by: null | number): Observable<any> {
@@ -33,10 +33,10 @@ export class YardService {
         } else {
             yard.CreatedBy = by;
         }
-        return this.http.post(environment.serverUrl_employee + `Yards/save`, yard, this.httpOptions);
+        return this.http.post(environment.apiUrl + `Yards/save`, yard, this.httpOptions);
     }
 
     deleteYard(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl_employee + `Yards/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.apiUrl + `Yards/${id}?deletedBy=${deletedBy}` , this.httpOptions);
     }
 }

@@ -18,11 +18,11 @@ import { Observable } from 'rxjs';
   
       getRecruitsList(filter: any): Observable<any> {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.serverUrl_employee + 'recruits?' + queryString , this.httpOptions);
+        return this.http.get(environment.apiUrl + 'Recruits?' + queryString , this.httpOptions);
     }
     
     getRecruit(id: any): Observable<any> {
-        return this.http.get(environment.serverUrl_employee + `recruits/${id}` , this.httpOptions);
+        return this.http.get(environment.apiUrl + `Recruits/${id}` , this.httpOptions);
     }
 
     addOrUpdateRecruit(recruit: Recruit, by: null | number): Observable<any> {
@@ -32,10 +32,10 @@ import { Observable } from 'rxjs';
         } else {
             recruit.CreatedBy = by;
         }
-        return this.http.post(environment.serverUrl_employee + `recruits/save`, recruit, this.httpOptions);
+        return this.http.post(environment.apiUrl + `Recruits/save`, recruit, this.httpOptions);
     }
 
     deleteRecruit(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl_employee + `recruits/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.apiUrl + `Recruits/${id}?deletedBy=${deletedBy}` , this.httpOptions);
     }
 }

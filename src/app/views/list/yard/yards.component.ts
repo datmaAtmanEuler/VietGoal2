@@ -8,6 +8,10 @@ import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { YardEditComponent } from './yard-edit/yard-edit.component';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import {TranslateService} from '@ngx-translate/core';
+import PerfectScrollbar from 'perfect-scrollbar';
+import { Area } from 'app/models/list/area';
 @Component({
   selector: 'app-yards',
   templateUrl: './yards.component.html',
@@ -15,35 +19,60 @@ import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 })
 export class YardComponent implements OnInit {
   yardsList:Yard[] = [];
+  areasList:Area[] = [];
   yard: Yard;
   searchTerm:string = '';
   pageIndex:number = 1;
-  pageSize:number = 20;
+  pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize:number = this.pageSizesList[1];
   currentUser: any;
+  loading: boolean = true;
+  Total: any;
+  firstRowOnPage: any;
 
   /**
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
-  columnsName: string[] = ['Order', 'YardCode', 'YardName', 'CentralName','AreaName','Address', 'Action'];
-  columnsNameMapping: string[] = ['Id', 'YardCode', 'YardName', 'CentralName','AreaName','Address', 'Action'];
+  columnsName: string[] = ['Order', 'YardCode', 'YardName','Area','Address','CampusArea','Note', 'Action'];
+  columnsNameMapping: string[] = ['Id', 'YardCode', 'YardName','Area','Address','CampusArea','Note', 'Action'];
   sortAbles: boolean[] = [false, true, true, true,true,true, false];
   /**
    * END SORT SETTINGS
    */
 
-  constructor(config: NgbModalConfig,public util: UtilsService, private service: YardService, private modalService: NgbModal, private router: Router) {
+  constructor(private translate: TranslateService,
+    private matCus: MatPaginatorIntl, config: NgbModalConfig,public util: UtilsService, private service: YardService, private modalService: NgbModal, private router: Router) {
     config.backdrop = 'static';
-    config.keyboard = false;
-    config.scrollable = false;
+      config.keyboard = false;
+      config.scrollable = false;
+      this.updateMatTableLabel();
+      translate.onLangChange.subscribe((a: any) => {
+        this.updateMatTableLabel();
+        matCus.changes.next();
+      });
    }
 
   ngOnInit() {
   this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-	this.reload();
+  this.reload();
+  const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+  new PerfectScrollbar(vgscroll);
   }
 
+  updateMatTableLabel() {
+    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
+    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
+        if (length === 0 || pageSize === 0) {
+          return this.translate.instant('MESSAGE.NameList.NoRecord');
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
+      }
+  }
   remove(yard: Yard) {
     this.yard = yard;
     const _this = this;
@@ -53,13 +82,31 @@ export class YardComponent implements OnInit {
         _this.deleteYard();
     });
 }
-
+pageEvent(variable: any){
+  this.pageIndex = variable.pageIndex+1;
+  this.pageSize = variable.pageSize;
+  this.reload();
+}
 reload() {
   const _this = this;
-  const filter: YardFilter = new YardFilter(this.searchTerm, this.pageIndex, this.pageSize,null, this.sort.SortName, this.sort.SortDirection);
-  _this.service.getYardsList(filter).subscribe((yardList: Yard[]) => {
-    _this.yardsList = yardList;
-  });
+  const filter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
+  this.loading = true;
+  _this.yardsList = [];
+  this.service.getYardsList(filter).subscribe(
+      (response: any) => {
+        const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        setTimeout(() => {
+          _this.yardsList = (list) ? list : [];
+          _this.loading = false;
+        }, 500);
+      },
+      (err: any) => {
+        _this.yardsList = [];
+        _this.loading = false;
+      }
+  );
 }
 
 add() {

@@ -18,11 +18,11 @@ export class AreaService {
 
     getAreasList(filter: any): Observable<any> {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.serverUrl_employee + 'Areas?' + queryString , this.httpOptions);
+        return this.http.get(environment.apiUrl + 'Areas?' + queryString , this.httpOptions);
     }
     
     getArea(id: any): Observable<any> {
-        return this.http.get(environment.serverUrl_employee + `Areas/${id}` , this.httpOptions);
+        return this.http.get(environment.apiUrl + `Areas/${id}` , this.httpOptions);
     }
 
     addOrUpdateArea(area: Area, by: null | number): Observable<any> {
@@ -33,10 +33,10 @@ export class AreaService {
         } else {
             area.CreatedBy = by;
         }
-        return this.http.post(environment.serverUrl_employee + `Areas/save`, area, this.httpOptions);
+        return this.http.post(environment.apiUrl + `Areas/save`, area, this.httpOptions);
     }
 
     deleteArea(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl_employee + `Areas/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.apiUrl + `Areas/${id}?deletedBy=${deletedBy}` , this.httpOptions);
     }
 }

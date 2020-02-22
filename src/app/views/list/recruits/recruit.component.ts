@@ -10,7 +10,7 @@ import { Recruit } from '../../../models/list/recruit';
 
 import {TranslateService} from '@ngx-translate/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-
+import PerfectScrollbar from 'perfect-scrollbar';
 @Component({
   selector: 'app-recruit',
   templateUrl: './recruit.component.html',
@@ -25,6 +25,8 @@ export class RecruitComponent implements OnInit {
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
   loading: boolean = true;
+  Total: any;
+  firstRowOnPage: any;
   
   /**
    * BEGIN SORT SETTINGS
@@ -37,7 +39,8 @@ export class RecruitComponent implements OnInit {
   /**
    * END SORT SETTINGS
    */
-  constructor(private translate: TranslateService, config: NgbModalConfig,  private matCus: MatPaginatorIntl, private service: RecruitService, private router: Router,  private cdRef: ChangeDetectorRef,
+  constructor(private translate: TranslateService, config: NgbModalConfig,  private matCus: MatPaginatorIntl, private service: RecruitService, 
+    private router: Router,  private cdRef: ChangeDetectorRef,
     private modalService: NgbModal) { 
       config.backdrop = 'static';
       config.keyboard = false;
@@ -65,6 +68,8 @@ export class RecruitComponent implements OnInit {
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.reload();
+    const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+    new PerfectScrollbar(vgscroll);
   }
 
   
@@ -85,11 +90,14 @@ export class RecruitComponent implements OnInit {
     }
     reload() {
       const _this = this;
-      const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize, this.sort.SortName, this.sort.SortDirection);
+      const filter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'Id','ASC');
       this.loading = true;
       _this.recruitsList = [];
       this.service.getRecruitsList(filter).subscribe(
-          (list: any) => {
+          (response: any) => {
+            const list = response.results ? response.results : [];
+            this.Total = (response && response.rowCount) ? response.rowCount : 0;
+            this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
             setTimeout(() => {
               _this.recruitsList = (list) ? list : [];
               _this.loading = false;

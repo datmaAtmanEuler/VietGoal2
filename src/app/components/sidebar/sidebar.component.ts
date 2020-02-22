@@ -30,7 +30,8 @@ export const ROUTES: RouteInfo[] = [
       { path: '/danhmuc/khoanthu', title: 'MESSAGE.NameList.CollectionsList', icon: '', class: '' },
       { path: '/danhmuc/luatuoi', title: 'MESSAGE.NameList.AgesList', icon: '', class: '' },
       { path: '/danhmuc/baitap', title: 'MESSAGE.NameList.YardArea', icon: '', class: '' },
-      { path: '/danhmuc/khuvuc', title: 'MESSAGE.NameList.RegionsList', icon: '', class: '' }
+      { path: '/danhmuc/khuvuc', title: 'MESSAGE.NameList.RegionsList', icon: '', class: '' },
+      { path: '/danhmuc/kqchieusinh', title: 'MESSAGE.NameList.EnrollmentResultsList', icon: '', class: '' }
     ]
   },
   {

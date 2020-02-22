@@ -35,6 +35,8 @@ import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.componen
 import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
 import { ClassComponent } from '../../views/manage/class/class.component';
 import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
+import { RecruitComponent } from '../../views/list/recruits/recruit.component';
+import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/recruit-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -119,6 +121,12 @@ export const AdminLayoutRoutes: Routes = [
         { path: '', component: AreaComponent },
         { path: 'add', component: AreaEditComponent },
         { path: 'edit', component: AreaEditComponent }
+      ] },
+      { path: 'kqchieusinh',  children:
+      [
+        { path: '', component: RecruitComponent },
+        { path: 'add', component: RecruitEditComponent },
+        { path: 'edit', component: RecruitEditComponent }
       ] },
     ]
 },

@@ -8,6 +8,11 @@
                     </div>
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-9 input-group form-sm form-1 pl-0"> 
+                            <div class="col-12 ta-r">
+                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="openImport()">Import</button>
+                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="downloadTemplate()">Mẫu
+                                    Import</button>
+                            </div>
                         </div>
                         <div class="col-sm-3 input-group form-sm form-1 pl-0 search-form search-form">
                             <button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}"

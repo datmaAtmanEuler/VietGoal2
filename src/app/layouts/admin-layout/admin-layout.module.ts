@@ -8,9 +8,11 @@ import { ProvincesComponent } from '../../views/list/provinces/provinces.compone
 import { DistrictsComponent } from '../../views/list/districts/districts.component';
 import { DistrictEditComponent } from '../../views/list/districts/districtedit/districtedit.component';
 import { ProvinceEditComponent } from '../../views/list/provinces/provinceedit/provinceedit.component';
-import { ProvinceImportComponent } from 'app/views/list/provinces/province-import/province-import.component';
+import { ProvinceImportComponent } from '../../views/list/provinces/province-import/province-import.component';
 import { CentralComponent } from '../../views/manage/central/central.component';
 import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
+import { DecentralizeUserComponent } from '../../views/manage/decentralize-user/decentralize-user.component';
+
 import { WardsComponent } from '../../views/list/wards/wards.component';
 import { WardEditComponent } from '../../views/list/wards/wardedit/wardedit.component';
 import { UserGroupComponent } from '../../views/list/usergroups/usergroup.component';
@@ -33,8 +35,13 @@ import {
   MatDatepickerModule,
 } from '@angular/material';
 
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatIconModule} from '@angular/material/icon';
 
 import { TrainingGroundsComponent } from '../../views/list/trainingground/traininggrounds.component';
 import { TrainingGroundEditComponent } from '../../views/list/trainingground/trainningground-edit/trainingground-edit.component';
@@ -45,33 +52,44 @@ import { HasClaimDirective } from '../../directives/has-claim.directive';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import { CategoriesComponent } from '../../views/controlmanagement/categories/categories.component';
 import { CategoryEditComponent } from '../../views/controlmanagement/categories/categoryedit/categoryedit.component';
-import { PositionComponent } from 'app/views/list/position/position.component';
-import { PositionEditComponent } from 'app/views/list/position/position-edit/position-edit.component';
-import { ClassStatusComponent } from 'app/views/list/classstatus/classstatus.component';
-import { ClassStatusEditComponent } from 'app/views/list/classstatus/classstatus-edit/classstatus-edit.component';
-import { StudentStatusComponent } from 'app/views/list/studentstatus/studentstatus.component';
-import { StudentStatusEditComponent } from 'app/views/list/studentstatus/studentstatus-edit/studentstatus-edit.component';
-import { CoachStatusComponent } from 'app/views/list/coachstatus/coachstatus.component';
-import { CoachStatusEditComponent } from 'app/views/list/coachstatus/coachstatus-edit/coachstatus-edit.component';
-import { CollectionComponent } from 'app/views/list/collections/collection.component';
-import { CollectionEditComponent } from 'app/views/list/collections/collection-edit/collection-edit.component';
-import { FeeComponent } from 'app/views/list/fees/fee.component';
-import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.component';
-import {RecruitComponent} from 'app/views/list/recruits/recruit.component';
-import { AgeComponent } from 'app/views/list/ages/age.component';
+import { PositionComponent } from '../../views/list/position/position.component';
+import { PositionEditComponent } from '../../views/list/position/position-edit/position-edit.component';
+import { ClassStatusComponent } from '../../views/list/classstatus/classstatus.component';
+import { ClassStatusEditComponent } from '../../views/list/classstatus/classstatus-edit/classstatus-edit.component';
+import { StudentStatusComponent } from '../../views/list/studentstatus/studentstatus.component';
+import { StudentStatusEditComponent } from '../../views/list/studentstatus/studentstatus-edit/studentstatus-edit.component';
+import { CoachStatusComponent } from '../../views/list/coachstatus/coachstatus.component';
+import { CoachStatusEditComponent } from '../../views/list/coachstatus/coachstatus-edit/coachstatus-edit.component';
+import { CollectionComponent } from '../../views/list/collections/collection.component';
+import { CollectionEditComponent } from '../../views/list/collections/collection-edit/collection-edit.component';
+import { FeeComponent } from '../../views/list/fees/fee.component';
+import { FeeEditComponent } from '../../views/list/fees/fee-edit/fee-edit.component';
+import {RecruitComponent} from '../../views/list/recruits/recruit.component';
+import { AgeComponent } from '../../views/list/ages/age.component';
 
-import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
+import { ScheduleComponent } from '../../views/manage/schedule/schedule.component';
 import { from } from 'rxjs';
-import { RecruitEditComponent } from 'app/views/list/recruits/recruit-edit/recruit-edit.component';
-import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.component';
-import { CentralImportComponent } from 'app/views/manage/central/central-import/central-import.component';
+import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/recruit-edit.component';
+import { AgeEditComponent } from '../../views/list/ages/age-edit/age-edit.component';
+import { CentralImportComponent } from '../../views/manage/central/central-import/central-import.component';
 import { ClassComponent } from '../../views/manage/class/class.component';
 import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 import { DistrictImportComponent } from '../../views/list/districts/districts-import/district-import.component';
 import { WardImportComponent } from '../../views/list/wards/wards-import/ward-import.component';
+
 import { AreaImportComponent } from 'app/views/list/area/areas-import/area-import.component';
 import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
 import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
+
+import { ClassImportComponent } from '../../views/manage/class/class-import/class-import.component';
+import { TrainingGroundImportComponent } from '../../views/list/trainingground/trainingground-import/trainingground-import.component';
+import { UserGroupImportComponent } from '../../views/list/usergroups/usergroup-import/usergroup-import.component';
+import { YardImportComponent } from '../../views/list/yard/yard-import/yard-import.component';
+import { RecruitImportComponent } from '../../views/list/recruits/recruit-import/recruit-import.component';
+import { RecruitStudentComponent } from '../../views/manage/recruit-student/recruit-student.component';
+import { RecruitStudentEditComponent } from '../../views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
+import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
+
 
 @NgModule({
   imports: [
@@ -82,6 +100,8 @@ import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabse
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     ReactiveFormsModule,
+    MatRadioModule,
+    MatCheckboxModule,
     MatButtonModule,
     MatRippleModule,
     MatFormFieldModule,
@@ -91,8 +111,10 @@ import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabse
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     MatPaginatorModule,
-    MatDatepickerModule
-],
+    MatDatepickerModule,
+    MatTreeModule,
+    MatIconModule
+  ],
   declarations: [
     ClassComponent,
     ClassEditComponent,
@@ -137,17 +159,32 @@ import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabse
     AgeEditComponent,
     CentralImportComponent,
     DistrictImportComponent,
+    ClassImportComponent,
+    TrainingGroundImportComponent,
+    UserGroupImportComponent,
+    YardImportComponent,
+    RecruitImportComponent,
+    RecruitStudentImportComponent,
     AreaImportComponent,
     WardImportComponent,
+    DecentralizeUserComponent,
     CoachAbsentComponent,
-    CoachAbsentEditComponent
+    CoachAbsentEditComponent,
+    RecruitStudentComponent,
+    RecruitStudentEditComponent
   ],
   entryComponents: [
     ProvinceImportComponent,
     CentralImportComponent,
     DistrictImportComponent,
     WardImportComponent,
-    AreaImportComponent
+    RecruitStudentImportComponent,
+    UserGroupImportComponent,
+    YardImportComponent,
+    RecruitImportComponent,
+    ClassImportComponent,
+    TrainingGroundImportComponent,
+    AreaImportComponent,
   ],
 })
 

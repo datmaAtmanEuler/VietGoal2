@@ -26,7 +26,7 @@ export class YardEditComponent implements OnInit {
 	searchCentralsCtrl = new FormControl();
 	searchAreasCtrl = new FormControl();
 	isLoading = false;
-	yard: Yard = new Yard (0,'', '', 0,0,null,'','',null,null,null,null,0,0,0,0);
+	yard: Yard = new Yard (0,'', '', 0,0,null,'','','',true,null,null,null,0,0,0,0);
 
 	constructor( config: NgbModalConfig, private modalService: NgbModal,public activeModal: NgbActiveModal, private centralService: CentralService, private santapService: YardService, private route: ActivatedRoute, private router: Router) {
 		this.Id = this.route.snapshot.queryParams['Id'];
@@ -55,7 +55,7 @@ export class YardEditComponent implements OnInit {
 			_this.santapService.getYard(Id).subscribe((yard: Yard) => {
 				_this.yard = yard;
 				if (_this.yard == null || _this.yard.Id==0) {
-					_this.yard =new Yard(0,'', '', 0,0,null,'','',null,null,null,null,0,0,0,0);
+					_this.yard =new Yard(0,'', '', 0,0,null,'','','',true,null,null,null,0,0,0,0);
 				}
 			});	
 		  });
@@ -73,7 +73,7 @@ export class YardEditComponent implements OnInit {
 	
 	UpdateYard() {
 		const _this = this;
-		this.santapService.addOrUpdateYard(_this.yard, this.UserId).subscribe((result: any) => {
+		this.santapService.addOrUpdateYard(_this.yard, _this.UserId).subscribe((result: any) => {
 			if (result) {
 				if(!_this.popup) {
 					_this.ReturnList();

@@ -12,6 +12,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Area } from 'app/models/list/area';
+import { YardImportComponent } from './yard-import/yard-import.component';
 @Component({
   selector: 'app-yards',
   templateUrl: './yards.component.html',
@@ -165,5 +166,21 @@ toggleSort(columnIndex: number): void {
 }
 
 doNothing(): void {}
+openImport() {
+  const _this = this;
+  const modalRef = this.modalService.open(YardImportComponent, { size: 'lg' });
+  modalRef.result.then(function(importModel: any){
+  });
+}
+
+downloadTemplate() {
+  var fileName = 'Yards_Import.xlsx';
+  var a = document.createElement('a');
+  a.href = this.service.getTemplate(fileName);
+  a.download = fileName;
+  document.body.append(a);
+  a.click();
+  a.remove();
+}
 }
 

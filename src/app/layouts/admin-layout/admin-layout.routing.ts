@@ -4,6 +4,7 @@ import { ProvincesComponent } from '../../views/list/provinces/provinces.compone
 import { ProvinceEditComponent } from '../../views/list/provinces/provinceedit/provinceedit.component';
 import { CentralComponent } from '../../views/manage/central/central.component';
 import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
+import { DecentralizeUserComponent } from '../../views/manage/decentralize-user/decentralize-user.component';
 import { DistrictsComponent } from '../../views/list/districts/districts.component';
 import { DistrictEditComponent } from '../../views/list/districts/districtedit/districtedit.component';
 import { WardsComponent } from '../../views/list/wards/wards.component';
@@ -39,6 +40,8 @@ import { RecruitComponent } from '../../views/list/recruits/recruit.component';
 import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/recruit-edit.component';
 import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
 import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
+import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
+import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -159,14 +162,24 @@ export const AdminLayoutRoutes: Routes = [
           { path: 'edit', component: ClassEditComponent }
         ] 
       },
+      {
+        path: 'decentralize-user', component: DecentralizeUserComponent
+      },
       { 
         path: 'ngaynghi',
         children: [
           { path: '', component: CoachAbsentComponent },
           { path: 'add', component: CoachAbsentEditComponent },
           { path: 'edit', component: CoachAbsentEditComponent }
+        ]},
+        {
+        path: 'recuit-student',
+        children: [
+          { path: '', component: RecruitStudentComponent },
+          { path: 'add', component: RecruitStudentEditComponent },
+          { path: 'edit', component: RecruitStudentEditComponent }
         ] 
-      },
+      }
     ]
 },
 { 

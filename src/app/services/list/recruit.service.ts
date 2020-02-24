@@ -4,6 +4,7 @@ import { Recruit } from '../../models/list/recruit';
 import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { ImportViewModel } from 'app/models/importviewmodel';
 @Injectable({
     providedIn: 'root'
   })
@@ -37,5 +38,12 @@ import { Observable } from 'rxjs';
 
     deleteRecruit(id: number, deletedBy: number): Observable<any> {
         return this.http.delete(environment.apiUrl + `Recruits/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    }
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `Recruits/import`, importViewModel , this.httpOptions);
     }
 }

@@ -3,19 +3,19 @@ import { Age } from "../list/age";
 
 export class Class{
     Id: number;
-    ClassCode: string;
-    ClassName: string;
+    classCode: string;
+    className: string;
     AreaId: number;
     YardId: number;
-    TrainingGroundId: number;
+    trainingGroundId: number;
     DisplayOrder: number;
-    ManagerId: number;
-    CoachId: number;
-    SecondaryCoachId: number;
-    Time: Date;
-    Ages: number;
-    Description: string;
-    Status: string;
+    managerId: number;
+    mainCoachId: number;
+    viceCoachList: number;
+    shiftId: number;
+    ageId: number;
+    description: string;
+    classStatusId: number;
     CreatedDate: Date;
     CreatedBy: number;
     UpdatedDate: null | Date;
@@ -23,24 +23,24 @@ export class Class{
     DeletedDate: null | Date;
     DeletedBy: null | number;
     
-    constructor(Id: number,ClassCode: string,ClassName: string,AreaId: number, YardId: number, TrainingGroundId: number,  DisplayOrder: number,
-        ManagerId: number, CoachId: number, SecondaryCoachId: number,Time: Date, Ages: number,  Description: string, Status: string,
+    constructor(Id: number,classCode : string,className: string,AreaId: number, YardId: number, trainingGroundId: number,  DisplayOrder: number,
+        managerId: number, mainCoachId: number, viceCoachList: number,shiftId: number, ageId: number,  description: string, classStatusId: number,
          CreatedDate: Date, CreatedBy: number, UpdatedDate: null | Date, UpdatedBy: null | number,
         DeletedDate: Date, DeletedBy: number){
         this.Id = Id;   
-        this.ClassCode =ClassCode;
-        this.ClassName =ClassName;
+        this.classCode =classCode;
+        this.className =className;
         this.AreaId = AreaId;
         this.YardId = YardId;
-        this.TrainingGroundId = TrainingGroundId;
+        this.trainingGroundId = trainingGroundId;
         this.DisplayOrder = DisplayOrder;
-        this.ManagerId = ManagerId;
-        this.CoachId = CoachId;
-        this.SecondaryCoachId = SecondaryCoachId;
-        this.Time = Time;
-        this.Ages = Ages;
-        this.Status = Status;
-        this.Description = Description;
+        this.managerId = managerId;
+        this.mainCoachId = mainCoachId;
+        this.viceCoachList = viceCoachList;
+        this.shiftId = shiftId;
+        this.ageId = ageId;
+        this.classStatusId = classStatusId;
+        this.description = description;
         this.CreatedDate = CreatedDate;
         this.CreatedBy = CreatedBy;
         this.UpdatedDate = UpdatedDate;

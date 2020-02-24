@@ -34,7 +34,7 @@ export class TrainingGroundService {
         } else {
             train.CreatedBy = by;
         }
-        return this.http.post(environment.apiUrl + `TrainingGrounds/save`, train, this.httpOptions);
+        return this.http.post(environment.apiUrl + `TrainingGrounds`, train, this.httpOptions);
     }
 
     deleteTrainingGround(id: number, deletedBy: number): Observable<any> {
@@ -45,6 +45,6 @@ export class TrainingGroundService {
     }
 
     import(importViewModel: ImportViewModel): Observable<any> {
-        return this.http.post(environment.serverUrl_employee + `Wards/import`, importViewModel , this.httpOptions);
+        return this.http.post(environment.serverUrl_employee + `TrainingGrounds/import`, importViewModel , this.httpOptions);
     }
 }

@@ -10,6 +10,7 @@ import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { UserGroupImportComponent } from './usergroup-import/usergroup-import.component';
 @Component({
   selector: 'app-usergroup',
   templateUrl: './usergroup.component.html',
@@ -160,5 +161,21 @@ reload() {
   }
   
   doNothing(): void {}
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(UserGroupImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'UserGroups_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
 }
 

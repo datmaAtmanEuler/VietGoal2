@@ -3,6 +3,7 @@ import { Yard } from '../../models/list/yard';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ImportViewModel } from 'app/models/importviewmodel';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +34,17 @@ export class YardService {
         } else {
             yard.CreatedBy = by;
         }
-        return this.http.post(environment.apiUrl + `Yards/save`, yard, this.httpOptions);
+        return this.http.post(environment.apiUrl + `Yards`, yard, this.httpOptions);
     }
 
     deleteYard(id: number, deletedBy: number): Observable<any> {
         return this.http.delete(environment.apiUrl + `Yards/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    }
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `Yards/import`, importViewModel , this.httpOptions);
     }
 }

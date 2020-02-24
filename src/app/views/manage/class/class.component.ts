@@ -13,12 +13,19 @@ import { ProvinceService } from 'app/services/list/province.service';
 import { HttpClient } from '@angular/common/http';
 import { YardService } from 'app/services/list/yard.service';
 import { YardFilter } from 'app/models/filter/yardfilter';
+import { Class } from '../../../models/manage/class';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { ClassEditComponent } from './class-edit/class-edit.component';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { AreaService } from 'app/services/list/area.service';
 import { ClassService } from 'app/services/manage/class.service';
+import { TrainingGroundService } from 'app/services/list/training-ground.service';
+import { TrainingGroundFilter } from 'app/models/filter/trainingroundfilter';
+import { AreaFilter } from 'app/models/filter/areafilter';
+import { MatPaginatorIntl } from '@angular/material';
+import { TranslateService } from '@ngx-translate/core';
+import { ClassImportComponent } from './class-import/class-import.component';
 
 @Component({
   selector: 'app-class',
@@ -26,18 +33,21 @@ import { ClassService } from 'app/services/manage/class.service';
   styleUrls: ['./class.component.scss']
 })
 export class ClassComponent implements OnInit {
-  ClassList: any[] = [];
+  classList: Class[] = [];
   Class: any;
-  searchTerm: string = '';
+  searchTerm:string = '';
+  pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
-  pageSize: number = this.pageSizesList[3];
-  pageSizeFilter: number = 20;
+  pageSize:number = this.pageSizesList[1];
   currentUser: any;
-  Total: number;
+  loading: boolean = true;
+  Total: any;
+  firstRowOnPage: any;
+
   areasList: any;
   yarddsList: any;
   traininggroundsList: any;
-  loading: boolean;
+
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
   searchTrainingGroundsCtrl = new FormControl();
@@ -46,32 +56,46 @@ export class ClassComponent implements OnInit {
   /**
   * BEGIN SORT SETTINGS
   */
-  paginationSettings: any = {
-    sort: new ASCSort(),
-    sortToggles: [
-      null,
-      SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
-      null
-    ],
-    columnsName: ['Order', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'],
-    columnsNameMapping: ['Id', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'],
-    sortAbles: [false, true, true, true, false,false,true, false],
-    visibles: [true, true, true, true, true, true,true, true]
-  }
+
+  sort: ASCSort = new ASCSort();
+  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,null];
+  columnsName: string[] = ['Order', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'];
+  columnsNameMapping: string[] = ['Id', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'];
+  sortAbles: boolean[] = [false, true, true, true, false,false,true, false];
+  visibles:boolean[]= [true, true, true, true, true, true,true, true];
+
   /**
    * END SORT SETTINGS
    */
-  filter: ClassFilter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, this.paginationSettings.sort.SortName, this.paginationSettings.sort.SortDirection,null,null,null);
+  filter: ClassFilter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, 'Id', 'ASC',null,null,null);
 
-  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: ClassService, private router: Router, private modalService: NgbModal,
+  constructor(private matCus: MatPaginatorIntl, private translate: TranslateService,public utilsService: UtilsService, config: NgbModalConfig, private service: ClassService,private traininggroundservice: TrainingGroundService, private router: Router, private modalService: NgbModal,
     private areaService: AreaService, private yardService: YardService, private http: HttpClient) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     utilsService.loadPaginatorLabels();
+    this.updateMatTableLabel();
+    translate.onLangChange.subscribe((a: any) => {
+      this.updateMatTableLabel();
+      matCus.changes.next();
+    });
+  }
+  updateMatTableLabel() {
+    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
+    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
+        if (length === 0 || pageSize === 0) {
+          return this.translate.instant('MESSAGE.NameList.NoRecord');
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
+      }
   }
   ngOnInit() {
+  
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.reload();
     this.filtersEventsBinding();
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
@@ -88,7 +112,7 @@ export class ClassComponent implements OnInit {
           this.areasList = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.areaService.getAreasList({ 'SearchTerm': value, 'PageIndex': 1, 'PageSize': 100, 'SortName': 'AreaCode', 'SortDirection': 'ASC' })
+        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'Id', 'ASC'))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -134,7 +158,7 @@ export class ClassComponent implements OnInit {
         this.traininggroundsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.TrainingGroundObservableFilter(value)
+      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'Id', 'ASC'))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -164,22 +188,31 @@ export class ClassComponent implements OnInit {
     });
   }
   pageEvent(variable: any) {
-    this.filter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, this.paginationSettings.sort.SortName, this.paginationSettings.sort.SortDirection,null,null,null);
+    this.filter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, 'Id','ASC',null,null,null);
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
     this.reload();
   }
   reload() {
-    this.filter.SearchTerm = this.searchTerm;
+    const _this = this;
+    const filter: ClassFilter = new ClassFilter( '',this.pageIndex, this.pageSize,0,0,0, 'Id','ASC',0,0,0);
     this.loading = true;
-    this.ClassList = [];
-    this.service.getClassList(this.filter).subscribe((list: any) => {
-      this.Total = (list && list[0]) ? list[0].Total : 0;
-      setTimeout(() => {
-        this.loading = false;
-        this.ClassList = list || [];
-      }, 500);
-    });
+    _this.classList = [];
+    this.service.getClassList(filter).subscribe(
+        (response: any) => {
+          const list = response.results ? response.results : [];
+          this.Total = (response && response.rowCount) ? response.rowCount : 0;
+          this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+          setTimeout(() => {
+            _this.classList = (list) ? list : [];
+            _this.loading = false;
+          }, 500);
+        },
+        (err: any) => {
+          _this.classList = [];
+          _this.loading = false;
+        }
+    );
   }
   add() {
     this.edit(null);
@@ -195,46 +228,52 @@ export class ClassComponent implements OnInit {
     });
   }
 
-  displayProvinceFn(user): string {
-    return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
+  displayAreaFn(user): string {
+    return user && user.AreaName && !user.notfound ? user.AreaName : '';
   }
-  displayDistrictFn(user): string {
-    return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
+  displayYardFn(user): string {
+    return user && user.YardName && !user.notfound ? user.YardName : '';
   }
-  displayWardFn(user): string {
-    return user && user.WardName && !user.notfound ? user.WardName : '';
+  displayTraininggroundFn(user): string {
+    return user && user.TraininggroundName && !user.notfound ? user.TraininggroundName : '';
   }
-  changearea(areaID: number) {
+  changeArea(areaID: number) {
     this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
       this.yarddsList = list;
       this.filter.AreaId = areaID;
       this.reload();
     });
   }
-  changeDistrict(yardID) {
-    this.http.get(`${environment.serverUrl}Wards/?SearchTerm=&DistrictID=${yardID}&SortName=&SortDirection=&PageIndex=1&PageSize=20`).subscribe((list) => {
-      this.yarddsList = list;
+  changeYard(yardID) {
+    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'Id', 'ASC')).subscribe((list) => {
+      this.traininggroundsList = list;
       this.filter.YardId = yardID;
       this.reload();
     });
   }
-  changeWard(wardID) {
-    this.filter.TrainingGroundId = wardID;
+  changeTrainingGround(traininggroundID) {
+    this.filter.TrainingGroundId = traininggroundID;
     this.reload();
   }
 
-  areaIDfilted() {
-    if (this.searchAreasCtrl.value && this.searchAreasCtrl.value.ID != undefined) {
-      return this.searchAreasCtrl.value.ID
-    } else {
-      return 0;
-    }
+  doNothing(): void {}
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(ClassImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+       
+    });
   }
-  TrainingGroundObservableFilter(value: any): Observable<any> {
-    if (this.searchYardsCtrl.value && this.searchYardsCtrl.value.ID != undefined) {
-      return this.http.get(`${environment.serverUrl}TrainingGrounds/?SearchTerm=${value}&yardID=${this.searchYardsCtrl.value.ID}&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-    } else {
-      return this.http.get(`${environment.serverUrl}Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-    }
+
+  downloadTemplate() {
+    var fileName = 'Districts_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
   }
+
 }
+

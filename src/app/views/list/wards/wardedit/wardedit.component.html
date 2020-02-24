@@ -47,28 +47,28 @@
             </div>
         </div>
             <div class="form-group row">
-                <label class="col-3 label-middling">Mã Phường Xã<span class="text-danger">(*)</span></label>
+                <label class="col-3 label-middling">{{'MESSAGE.NameList.WardCode' |translate}}:<span class="text-danger">(*)</span></label>
                 <div class="col-6 label-middling" >
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.WardCode"
-                        class="form-control" placeholder="Ward Code">
+                        class="form-control" placeholder='{{"MESSAGE.NameList.WardCode" |translate}}'>
                 </div>
             </div>
 
        
 
             <div class="form-group row">
-                <label class="col-3 label-middling">Tên Phường Xã<span class="text-danger">(*)</span></label>
+                <label class="col-3 label-middling">{{'MESSAGE.NameList.WardName' |translate}}:<span class="text-danger">(*)</span></label>
                 <div class="col-6 label-middling" >
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.WardName"
-                        class="form-control" placeholder="Ward Name">
+                        class="form-control" placeholder='{{"MESSAGE.NameList.WardName" |translate}}'>
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-3 label-middling">Số Thứ Tự</label>
+                <label class="col-3 label-middling">{{'MESSAGE.NameList.DisplayOrder' |translate}}:</label>
                 <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.SoThuTu"
-                        class="form-control" placeholder="Numerical order">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.DisplayOrder"
+                        class="form-control" placeholder='{{"MESSAGE.NameList.DisplayOrder" |translate}}'>
                 </div>
             </div>
         </form>

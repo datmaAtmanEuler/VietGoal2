@@ -7,7 +7,8 @@ export class Yard {
     StartYearContract: null | Date;
     Address: string;
     Areas: string;
-    Visible: boolean;
+    Description: string;
+    Visible: boolean = true;
 	Deleted: boolean;
     CreatedDate: null | Date;
     UpdatedDate: null | Date;
@@ -16,7 +17,7 @@ export class Yard {
 	DeletedBy: null | number;
 	DisplayOrder : null | number;
 	
-	constructor(Id: number, YardCode: string,  YardName: string,CentralId: null | number, AreaId: null | number,  StartYearContract: Date, Address: string, Areas:string, Visible: boolean, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
+	constructor(Id: number, YardCode: string,  YardName: string,CentralId: null | number, AreaId: null | number,  StartYearContract: Date, Address: string, Areas:string, Description: string, Visible: boolean, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
 		UpdatedBy: null | number, DeletedBy: null | number, DisplayOrder: null | number) {
 		this.Id = Id;
 		this.YardCode = YardCode;
@@ -26,6 +27,7 @@ export class Yard {
         this.StartYearContract = StartYearContract;
         this.Address = Address;
         this.Areas = Areas;
+        this.Description = Description;
         this.Visible = Visible;	
 		this.Deleted = Deleted;
 		this.CreatedDate = CreatedDate;

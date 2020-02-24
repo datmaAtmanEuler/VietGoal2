@@ -8,7 +8,13 @@
                     </div>
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-8 input-group form-sm form-1 pl-0">
+                            <div class="col-12 ta-r">
+                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="openImport()">Import</button>
+                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="downloadTemplate()">Mẫu
+                                    Import</button>
+                            </div>
                         </div>
+
                         <div class="col-sm-4 input-group form-sm form-1 pl-0 pull-right search-form">
                             <button mat-raised-button  type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}" class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
                                 <i class="material-icons">add</i>

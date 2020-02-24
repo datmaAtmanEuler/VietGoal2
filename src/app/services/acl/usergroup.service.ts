@@ -3,6 +3,7 @@ import { UserGroup } from '../../models/acl/usergroup';
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { ImportViewModel } from 'app/models/importviewmodel';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,5 +36,12 @@ export class UserGroupService {
 
     deleteNhom(id: number , deleteBy : number): Observable<any> {
         return this.http.delete(environment.apiUrl + `Groups/${id}?deleteBy/${deleteBy}`,this.httpOptions)
+    }
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `Groups/import`, importViewModel , this.httpOptions);
     }
 }

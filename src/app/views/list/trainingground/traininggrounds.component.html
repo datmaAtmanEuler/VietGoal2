@@ -3,15 +3,19 @@
         <div class="row">
             <div class="col-lg-12 col-md-12">
                 <div class="card">
+
                     <div class="card-header card-header-warning" style="background: #023a54">
                         <h4 class="card-title">{{ "MESSAGE.NameList.YardArea" | translate }}</h4>
                     </div>
+
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-9 input-group form-sm form-1 pl-0">
+                            <div class="col-12 ta-r">
+                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="openImport()">Import</button>
+                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="downloadTemplate()">Mẫu
+                                    Import</button>
+                            </div>
                             <div class="row" style="padding-left: 50px;">
-
-                                
-
                                 <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
                                         [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
@@ -29,7 +33,7 @@
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
-                                
+
                                 <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
                                         [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
@@ -46,9 +50,11 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
+
                                 </div>
-                                
                             </div>
+
+
                         </div>
                         <div class="col-sm-3 input-group form-sm form-1 pl-0 search-form search-form">
                             <button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}"
@@ -71,46 +77,58 @@
                             <div class="card-body table-responsive">
                                 <div class="vietgoal-table-settings style-1">
                                     <div class="vietgoal-table-settings vg-scroll">
-                                <table class="table table-condensed table-striped table-bordered table-hover" style="width: 120%">
-                                    <thead>
-                                        <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
-                                            <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')" (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
-                                                <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
-                                                     <i class="material-icons asc-sort-icons" *ngIf="sortAbles[colIndex]">
-                                                        {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
-                                                    </i>
-                                                </span>
-                                            </th>
-                                        </ng-container>
-                                    </thead>
-                                    <tbody>
-                                        <ng-container *ngFor="let traininground of trainingroundsList; let i = index;">
-                                            <tr>
-                                                <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ traininground.trainingGroundCode }}</td>
-                                                <td>{{ traininground.trainingGroundName }}</td>
-                                                <!-- <td>{{ traininground.areaId }}</td> -->
-                                                <td>{{ traininground.yardId }}</td>
-                                                <td>{{ traininground.address }}</td>
-                                                <td>{{ traininground.description }}</td>
-                                                <td class="my-action-item">
-    
-                                                    <button mat-raised-button  type="button" (click)="edit(traininground.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
-                                                        <i class="material-icons">edit</i>
-                                                    </button>
-                                                    <button mat-raised-button  type="button" (click)="remove(traininground)" title="{{ 'MESSAGE.NameList.Delete' | translate}}" class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
-                                                        <i class="material-icons">close</i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </ng-container>
-                                    </tbody>
-                                </table>
-                            </div>
-                            </div>
-                            <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
-                            [showFirstLastButtons]="true" (page)="pageEvent($event)">
-                        </mat-paginator>
+                                        <table class="table table-condensed table-striped table-bordered table-hover"
+                                            style="width: 120%">
+                                            <thead>
+                                                <ng-container
+                                                    *ngFor="let colName of columnsName; let colIndex = index;">
+                                                    <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')"
+                                                        (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
+                                                        <span
+                                                            style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                                                            <i class="material-icons asc-sort-icons"
+                                                                *ngIf="sortAbles[colIndex]">
+                                                                {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                                                            </i>
+                                                        </span>
+                                                    </th>
+                                                </ng-container>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container
+                                                    *ngFor="let traininground of trainingroundsList; let i = index;">
+                                                    <tr>
+                                                        <td width="100px">{{ i + 1}}</td>
+                                                        <td>{{ traininground.trainingGroundCode }}</td>
+                                                        <td>{{ traininground.trainingGroundName }}</td>
+                                                        <!-- <td>{{ traininground.areaId }}</td> -->
+                                                        <td>{{ traininground.yardId }}</td>
+                                                        <td>{{ traininground.address }}</td>
+                                                        <td>{{ traininground.description }}</td>
+                                                        <td class="my-action-item">
+
+                                                            <button mat-raised-button type="button"
+                                                                (click)="edit(traininground.ID)"
+                                                                title="{{ 'MESSAGE.NameList.Edit' | translate}}"
+                                                                class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                                <i class="material-icons">edit</i>
+                                                            </button>
+                                                            <button mat-raised-button type="button"
+                                                                (click)="remove(traininground)"
+                                                                title="{{ 'MESSAGE.NameList.Delete' | translate}}"
+                                                                class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                                <i class="material-icons">close</i>
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                    [showFirstLastButtons]="true" (page)="pageEvent($event)">
+                                </mat-paginator>
                             </div>
                         </div>
                     </div>

@@ -45,7 +45,7 @@ export class DistrictEditComponent implements OnInit {
 			_this.districtService.getDistrict(Id).subscribe((district: District) => {
 				_this.district = district;
 				if (_this.district == null || _this.district.Id==0) {
-					_this.district =new District(0, '', '',0, false, new Date(), null, 1, null, null, null);
+					_this.district = new District(0, '', '',0, false, new Date(), null, 1, null, null, null);
 				}
 			});	
 		  });

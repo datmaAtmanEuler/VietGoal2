@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { UtilsService } from 'app/services/utils.service';
 import { Schedule } from 'app/models/schedule';
-import { ScheduleService } from 'app/services/schedule.service';
+import { ScheduleService } from 'app/services/manage/schedule.service';
 import { Filter } from 'app/models/filter/filter';
 import PerfectScrollbar from 'perfect-scrollbar';
 

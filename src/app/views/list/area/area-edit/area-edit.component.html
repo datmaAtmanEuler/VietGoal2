@@ -3,9 +3,9 @@
         <p class="h4 mb-4">Area Information</p>
         <form>
             <div class="form-group row">
-                <label class="col-3 label-middling">Trung Tâm<span class="text-danger">(*)</span></label>
+                <label class="col-3 label-middling">{{'MESSAGE.NameList.Central' |translate}}:<span class="text-danger">(*)</span></label>
                 <div class="col-6 label-middling">
-                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="area.CentralID"
+                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="area.CentralId"
                         class="form-control">
                         <option *ngFor="let trungtam of trungtamList; let i = index;" [value]="trungtam.Id">
                             {{ trungtam.CentralName}}</option>
@@ -14,17 +14,17 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-3 label-middling">Mã Khu Vực</label>
+                <label class="col-3 label-middling">{{'MESSAGE.NameList.AreaCode' |translate}}:<span class="text-danger">(*)</span></label>
                 <div class="col-6 label-middling">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="area.AreaCode"
-                        class="form-control" placeholder="Mã Khu Vực">
+                        class="form-control" placeholder='{{"MESSAGE.NameList.AreaCode" | translate}}'>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-3 label-middling">Tên Khu Vực<span class="text-danger">(*)</span></label>
+                <label class="col-3 label-middling">{{'MESSAGE.NameList.AreaName' |translate}}:<span class="text-danger">(*)</span></label>
                 <div class="col-6 label-middling">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="area.AreaName"
-                        class="form-control" placeholder="Tên Khu Vực">
+                        class="form-control" placeholder='{{"MESSAGE.NameList.AreaName" | translate}}'>
                 </div>
             </div>
             

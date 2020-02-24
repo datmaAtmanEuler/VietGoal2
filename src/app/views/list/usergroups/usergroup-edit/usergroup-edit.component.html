@@ -3,10 +3,10 @@
         <p class="h4 mb-4">UserGroups Information</p>
         <form>
                 <div class="form-group row">
-                    <label class="col-3 label-middling">Tên Nhóm<span class="text-danger">(*)</span></label>
+                    <label class="col-3 label-middling">{{'MESSAGE.NameList.GroupName' |translate}}<span class="text-danger">(*)</span></label>
                         <div class="col-9">
                             <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="usergroup.AdministrationOfUserGroupName"
-                                class="form-control" placeholder="Tên Nhóm">
+                                class="form-control" placeholder='{{"MESSAGE.NameList.GroupName" | translate}}'>
                         </div>
                 </div>
 

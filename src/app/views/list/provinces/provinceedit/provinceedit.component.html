@@ -3,7 +3,7 @@
         <p class="h4 mb-4">Province Information</p>
         <form>
                 <div class="form-group row">
-                    <label class="col-5 label-middling">Mã Tỉnh Thành <span class="text-danger">(*)</span></label>
+                    <label class="col-5 label-middling">{{'MESSAGE.NameList.ProvinceCode' | translate}}<span class="text-danger">(*)</span></label>
                         <div class="col-7">
                             <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.ProvinceCode"
                                 class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceCode" |translate}}'>
@@ -11,17 +11,17 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-5 label-middling">Tên Tỉnh Thành <span class="text-danger">(*)</span></label>
+                    <label class="col-5 label-middling">{{'MESSAGE.NameList.ProvinceName' | translate}}<span class="text-danger">(*)</span></label>
                     <div class=" col-7 label-middling">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="province.ProvinceName"
                         class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceName" |translate}}'>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-5 label-middling">Số Thứ Tự</label>
+                    <label class="col-5 label-middling">{{'MESSAGE.NameList.DisplayOrder' | translate}}</label>
                     <div class="col-7 label-middling">
                         <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="province.SoThuTu"
-                            class="form-control" placeholder="Số Thứ Tự">
+                            class="form-control" placeholder='{{"MESSAGE.NameList.ProvinceName" |translate}}'>
                     </div>
                 </div>
         </form>

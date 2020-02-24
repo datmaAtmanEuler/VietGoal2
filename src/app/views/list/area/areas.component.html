@@ -10,6 +10,29 @@
                         <div class="col-12">
                             <div class="card-body">
                                 <div class="row">
+
+                                    <div class="col-sm-4">
+                                        <input class="form-control"
+                                            placeholder="{{'MESSAGE.NameList.Central' |translate}}"
+                                            [matAutocomplete]="centralAC" [formControl]="searchCentralsCtrl">
+                                        <mat-autocomplete #centralAC="matAutocomplete"
+                                            (optionSelected)="changeCentral(searchCentralsCtrl.value.ID)"
+                                            [displayWith]="displayCentralFn">
+                                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                <mat-spinner></mat-spinner>
+                                            </mat-option>
+                                            <ng-container *ngIf="!isLoading">
+                                                <mat-option *ngFor="let central of centralList"
+                                                    [value]="central">
+                                                    <span
+                                                        *ngIf="!central.notfound">{{central.CentralName}}</span>
+                                                    <span *ngIf="central.notfound"
+                                                        class="nofind">{{central.notfound}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-autocomplete>
+                                    </div>
+
                                     <div class="offset-sm-8 col-sm-4 search-form">
                                         <div class="row">
 

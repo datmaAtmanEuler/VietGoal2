@@ -5,9 +5,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-	selector: 'app-training-import',
-	templateUrl: './training-import.component.html',
-	styleUrls: ['./training-import.component.scss'],
+	selector: 'app-trainingground-import',
+	templateUrl: './trainingground-import.component.html',
+	styleUrls: ['./trainingground-import.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 
@@ -40,7 +40,7 @@ export class TrainingGroundImportComponent implements OnInit {
 				//_this.closeMe({'success': _this.successList.length + ' record' + ((_this.successList.length > 1) ? 's' : '') + ' had been updated'});
 			}
 
-			console.log('Danh sach loi', _this.errorsList);
+
 		});
 	}
 

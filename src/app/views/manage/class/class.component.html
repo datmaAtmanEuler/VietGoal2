@@ -8,6 +8,11 @@
                     </div>
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-9 input-group form-sm form-1 pl-0">
+                            <div class="col-12 ta-r">
+                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="openImport()">Import</button>
+                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="downloadTemplate()">Mẫu
+                                    Import</button>
+                            </div>
                             <div class="row" style="padding-left: 50px;">
                                 <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
@@ -89,39 +94,41 @@
                                     <table class="table table-condensed table-striped table-bordered table-hover"
                                         style="width: 100%">
                                         <thead>
-                                            <ng-container
-                                                *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
-                                                <th *ngIf="paginationSettings.visibles[colIndex]"
-                                                    [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
-                                                    (click)="paginationSettings.sortAbles[colIndex] ? utilsService.toggleSort(colIndex,paginationSettings.sortToggles ,paginationSettings.sort ,paginationSettings.columnsNameMapping ,reload()) : utilsService.doNothing()">
+                                            <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
+                                                <th [style.width]="(colIndex == 0) ? '50px' : ((colIndex == columnsName.length - 1) ? '100px' : 'auto')"
+                                                    (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
                                                     <span
                                                         style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
                                                         <i class="material-icons asc-sort-icons"
-                                                            *ngIf="paginationSettings.sortAbles[colIndex]">
-                                                            {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                                                            *ngIf="sortAbles[colIndex]">
+                                                            {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
                                                         </i>
                                                     </span>
                                                 </th>
                                             </ng-container>
                                         </thead>
                                         <tbody>
-                                            <ng-container *ngFor="let tt of CentralList; let i = index;">
+                                            <ng-container *ngFor="let class of classList; let i = index;">
                                                 <tr>
-                                                    <td>{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
-                                                    <ng-container
-                                                        *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
-                                                        <td
-                                                            *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
-                                                            {{ utilsService.getColumnValue(tt, colIndex, paginationSettings.columnsNameMapping) }}
-                                                        </td>
-                                                    </ng-container>
-                                                    <td class="my-action-item">
-                                                        <button type="button" (click)="edit(tt.ID)"
-                                                            class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
+                                                    <td>{{ i + 1}}</td>
+                                                    <td>{{ class.classCode }}</td>
+                                                    <td>{{ class.className }}</td>
+                                                    <td>{{ class.displayOrder }}</td>
+                                                    <td>{{ class.studentCounts }}</td>
+                                                    <td>{{ class.mainCoachId }}</td>
+                                                    <td>{{ class.trainingGroundId }}</td>
+                                                    <td  class="my-action-item">
+
+                                                        <button mat-raised-button 
+                                                            type="button" (click)="edit(class.ID)"
+                                                            title="{{ 'MESSAGE.NameList.Edit' | translate}}"
+                                                            class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                             <i class="material-icons">edit</i>
                                                         </button>
-                                                        <button type="button" (click)="remove(tt)"
-                                                            class="btn btn-danger btn-link btn-sm delete-button btn-just-icon">
+                                                        <button mat-raised-button 
+                                                            type="button" (click)="remove(class)"
+                                                            title="{{ 'MESSAGE.NameList.Delete' | translate}}"
+                                                            class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                             <i class="material-icons">close</i>
                                                         </button>
                                                     </td>

@@ -178,7 +178,6 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     const _this = this;
     const modalRef = this.modalService.open(ProvinceImportComponent, { size: 'lg' });
     modalRef.result.then(function(importModel: any){
-        console.log(importModel);
     });
   }
 

@@ -62,6 +62,8 @@ export class UserGroupEditComponent implements OnInit {
 		});
 	}
 
+	
+
 
 	closeMe() {
 		this.activeModal.close();

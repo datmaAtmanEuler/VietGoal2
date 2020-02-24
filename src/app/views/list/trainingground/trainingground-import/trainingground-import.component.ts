@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation  } from '@angular/core';
-import { WardService } from '../../../../services/list/ward.service';
+import { TrainingGroundService } from '../../../../services/list/training-ground.service';
 import { ImportViewModel } from '../../../../models/importviewmodel';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-	selector: 'app-ward-import',
-	templateUrl: './ward-import.component.html',
-	styleUrls: ['./ward-import.component.scss'],
+	selector: 'app-training-import',
+	templateUrl: './training-import.component.html',
+	styleUrls: ['./training-import.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 
-export class WardImportComponent implements OnInit {
+export class TrainingGroundImportComponent implements OnInit {
 	currentUser: any;
 	_files: any = null;
 	disabled: boolean = true;
@@ -20,7 +20,7 @@ export class WardImportComponent implements OnInit {
 
 	importViewModel: ImportViewModel = new ImportViewModel(null, 0);
 
-	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private wardService: WardService) {
+	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private trainingService: TrainingGroundService) {
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
@@ -31,9 +31,9 @@ export class WardImportComponent implements OnInit {
 	ngOnInit() {
 	}
 	
-	ImportWard() {
+	ImportTrainingGround() {
 		const _this = this;
-		this.wardService.import(this.importViewModel).subscribe((result: any) => {
+		this.trainingService.import(this.importViewModel).subscribe((result: any) => {
 			_this.errorsList = result.Error.filter((r: any) => r.isError == true);
 			_this.successList = result.Error.filter((r: any) => r.isError == false);
 			if(_this.errorsList.length < 1) {

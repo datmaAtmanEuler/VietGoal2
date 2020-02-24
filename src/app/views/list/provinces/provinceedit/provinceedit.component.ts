@@ -26,20 +26,21 @@ export class ProvinceEditComponent implements OnInit {
 		config.scrollable = false;
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}  
-	GetProvinceById(ID: number)  
+	GetProvinceById(id: number)  
 	{  
 		const _this = this;
-		if(ID){
-			this.provinceService.getProvince(ID).subscribe((province: Province) => {
+		if(id){
+			this.provinceService.getProvince(id).subscribe((province: Province) => {
 				_this.province = province;
 				if (_this.province == null || _this.province.Id == null) {
 					_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null, null);
 				}
 			});
-		} else {
-			_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null, null);
-		}
+		} 		else {
+					_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null, null);
+					}
 	}
+	
 	ngOnInit() {
 		this.GetProvinceById(this.ID);  
 	}

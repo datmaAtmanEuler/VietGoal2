@@ -11,6 +11,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { AreaImportComponent } from './areas-import/area-import.component';
 
 @Component({
   selector: 'app-areas',
@@ -166,4 +167,20 @@ export class AreaComponent implements OnInit {ModalDirective;
   }
   
   doNothing(): void {}
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(AreaImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Areas_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
 }

@@ -32,6 +32,7 @@ export class DistrictsComponent implements OnInit {
   loading: boolean = true;
   Total: any;
   firstRowOnPage: any;
+  
   /**
    * BEGIN SORT SETTINGS
    */
@@ -91,7 +92,7 @@ pageEvent(variable: any){
 }
 reload() {
   const _this = this;
-  const filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
+  const filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
   this.loading = true;
   _this.districtsList = [];
   this.service.getDistrictsList(filter).subscribe(

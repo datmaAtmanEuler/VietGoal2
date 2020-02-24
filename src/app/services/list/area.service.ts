@@ -4,6 +4,7 @@ import { AreaFilter } from '../../models/filter/areafilter';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ImportViewModel } from '../../models/importviewmodel';
 @Injectable({
   providedIn: 'root'
 })
@@ -26,17 +27,23 @@ export class AreaService {
     }
 
     addOrUpdateArea(area: Area, by: null | number): Observable<any> {
-        area.DisplayOrder = parseInt(area.DisplayOrder
- + '');
+        area.DisplayOrder = parseInt(area.DisplayOrder+ '');
         if (area.Id != 0 && area.Id) {
             area.UpdatedBy = by;
         } else {
             area.CreatedBy = by;
         }
-        return this.http.post(environment.apiUrl + `Areas/save`, area, this.httpOptions);
+        return this.http.post(environment.apiUrl + `Areas`, area, this.httpOptions);
     }
 
     deleteArea(id: number, deletedBy: number): Observable<any> {
         return this.http.delete(environment.apiUrl + `Areas/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    }
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `provinces/import`, importViewModel , this.httpOptions);
     }
 }

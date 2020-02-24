@@ -10,7 +10,7 @@
                         <div class="col-sm-9 input-group form-sm form-1 pl-0">
                             <div class="row" style="padding-left: 50px;">
 
-                                <!-- <div class="col-sm-4">
+                                <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
                                         [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
                                     <mat-autocomplete #AreasAC="matAutocomplete"
@@ -26,9 +26,9 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
-                                </div> -->
+                                </div>
                                 
-                                <!-- <div class="col-sm-4">
+                                <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"
                                         [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
                                     <mat-autocomplete #CentralAC="matAutocomplete"
@@ -44,7 +44,7 @@
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
-                                </div> -->
+                                </div>
                                 
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                                 <div class="vietgoal-table-settings style-1">
                                     <div class="vietgoal-table-settings vg-scroll">
                                     <table class="table table-condensed table-striped table-bordered table-hover"
-                                        style="width: 200%">
+                                        style="width: 190% ">
                                         <thead>
                                             <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
                                                 <th [style.width]="(colIndex == 0) ? '50px' : ((colIndex == columnsName.length - 1) ? '100px' : 'auto')"

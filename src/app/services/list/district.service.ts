@@ -34,7 +34,7 @@ export class DistrictService {
         } else {
             district.CreatedBy = by;
         }
-        return this.http.post(environment.apiUrl + `Districts?`, district, this.httpOptions);
+        return this.http.post(environment.apiUrl + `Districts`, district, this.httpOptions);
         
     }
 

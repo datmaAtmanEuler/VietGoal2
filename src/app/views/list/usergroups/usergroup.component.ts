@@ -7,7 +7,9 @@ import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.componen
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { UserGroupEditComponent } from './usergroup-edit/usergroup-edit.component';
 import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
-
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import {TranslateService} from '@ngx-translate/core';
+import PerfectScrollbar from 'perfect-scrollbar';
 @Component({
   selector: 'app-usergroup',
   templateUrl: './usergroup.component.html',
@@ -19,27 +21,57 @@ export class UserGroupComponent implements OnInit {
   usergroup: UserGroup;
   searchTerm:string = '';
   pageIndex:number = 1;
-  pageSize:number = 20;
+  pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize:number = this.pageSizesList[1];
   currentUser: any;
+  loading: boolean = true;
+  Total: any;
+  firstRowOnPage: any;
     /**
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
-  columnsName: string[] = ['Order', 'ProvinceCode', 'ProvinceName', 'Action'];
-  columnsNameMapping: string[] = ['ID', 'ProvinceCode', 'ProvinceName', 'Action'];
+  columnsName: string[] = ['Order', 'GroupCode', 'GroupName', 'Action'];
+  columnsNameMapping: string[] = ['ID', 'GroupCode', 'GroupName', 'Action'];
   sortAbles: boolean[] = [false, true, true, false];
   /**
    * END SORT SETTINGS
    */
-  constructor(config: NgbModalConfig, private service: UserGroupService, private router: Router, private modalService: NgbModal) {
+  constructor(private translate: TranslateService,
+    private matCus: MatPaginatorIntl, config: NgbModalConfig, private service: UserGroupService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
+    this.updateMatTableLabel();
+    translate.onLangChange.subscribe((a: any) => {
+      this.updateMatTableLabel();
+      matCus.changes.next();
+    });
    }
 
+   updateMatTableLabel() {
+    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
+    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
+        if (length === 0 || pageSize === 0) {
+          return this.translate.instant('MESSAGE.NameList.NoRecord');
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
+      }
+  }
+  pageEvent(variable: any){
+    this.pageIndex = variable.pageIndex+1;
+    this.pageSize = variable.pageSize;
+    this.reload();
+  }
   ngOnInit() {
-	this.reload();
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.reload();
+    const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+    new PerfectScrollbar(vgscroll);
   }
 
   remove(usergroup: UserGroup) {
@@ -54,22 +86,35 @@ export class UserGroupComponent implements OnInit {
 
 reload() {
   const _this = this;
-  const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize, this.sort.SortName, this.sort.SortDirection);
-  this.service.getNhomList(filter).subscribe((list: any) => {
-    _this.usergroup = list;
-  });
+  const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize, 'Id', 'ASC');
+  _this.usergroupList = [];
+  this.service.getNhomList(filter).subscribe(
+      (response: any) => {
+        const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        setTimeout(() => {
+          _this.usergroupList = (list) ? list : [];
+          _this.loading = false;
+        }, 500);
+      },
+      (err: any) => {
+        _this.usergroupList = [];
+        _this.loading = false;
+      }
+  );
 }
 
   add() {
     this.edit(null);
   }
 
-  edit(IdNhom: null | number) {
+  edit(Id: null | number) {
     const _this = this;
     const modalRef = this.modalService.open(UserGroupEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    if (IdNhom) {
-      modalRef.componentInstance.Idnhom = IdNhom;
+    if (Id) {
+      modalRef.componentInstance.Idnhom = Id;
     }
     modalRef.result.then(function(){
         _this.reload();

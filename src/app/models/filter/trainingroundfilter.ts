@@ -6,10 +6,10 @@ export class TrainingGroundFilter {
     SearchTerm: string = '';
     YardId: null | number = null;
     AreaId: null | number = null;
-    SortName: string = 'ID';
+    SortName: string ;
     SortDirection: string = SORD_DIRECTION.DEFAULT;
 
-    constructor(searchTerm: string, pageIndex: number, pageSize: number, YardId: null | number,AreaId: null | number , sN: string = 'ID', sD: string = SORD_DIRECTION.DEFAULT) {
+    constructor(searchTerm: string, pageIndex: number, pageSize: number, YardId: null | number,AreaId: null | number , sN: string , sD: string = SORD_DIRECTION.DEFAULT) {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;
         this.PageSize = pageSize;

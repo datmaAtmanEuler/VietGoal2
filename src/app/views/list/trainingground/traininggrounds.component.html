@@ -70,7 +70,8 @@
                         <div class="col-12">
                             <div class="card-body table-responsive">
                                 <div class="vietgoal-table-settings style-1">
-                                <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
+                                    <div class="vietgoal-table-settings vg-scroll">
+                                <table class="table table-condensed table-striped table-bordered table-hover" style="width: 120%">
                                     <thead>
                                         <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
                                             <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')" (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
@@ -86,12 +87,12 @@
                                         <ng-container *ngFor="let traininground of trainingroundsList; let i = index;">
                                             <tr>
                                                 <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ traininground.TrainingGroundCode }}</td>
-                                                <td>{{ traininground.TrainingGroundName }}</td>
-                                                <td>{{ traininground.AreaName }}</td>
-                                                <td>{{ traininground.YardName }}</td>
-                                                <td>{{ traininground.Address }}</td>
-                                                <td>{{ traininground.Description }}</td>
+                                                <td>{{ traininground.trainingGroundCode }}</td>
+                                                <td>{{ traininground.trainingGroundName }}</td>
+                                                <!-- <td>{{ traininground.areaId }}</td> -->
+                                                <td>{{ traininground.yardId }}</td>
+                                                <td>{{ traininground.address }}</td>
+                                                <td>{{ traininground.description }}</td>
                                                 <td class="my-action-item">
     
                                                     <button mat-raised-button  type="button" (click)="edit(traininground.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
@@ -104,12 +105,12 @@
                                             </tr>
                                         </ng-container>
                                     </tbody>
-                                </table></div>
-                                <mat-paginator [length]="100"
-                                            [pageSize]="pageSize"
-                                            [pageSizeOptions]="[1,2]"
-                                            >
-                                </mat-paginator>
+                                </table>
+                            </div>
+                            </div>
+                            <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                            [showFirstLastButtons]="true" (page)="pageEvent($event)">
+                        </mat-paginator>
                             </div>
                         </div>
                     </div>

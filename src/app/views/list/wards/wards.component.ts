@@ -78,7 +78,7 @@ export class WardsComponent implements OnInit {
   remove(ward: Ward) {
     this.ward = ward;
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'Wards';
     modalRef.componentInstance.decide.subscribe(() => {
         _this.deleteWard();

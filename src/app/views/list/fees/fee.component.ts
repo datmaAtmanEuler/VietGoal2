@@ -53,7 +53,7 @@ export class FeeComponent implements OnInit {
   remove(Fee: Fee) {
     this.Fee = Fee;
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'Collection';
     modalRef.componentInstance.decide.subscribe(() => {
       _this.service.deleteFee(Fee.Id, this.currentUser.UserId).subscribe(() => {

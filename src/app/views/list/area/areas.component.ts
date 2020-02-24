@@ -49,7 +49,7 @@ export class AreaComponent implements OnInit {ModalDirective;
     remove(area: Area) {
         this.area = area;
     	const _this = this;
-    	const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    	const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     	modalRef.componentInstance.confirmObject = 'RegionsList';
     	modalRef.componentInstance.decide.subscribe(() => {
         	_this.deleteArea();

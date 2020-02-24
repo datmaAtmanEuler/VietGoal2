@@ -51,7 +51,7 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
   remove(traininground: TrainingGround) {
     this.traininground = traininground;
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'TrainingGround';
     modalRef.componentInstance.decide.subscribe(() => {
         _this.deleteTraningGround();

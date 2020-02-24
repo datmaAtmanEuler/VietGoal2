@@ -77,7 +77,7 @@ export class RecruitComponent implements OnInit {
     remove(recruit: Recruit) {
         this.recruit = recruit;
     	const _this = this;
-    	const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    	const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     	modalRef.componentInstance.confirmObject = 'Recruit';
     	modalRef.componentInstance.decide.subscribe(() => {
         	_this.deleteRecruit();

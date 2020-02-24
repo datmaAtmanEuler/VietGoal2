@@ -55,7 +55,7 @@ export class CollectionComponent implements OnInit {
   remove(Collection: Collection) {
     this.Collection = Collection;
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'TermOfCollection';
     modalRef.componentInstance.decide.subscribe(() => {
       _this.service.deleteCollection(Collection.Id, this.currentUser.UserId).subscribe(() => {

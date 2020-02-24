@@ -80,7 +80,7 @@ export class AgeComponent implements OnInit {
 
   remove(id) {
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm'});
     modalRef.componentInstance.confirmObject = 'Age';
     modalRef.componentInstance.decide.subscribe(() => {
       _this.service.deleteAge(id).subscribe(() => {

@@ -156,7 +156,7 @@ export class CentralComponent implements OnInit {
   remove(Central: Central) {
     this.Central = Central;
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'Central';
     modalRef.componentInstance.decide.subscribe(() => {
       _this.service.deleteCentral(Central.Id, this.currentUser.UserId).subscribe(() => {

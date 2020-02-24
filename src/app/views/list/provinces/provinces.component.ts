@@ -88,7 +88,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     remove(province: Province) {
         this.province = province;
     	const _this = this;
-    	const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    	const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     	modalRef.componentInstance.confirmObject = 'Province';
     	modalRef.componentInstance.decide.subscribe(() => {
         	_this.deleteProvince();

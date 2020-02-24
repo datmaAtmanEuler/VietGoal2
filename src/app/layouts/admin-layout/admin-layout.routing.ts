@@ -37,6 +37,8 @@ import { ClassComponent } from '../../views/manage/class/class.component';
 import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 import { RecruitComponent } from '../../views/list/recruits/recruit.component';
 import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/recruit-edit.component';
+import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
+import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -155,6 +157,14 @@ export const AdminLayoutRoutes: Routes = [
           { path: '', component: ClassComponent },
           { path: 'add', component: ClassEditComponent },
           { path: 'edit', component: ClassEditComponent }
+        ] 
+      },
+      { 
+        path: 'recuit-student',
+        children: [
+          { path: '', component: RecruitStudentComponent },
+          { path: 'add', component: RecruitStudentEditComponent },
+          { path: 'edit', component: RecruitStudentEditComponent }
         ] 
       },
     ]

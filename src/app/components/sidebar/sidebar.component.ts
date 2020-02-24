@@ -38,7 +38,8 @@ export const ROUTES: RouteInfo[] = [
     path: '/quanly/trungtam', title: 'MESSAGE.NameList.Manage', icon: 'assignment_ind', class: '', childrens: [
       { path: '/quanly/trungtam', title: 'MESSAGE.NameList.CentralManagement', icon: '', class: '' },
       { path: '/quanly/thoikhoabieu', title: 'MESSAGE.NameList.Schedule', icon: '', class: '' },
-      { path: '/quanly/class', title: 'MESSAGE.NameList.ClassManagement', icon: '', class: '' }
+      { path: '/quanly/class', title: 'MESSAGE.NameList.ClassManagement', icon: '', class: '' },
+      { path: '/quanly/recuit-student', title: 'MESSAGE.NameList.ClassManagement', icon: '', class: '' }
     ]
   }
 ];

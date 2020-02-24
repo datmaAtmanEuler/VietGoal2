@@ -11,6 +11,7 @@ import { Recruit } from '../../../models/list/recruit';
 import {TranslateService} from '@ngx-translate/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { RecruitImportComponent } from './recruit-import/recruit-import.component';
 @Component({
   selector: 'app-recruit',
   templateUrl: './recruit.component.html',
@@ -164,5 +165,21 @@ export class RecruitComponent implements OnInit {
     }
     
     doNothing(): void {}
+    openImport() {
+      const _this = this;
+      const modalRef = this.modalService.open(RecruitImportComponent, { size: 'lg' });
+      modalRef.result.then(function(importModel: any){
+      });
+    }
+  
+    downloadTemplate() {
+      var fileName = 'Recruits_Import.xlsx';
+      var a = document.createElement('a');
+      a.href = this.service.getTemplate(fileName);
+      a.download = fileName;
+      document.body.append(a);
+      a.click();
+      a.remove();
+    }
   }
   

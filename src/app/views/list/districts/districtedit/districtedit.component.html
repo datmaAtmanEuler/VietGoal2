@@ -26,24 +26,24 @@
             </div>
 
             <div class="form-group row">
-                <label class="col-3 label-middling">Mã Quận Huyện</label>
+                <label class="col-3 label-middling">{{'MESSAGE.NameList.DistrictCode' | translate}}</label>
                 <div class="col-6 label-middling">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.DistrictCode"
-                        class="form-control" placeholder="Ma District">
+                        class="form-control" placeholder='{{"MESSAGE.NameList.DistrictCode" | translate}}'>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-3 label-middling">Tên Quận Huyện<span class="text-danger">(*)</span></label>
+                <label class="col-3 label-middling">{{'MESSAGE.NameList.DistrictName' | translate}}<span class="text-danger">(*)</span></label>
                 <div class="col-6 label-middling">
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.DistrictName"
-                        class="form-control" placeholder="District Name">
+                        class="form-control" placeholder='{{"MESSAGE.NameList.DistrictName" | translate}}'>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-3 label-middling">Số Thứ Tự</label>
+                <label class="col-3 label-middling">{{'MESSAGE.NameList.DisplayOrder' | translate}}</label>
                 <div class="col-6 label-middling">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.SoThuTu"
-                        class="form-control" placeholder="Số Thứ Tự">
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.DisplayOrder"
+                        class="form-control" placeholder='{{"MESSAGE.NameList.DisplayOrder" | translate}}'>
                 </div>
             </div>
         </form>

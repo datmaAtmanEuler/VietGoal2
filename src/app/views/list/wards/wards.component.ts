@@ -11,6 +11,8 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { WardImportComponent } from './wards-import/ward-import.component';
+import { Province } from 'app/models/list/province';
+import { District } from 'app/models/list/districts';
 @Component({
   selector: 'app-wards',
   templateUrl: './wards.component.html',
@@ -18,6 +20,8 @@ import { WardImportComponent } from './wards-import/ward-import.component';
 })
 export class WardsComponent implements OnInit {
   wardsList:Ward[] = [];
+  provincesList:Province[] = [];
+  districtsList:District[] = [];
   ward: Ward;
   searchTerm:string = '';
   pageIndex:number = 1;

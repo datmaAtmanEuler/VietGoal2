@@ -10,6 +10,7 @@ import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { TrainingGroundImportComponent } from './trainingground-import/trainingground-import.component';
 @Component({
   selector: 'app-training-grounds',
   templateUrl: './traininggrounds.component.html',
@@ -109,6 +110,7 @@ reload() {
   );
 }
 
+
 add() {
   this.edit(null);
 }
@@ -165,5 +167,22 @@ toggleSort(columnIndex: number): void {
 }
 
 doNothing(): void {}
+openImport() {
+  const _this = this;
+  const modalRef = this.modalService.open(TrainingGroundImportComponent, { size: 'lg' });
+  modalRef.result.then(function(importModel: any){
+     
+  });
+}
+
+downloadTemplate() {
+  var fileName = 'Districts_Import.xlsx';
+  var a = document.createElement('a');
+  a.href = this.service.getTemplate(fileName);
+  a.download = fileName;
+  document.body.append(a);
+  a.click();
+  a.remove();
+}
 }
 

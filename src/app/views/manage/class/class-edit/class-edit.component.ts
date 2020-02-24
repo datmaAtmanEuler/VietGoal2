@@ -22,9 +22,10 @@ import { YardService } from '../../../../services/list/yard.service';
 import { TrainingGroundService } from '../../../../services/list/training-ground.service';
 import { UserService } from '../../../../services/acl/user.service';
 import { AgeService } from '../../../../services/list/age.service';
-
+import { Class } from '../../../../models/manage/class';
 import { ClassFilter } from 'app/models/filter/classfilter';
 import { AreaFilter } from 'app/models/filter/areafilter';
+
 import { YardFilter } from 'app/models/filter/yardfilter';
 import { TrainingGroundFilter } from 'app/models/filter/trainingroundfilter';
 import { Week, WeekToList, WeekToListName } from 'app/models/enums/week.enums';
@@ -66,7 +67,7 @@ export class ClassEditComponent implements OnInit {
 	searchManagersCtrl = new FormControl();
 	searchMainCoachsCtrl = new FormControl();
 	searchViceCoachsCtrl = new FormControl();
-
+	yard: Class = new Class (0,'', '', 0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
 	isLoading = false;
 	errorMsg: string;
 
@@ -89,19 +90,20 @@ export class ClassEditComponent implements OnInit {
 	}
 
 	displayAreaFn(user): string {
-		return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
+		return user && user.AreaName && !user.notfound ? user.AreaName : '';
 	}
 	displayYardFn(user): string {
-		return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
+		return user && user.YardName && !user.notfound ? user.YardName : '';
 	}
 	displayTrainingGroundFn(user): string {
-		return user && user.WardName && !user.notfound ? user.WardName : '';
+		return user && user.TrainingGroundName && !user.notfound ? user.TrainingGroundName : '';
 	}
 	changeArea() {
 		this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
 			this.yardsList = list;
 		});
 	}
+	
 	changeYard() {
 		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null, null, 'ID', 'ASC')).subscribe((list) => {
 			this.trainingGroundsList = list;
@@ -201,25 +203,27 @@ export class ClassEditComponent implements OnInit {
 	}
 
 	ReturnList() {
-		this.router.navigate(['manage/class']);
+		this.router.navigate(['quanly/class']);
 
 	}
 
 	UpdateClass() {
-		this.class.Week = Number.parseInt(this.class.Week + "", 10);
-		this.class.ShiftDay = Number.parseInt(this.class.ShiftDay + "", 10);
-		this.classService.addOrUpdateClass(this.class, this.currentUser.UserId).subscribe(
+		const _this= this
+		this.class.Week = Number.parseInt(_this.class.Week + "", 10);
+		this.class.ShiftDay = Number.parseInt(_this.class.ShiftDay + "", 10);
+		this.classService.addOrUpdateClass(_this.class, this.currentUser.UserId).subscribe(
 			() => {
-				if (!this.popup) {
-					this.ReturnList();
+				if (!_this.popup) {
+					_this.ReturnList();
 				} else {
-					this.closeMe();
+					_this.closeMe();
 				}
 			},
 			() => {
-				this.modalService.open(ConfirmComponent, { size: 'lg' });
+				_this.modalService.open(ConfirmComponent, { size: 'lg' });
 			});
 	}
+	
 
 	closeMe() {
 		this.activeModal.close();

@@ -76,7 +76,7 @@ export class YardComponent implements OnInit {
   remove(yard: Yard) {
     this.yard = yard;
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'Yard';
     modalRef.componentInstance.decide.subscribe(() => {
         _this.deleteYard();

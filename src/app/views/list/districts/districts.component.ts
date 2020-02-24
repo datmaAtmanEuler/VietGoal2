@@ -79,7 +79,7 @@ export class DistrictsComponent implements OnInit {
   remove(district: District) {
     this.district = district;
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'District';
     modalRef.componentInstance.decide.subscribe(() => {
         _this.deleteDistrict();

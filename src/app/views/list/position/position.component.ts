@@ -52,7 +52,7 @@ export class PositionComponent implements OnInit {
 
   remove(id: any) {
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'Position';
     modalRef.componentInstance.decide.subscribe(() => {
       _this.service.deletePosition(id).subscribe(()=>{
@@ -69,8 +69,8 @@ export class PositionComponent implements OnInit {
     const filter = {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
-      sortName: 'positionName',
-      sortDirection: 0
+      sortName: this.paginationSettings.sort.SortName,
+      sortDirection: this.paginationSettings.sort.SortDirection
     };
     this.loading = true;
     this.positionList = [];

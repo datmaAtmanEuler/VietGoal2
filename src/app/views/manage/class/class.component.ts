@@ -155,7 +155,7 @@ export class ClassComponent implements OnInit {
   remove(aclass: any) {
     this.Class = aclass;
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'class';
     modalRef.componentInstance.decide.subscribe(() => {
       _this.service.deleteClass(aclass.ID, this.currentUser.UserId).subscribe(() => {

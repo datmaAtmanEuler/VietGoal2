@@ -59,8 +59,8 @@ export class AgeComponent implements OnInit {
     const filter = {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
-      sortName: 'ageName',
-      sortDirection: 0
+      sortName: this.paginationSettings.sort.SortName,
+      sortDirection: this.paginationSettings.sort.SortDirection
     };
     this.loading = true;
     this.AgeList = [];
@@ -80,7 +80,7 @@ export class AgeComponent implements OnInit {
 
   remove(id) {
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm'});
     modalRef.componentInstance.confirmObject = 'Age';
     modalRef.componentInstance.decide.subscribe(() => {
       _this.service.deleteAge(id).subscribe(() => {

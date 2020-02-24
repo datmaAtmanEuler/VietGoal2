@@ -11,6 +11,8 @@ import { ProvinceEditComponent } from '../../views/list/provinces/provinceedit/p
 import { ProvinceImportComponent } from 'app/views/list/provinces/province-import/province-import.component';
 import { CentralComponent } from '../../views/manage/central/central.component';
 import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
+import { DecentralizeUserComponent } from '../../views/manage/decentralize-user/decentralize-user.component';
+
 import { WardsComponent } from '../../views/list/wards/wards.component';
 import { WardEditComponent } from '../../views/list/wards/wardedit/wardedit.component';
 import { UserGroupComponent } from '../../views/list/usergroups/usergroup.component';
@@ -32,8 +34,13 @@ import {
   MatSelectModule,
 } from '@angular/material';
 
+import { MatRadioModule } from '@angular/material/radio';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatTreeModule} from '@angular/material/tree';
+import {MatIconModule} from '@angular/material/icon';
 
 import { TrainingGroundsComponent } from '../../views/list/trainingground/traininggrounds.component';
 import { TrainingGroundEditComponent } from '../../views/list/trainingground/trainningground-edit/trainingground-edit.component';
@@ -79,6 +86,8 @@ import { AreaImportComponent } from 'app/views/list/area/areas-import/area-impor
     RouterModule.forChild(AdminLayoutRoutes),
     FormsModule,
     ReactiveFormsModule,
+    MatRadioModule,
+    MatCheckboxModule,
     MatButtonModule,
     MatRippleModule,
     MatFormFieldModule,
@@ -87,7 +96,9 @@ import { AreaImportComponent } from 'app/views/list/area/areas-import/area-impor
     MatTooltipModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatTreeModule,
+    MatIconModule
   ],
   declarations: [
     ClassComponent,
@@ -134,7 +145,8 @@ import { AreaImportComponent } from 'app/views/list/area/areas-import/area-impor
     CentralImportComponent,
     DistrictImportComponent,
     AreaImportComponent,
-    WardImportComponent
+    WardImportComponent,
+    DecentralizeUserComponent
   ],
   entryComponents: [
     ProvinceImportComponent,

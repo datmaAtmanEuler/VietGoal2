@@ -4,6 +4,7 @@ import { ProvincesComponent } from '../../views/list/provinces/provinces.compone
 import { ProvinceEditComponent } from '../../views/list/provinces/provinceedit/provinceedit.component';
 import { CentralComponent } from '../../views/manage/central/central.component';
 import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
+import { DecentralizeUserComponent } from '../../views/manage/decentralize-user/decentralize-user.component';
 import { DistrictsComponent } from '../../views/list/districts/districts.component';
 import { DistrictEditComponent } from '../../views/list/districts/districtedit/districtedit.component';
 import { WardsComponent } from '../../views/list/wards/wards.component';
@@ -157,6 +158,9 @@ export const AdminLayoutRoutes: Routes = [
           { path: 'edit', component: ClassEditComponent }
         ] 
       },
+      {
+        path: 'decentralize-user', component: DecentralizeUserComponent
+      }
     ]
 },
 { 

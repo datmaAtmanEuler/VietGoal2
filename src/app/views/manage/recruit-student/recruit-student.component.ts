@@ -25,6 +25,7 @@ import { TrainingGroundFilter } from 'app/models/filter/trainingroundfilter';
 import { AreaFilter } from 'app/models/filter/areafilter';
 import { MatPaginatorIntl } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
+import { RecruitStudentImportComponent } from './recruit-student-import/recruit-student-import.component';
 
 
 @Component({
@@ -257,7 +258,22 @@ export class RecruitStudentComponent implements OnInit {
   }
 
   doNothing(): void {}
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(RecruitStudentImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+    });
+  }
   
+  downloadTemplate() {
+    var fileName = 'RecruitStudent_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
 
 }
 

@@ -76,6 +76,7 @@ import { YardImportComponent } from '../../views/list/yard/yard-import/yard-impo
 import { RecruitImportComponent } from '../../views/list/recruits/recruit-import/recruit-import.component';
 import { RecruitStudentComponent } from '../../views/manage/recruit-student/recruit-student.component';
 import { RecruitStudentEditComponent } from '../../views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
+import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
 
 @NgModule({
   imports: [
@@ -145,6 +146,7 @@ import { RecruitStudentEditComponent } from '../../views/manage/recruit-student/
     UserGroupImportComponent,
     YardImportComponent,
     RecruitImportComponent,
+    RecruitStudentImportComponent,
     AreaImportComponent,
     WardImportComponent,
     RecruitStudentComponent,
@@ -155,6 +157,7 @@ import { RecruitStudentEditComponent } from '../../views/manage/recruit-student/
     CentralImportComponent,
     DistrictImportComponent,
     WardImportComponent,
+    RecruitStudentImportComponent,
     UserGroupImportComponent,
     YardImportComponent,
     RecruitImportComponent,

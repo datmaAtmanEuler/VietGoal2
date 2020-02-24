@@ -91,6 +91,10 @@
                             </td>
                           </ng-container>
                           <td class="my-action-item">
+                            <button *ngIf="coachabsent.coachAbsentStatus == 0" type="button" (click)="duyet(coachabsent)"
+                              class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
+                              <i class="material-icons">check</i>
+                            </button>
                             <button type="button" (click)="edit(coachabsent.id)"
                               class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
                               <i class="material-icons">edit</i>

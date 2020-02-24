@@ -36,10 +36,10 @@ export class WardService {
         {
             ward.CreatedBy = by;
         }
-        return this.http.post(environment.apiUrl + `Wards/save`,ward, this.httpOptions);
+        return this.http.post(environment.apiUrl + `Wards`,ward, this.httpOptions);
     }
     
-  deleteWard(id: number , deleteBy : number): Observable<any> {
+    deleteWard(id: number , deleteBy : number): Observable<any> {
        
         return this.http.delete(environment.apiUrl + `Wards/${id}?deleteBy=${deleteBy}`, this.httpOptions);
     }

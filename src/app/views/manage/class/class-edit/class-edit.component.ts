@@ -98,12 +98,12 @@ export class ClassEditComponent implements OnInit {
 		return user && user.WardName && !user.notfound ? user.WardName : '';
 	}
 	changeArea() {
-		this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'AreaCode', 'ASC')).subscribe((list) => {
+		this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
 			this.yardsList = list;
 		});
 	}
 	changeYard() {
-		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null, null, 'YardCode', 'ASC')).subscribe((list) => {
+		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null, null, 'ID', 'ASC')).subscribe((list) => {
 			this.trainingGroundsList = list;
 		});
 	}
@@ -128,7 +128,7 @@ export class ClassEditComponent implements OnInit {
 					this.areasList = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, this.class.CentralID, 'AreaCode', 'ASC'))
+				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, this.class.CentralID, 'Id', 'ASC'))
 					.pipe(
 						finalize(() => {
 							this.isLoading = false

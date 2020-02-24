@@ -68,6 +68,7 @@ import { ClassComponent } from '../../views/manage/class/class.component';
 import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 import { DistrictImportComponent } from '../../views/list/districts/districts-import/district-import.component';
 import { WardImportComponent } from '../../views/list/wards/wards-import/ward-import.component';
+import { AreaImportComponent } from 'app/views/list/area/areas-import/area-import.component';
 
 @NgModule({
   imports: [
@@ -132,13 +133,15 @@ import { WardImportComponent } from '../../views/list/wards/wards-import/ward-im
     AgeEditComponent,
     CentralImportComponent,
     DistrictImportComponent,
+    AreaImportComponent,
     WardImportComponent
   ],
   entryComponents: [
     ProvinceImportComponent,
     CentralImportComponent,
     DistrictImportComponent,
-    WardImportComponent
+    WardImportComponent,
+    AreaImportComponent
   ],
 })
 

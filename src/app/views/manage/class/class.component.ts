@@ -111,7 +111,7 @@ export class ClassComponent implements OnInit {
         this.yarddsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'YardCode', 'ASC'))
+      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'Id', 'ASC'))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -205,7 +205,7 @@ export class ClassComponent implements OnInit {
     return user && user.WardName && !user.notfound ? user.WardName : '';
   }
   changearea(areaID: number) {
-    this.yardService.getYardsList(new YardFilter('', 1, 100, areaID, 'YardCode', 'ASC')).subscribe((list) => {
+    this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
       this.yarddsList = list;
       this.filter.AreaId = areaID;
       this.reload();

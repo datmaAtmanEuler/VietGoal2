@@ -2,14 +2,26 @@
     <div class="text-center border border-light p-5">
         <p class="h4 mb-4">District Information</p>
         <form>
+
             <div class="form-group row">
-                <label class="col-3 label-middling">Tên Tỉnh Thành <span class="text-danger">(*)</span></label>
-                <div class="col-6 label-middling">
-                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.ProvinceID"
-                        class="form-control">
-                        <option *ngFor="let province of provincesList; let i = index;" [value]="province.ID">
-                            {{ province.ProvinceName}}</option>
-                    </select>
+                <label class="col-sm-3 label-middling"
+                    for="ProvinceAC">{{'MESSAGE.NameList.ProvinceName' |translate}}:</label>
+                <div class="col-sm-6">
+                    <input class="form-control" id="ProvinceAC" [value]="district.ProvinceId"
+                        [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
+                    <mat-autocomplete #provinceAC="matAutocomplete"
+                        (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)"
+                        [displayWith]="displayProvinceFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let province of listprovince" [value]="province">
+                                <span *ngIf="!province.notfound">{{province.ProvinceName}}</span>
+                                <span *ngIf="province.notfound" class="nofind">{{province.notfound}}</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
                 </div>
             </div>
 

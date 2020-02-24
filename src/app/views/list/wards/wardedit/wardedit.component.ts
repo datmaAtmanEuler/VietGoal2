@@ -7,9 +7,11 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 import { DistrictService } from '../../../../services/list/district.service';
 import { District } from '../../../../models/list/districts';
 import { DistrictFilter } from '../../../../models/filter/districtfilter';
-import { debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
 import { SORD_DIRECTION } from "../../../../models/sort";
 import { FormControl } from '@angular/forms';
+import { WardFilter } from 'app/models/filter/wardfilter';
+import { ProvinceService } from 'app/services/list/province.service';
 
 @Component({
 	selector: 'app-ward-edit',
@@ -22,7 +24,8 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	@Input('Id') Id: number;
 	@Input('UserId') UserId: null | number;
 	ward: Ward = new Ward(0, '', '', 0,false, new Date(), null, 1, null, null, null);
-
+	listdistrict: any;
+	listprovince: any;
 	/**
 	*  Search with autocomplete
 	* ---------------------------
@@ -32,15 +35,17 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	* District
 	*/
 	searchDistrictsCtrl = new FormControl();
+	searchProvincesCtrl = new FormControl();
   	filteredDistricts: any;
 
 	/**
 	* ---------------------------
 	*/
-
+	
+	errorMsg: string;
   	isLoading = false;
 
-	constructor(private cd: ChangeDetectorRef, private districtService: DistrictService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
+	constructor(private cd: ChangeDetectorRef,private provinceService: ProvinceService, private districtService: DistrictService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
 		this.Id = this.route.snapshot.queryParams['Id'];
 		this.Id = (this.Id) ? this.Id : 0;
 		config.backdrop = 'static';
@@ -48,11 +53,26 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 		config.scrollable = false;
 	}  
 
-
-	GetWardById(Id:number)  
-	{  
-		
-		const _this = this;
+	displayProvinceFn(user): string {
+		return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
+	}
+	displayDistrictFn(user): string {
+		return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
+	}
+	changeProvince(provinceId) {
+		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,null,'Id','ASC')).subscribe((list) => {
+			this.listdistrict = list;
+		});
+	}
+	GetWardById(Id: number) {
+		this.wardService.getWard((Id) ? Id : this.Id).subscribe(
+			(aWard) => {
+				this.ward = aWard || new Ward(0, '', '', 0, true, new Date(),null, null, null, null,0);
+			},
+			() => {
+				this.ward = new  Ward(0, '', '', 0, true, new Date(),null, null, null, null,0);
+			}
+		);
 	}
 
 	ngAfterViewInit() {
@@ -61,11 +81,40 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 
 	ngOnInit() {
 		const _this = this;
+
+		this.searchProvincesCtrl.valueChanges
+			.pipe(
+				startWith(''),
+				debounceTime(500),
+				tap(() => {
+					this.errorMsg = "";
+					this.listprovince = [];
+					this.isLoading = true;
+				}),
+				switchMap(value => this.provinceService.getProvincesList({ 'SearchTerm': value, 'PageIndex': 1, 'PageSize': 10, 'SortName': 'Id', 'SortDirection': 'ASC' })
+					.pipe(
+						finalize(() => {
+							this.isLoading = false
+						}),
+					)
+				)
+			)
+			.subscribe(data => {
+				if (data == undefined) {
+					this.errorMsg = 'error';
+					this.listprovince = [{ notfound: 'Not Found' }];
+				} else {
+					this.errorMsg = "";
+					this.listprovince = data.length ? data : [{ notfound: 'Not Found' }];
+				}
+
+			});
+
 		this.searchDistrictsCtrl.valueChanges
 		  .pipe(
 	        debounceTime(300),
 	        tap(() => this.isLoading = true),
-	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, null, 'DistrictName', SORD_DIRECTION.ASC))
+	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, null,null, 'Id', 'ASC'))
 	        .pipe(
 	          finalize(() => this.isLoading = false),
 	          )
@@ -78,7 +127,8 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	          _this.filteredDistricts = data;
 	        }
 	        _this.checkDistricts();
-	      });
+		  });
+		  
 		this.GetWardById(this.Id);  
 	}
 

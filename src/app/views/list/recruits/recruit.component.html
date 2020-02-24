@@ -27,7 +27,7 @@
                             <div class="card-body table-responsive">
                                 <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
                                 <div class="vietgoal-table-settings style-1">
-                                    
+                                    <div class="vietgoal-table-settings vg-scroll">
                                     <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
                                         <thead>
                                             <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
@@ -44,9 +44,10 @@
                                             <ng-container *ngFor="let recruit of recruitsList; let i = index;">
                                                 <tr>
                                                     <td width="100px">{{ i + 1}}</td>
-                                                    <td>{{ recruit.RecruitsCode }}</td>
-                                                    <td>{{ recruit.RecruitsName }}</td>
-                                                    <td>{{ recruit.RecruitsColor }}</td>
+                                                    <td>{{ recruit.recruitCode }}</td>
+                                                    <td>{{ recruit.recruitName }}</td>
+                                                    <td [style.background-color]="recruit.recruitColor">
+                                                        {{ recruit.recruitColor }}</td>
                                                     <td width="150px" class="my-action-item">
                                                         <button mat-raised-button type="button"  (click)="edit(recruit.ID)" title="{{ 'MESSAGE.NameList.Edit' | translate}}" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                             <i class="material-icons">edit</i>

@@ -20,8 +20,11 @@
             </div>
         </div>
 
-        <div class="col-md-6  alert" role="alert">
-            <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"  [matAutocomplete]="centralAC" [formControl]="searchCentralsCtrl">
+        <div class="form-group row">
+            <label class="col-3 label-middling">Trung Tâm <span class="text-danger">(*)</span></label>
+                <div  class="col-6 label-middling" >
+                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"  [matAutocomplete]="centralAC" [formControl]="searchCentralsCtrl">
+                </div>
             <mat-autocomplete #centralAC="matAutocomplete" (optionSelected)="changeCentral(searchCentralsCtrl.value.ID)" [displayWith]="displayCentralFn">
                 <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                     <mat-spinner></mat-spinner>
@@ -35,8 +38,11 @@
             </mat-autocomplete>
         </div>
 
-        <div class="col-md-6  alert" role="alert">
-            <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"  [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
+        <div class="form-group row" >
+            <label class="col-3 label-middling">Khu Vực<span class="text-danger">(*)</span></label>
+                <div  class="col-6 label-middling" >
+                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"  [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
+                </div>
             <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.ID)" [displayWith]="displayAreaFn">
                 <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                     <mat-spinner></mat-spinner>
@@ -56,12 +62,12 @@
                 <label class="col-3 label-middling">Năm Bắt Đầu HĐ</label>
                 <div class="col-6 label-middling" >
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.StartYearContract"
-                        class="form-control" placeholder="StartYearContract">
+                        class="form-control" placeholder="Năm Bắt Đầu HĐ">
                 </div>
             </div>
 
             <div class="form-group row">
-                <label class="col-3 label-middling">Địa Chỉ<span class="text-danger">(*)</span></label>
+                <label class="col-3 label-middling">Địa Chỉ</label>
                 <div class="col-6 label-middling" >
                     <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.Address"
                         class="form-control" placeholder="Địa Chỉ">

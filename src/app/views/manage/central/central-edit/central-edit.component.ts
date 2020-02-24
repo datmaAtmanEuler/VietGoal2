@@ -62,7 +62,7 @@ export class CentralEditComponent implements OnInit {
 		return user && user.WardName && !user.notfound ? user.WardName : '';
 	}
 	changeProvince(provinceID) {
-		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, provinceID)).subscribe((list) => {
+		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,null,'Id','ASC')).subscribe((list) => {
 			this.listdistrict = list;
 		});
 	}
@@ -117,7 +117,7 @@ export class CentralEditComponent implements OnInit {
 				this.listdistrict = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.districtService.getDistrictsList(new DistrictFilter(value, 1, 100, this.provinceIDfilted()))
+			switchMap(value => this.districtService.getDistrictsList(new DistrictFilter(value, 1, 100,null, this.provinceIDfilted()))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false

@@ -23,6 +23,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 export class DistrictsComponent implements OnInit {
   districtsList:District[] = [];
   district: District;
+  provinceList: Province[]=[];
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
@@ -31,6 +32,7 @@ export class DistrictsComponent implements OnInit {
   loading: boolean = true;
   Total: any;
   firstRowOnPage: any;
+  
   /**
    * BEGIN SORT SETTINGS
    */
@@ -90,7 +92,7 @@ pageEvent(variable: any){
 }
 reload() {
   const _this = this;
-  const filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
+  const filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
   this.loading = true;
   _this.districtsList = [];
   this.service.getDistrictsList(filter).subscribe(

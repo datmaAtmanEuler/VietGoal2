@@ -17,11 +17,11 @@ export class UserGroupService {
 
     getNhomList(filter: any): Observable<any> {
        let querystring = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-       return this.http.get(environment.serverUrl_employee + 'UserGroups?' + querystring, this.httpOptions);
+       return this.http.get(environment.apiUrl + 'Groups?' + querystring, this.httpOptions);
     }
     
     getNhom(id: any): Observable<any> {
-        return this.http.get(environment.serverUrl_employee + `UserGroups/${id}`,this.httpOptions);
+        return this.http.get(environment.apiUrl + `Groups/${id}`,this.httpOptions);
     }
 
     addOrUpdateNhom(usergroup: UserGroup , by: null | number): Observable<any> {
@@ -30,10 +30,10 @@ export class UserGroupService {
         }else{
             usergroup.CreatedBy = by;
         }
-        return this.http.post(environment.serverUrl_employee + `UserGroups/save`,usergroup,this.httpOptions);
+        return this.http.post(environment.apiUrl + `Groups`,usergroup,this.httpOptions);
     }
 
     deleteNhom(id: number , deleteBy : number): Observable<any> {
-        return this.http.delete(environment.serverUrl_employee + `UserGroups/${id}?deleteBy/${deleteBy}`,this.httpOptions)
+        return this.http.delete(environment.apiUrl + `Groups/${id}?deleteBy/${deleteBy}`,this.httpOptions)
     }
 }

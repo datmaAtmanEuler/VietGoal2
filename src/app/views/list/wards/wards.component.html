@@ -4,7 +4,7 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-warning" style="background: #023a54">
-                        <h4 class="card-title">{{ "MESSAGE.NameList.ProvincesList" | translate }}</h4>
+                        <h4 class="card-title">{{ "MESSAGE.NameList.Yard" | translate }}</h4>
                     </div>
                     <div class="row ">
                         <div class="col-12">
@@ -12,6 +12,7 @@
                                 <div class="row">
                                     <div class="offset-sm-8 col-sm-4 search-form">
                                         <div class="row">
+
                                             <div class="col-12 ta-r">
                                                 <button class="btn btn-vietgoal btn-sm mr-2"
                                                     (click)="openImport()">Import</button>
@@ -19,7 +20,7 @@
                                                     (click)="downloadTemplate()">Mẫu Import</button>
                                                 <button mat-raised-button type="button" (click)="add()"
                                                     title="{{ 'MESSAGE.NameList.Create' | translate}}"
-                                                    *hasClaim="['CanAddDistricts']"
+                                                    *hasClaim="['CanAddProvinces']"
                                                     class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
                                                     <i class="material-icons">add</i>
                                                 </button>
@@ -44,6 +45,7 @@
                         <div class="col-12">
                             <div class="card-body table-responsive">
                                 <div class="vietgoal-table-settings style-1">
+                                    <div class="vietgoal-table-settings vg-scroll">
                                     <table class="table table-condensed table-striped table-bordered table-hover"
                                         style="width: 100%">
                                         <thead>
@@ -85,6 +87,7 @@
                                         </tbody>
                                     </table>
                                 </div>
+                            </div>
                                 <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
                                     [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                 </mat-paginator>

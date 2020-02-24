@@ -7,7 +7,9 @@ import { Router } from '@angular/router';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
-
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import {TranslateService} from '@ngx-translate/core';
+import PerfectScrollbar from 'perfect-scrollbar';
 @Component({
   selector: 'app-training-grounds',
   templateUrl: './traininggrounds.component.html',
@@ -22,30 +24,52 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
   yard: any;
   searchTerm:string = '';
   pageIndex:number = 1;
-  pageSize:number = 20;
+  pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize:number = this.pageSizesList[1];
   currentUser: any;
+  loading: boolean = true;
+  Total: any;
+  firstRowOnPage: any;
 
   /**
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT, null];
-  columnsName: string[] = ['Order', 'YardAreaCode','TrainingGroundName', 'YardName', 'AreaName','Address','Note','Action'];
-  columnsNameMapping: string[] = ['ID', 'YardAreaCode','TrainingGroundName', 'YardName', 'AreaName','Address','Note','Action'];
-  sortAbles: boolean[] = [false, true, true, true,true,true,true, false];
+  columnsName: string[] = ['Order', 'TrainingGroundCode','TrainingGroundName', 'YardName','Address','Note','Action'];
+  columnsNameMapping: string[] = ['ID', 'TrainingGroundCode','TrainingGroundName', 'YardName','Address','Note','Action'];
+  sortAbles: boolean[] = [false, true, true, true,true,true, false];
   /**
    * END SORT SETTINGS
    */
-  constructor(config: NgbModalConfig, private service: TrainingGroundService, private router: Router, private modalService: NgbModal) { 
+  constructor(private matCus: MatPaginatorIntl,private translate: TranslateService,config: NgbModalConfig, private service: TrainingGroundService, 
+    private router: Router, private modalService: NgbModal) { 
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
+    this.updateMatTableLabel();
+    translate.onLangChange.subscribe((a: any) => {
+      this.updateMatTableLabel();
+      matCus.changes.next();
+    });
   }
-
+  updateMatTableLabel() {
+    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
+    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
+        if (length === 0 || pageSize === 0) {
+          return this.translate.instant('MESSAGE.NameList.NoRecord');
+        }
+        length = Math.max(length, 0);
+        const startIndex = page * pageSize;
+        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
+        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
+      }
+  }
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   this.reload();
-  
+  const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+  new PerfectScrollbar(vgscroll);
   }
 
   remove(traininground: TrainingGround) {
@@ -58,12 +82,31 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
     });
 }
 
+pageEvent(variable: any){
+  this.pageIndex = variable.pageIndex+1;
+  this.pageSize = variable.pageSize;
+  this.reload();
+}
 reload() {
   const _this = this;
-  const filter: TrainingGroundFilter = new TrainingGroundFilter('', this.pageIndex, this.pageSize, null,null,this.sort.SortName,'ASC');
-  _this.service.getTrainingGroundsList(filter).subscribe((traininground: TrainingGround[]) => {
-    _this.traininground = traininground;
-  });
+  const filter: TrainingGroundFilter = new TrainingGroundFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
+  this.loading = true;
+  _this.trainingroundsList = [];
+  this.service.getTrainingGroundsList(filter).subscribe(
+      (response: any) => {
+        const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        setTimeout(() => {
+          _this.trainingroundsList = (list) ? list : [];
+          _this.loading = false;
+        }, 500);
+      },
+      (err: any) => {
+        _this.trainingroundsList = [];
+        _this.loading = false;
+      }
+  );
 }
 
 add() {

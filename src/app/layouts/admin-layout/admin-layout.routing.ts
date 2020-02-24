@@ -37,6 +37,8 @@ import { ClassComponent } from '../../views/manage/class/class.component';
 import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 import { RecruitComponent } from '../../views/list/recruits/recruit.component';
 import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/recruit-edit.component';
+import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
+import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -155,6 +157,14 @@ export const AdminLayoutRoutes: Routes = [
           { path: '', component: ClassComponent },
           { path: 'add', component: ClassEditComponent },
           { path: 'edit', component: ClassEditComponent }
+        ] 
+      },
+      { 
+        path: 'ngaynghi',
+        children: [
+          { path: '', component: CoachAbsentComponent },
+          { path: 'add', component: CoachAbsentEditComponent },
+          { path: 'edit', component: CoachAbsentEditComponent }
         ] 
       },
     ]

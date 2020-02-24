@@ -30,6 +30,7 @@ import {
   MatFormFieldModule,
   MatTooltipModule,
   MatSelectModule,
+  MatDatepickerModule,
 } from '@angular/material';
 
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -69,6 +70,8 @@ import { ClassEditComponent } from '../../views/manage/class/class-edit/class-ed
 import { DistrictImportComponent } from '../../views/list/districts/districts-import/district-import.component';
 import { WardImportComponent } from '../../views/list/wards/wards-import/ward-import.component';
 import { AreaImportComponent } from 'app/views/list/area/areas-import/area-import.component';
+import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
+import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
 
 @NgModule({
   imports: [
@@ -87,8 +90,9 @@ import { AreaImportComponent } from 'app/views/list/area/areas-import/area-impor
     MatTooltipModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
-    MatPaginatorModule
-  ],
+    MatPaginatorModule,
+    MatDatepickerModule
+],
   declarations: [
     ClassComponent,
     ClassEditComponent,
@@ -134,7 +138,9 @@ import { AreaImportComponent } from 'app/views/list/area/areas-import/area-impor
     CentralImportComponent,
     DistrictImportComponent,
     AreaImportComponent,
-    WardImportComponent
+    WardImportComponent,
+    CoachAbsentComponent,
+    CoachAbsentEditComponent
   ],
   entryComponents: [
     ProvinceImportComponent,

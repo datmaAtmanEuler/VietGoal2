@@ -58,8 +58,8 @@ export class CoachStatusComponent implements OnInit {
     const filter = {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
-      sortName: 'coachStatusName',
-      sortDirection: 0
+      sortName: this.paginationSettings.sort.SortName,
+      sortDirection: this.paginationSettings.sort.SortDirection
     };
     this.loading = true;
     this.CoachStatusList = [];

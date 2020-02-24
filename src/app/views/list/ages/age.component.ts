@@ -59,8 +59,8 @@ export class AgeComponent implements OnInit {
     const filter = {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
-      sortName: 'ageName',
-      sortDirection: 0
+      sortName: this.paginationSettings.sort.SortName,
+      sortDirection: this.paginationSettings.sort.SortDirection
     };
     this.loading = true;
     this.AgeList = [];

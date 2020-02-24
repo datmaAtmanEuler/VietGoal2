@@ -32,12 +32,12 @@ export class StudentStatusComponent implements OnInit {
     sortToggles: [
       null,
       SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
-      null
+      null, null
     ],
     columnsName: ['Order', 'StudentStatusName', 'StudentStatusCode', 'Color', 'Action'],
     columnsNameMapping: ['', 'studentStatusName', 'studentStatusCode', '', ''],
-    sortAbles: [false, true, true, false],
-    visibles: [true, true, true, true]
+    sortAbles: [false, true, true, false, false],
+    visibles: [true, true, true, true, true]
   }
   constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: StudentStatusService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
@@ -56,12 +56,12 @@ export class StudentStatusComponent implements OnInit {
     this.pageSize = pageE.pageSize;
     this.reload();
   }
-  reload() {
+  public reload() {
     const filter = {
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
-      sortName: 'studentStatusName',
-      sortDirection: 0
+      sortName: this.paginationSettings.sort.SortName,
+      sortDirection: this.paginationSettings.sort.SortDirection
     };
     this.loading = true;
     this.StudentStatusList = [];

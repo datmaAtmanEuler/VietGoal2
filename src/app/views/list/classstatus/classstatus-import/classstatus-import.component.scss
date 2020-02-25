@@ -1,5 +1,5 @@
 .modal-lg { 
-    max-width: 850px !important;
+    max-width: 500px !important;
 }
 .button-save {
     cursor: pointer;
@@ -34,14 +34,4 @@
  .fade {
   opacity: 1;
   transition: opacity .15s linear;
-}
-.cdk-overlay-container {
-  z-index: 2000;
-}
-.nofind{
-  color: #cccccc;
-}
-
-.bigger-spinner{
-  height: unset!important;
 }

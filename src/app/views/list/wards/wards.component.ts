@@ -1,7 +1,11 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { WardService } from '../../../services/list/ward.service';
+import { DistrictService } from '../../../services/list/district.service';
+import { ProvinceService } from '../../../services/list/province.service';
 import { Ward } from '../../../models/list/wards';
 import { WardFilter } from '../../../models/filter/wardfilter';
+import { Filter } from '../../../models/filter/filter';
+import { DistrictFilter } from '../../../models/filter/districtfilter';
 import { Router } from '@angular/router'; 
 import { WardEditComponent } from './wardedit/wardedit.component';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
@@ -13,32 +17,38 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { WardImportComponent } from './wards-import/ward-import.component';
 import { Province } from 'app/models/list/province';
 import { District } from 'app/models/list/districts';
+
+import { FormControl } from '@angular/forms';
+
 @Component({
   selector: 'app-wards',
   templateUrl: './wards.component.html',
   styleUrls: ['./wards.component.scss']
 })
 export class WardsComponent implements OnInit {
-  wardsList:Ward[] = [];
-  provincesList:Province[] = [];
-  districtsList:District[] = [];
-  ward: Ward;
+  wardsList:any[] = [];
+  provincesList:any[] = [];
+  districtsList:any[] = [];
+  ward: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
-  loading: boolean = true;
-  Total: any;
+  isLoading: boolean = true;
   firstRowOnPage: any;
   provinceId: null | number = null;
   districtId: null | number = null;
+
+
+  searchProvincesCtrl = new FormControl();
+  searchDistrictsCtrl = new FormControl();
 
   /**
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'WardCode', 'WardName',  'DistrictName', 'Action'];
   columnsNameMapping: string[] = ['ID', 'WardCode', 'WardName',  'DistrictName', 'Action'];
   sortAbles: boolean[] = [false, true, true, true, false];
@@ -46,7 +56,11 @@ export class WardsComponent implements OnInit {
    * END SORT SETTINGS
    */
 
-  constructor(private translate: TranslateService, private service: WardService, private router: Router,
+   filter: WardFilter = new WardFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
+   districtFilter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
+   provinceFilter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'Id','ASC');
+
+  constructor(private translate: TranslateService, private service: WardService, private provinceService: ProvinceService, private districtService: DistrictService, private router: Router,
     private matCus: MatPaginatorIntl,config: NgbModalConfig,
     private modalService: NgbModal) { 
       config.backdrop = 'static';
@@ -97,22 +111,49 @@ pageEvent(variable: any){
 
 reload() {
   const _this = this;
-  const filter: WardFilter = new WardFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
-  this.loading = true;
-  _this.wardsList = [];
-  this.service.getWardsList(filter).subscribe(
+  this.isLoading = true;
+  _this.provincesList = [];
+  this.provinceService.getProvincesList(this.provinceFilter).subscribe(
       (response: any) => {
         const list = response.results ? response.results : [];
-        this.Total = (response && response.rowCount) ? response.rowCount : 0;
         this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
         setTimeout(() => {
-          _this.wardsList = (list) ? list : [];
-          _this.loading = false;
+          _this.provincesList = (list) ? list : [];
+          _this.districtsList = [];
+          this.districtService.getDistrictsList(this.districtFilter).subscribe(
+              (response: any) => {
+                const list = response.results ? response.results : [];
+                this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+                setTimeout(() => {
+                  _this.districtsList = (list) ? list : [];
+                  _this.wardsList = [];
+                  this.service.getWardsList(this.filter).subscribe(
+                      (response: any) => {
+                        const list = response.results ? response.results : [];
+                        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+                        setTimeout(() => {
+                          _this.wardsList = (list) ? list : [];
+                          _this.isLoading = false;
+                        }, 500);
+                      },
+                      (err: any) => {
+                        _this.wardsList = [];
+                        _this.isLoading = false;
+                      }
+                  );
+                }, 500);
+              },
+              (err: any) => {
+                _this.districtsList = [];
+                _this.isLoading = false;
+              }
+          );
+
         }, 500);
       },
       (err: any) => {
-        _this.wardsList = [];
-        _this.loading = false;
+        _this.provincesList = [];
+        _this.isLoading = false;
       }
   );
 }
@@ -144,7 +185,7 @@ reload() {
   toggleSort(columnIndex: number): void {
     let toggleState =  this.sortToggles[columnIndex];
     switch(toggleState) {
-      case SORD_DIRECTION.DEFAULT: 
+      case SORD_DIRECTION.ASC: 
       {
         toggleState = SORD_DIRECTION.ASC;
         break;
@@ -156,7 +197,7 @@ reload() {
       }
       default:
       {
-        toggleState = SORD_DIRECTION.DEFAULT;
+        toggleState = SORD_DIRECTION.ASC;
         break;
       }
     }
@@ -164,11 +205,11 @@ reload() {
       if(index == columnIndex) {
         this.sortToggles[index] = this.sort.SortDirection = toggleState;
       } else {
-        this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+        this.sortToggles[index] = SORD_DIRECTION.ASC;
       }
     });
 
-    this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'ID' : this.columnsNameMapping[columnIndex];
+    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'ID' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
   
@@ -190,5 +231,29 @@ reload() {
     document.body.append(a);
     a.click();
     a.remove();
+  }
+
+displayProvinceFn(province: any) {
+    return province && province.ProvinceName && !province.notfound ? province.ProvinceName : '';
+  }
+
+changeProvince(provinceId: number) {
+    this.districtFilter.ProvinceId = provinceId;
+    this.districtService.getDistrictsList(this.districtFilter).subscribe((list) => {
+      this.districtsList = list;
+      this.reload();
+    });
+  }
+
+  displayDistrictFn(district: any) {
+    return district && district.DistrictName && !district.notfound ? district.DistrictName : '';
+  }
+
+changeDistrict(districtId: number) {
+    this.filter.DistrictId = districtId;
+    this.service.getWardsList(this.filter).subscribe((list) => {
+      this.wardsList = list;
+      this.reload();
+    });
   }
 }

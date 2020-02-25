@@ -4,9 +4,9 @@
         <form>
             <div class="form-group row">
                 <label class="control-label col-sm-3 label-middling"
-                    for="ip1">{{ "MESSAGE.NameList.CoachRegistried" | translate }}:</label>
+                    for="ipcoachAC">{{ "MESSAGE.NameList.CoachRegistried" | translate }}:</label>
                 <div class="col-sm-9">
-                    <input type="text" id="ip1" class="form-control" [matAutocomplete]="coachAC" [formControl]="searchCoachesCtrl">
+                    <input type="text" id="ipcoachAC" class="form-control" [matAutocomplete]="coachAC" [formControl]="searchCoachesCtrl">
                         <mat-autocomplete #coachAC="matAutocomplete"
                             (optionSelected)="changeCoach(searchCoachesCtrl.value.id)"
                             [displayWith]="displayCoachFn">

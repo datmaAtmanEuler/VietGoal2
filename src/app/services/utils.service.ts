@@ -48,7 +48,7 @@ export class UtilsService {
   toggleSort(columnIndex: number, sortToggles: any, sort: any, columnsNameMapping: any[], reload: () => any): void {
     let toggleState = sortToggles[columnIndex];
     switch (toggleState) {
-      case SORD_DIRECTION.DEFAULT:
+      case SORD_DIRECTION.DESC:
         {
           toggleState = SORD_DIRECTION.ASC;
           break;
@@ -60,7 +60,7 @@ export class UtilsService {
         }
       default:
         {
-          toggleState = SORD_DIRECTION.DEFAULT;
+          toggleState = SORD_DIRECTION.ASC;
           break;
         }
     }
@@ -68,11 +68,11 @@ export class UtilsService {
       if (index == columnIndex) {
         sortToggles[index] = sort.SortDirection = toggleState;
       } else {
-        sortToggles[index] = SORD_DIRECTION.DEFAULT;
+        sortToggles[index] = SORD_DIRECTION.ASC;
       }
     });
 
-    sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'ID' : columnsNameMapping[columnIndex];
+    sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : columnsNameMapping[columnIndex];
     reload();
   }
 

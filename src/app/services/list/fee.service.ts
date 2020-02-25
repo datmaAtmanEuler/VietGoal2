@@ -3,6 +3,7 @@ import { Filter } from '../../models/filter/filter';
 import { Fee } from 'app/models/list/fee';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ImportViewModel } from 'app/models/importviewmodel';
 
 import { environment } from 'environments/environment';
 
@@ -41,5 +42,12 @@ import { environment } from 'environments/environment';
 
     deleteFee(FeeId: number, deletedBy: number): Observable<any> {
         return this.http.delete(environment.serverUrl + `Fees/${FeeId}?deletedBy=${deletedBy}` , this.httpOptions);
+    }
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `Fees/import`, importViewModel , this.httpOptions);
     }
   }

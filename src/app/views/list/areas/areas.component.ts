@@ -4,6 +4,7 @@ import { CentralService } from '../../../services/manage/central.service';
 import { Area } from '../../../models/list/area';
 import { AreaEditComponent } from './area-edit/area-edit.component';
 import { AreaFilter } from '../../../models/filter/areafilter';
+import { CentralFilter } from '../../../models/filter/centralfilter';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
@@ -11,67 +12,60 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
-import { AreaImportComponent } from './areas-import/area-import.component';
+import { AreaImportComponent } from './area-import/area-import.component';
+import { FormControl } from '@angular/forms';
+import { UtilsService } from '../../../services/utils.service';
 
 @Component({
   selector: 'app-areas',
   templateUrl: './areas.component.html',
   styleUrls: ['./areas.component.scss']
 })
-export class AreaComponent implements OnInit {ModalDirective;
+export class AreasComponent implements OnInit {ModalDirective;
   areasList:any[] = [];
   area: any;
-  centralList: any[]=[];
+  centralsList: any[]=[];
   central: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
-  loading: boolean = true;
+  isLoading: boolean = true;
   Total: any;
   firstRowOnPage: any;
+
+
+  searchCentralsCtrl = new FormControl();
+
+  filter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
+  centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,null, null, null, 'Id','ASC');
+
   /**
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'AreaCode', 'AreaName', 'Central', 'Action'];
   columnsNameMapping: string[] = ['ID', 'AreaCode', 'AreaName', 'Central', 'Action'];
   sortAbles: boolean[] = [false, true, true, true, false];
   /**
    * END SORT SETTINGS
    */
-  constructor(private translate: TranslateService, private matCus: MatPaginatorIntl,config: NgbModalConfig,
-     private service: AreaService, private router: Router,
-     private modalService: NgbModal,private centralService: CentralService) { 
+  constructor(private translate: TranslateService, private matCus: MatPaginatorIntl,config: NgbModalConfig, public utilsService: UtilsService,
+     private centralService: CentralService,private service: AreaService, private router: Router,
+     private modalService: NgbModal) { 
+      this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
       config.backdrop = 'static';
       config.keyboard = false;
       config.scrollable = false;
-      this.updateMatTableLabel();
-      translate.onLangChange.subscribe((a: any) => {
-        this.updateMatTableLabel();
-        matCus.changes.next();
-      });
+      utilsService.loadPaginatorLabels();
   }
 
   ngOnInit() {
-  this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-  this.reload();
-  const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+    this.reload();
+    const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
-  }
-  updateMatTableLabel() {
-    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
-    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
-        if (length === 0 || pageSize === 0) {
-          return this.translate.instant('MESSAGE.NameList.NoRecord');
-        }
-        length = Math.max(length, 0);
-        const startIndex = page * pageSize;
-        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
-        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
-      }
   }
 
     remove(area: Area) {
@@ -87,22 +81,35 @@ export class AreaComponent implements OnInit {ModalDirective;
 
     reload() {
       const _this = this;
-      const filter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
-      this.loading = true;
-      _this.areasList = [];
-      this.service.getAreasList(filter).subscribe(
+      
+      this.isLoading = true;
+      _this.centralsList = [];
+      this.centralService.getCentralsList(this.centralFilter).subscribe(
           (response: any) => {
             const list = response.results ? response.results : [];
-            this.Total = (response && response.rowCount) ? response.rowCount : 0;
-            this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
             setTimeout(() => {
-              _this.areasList = (list) ? list : [];
-              _this.loading = false;
+              _this.centralsList = (list) ? list : [];
+              _this.areasList = [];
+              this.service.getAreasList(this.filter).subscribe(
+                  (response: any) => {
+                    const list = response.results ? response.results : [];
+                    this.Total = (response && response.rowCount) ? response.rowCount : 0;
+                    this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+                    setTimeout(() => {
+                      _this.areasList = (list) ? list : [];
+                      _this.isLoading = false;
+                    }, 500);
+                  },
+                  (err: any) => {
+                    _this.areasList = [];
+                    _this.isLoading = false;
+                  }
+              );
             }, 500);
           },
           (err: any) => {
-            _this.areasList = [];
-            _this.loading = false;
+            _this.centralsList = [];
+            _this.isLoading = false;
           }
       );
     }
@@ -138,7 +145,7 @@ export class AreaComponent implements OnInit {ModalDirective;
   toggleSort(columnIndex: number): void {
     let toggleState =  this.sortToggles[columnIndex];
     switch(toggleState) {
-      case SORD_DIRECTION.DEFAULT: 
+      case SORD_DIRECTION.ASC: 
       {
         toggleState = SORD_DIRECTION.ASC;
         break;
@@ -150,7 +157,7 @@ export class AreaComponent implements OnInit {ModalDirective;
       }
       default:
       {
-        toggleState = SORD_DIRECTION.DEFAULT;
+        toggleState = SORD_DIRECTION.ASC;
         break;
       }
     }
@@ -158,15 +165,28 @@ export class AreaComponent implements OnInit {ModalDirective;
       if(index == columnIndex) {
         this.sortToggles[index] = this.sort.SortDirection = toggleState;
       } else {
-        this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+        this.sortToggles[index] = SORD_DIRECTION.ASC;
       }
     });
 
-    this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'ID' : this.columnsNameMapping[columnIndex];
+    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'ID' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
   
   doNothing(): void {}
+
+  displayCentralFn(central: any) {
+    return central && central.CentralName && !central.notfound ? central.CentralName : '';
+  }
+
+changeCentral(centralId: number) {
+    this.filter.CentralId = centralId;
+    this.service.getAreasList(this.filter).subscribe((list) => {
+      this.areasList = list;
+      this.reload();
+    });
+  }
+
   openImport() {
     const _this = this;
     const modalRef = this.modalService.open(AreaImportComponent, { size: 'lg' });

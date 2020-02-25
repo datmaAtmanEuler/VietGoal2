@@ -6,9 +6,9 @@ export class AreaFilter {
     SearchTerm: string = '';
     CentralId: null | number = null;
     SortName: string = 'ID';
-    SortDirection: string = SORD_DIRECTION.DEFAULT;
+    SortDirection: string = SORD_DIRECTION.ASC;
 
-    constructor(searchTerm: string, pageIndex: number, pageSize: number, CentralId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.DEFAULT) {
+    constructor(searchTerm: string, pageIndex: number, pageSize: number, CentralId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.ASC) {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;
         this.PageSize = pageSize;

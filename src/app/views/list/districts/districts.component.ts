@@ -15,29 +15,35 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
+
+import { FormControl } from '@angular/forms';
+
 @Component({
   selector: 'app-districts',
   templateUrl: './districts.component.html',
   styleUrls: ['./districts.component.scss']
 })
 export class DistrictsComponent implements OnInit {
-  districtsList:District[] = [];
-  district: District;
-  provinceList: Province[]=[];
+  districtsList:any[] = [];
+  district: any;
+  provincesList: any[]=[];
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
   loading: boolean = true;
-  Total: any;
   firstRowOnPage: any;
-  
+  searchProvincesCtrl = new FormControl();
+
+  provinceFilter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'Id','ASC');
+  filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
+
   /**
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
   columnsNameMapping: string[] = ['ID', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
   sortAbles: boolean[] = [false, true, true, true, false];
@@ -45,7 +51,11 @@ export class DistrictsComponent implements OnInit {
    * END SORT SETTINGS
    */
 
-  constructor(private translate: TranslateService, public util: UtilsService, private service: DistrictService, private router: Router, 
+  isLoading: boolean  = false;
+
+  constructor(private translate: TranslateService, public util: UtilsService,
+    private provinceService: ProvinceService,
+   private service: DistrictService, private router: Router, 
     private matCus: MatPaginatorIntl,config: NgbModalConfig,private modalService: NgbModal) { 
       config.backdrop = 'static';
       config.keyboard = false;
@@ -79,7 +89,7 @@ export class DistrictsComponent implements OnInit {
   remove(district: District) {
     this.district = district;
     const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
+    const modalRef = _this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'District';
     modalRef.componentInstance.decide.subscribe(() => {
         _this.deleteDistrict();
@@ -92,22 +102,34 @@ pageEvent(variable: any){
 }
 reload() {
   const _this = this;
-  const filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
-  this.loading = true;
-  _this.districtsList = [];
-  this.service.getDistrictsList(filter).subscribe(
+  _this.isLoading = true;
+  _this.provincesList = [];
+  _this.provinceService.getProvincesList(_this.provinceFilter).subscribe(
       (response: any) => {
         const list = response.results ? response.results : [];
-        this.Total = (response && response.rowCount) ? response.rowCount : 0;
-        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
         setTimeout(() => {
-          _this.districtsList = (list) ? list : [];
-          _this.loading = false;
+          _this.provincesList = (list) ? list : [];
+          _this.districtsList = [];
+          _this.service.getDistrictsList(_this.filter).subscribe(
+              (response: any) => {
+                const list = response.results ? response.results : [];
+                _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+                setTimeout(() => {
+                  _this.districtsList = (list) ? list : [];
+                  _this.isLoading = false;
+                }, 500);
+              },
+              (err: any) => {
+                _this.districtsList = [];
+                _this.isLoading = false;
+              }
+          );
         }, 500);
       },
       (err: any) => {
-        _this.districtsList = [];
-        _this.loading = false;
+        _this.provincesList = [];
+        _this.isLoading = false;
       }
   );
 }
@@ -118,7 +140,7 @@ reload() {
 
   edit(ID: null | number) {
     const _this = this;
-    const modalRef = this.modalService.open(DistrictEditComponent, { size: 'lg' });
+    const modalRef = _this.modalService.open(DistrictEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
     if (ID) {
       modalRef.componentInstance.ID = ID;
@@ -131,7 +153,7 @@ reload() {
 
   deleteDistrict() {
     const _this = this;
-    this.service.deleteDistrict(this.district.Id, this.currentUser.UserId).subscribe((res: any) => {
+    _this.service.deleteDistrict(_this.district.Id, _this.currentUser.UserId).subscribe((res: any) => {
       _this.reload();
     });
   }
@@ -139,7 +161,7 @@ reload() {
   toggleSort(columnIndex: number): void {
     let toggleState =  this.sortToggles[columnIndex];
     switch(toggleState) {
-      case SORD_DIRECTION.DEFAULT: 
+      case SORD_DIRECTION.ASC: 
       {
         toggleState = SORD_DIRECTION.ASC;
         break;
@@ -151,7 +173,7 @@ reload() {
       }
       default:
       {
-        toggleState = SORD_DIRECTION.DEFAULT;
+        toggleState = SORD_DIRECTION.ASC;
         break;
       }
     }
@@ -159,11 +181,11 @@ reload() {
       if(index == columnIndex) {
         this.sortToggles[index] = this.sort.SortDirection = toggleState;
       } else {
-        this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+        this.sortToggles[index] = SORD_DIRECTION.ASC;
       }
     });
 
-    this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'ID' : this.columnsNameMapping[columnIndex];
+    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'ID' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
   
@@ -171,7 +193,7 @@ reload() {
   
   openImport() {
     const _this = this;
-    const modalRef = this.modalService.open(DistrictImportComponent, { size: 'lg' });
+    const modalRef = _this.modalService.open(DistrictImportComponent, { size: 'lg' });
     modalRef.result.then(function(importModel: any){
        
     });
@@ -185,5 +207,17 @@ reload() {
     document.body.append(a);
     a.click();
     a.remove();
+  }
+
+  displayProvinceFn(province: any) {
+    return province && province.ProvinceName && !province.notfound ? province.ProvinceName : '';
+  }
+
+  changeProvince(provinceID) {
+    this.service.getDistrictsList(new DistrictFilter('', 1, 100, provinceID, null, 'Id', 'ASC')).subscribe((list) => {
+      this.districtsList = list;
+      this.filter.ProvinceId = provinceID;
+      this.reload();
+    });
   }
 }

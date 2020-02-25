@@ -34,7 +34,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'ProvinceCode', 'ProvinceName', 'Action'];
   columnsNameMapping: string[] = ['ID', 'ProvinceCode', 'ProvinceName', 'Action'];
   sortAbles: boolean[] = [false, true, true, false];
@@ -144,7 +144,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   toggleSort(columnIndex: number): void {
     let toggleState =  this.sortToggles[columnIndex];
     switch(toggleState) {
-      case SORD_DIRECTION.DEFAULT: 
+      case SORD_DIRECTION.ASC: 
       {
         toggleState = SORD_DIRECTION.ASC;
         break;
@@ -156,7 +156,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
       }
       default:
       {
-        toggleState = SORD_DIRECTION.DEFAULT;
+        toggleState = SORD_DIRECTION.ASC;
         break;
       }
     }
@@ -164,11 +164,11 @@ export class ProvincesComponent implements OnInit {ModalDirective;
       if(index == columnIndex) {
         this.sortToggles[index] = this.sort.SortDirection = toggleState;
       } else {
-        this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+        this.sortToggles[index] = SORD_DIRECTION.ASC;
       }
     });
 
-    this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'provinceName' : this.columnsNameMapping[columnIndex];
+    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'provinceName' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
   

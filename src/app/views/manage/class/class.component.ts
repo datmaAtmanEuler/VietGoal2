@@ -58,7 +58,7 @@ export class ClassComponent implements OnInit {
   */
 
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,null];
+  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,null];
   columnsName: string[] = ['Order', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'];
   columnsNameMapping: string[] = ['Id', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'];
   sortAbles: boolean[] = [false, true, true, true, false,false,true, false];
@@ -275,5 +275,12 @@ export class ClassComponent implements OnInit {
     a.remove();
   }
 
+  displayAresFn(area: any) {
+    return area && area.AreaName && !area.notfound ? area.AreaName : '';
+  }
+
+  displayTrainingGroundFn(trainingground: any) {
+    return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
+  }
 }
 

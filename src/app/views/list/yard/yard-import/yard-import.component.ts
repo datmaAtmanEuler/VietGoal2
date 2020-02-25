@@ -31,7 +31,7 @@ export class YardImportComponent implements OnInit {
 	ngOnInit() {
 	}
 	
-	ImportYard() {
+	ImportYards() {
 		const _this = this;
 		this.yardService.import(this.importViewModel).subscribe((result: any) => {
 			_this.errorsList = result.Error.filter((r: any) => r.isError == true);

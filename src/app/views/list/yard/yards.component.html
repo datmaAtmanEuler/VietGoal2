@@ -28,9 +28,9 @@
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let area of areasList" [value]="area">
-                                                <span *ngIf="!area.notfound">{{area.areaName}}</span>
-                                                <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
+                                            <mat-option *ngFor="let Central of listCentral" [value]="Central">
+                                                <span *ngIf="!Central.notfound">{{Central.CentralName}}</span>
+                                                <span *ngIf="Central.notfound" class="nofind">{{Central.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
@@ -49,13 +49,15 @@
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Central of listCentral" [value]="Central">
-                                                <span *ngIf="!Central.notfound">{{Central.CentralName}}</span>
-                                                <span *ngIf="Central.notfound" class="nofind">{{Central.notfound}}</span>
+                                            <mat-option *ngFor="let area of areasList" [value]="area">
+                                                <span *ngIf="!area.notfound">{{area.areaName}}</span>
+                                                <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
+                                
+                                
                                 
                             </div>
                         </div>
@@ -128,7 +130,9 @@
                                     </table>
                                 </div>
                                 </div>
-                                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                <mat-paginator 
+                                    [length]="(yardsList && yardsList.length > 0 && yardsList[0] && yardsList[0].Total) ? yardsList[0].Total : 0"
+                                     [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
                                     [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                 </mat-paginator>
                             </div>

@@ -1,10 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { UtilsService } from 'app/services/utils.service';
 import { Schedule } from 'app/models/schedule';
 import { ScheduleService } from 'app/services/manage/schedule.service';
-import { Filter } from 'app/models/filter/filter';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { AreaService } from '../../../services/list/area.service';
+import { CentralService } from '../../../services/manage/central.service';
+import { Area } from '../../../models/list/area';
+import { Filter } from '../../../models/filter/filter';
+import { Router } from '@angular/router'; 
+import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
+import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { FormControl } from '@angular/forms';
 
 @Component({
     selector: 'app-schedule',
@@ -17,14 +26,15 @@ export class ScheduleComponent implements OnInit {
     pageSizesList: number[] = [5, 10, 20, 100];
     pageSize: number = this.pageSizesList[3];
     Total: number;
+    isLoading: boolean = true;
 
     paginationSettings: any = {
         sort: new ASCSort(),
         sortToggles: [
             null,
-            SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
-            SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
-            SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+            SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+            SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+            SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
             null
         ],
         columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'ClassDay', 'ClassTime', 'Coach1', 'Coach2', 'Coach3', 'RealCoach1', 'RealCoach2', 'RealCoach3', 'Action'],
@@ -36,30 +46,45 @@ export class ScheduleComponent implements OnInit {
 
     schedulesList: any[];
     loading: boolean;
-    constructor(public utilsService: UtilsService,
-        private service: ScheduleService) {
+    constructor(private translate: TranslateService, private matCus: MatPaginatorIntl,config: NgbModalConfig, public utilsService: UtilsService,
+        private service: ScheduleService, private modalService: NgbModal) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-
+        config.backdrop = 'static';
+        config.keyboard = false;
+        config.scrollable = false;
         utilsService.loadPaginatorLabels();
     }
     reload() {
-        this.schedulesList = this.service.getListScheduledemo();
-        // const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-        // this.loading = true;
-        // this.schedulesList = [];
-        // this.service.getSchedulesList(filter).subscribe((list: any) => {
-        //     this.Total = (list && list[0]) ? list[0].Total : 0;
-        //     setTimeout(() => {
-        //         this.loading = false;
-        //         this.schedulesList = list || [];
-        //     }, 500);
-        // });
+        this.isLoading = true;
+        this.schedulesList = [];
+        setTimeout(() => {
+          this.schedulesList = this.service.getListScheduledemo();
+          this.isLoading = false;
+        }, 500);
     }
+
     add(){}
 
     ngOnInit() {
         this.reload();
         const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
         new PerfectScrollbar(vgscroll);
-    }
+    } 
+
+  openImport() {
+    /*const _this = this;
+    const modalRef = this.modalService.open(ScheduleImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+    });*/
+  }
+
+  downloadTemplate() {
+    /*var fileName = 'Areas_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();*/
+  }
 }

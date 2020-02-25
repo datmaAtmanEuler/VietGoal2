@@ -22,10 +22,10 @@ export class RecruitStudentFilter {
     Ages: number;
     TrainingGroundId: null | number = null;
     SortName: string = 'ID';
-    SortDirection: string = SORD_DIRECTION.DEFAULT;
+    SortDirection: string = SORD_DIRECTION.ASC;
 
     constructor(searchTerm: string, pageIndex: number, pageSize: number, AreaId: null | number, YardId: null | number, 
-        TrainingGroundId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.DEFAULT,
+        TrainingGroundId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.ASC,
         ManagerId: null | number, CoachId: null | number, SecondaryCoachId: null | number,
         ProvinceId: null | number,
         DistrictId: null | number,

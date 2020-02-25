@@ -13,7 +13,8 @@
     vertical-align: middle;
     float: right;
   }
-thead {
+
+thead:not(.mat-calendar-table-header) {
     background-color: #023a54;
     color: white;
 }
@@ -236,7 +237,7 @@ footer{
   .table-hover tbody tr:hover > td {
     background-color: #aabbc3;
   }
-  td {
+  td:not(.mat-calendar-body-cell) {
     padding: 0px 8px !important;
   }
   body{

@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">{{ "MESSAGE.NameList.Confirm" | translate}}</h4>
+</div>
+<div class="modal-body">
+  <div class="text-center border border-light">
+      <div class="ml-3 mr-3 text-center">
+        {{message}}
+      </div>
+      <button class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{ "MESSAGE.NameList.Close" | translate}}</button>
+      <button class="btn btn-success" (click)="Okay()" alt=''>{{ "MESSAGE.NameList.OK" | translate}}</button>
+  </div>
+</div>

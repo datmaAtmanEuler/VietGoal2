@@ -54,13 +54,16 @@ export class CoachAbsentEditComponent implements OnInit {
 		this.service.get((id) ? id : this.coachabsentId).subscribe(
 			(object) => {
 				this.CoachAbsent = object || new CoachAbsentMapping(0);
+				this.http.get(environment.serverUrl+"Coachs/"+this.CoachAbsent.coachId).subscribe((response: any)=>{
+					const ipcoachAC = <HTMLInputElement>document.getElementById('ipcoachAC');
+					ipcoachAC.value = response.firstName +' '+ response.lastName;
+				});
 			},
 			() => {
 				this.CoachAbsent = new CoachAbsentMapping(0);
 			}
 		);
 	}
-	
 	displayCoachFn(coach): string {
 	  return coach && coach.firstName +' '+ coach.lastName && !coach.notfound ? coach.firstName +' '+ coach.lastName : '';
 	}
@@ -77,7 +80,7 @@ export class CoachAbsentEditComponent implements OnInit {
 			  this.listcoaches = [];
 			  this.isLoading = true;
 			}),
-			switchMap(value => this.http.get(`${environment.serverUrl}Coachs?searchTerm=${value}&pageIndex=1&pageSize=20&sortName=id&sortDirection=ASC`)
+			switchMap(value => this.http.get(`${environment.serverUrl}Coachs/GetCoachSelect?searchTerm=${value}&pageIndex=1&pageSize=20`)
 			  .pipe(
 				finalize(() => {
 				  this.isLoading = false
@@ -131,7 +134,7 @@ export class CoachAbsentEditComponent implements OnInit {
 				}
 			},
 			() => {
-				this.modalService.open(ConfirmComponent, { size: 'lg' });
+				// this.modalService.open(ConfirmComponent, { size: 'lg' });
 			});
 	}
 

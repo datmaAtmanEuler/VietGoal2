@@ -8,9 +8,9 @@ export class CentralFilter {
     DistrictId: null | number = null;
     WardId: null | number = null;
     SortName: string = 'ID';
-    SortDirection: string = SORD_DIRECTION.DEFAULT;
+    SortDirection: string = SORD_DIRECTION.ASC;
 
-    constructor(searchTerm: string, pageIndex: number, pageSize: number, ProvinceId: null | number, DistrictId: null | number, WardId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.DEFAULT) {
+    constructor(searchTerm: string, pageIndex: number, pageSize: number, ProvinceId: null | number, DistrictId: null | number, WardId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.ASC) {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;
         this.PageSize = pageSize;

@@ -7,6 +7,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CollectionService } from 'app/services/list/collection.service';
 import { Collection } from 'app/models/list/collection';
 import { CollectionEditComponent } from './collection-edit/collection-edit.component';
+import { CollectionImportComponent } from './collection-import/collection-import.component';
 
 @Component({
   selector: 'app-collection',
@@ -71,6 +72,24 @@ export class CollectionComponent implements OnInit {
     modalRef.result.then(function (result) {
       _this.reload();
     });
+  }
+  
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(CollectionImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Yards_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
   }
 
 }

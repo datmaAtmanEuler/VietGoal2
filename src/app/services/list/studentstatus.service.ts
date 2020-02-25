@@ -4,6 +4,7 @@ import { StudentStatus } from '../../models/list/studentstatus';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
 import { Observable } from 'rxjs';
+import { ImportViewModel } from 'app/models/importviewmodel';
 
 @Injectable({
     providedIn: 'root'
@@ -40,5 +41,13 @@ import { Observable } from 'rxjs';
 
     deleteStudentStatus(StudentStatusId: number): Observable<any> {
         return this.http.delete(environment.serverUrl + `StudentStatus/${StudentStatusId}` , this.httpOptions);
+    }
+    
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `StudentStatus/import`, importViewModel , this.httpOptions);
     }
   }

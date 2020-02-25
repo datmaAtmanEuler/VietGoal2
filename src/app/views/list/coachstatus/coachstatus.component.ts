@@ -7,7 +7,9 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { CoachStatus } from 'app/models/list/coachstatus';
 import { CoachStatusService } from 'app/services/list/coachstatus.service';
 import { CoachStatusEditComponent } from './coachstatus-edit/coachstatus-edit.component';
+import { CoachStatusImportComponent } from './coachstatus-import/coachstatus-import.component';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+
 @Component({
   selector: 'app-coachstatus',
   templateUrl: './coachstatus.component.html',
@@ -29,7 +31,7 @@ export class CoachStatusComponent implements OnInit {
     sort: new ASCSort(),
     sortToggles: [
       null,
-      SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
       null
     ],
     columnsName: ['Order', 'CoachStatusName', 'CoachStatusCode', 'Action'],
@@ -95,5 +97,23 @@ export class CoachStatusComponent implements OnInit {
     modalRef.result.then(function (result) {
       _this.reload();
     });
+  }
+  
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(CoachStatusImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Yards_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
   }
 }

@@ -19,8 +19,7 @@
                                     <div  class="col-6 label-middling" >
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.ProvinceName' |translate}}"
                                         [matAutocomplete]="ProvincesAC" [formControl]="searchProvincesCtrl">
-                                    </div>
-                                    <mat-autocomplete #ProvinceAC="matAutocomplete"
+                                    <mat-autocomplete #ProvincesAC="matAutocomplete"
                                         (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)"
                                         [displayWith]="displayProvinceFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
@@ -123,7 +122,9 @@
                                     </table>
                                 </div>
                             </div>
-                                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                <mat-paginator
+                                    [length]="(wardsList && wardsList.length > 0 && wardsList[0] && wardsList[0].Total) ? wardsList[0].Total : 0"
+                                    [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
                                     [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                 </mat-paginator>
                             </div>

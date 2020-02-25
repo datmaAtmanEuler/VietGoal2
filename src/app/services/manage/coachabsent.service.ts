@@ -35,4 +35,7 @@ export class CoachAbsentService {
     delete(id: number, ): Observable<any> {
         return this.http.delete(environment.serverUrl + `CoachAbsents/${id}` , this.httpOptions);
     }
+    toggleApprove(state, id){
+        return this.http.put(`${environment.serverUrl}CoachAbsents/${state}/${id}`, this.httpOptions);
+    }
 }

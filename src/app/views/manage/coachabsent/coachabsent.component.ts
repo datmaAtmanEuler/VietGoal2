@@ -7,6 +7,12 @@ import { CoachAbsentEditComponent } from './coachabsent-edit/coachabsent-edit.co
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
 import { CoachAbsentMapping } from 'app/models/manage/coachabsent';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
+import { FormControl } from '@angular/forms';
+import { startWith, map, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { environment } from 'environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-coachabsent',
@@ -14,11 +20,34 @@ import { CoachAbsentMapping } from 'app/models/manage/coachabsent';
   styleUrls: ['./coachabsent.component.scss']
 })
 export class CoachAbsentComponent implements OnInit {
+  statusControl = new FormControl();
+	coachAbsentStatuses = [
+		{
+			id: 0,
+			name: 'Chưa duyệt'
+		},
+		{
+			id: 1,
+			name: 'Đã duyệt'
+		}
+	];
+  filteredStatuses: Observable<any>;
+  
+
   searchTerm: string = '';
   pageIndex: number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize: number = this.pageSizesList[3];
   Total: number;
+
+  maxDate: Date;
+  minDate: Date;
+  originMin: Date;
+  originMax: Date;
+
+  coachAbsentStatus: number;
+  coachId:number;
+  
 
   paginationSettings: any = {
     sort: new ASCSort(),
@@ -41,25 +70,68 @@ export class CoachAbsentComponent implements OnInit {
   coachabsentsList: any[];
   loading: boolean;
   firstRowOnPage: any;
-  constructor(public utilsService: UtilsService, private service: CoachAbsentService, private modalService: NgbModal) {
+  searchCoachesCtrl = new FormControl();
+  listcoaches: any[];
+  isLoading: boolean;
+
+  constructor(public utilsService: UtilsService, private service: CoachAbsentService, private modalService: NgbModal, private http: HttpClient) {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
       utilsService.loadPaginatorLabels();
+      const currentYear = new Date().getFullYear();
+      this.minDate = new Date(currentYear - 20, 0, 1);
+      this.maxDate = new Date(currentYear + 1, 11, 31);
+      this.originMin = new Date();
+      this.originMax = new Date(currentYear + 1, 11, 31);
   }
-  duyet(coach){
-    let obj: CoachAbsentMapping = new CoachAbsentMapping(0);
-    if(coach){
-      obj.id = coach.id;
-      obj.coachId = coach.coachId;
-      obj.coachAbsentDate = coach.coachAbsentDate;
-      obj.shiftType = coach.shiftType;
-      obj.coachAbsentReason = coach.coachAbsentReason;
-      obj.coachAbsentStatus = 1;
-      if(confirm('Duyệt Huấn luyện viên này')){
-        console.log(JSON.stringify(obj));
-        this.service.addOrUpdate(obj).subscribe(()=>{
-          this.reload();
-        });
+  
+	displayCoachFn(coach): string {
+	  return coach && coach.firstName +' '+ coach.lastName && !coach.notfound ? coach.firstName +' '+ coach.lastName : '';
+	}
+	displayStatusFn(st){
+		return (st && st.name) ? st.name : '';
+	}
+  statusChanged(changedValue){
+    this.coachAbsentStatus = changedValue;
+  }
+	changeCoach(coachid){
+		this.coachId = coachid;
+  }
+  dateEvent(type: string, event: MatDatepickerInputEvent<Date>){
+    const theDate = event.value;
+    switch(type){
+      case 'start':
+        this.minDate = theDate;
+        break;
+      case 'end':
+        this.maxDate = event.value;
+        break;
+    }
+  }
+  approve(absent){
+    if(absent){
+      switch(absent.coachAbsentStatusName){
+        case 'WaitApprove':
+          if(confirm('Duyệt Huấn luyện viên này')){
+            this.service.toggleApprove('Approve',absent.id).subscribe(()=>{
+              this.reload();
+            });
+          }
+          break;
+        case 'Approved':
+          if(confirm('Bỏ duyệt Huấn luyện viên này')){
+            this.service.toggleApprove('DisApprove',absent.id).subscribe(()=>{
+              this.reload();
+            });
+          }
+          break;
+        case 'Disapproved':
+          if(confirm('Duyệt Huấn luyện viên này')){
+            this.service.toggleApprove('Approve',absent.id).subscribe(()=>{
+              this.reload();
+            });
+          }
+          break;
       }
     }
   }
@@ -104,7 +176,48 @@ export class CoachAbsentComponent implements OnInit {
       this.reload();
       const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
       new PerfectScrollbar(vgscroll);
+      
+      this.filteredStatuses = this.statusControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value))
+      );
+
+      
+		this.searchCoachesCtrl.valueChanges.pipe(
+			startWith(''),
+			debounceTime(500),
+			tap(() => {
+			  this.listcoaches = [];
+			  this.isLoading = true;
+			}),
+			switchMap(value => this.http.get(`${environment.serverUrl}Coachs/GetCoachSelect?searchTerm=${value}&pageIndex=1&pageSize=20`)
+			  .pipe(
+				finalize(() => {
+				  this.isLoading = false
+				}),
+			  )
+			)
+		  )
+			.subscribe((response: any) => {
+				const data = response.results;
+			  if (data == undefined) {
+				this.listcoaches = [{ notfound: 'Not Found' }];
+			  } else {
+				this.listcoaches = data && data.length ? data : [{ notfound: 'Not Found' }];
+			  }
+	  
+			});
   }
+  
+	private _filter(value: string) {
+		const filterValue = this._normalizeValue(value);
+		let b = this.coachAbsentStatuses.filter(status => this._normalizeValue(status.name).includes(filterValue));
+		return b;
+	}
+
+	private _normalizeValue(value: string): string {
+		return value.toLowerCase().replace(/\s/g, '');
+	}
   remove(id: any) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
@@ -114,6 +227,13 @@ export class CoachAbsentComponent implements OnInit {
         _this.reload();
       });
     });
+  }
+  approveColor(absentItem){
+    if (absentItem.coachAbsentStatusName == 'Approved') {
+      return 'btn btn-danger btn-link btn-sm delete-button btn-just-icon' ;
+    } else {
+      return 'btn btn-primary edit-button btn-link btn-sm btn-just-icon';
+    } 
   }
 
 

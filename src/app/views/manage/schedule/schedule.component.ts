@@ -46,6 +46,7 @@ export class ScheduleComponent implements OnInit {
 
     schedulesList: any[];
     loading: boolean;
+    
     constructor(private translate: TranslateService, private matCus: MatPaginatorIntl,config: NgbModalConfig, public utilsService: UtilsService,
         private service: ScheduleService, private modalService: NgbModal) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -54,14 +55,15 @@ export class ScheduleComponent implements OnInit {
         config.scrollable = false;
         utilsService.loadPaginatorLabels();
     }
-    reload() {
+
+    reload = () => {
         this.isLoading = true;
         this.schedulesList = [];
         setTimeout(() => {
           this.schedulesList = this.service.getListScheduledemo();
           this.isLoading = false;
         }, 500);
-    }
+    };
 
     add(){}
 
@@ -71,6 +73,18 @@ export class ScheduleComponent implements OnInit {
         new PerfectScrollbar(vgscroll);
     } 
 
+
+    sortToggles(colIndex: number) {
+        const _this= this;
+        if(this.paginationSettings.sortAbles[colIndex]) 
+            this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles ,this.paginationSettings.sort , this.paginationSettings.columnsNameMapping)
+              .then(() => {
+                _this.reload();
+              });
+        else 
+          this.utilsService.doNothing();
+    }
+    
   openImport() {
     /*const _this = this;
     const modalRef = this.modalService.open(ScheduleImportComponent, { size: 'lg' });

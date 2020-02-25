@@ -113,6 +113,7 @@ export class ClassEditComponent implements OnInit {
 		this.classService.getClass((Id) ? Id : this.ClassId).subscribe(
 			(aClass: any) => {
 				this.class = aClass || {};
+				console.log(aClass);
 			},
 			() => {
 				this.class = {};

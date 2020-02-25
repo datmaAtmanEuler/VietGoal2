@@ -141,13 +141,15 @@ export class CoachAbsentComponent implements OnInit {
     this.pageSize = pageE.pageSize;
     this.reload();
   }
-  reload() {
+  reload = function() {
+    const _this= this;
     const filter = {
-      pageIndex: this.pageIndex,
-      pageSize: this.pageSize,
-      sortName: this.paginationSettings.sort.SortName,
-      sortDirection: this.paginationSettings.sort.SortDirection
+      pageIndex: _this.pageIndex,
+      pageSize: _this.pageSize,
+      sortName: _this.paginationSettings.sort.SortName,
+      sortDirection: _this.paginationSettings.sort.SortDirection
     };
+
     this.loading = true;
     this.coachabsentsList = [];
     this.service.getList(filter).subscribe((response: any) => {
@@ -256,4 +258,15 @@ export class CoachAbsentComponent implements OnInit {
     a.remove();
   }
 
+
+    sortToggles(colIndex: number) {
+    const _this= this;
+        if(this.paginationSettings.sortAbles[colIndex]) 
+            this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles ,this.paginationSettings.sort , this.paginationSettings.columnsNameMapping)
+              .then(() => {
+                _this.reload();
+              });
+        else 
+          this.utilsService.doNothing();
+    }
 }

@@ -43,9 +43,14 @@ export class UtilsService {
       const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
       return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
     }
+
+    this.matCus.nextPageLabel = '';
+    this.matCus.lastPageLabel = '';
+    this.matCus.previousPageLabel = '';
+    this.matCus.firstPageLabel = '';
   }
 
-  toggleSort(columnIndex: number, sortToggles: any, sort: any, columnsNameMapping: any[], reload: () => any): void {
+  async toggleSort(columnIndex: number, sortToggles: any, sort: any, columnsNameMapping: any[]) {
     let toggleState = sortToggles[columnIndex];
     switch (toggleState) {
       case SORD_DIRECTION.DESC:
@@ -73,7 +78,6 @@ export class UtilsService {
     });
 
     sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : columnsNameMapping[columnIndex];
-    reload();
   }
 
   doNothing(): void { }

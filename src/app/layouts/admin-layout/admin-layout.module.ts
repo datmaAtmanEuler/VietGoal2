@@ -95,6 +95,8 @@ import { UserGroupImportComponent } from '../../views/list/usergroups/usergroup-
 import { YardImportComponent } from '../../views/list/yard/yard-import/yard-import.component';
 import { RecruitImportComponent } from '../../views/list/recruits/recruit-import/recruit-import.component';
 import { ApproveComponent } from 'app/views/manage/coachabsent/approve/approve.component';
+import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
+import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 
 
 @NgModule({
@@ -186,7 +188,9 @@ import { ApproveComponent } from 'app/views/manage/coachabsent/approve/approve.c
     TrainingGroundImportComponent,
     AreaImportComponent,
     PositionImportComponent,
-    StudentStatusImportComponent
+    StudentStatusImportComponent,
+    RecruitStudentComponent,
+    RecruitStudentEditComponent
   ],
   entryComponents: [
     ProvinceImportComponent,

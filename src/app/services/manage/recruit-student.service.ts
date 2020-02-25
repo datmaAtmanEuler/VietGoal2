@@ -22,11 +22,11 @@ export class RecruitStudentService {
 
     getRecruitStudentList(filter: any): Observable<any>  {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'RecruitStudent?' + queryString , this.httpOptions);
+        return this.http.get(environment.apiUrl + 'StudentRecruits?' + queryString , this.httpOptions);
     }
     
     getRecruitStudent(id: any): Observable<any>  {
-        return this.http.get(environment.apiUrl + `RecruitStudent/${id}` , this.httpOptions);
+        return this.http.get(environment.apiUrl + `StudentRecruits/${id}` , this.httpOptions);
     }
 
     addOrUpdateRecruitStudent(RecruitStudent: RecruitStudent, by: null | number): Observable<any> {
@@ -35,17 +35,17 @@ export class RecruitStudentService {
         } else {
             RecruitStudent.UpdatedBy = by;
         }
-        return this.http.post(environment.apiUrl + `RecruitStudent`, RecruitStudent, this.httpOptions);
+        return this.http.post(environment.apiUrl + `StudentRecruits`, RecruitStudent, this.httpOptions);
     }
 
     deleteRecruitStudent(RecruitStudentId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `RecruitStudent/${RecruitStudentId}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.apiUrl + `StudentRecruits/${RecruitStudentId}?deletedBy=${deletedBy}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
     }
 
     import(importViewModel: ImportViewModel): Observable<any> {
-        return this.http.post(environment.serverUrl_employee + `RecruitStudent/import`, importViewModel , this.httpOptions);
+        return this.http.post(environment.serverUrl_employee + `StudentRecruits/import`, importViewModel , this.httpOptions);
     }
 }

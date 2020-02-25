@@ -19,13 +19,12 @@ import { environment } from 'environments/environment';
 import { RecruitStudentEditComponent } from './recruit-student-edit/recruit-student-edit.component';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { AreaService } from 'app/services/list/area.service';
-import { RecruitStudentService } from 'app/services/manage/recruit-student.service copy';
+import { RecruitStudentService } from 'app/services/manage/recruit-student.service';
 import { TrainingGroundService } from 'app/services/list/training-ground.service';
 import { TrainingGroundFilter } from 'app/models/filter/trainingroundfilter';
 import { AreaFilter } from 'app/models/filter/areafilter';
 import { MatPaginatorIntl } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
-import { RecruitStudentImportComponent } from './recruit-student-import/recruit-student-import.component';
 
 
 @Component({
@@ -59,7 +58,7 @@ export class RecruitStudentComponent implements OnInit {
   */
 
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,null];
+  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,null];
   columnsName: string[] = ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Action'];
   columnsNameMapping: string[] = ['Id', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Action'];
   sortAbles: boolean[] = [false, true, true, true, false,false,true,false, false];
@@ -94,9 +93,8 @@ export class RecruitStudentComponent implements OnInit {
         return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
       }
   }
-  
   ngOnInit() {
-
+  
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.reload();
     this.filtersEventsBinding();
@@ -259,22 +257,7 @@ export class RecruitStudentComponent implements OnInit {
   }
 
   doNothing(): void {}
-  openImport() {
-    const _this = this;
-    const modalRef = this.modalService.open(RecruitStudentImportComponent, { size: 'lg' });
-    modalRef.result.then(function(importModel: any){
-    });
-  }
   
-  downloadTemplate() {
-    var fileName = 'RecruitStudent_Import.xlsx';
-    var a = document.createElement('a');
-    a.href = this.service.getTemplate(fileName);
-    a.download = fileName;
-    document.body.append(a);
-    a.click();
-    a.remove();
-  }
 
 }
 

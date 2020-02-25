@@ -38,62 +38,63 @@
                       <div class="offset-2 col-4">
                         <label class="m-0">{{ "MESSAGE.NameList.Day" | translate }}</label>
                         <mat-form-field>
-                            <input matInput [disabled]="true" (dateChange)="dateEvent('start',$event)" [min]="originMin" [max]="maxDate" [matDatepicker]="startDateFilter" class="col-sm-3 form-control">
-                            <span mat-raised-button (click)="startDateFilter.open()"
-                        class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
-                        <i class="material-icons">date_range</i>
+                          <input matInput [disabled]="true" (dateChange)="dateEvent('start',$event)" [min]="originMin"
+                            [max]="maxDate" [matDatepicker]="startDateFilter" class="col-sm-3 form-control">
+                          <span mat-raised-button (click)="startDateFilter.open()"
+                            class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
+                            <i class="material-icons">date_range</i>
                           </span>
-                            <!-- <mat-datepicker-toggle matSuffix [for]="startDateFilter"></mat-datepicker-toggle> -->
-                            <mat-datepicker #startDateFilter disabled="false" ></mat-datepicker>
-                          </mat-form-field>
+                          <!-- <mat-datepicker-toggle matSuffix [for]="startDateFilter"></mat-datepicker-toggle> -->
+                          <mat-datepicker #startDateFilter disabled="false"></mat-datepicker>
+                        </mat-form-field>
                       </div>
                       <div class="col-4">
                         <label class="m-0">&nbsp;</label>
                         <mat-form-field>
-                            <input matInput [disabled]="true" (dateChange)="dateEvent('end',$event)"  [min]="minDate" [max]="originMax" [matDatepicker]="endDateFilter" class="col-sm-3 form-control">
-                              <span mat-raised-button (click)="endDateFilter.open()"
-                          class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
-                          <i class="material-icons">date_range</i>
-                            </span>
-                            <mat-datepicker #endDateFilter disabled="false"></mat-datepicker>
-                          </mat-form-field>
-                      </div>  
+                          <input matInput [disabled]="true" (dateChange)="dateEvent('end',$event)" [min]="minDate"
+                            [max]="originMax" [matDatepicker]="endDateFilter" class="col-sm-3 form-control">
+                          <span mat-raised-button (click)="endDateFilter.open()"
+                            class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
+                            <i class="material-icons">date_range</i>
+                          </span>
+                          <mat-datepicker #endDateFilter disabled="false"></mat-datepicker>
+                        </mat-form-field>
+                      </div>
                     </div>
                   </div>
                   <div class="form-body col-sm-12">
                     <div class="row form-group">
                       <div class="offset-2 col-4">
                         <label class="m-0">{{ "MESSAGE.NameList.CoachRegistried" | translate }}</label>
-                        <input type="text" class=" form-control" [matAutocomplete]="coachAC" [formControl]="searchCoachesCtrl">
-                                  <mat-autocomplete #coachAC="matAutocomplete"
-                                      (optionSelected)="changeCoach(searchCoachesCtrl.value.id)"
-                                      [displayWith]="displayCoachFn">
-                                      <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                          <mat-spinner></mat-spinner>
-                                      </mat-option>
-                                      <ng-container *ngIf="!isLoading">
-                                          <mat-option *ngFor="let coach of listcoaches"
-                                              [value]="coach">
-                                              <span
-                                                  *ngIf="!coach.notfound">{{coach.firstName +' '+ coach.lastName}}</span>
-                                              <span *ngIf="coach.notfound"
-                                                  class="nofind">{{coach.notfound}}</span>
-                                          </mat-option>
-                                      </ng-container>
-                                  </mat-autocomplete>
+                        <input type="text" class=" form-control" [matAutocomplete]="coachAC"
+                          [formControl]="searchCoachesCtrl">
+                        <mat-autocomplete #coachAC="matAutocomplete"
+                          (optionSelected)="changeCoach(searchCoachesCtrl.value.id)" [displayWith]="displayCoachFn">
+                          <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                          </mat-option>
+                          <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let coach of listcoaches" [value]="coach">
+                              <span *ngIf="!coach.notfound">{{coach.firstName +' '+ coach.lastName}}</span>
+                              <span *ngIf="coach.notfound" class="nofind">{{coach.notfound}}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
                       </div>
                       <div class="col-4">
                         <label class="m-0">{{ "MESSAGE.NameList.Status" | translate }}</label>
                         <input type="text" class=" form-control" [formControl]="statusControl"
-                                [matAutocomplete]="coachabsentStatus">
-                                <mat-autocomplete #coachabsentStatus="matAutocomplete" [displayWith]="displayStatusFn" (optionSelected)="statusChanged(statusControl.value.id)">
-                                    <mat-option *ngFor="let status of filteredStatuses | async" [value]="status">
-                                        {{status.name}}
-                                    </mat-option>
-                                </mat-autocomplete>
-                      </div>  
+                          [matAutocomplete]="coachabsentStatus">
+                        <mat-autocomplete #coachabsentStatus="matAutocomplete" [displayWith]="displayStatusFn"
+                          (optionSelected)="statusChanged(statusControl.value.id)">
+                          <mat-option *ngFor="let status of filteredStatuses | async" [value]="status">
+                            {{status.name}}
+                          </mat-option>
+                        </mat-autocomplete>
+                      </div>
                     </div>
                   </div>
+                </div>
               </div>
             </div>
           </div>
@@ -128,8 +129,7 @@
                             </td>
                           </ng-container>
                           <td class="my-action-item">
-                            <button type="button" (click)="approve(coachabsent)"
-                            [class]="approveColor(coachabsent)">
+                            <button type="button" (click)="approve(coachabsent)" [class]="approveColor(coachabsent)">
                               <i class="material-icons">check</i>
                             </button>
                             <button type="button" (click)="edit(coachabsent.id)"

@@ -1,0 +1,124 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-warning" style="background: #023a54">
+                        <div class="row" style="align-items: center;">
+                            <div class="col-3 card-title">
+                                 {{ "MESSAGE.NameList.DecentralizeUser" | translate }}
+                            </div>
+                            <div class="col-7">
+                            </div>
+                            <div class="col-2  text-right">
+                                <button type="button" (click)="save()"
+                                    class="btn btn-info btn-sm">
+                                    {{ "MESSAGE.NameList.SaveObject" | translate : {name: (("MESSAGE.NameList.Decentralize" | translate) | lowercase)} }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="row" style="min-height: 450px; overflow-y: auto">
+                                    <div class="col-3 card-title" style="; border-right: 1px solid #c4c4c4;">
+                                         <mat-tree [dataSource]="dataSourceGroup" [treeControl]="groupTreeControl">
+                                              <!-- This is the tree node template for leaf nodes -->
+                                              <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding id="{{node.id}}" (click)="logNode(node)">
+                                                <!-- use a disabled button to provide padding for tree leaf -->
+                                                <button mat-icon-button disabled></button>
+                                                <i class="material-icons mr-1" [ngClass]="{ 'active': selectedGroup?.id== node.id}">{{ (node.isUser) ? 'person' : 'group'}}</i><span [ngClass]="{ 'active': selectedGroup?.id == node.id}">{{node.name | translate}}</span>
+                                              </mat-tree-node>
+                                              <!-- This is the tree node template for expandable nodes -->
+                                              <mat-tree-node *matTreeNodeDef="let node;when: hasChildGroup" matTreeNodePadding id="{{node.id}}" (click)="logNode(node)">
+                                                <button mat-icon-button matTreeNodeToggle
+                                                        [attr.aria-label]="'toggle ' + node.name">
+                                                  <mat-icon class="mat-icon-rtl-mirror" [ngClass]="{ 'active': selectedGroup?.id == node.id}">
+                                                    {{groupTreeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                                                  </mat-icon>
+                                                </button>
+                                                <i class="material-icons mr-1" [ngClass]="{ 'active': selectedGroup?.id == node.id}">{{ (node.isUser) ? 'person' : 'group'}}</i><span [ngClass]="{ 'active': selectedGroup?.id == node.id}">{{node.name | translate}}</span>
+                                              </mat-tree-node>
+                                        </mat-tree>
+                                    </div>
+                                    <div class="col-9 mt-3">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label id="academy-radio-group-label"><strong>{{ inheritanceRightsOptions.name | translate}}</strong></label>
+                                                <mat-radio-group
+                                                  aria-labelledby="academy-radio-group-label"
+                                                  class="academy-radio-group"
+                                                  [(ngModel)]="selectedInheritanceRightsOption">
+                                                  <mat-radio-button class="academy-radio-button" *ngFor="let option of inheritanceRightsOptions.items; let i = index;" [value]="option">
+                                                    {{ option.OptionName | translate }}
+                                                  </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label id="academy-radio-group-label"><strong>{{ addNewPermissionsOptions.name | translate}}</strong></label>
+                                                <mat-radio-group
+                                                  aria-labelledby="academy-radio-group-label"
+                                                  class="academy-radio-group"
+                                                  [(ngModel)]="selectedAddNewPermissionsOption">
+                                                  <mat-radio-button class="academy-radio-button" *ngFor="let option of addNewPermissionsOptions.items; let i = index;" [value]="option">
+                                                    {{ option.OptionName | translate }}
+                                                  </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <label id="academy-radio-group-label"><strong>{{ revokeOptions.name | translate}}</strong></label>
+                                                <mat-radio-group
+                                                  aria-labelledby="academy-radio-group-label"
+                                                  class="academy-radio-group"
+                                                  [(ngModel)]="selectedRevokeOption">
+                                                  <mat-radio-button class="academy-radio-button" *ngFor="let option of revokeOptions.items; let i = index;" [value]="option">
+                                                    {{ option.OptionName | translate }}
+                                                  </mat-radio-button>
+                                                </mat-radio-group>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12 style-1" style="min-height: 350px; overflow-y: auto">
+                                                <div class="vietgoal-table-settings vg-scroll">
+                                                    <table class="table table-condensed table-striped table-hover"
+                                                        style="width: 100%">
+                                                        <thead>
+                                                            <th width="85%"></th>
+                                                            <th width="15%">{{ "MESSAGE.NameList.HaveTheRightTo" | translate }}</th>
+                                                        </thead>
+                                                        <tbody>
+                                                             <tr *ngFor="let tag of tree; let tagIndex = index;">
+                                                                <ng-container *ngIf="tag.type == 2">
+                                                                  <td [class]="'area academy-tree-x' + tag.deep"><span [ngClass]="{ 'a_active': tag.selected}">{{tag?.name | translate}}</span></td>
+                                                                  <td width="15%">
+                                                                    <mat-checkbox (change)="toggle($event, tag)" class="academy-checkbox-button" [(ngModel)]="tag.selected">
+                                                                    </mat-checkbox>
+                                                                  </td>
+                                                                </ng-container>
+                                                                <ng-container *ngIf="tag.type == 1">
+                                                                  <td width="100%" colspan="2" [class]="'central academy-tree-x' + tag.deep">
+                                                                    <mat-checkbox (change)="toggle($event, tag)" class="academy-checkbox-button mr-1 ml-2" [(ngModel)]="tag.selected">
+                                                                     <span [ngClass]="{ 'c_active': tag.selected}">{{tag?.name | translate}}</span>
+                                                                    </mat-checkbox>
+                                                                  </td>
+                                                                </ng-container>
+                                                              </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

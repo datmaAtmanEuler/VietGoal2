@@ -5,6 +5,7 @@ import { ProvinceEditComponent } from '../../views/list/provinces/provinceedit/p
 import { CentralComponent } from '../../views/manage/central/central.component';
 import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
 import { DecentralizeUserComponent } from '../../views/manage/decentralize-user/decentralize-user.component';
+import { DecentralizeDataComponent } from '../../views/manage/decentralize-data/decentralize-data.component';
 import { DistrictsComponent } from '../../views/list/districts/districts.component';
 import { DistrictEditComponent } from '../../views/list/districts/districtedit/districtedit.component';
 import { WardsComponent } from '../../views/list/wards/wards.component';
@@ -336,8 +337,10 @@ export const AdminLayoutRoutes: Routes = [
     ,
     {
         path: 'decentralize-user', component: DecentralizeUserComponent
-    }
-    ,
+    },
+    {
+        path: 'decentralize-data', component: DecentralizeDataComponent
+    },
     {
         path: 'nghiphep',
         children: [ {

@@ -339,7 +339,7 @@ export const AdminLayoutRoutes: Routes = [
     }
     ,
     {
-        path: 'ngaynghi',
+        path: 'nghiphep',
         children: [ {
             path: '', component: CoachAbsentComponent
         }

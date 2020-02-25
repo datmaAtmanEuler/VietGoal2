@@ -95,7 +95,6 @@ import { TrainingGroundImportComponent } from '../../views/list/trainingground/t
 import { UserGroupImportComponent } from '../../views/list/usergroups/usergroup-import/usergroup-import.component';
 import { YardImportComponent } from '../../views/list/yard/yard-import/yard-import.component';
 import { RecruitImportComponent } from '../../views/list/recruits/recruit-import/recruit-import.component';
-import { ApproveComponent } from 'app/views/manage/coachabsent/approve/approve.component';
 
 
 @NgModule({
@@ -178,7 +177,6 @@ import { ApproveComponent } from 'app/views/manage/coachabsent/approve/approve.c
     DecentralizeDataComponent,
     CoachAbsentComponent,
     CoachAbsentEditComponent,
-    ApproveComponent,
     ClassStatusImportComponent,
     CoachStatusImportComponent,
     CollectionImportComponent,

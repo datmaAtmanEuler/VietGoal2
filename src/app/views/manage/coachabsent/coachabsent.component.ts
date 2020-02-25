@@ -26,11 +26,18 @@ export class CoachAbsentComponent implements OnInit {
 	coachAbsentStatuses = [
 		{
 			id: 0,
-			name: 'Chưa duyệt'
+      name: 'Chưa duyệt',
+      value: 'WaitApprove'
 		},
 		{
 			id: 1,
-			name: 'Đã duyệt'
+      name: 'Đã duyệt',
+      value: 'Approved'
+		},
+		{
+			id: 2,
+      name: 'Bỏ duyệt',
+      value: 'Disapproved'
 		}
 	];
   filteredStatuses: Observable<any>;
@@ -42,12 +49,12 @@ export class CoachAbsentComponent implements OnInit {
   pageSize: number = this.pageSizesList[3];
   Total: number;
 
-  maxDate: Date;
-  minDate: Date;
+  toDate: Date;
+  fromDate: Date;
   originMin: Date;
   originMax: Date;
 
-  coachAbsentStatus: number;
+  coachAbsentStatusName: string;
   coachId:number;
   searchAdvanced: boolean = false;
   
@@ -62,7 +69,7 @@ export class CoachAbsentComponent implements OnInit {
     ],
     columnsName: ['Order', 'CoachRegistried', 'AbsentDate', 'ShiftType', 'Status', 'Reason', 'Action'],
     columnsNameMapping: ['id', 'coachFullName', 'coachAbsentDate', 'shiftTypeName', 'coachAbsentStatusName', 'coachAbsentReason', ''],
-    columnsNameFilter: ['id', 'coachId', 'coachAbsentDate', 'shiftTypeName', 'coachAbsentStatus', 'coachAbsentReason', ''],
+    columnsNameFilter: ['id', 'coachId', 'coachAbsentDate', 'shiftType', 'coachAbsentStatus', 'coachAbsentReason', ''],
     sortAbles: [false, true, true, true, true, true, false],
     visibles: [true, true, true, true, true, true, true]
   }
@@ -82,9 +89,10 @@ export class CoachAbsentComponent implements OnInit {
 
       utilsService.loadPaginatorLabels();
       const currentYear = new Date().getFullYear();
-      this.minDate = new Date(currentYear - 20, 0, 1);
-      this.maxDate = new Date(currentYear + 1, 11, 31);
-      this.originMin = new Date();
+      const currentMonth = new Date().getMonth();
+      this.fromDate = new Date(currentYear - 20, 0, 1);
+      this.toDate = new Date(currentYear + 1, 11, 31);
+      this.originMin = new Date(currentYear, currentMonth - 6,1);
       this.originMax = new Date(currentYear + 1, 11, 31);
   }
   
@@ -95,7 +103,7 @@ export class CoachAbsentComponent implements OnInit {
 		return (st && st.name) ? st.name : '';
 	}
   statusChanged(changedValue){
-    this.coachAbsentStatus = changedValue;
+    this.coachAbsentStatusName = changedValue;
   }
 	changeCoach(coachid){
 		this.coachId = coachid;
@@ -104,10 +112,10 @@ export class CoachAbsentComponent implements OnInit {
     const theDate = event.value;
     switch(type){
       case 'start':
-        this.minDate = theDate;
+        this.fromDate = theDate;
         break;
       case 'end':
-        this.maxDate = event.value;
+        this.fromDate = event.value;
         break;
     }
   }
@@ -141,8 +149,25 @@ export class CoachAbsentComponent implements OnInit {
     this.pageSize = pageE.pageSize;
     this.reload();
   }
+  stringDate(date: Date){
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+  }
   reload() {
     const filter = {
+      fromDate: this.stringDate(this.fromDate),
+      toDate: this.stringDate(this.toDate),
+      coachAbsentStatus: this.coachAbsentStatusName ? this.coachAbsentStatusName : '',
+      coachId: this.coachId ? this.coachId : '',
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
       sortName: this.paginationSettings.sort.SortName,
@@ -247,13 +272,13 @@ export class CoachAbsentComponent implements OnInit {
   }
 
   downloadTemplate() {
-    var fileName = 'Yards_Import.xlsx';
-    var a = document.createElement('a');
-    a.href = this.service.getTemplate(fileName);
-    a.download = fileName;
-    document.body.append(a);
-    a.click();
-    a.remove();
+    // var fileName = 'Yards_Import.xlsx';
+    // var a = document.createElement('a');
+    // a.href = this.service.getTemplate(fileName);
+    // a.download = fileName;
+    // document.body.append(a);
+    // a.click();
+    // a.remove();
   }
 
 }

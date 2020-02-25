@@ -55,11 +55,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     })
 
   ],
-  entryComponents: [ConfirmComponent],
+  entryComponents: [ConfirmComponent, ApproveComponent],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     LoginComponent,
+    ApproveComponent,
     ConfirmComponent
   ],
   providers: [  	

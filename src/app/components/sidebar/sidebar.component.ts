@@ -40,7 +40,7 @@ export const ROUTES: RouteInfo[] = [
       { path: '/quanly/thoikhoabieu', title: 'MESSAGE.NameList.Schedule', icon: '', class: '' },
       { path: '/quanly/class', title: 'MESSAGE.NameList.ClassManagement', icon: '', class: '' },
       { path: '/quanly/ngaynghi', title: 'MESSAGE.NameList.CoachAbsent', icon: '', class: '' },
-      { path: '/quanly/recuit-student', title: 'MESSAGE.NameList.ClassManagement', icon: '', class: '' }
+      { path: '/quanly/recuit-student', title: 'Danh Sách Học Viên Chiêu Sinh', icon: '', class: '' }
     ]
   }
 ];

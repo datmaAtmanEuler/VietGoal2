@@ -59,7 +59,7 @@ export class RecruitStudentComponent implements OnInit {
   */
 
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,null];
+  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,null];
   columnsName: string[] = ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Action'];
   columnsNameMapping: string[] = ['Id', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Action'];
   sortAbles: boolean[] = [false, true, true, true, false,false,true,false, false];

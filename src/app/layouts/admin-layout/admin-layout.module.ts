@@ -90,6 +90,7 @@ import { RecruitImportComponent } from '../../views/list/recruits/recruit-import
 import { RecruitStudentComponent } from '../../views/manage/recruit-student/recruit-student.component';
 import { RecruitStudentEditComponent } from '../../views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
+import { ApproveComponent } from 'app/views/manage/coachabsent/approve/approve.component';
 
 
 @NgModule({
@@ -173,7 +174,8 @@ import { RecruitStudentImportComponent } from '../../views/manage/recruit-studen
     CoachAbsentComponent,
     CoachAbsentEditComponent,
     RecruitStudentComponent,
-    RecruitStudentEditComponent
+    RecruitStudentEditComponent,
+    ApproveComponent
   ],
   entryComponents: [
     ProvinceImportComponent,

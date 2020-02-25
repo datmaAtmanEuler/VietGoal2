@@ -7,9 +7,9 @@ export class WardFilter {
     ProvinceId: null | number = null;
     DistrictId: null | number = null;
     SortName: string = 'ID';
-    SortDirection: string = SORD_DIRECTION.DEFAULT;
+    SortDirection: string = SORD_DIRECTION.ASC;
 
-    constructor(searchTerm: string, pageIndex: number, pageSize: number, ProvinceId: null | number, DistrictId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.DEFAULT) {
+    constructor(searchTerm: string, pageIndex: number, pageSize: number, ProvinceId: null | number, DistrictId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.ASC) {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;
         this.PageSize = pageSize;

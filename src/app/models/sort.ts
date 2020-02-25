@@ -1,8 +1,8 @@
 export class ASCSort {
-    SortName: string = 'ID';
-    SortDirection: string = SORD_DIRECTION.DEFAULT;
+    SortName: string = 'id';
+    SortDirection: string = SORD_DIRECTION.ASC;
 
-    constructor(sN: string = 'ID', sD: string = SORD_DIRECTION.DEFAULT) {
+    constructor(sN: string = 'id', sD: string = SORD_DIRECTION.ASC) {
         this.SortName = sN;
         this.SortDirection = sD;
     }
@@ -11,5 +11,4 @@ export class ASCSort {
 export enum SORD_DIRECTION {
     ASC = 'ASC',
     DESC = 'DESC',
-    DEFAULT = ''
 }

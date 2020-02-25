@@ -6,9 +6,9 @@ export class CategoryFilter {
     SearchTerm: string = '';
     UserGroupID: null | number = null;
     SortName: string = 'ID';
-    SortDirection: string = SORD_DIRECTION.DEFAULT;
+    SortDirection: string = SORD_DIRECTION.ASC;
 
-    constructor(searchTerm: string, UserGroupID: null | number, pageIndex: number, pageSize: number, sN: string = 'ID', sD: string = SORD_DIRECTION.DEFAULT) {
+    constructor(searchTerm: string, UserGroupID: null | number, pageIndex: number, pageSize: number, sN: string = 'ID', sD: string = SORD_DIRECTION.ASC) {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;
         this.PageSize = pageSize;

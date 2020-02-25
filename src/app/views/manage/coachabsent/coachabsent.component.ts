@@ -13,6 +13,7 @@ import { startWith, map, debounceTime, tap, switchMap, finalize } from 'rxjs/ope
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { ApproveComponent } from './approve/approve.component';
 
 @Component({
   selector: 'app-coachabsent',
@@ -53,8 +54,8 @@ export class CoachAbsentComponent implements OnInit {
     sort: new ASCSort(),
     sortToggles: [
       null,
-      SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
-      SORD_DIRECTION.DEFAULT,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      SORD_DIRECTION.ASC,
       null
     ],
     columnsName: ['Order', 'CoachRegistried', 'AbsentDate', 'ShiftType', 'Status', 'Reason', 'Action'],
@@ -109,31 +110,29 @@ export class CoachAbsentComponent implements OnInit {
     }
   }
   approve(absent){
+    var message, state;
     if(absent){
       switch(absent.coachAbsentStatusName){
         case 'WaitApprove':
-          if(confirm('Duyệt Huấn luyện viên này')){
-            this.service.toggleApprove('Approve',absent.id).subscribe(()=>{
-              this.reload();
-            });
-          }
+        case 'Disapproved':
+          message = 'Duyệt Huấn luyện viên này';
+          state = 'Approve';
           break;
         case 'Approved':
-          if(confirm('Bỏ duyệt Huấn luyện viên này')){
-            this.service.toggleApprove('DisApprove',absent.id).subscribe(()=>{
-              this.reload();
-            });
-          }
-          break;
-        case 'Disapproved':
-          if(confirm('Duyệt Huấn luyện viên này')){
-            this.service.toggleApprove('Approve',absent.id).subscribe(()=>{
-              this.reload();
-            });
-          }
+          message = 'Bỏ duyệt Huấn luyện viên này';
+          state = 'DisApprove';
           break;
       }
     }
+    const modalRef = this.modalService.open(ApproveComponent, { windowClass: 'modal-confirm' });
+    modalRef.componentInstance.message = message;
+    modalRef.componentInstance.decide.subscribe(() => {
+      this.service.toggleApprove(state,absent.id).subscribe(()=>{
+        this.reload();
+      });
+    });
+
+
   }
   pageEvent(pageE: any) {
     this.pageIndex = pageE.pageIndex + 1;

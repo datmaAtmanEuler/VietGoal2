@@ -7,9 +7,9 @@ export class TrainingGroundFilter {
     YardId: null | number = null;
     AreaId: null | number = null;
     SortName: string ;
-    SortDirection: string = SORD_DIRECTION.DEFAULT;
+    SortDirection: string = SORD_DIRECTION.ASC;
 
-    constructor(searchTerm: string, pageIndex: number, pageSize: number, YardId: null | number,AreaId: null | number , sN: string , sD: string = SORD_DIRECTION.DEFAULT) {
+    constructor(searchTerm: string, pageIndex: number, pageSize: number, YardId: null | number,AreaId: null | number , sN: string , sD: string = SORD_DIRECTION.ASC) {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;
         this.PageSize = pageSize;

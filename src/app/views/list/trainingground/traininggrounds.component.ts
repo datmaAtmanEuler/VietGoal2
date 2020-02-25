@@ -36,7 +36,7 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT, null];
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'TrainingGroundCode','TrainingGroundName', 'YardName','Address','Note','Action'];
   columnsNameMapping: string[] = ['ID', 'TrainingGroundCode','TrainingGroundName', 'YardName','Address','Note','Action'];
   sortAbles: boolean[] = [false, true, true, true,true,true, false];
@@ -138,7 +138,7 @@ deleteTraningGround() {
 toggleSort(columnIndex: number): void {
   let toggleState =  this.sortToggles[columnIndex];
   switch(toggleState) {
-    case SORD_DIRECTION.DEFAULT: 
+    case SORD_DIRECTION.ASC: 
     {
       toggleState = SORD_DIRECTION.ASC;
       break;
@@ -150,7 +150,7 @@ toggleSort(columnIndex: number): void {
     }
     default:
     {
-      toggleState = SORD_DIRECTION.DEFAULT;
+      toggleState = SORD_DIRECTION.ASC;
       break;
     }
   }
@@ -158,11 +158,11 @@ toggleSort(columnIndex: number): void {
     if(index == columnIndex) {
       this.sortToggles[index] = this.sort.SortDirection = toggleState;
     } else {
-      this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+      this.sortToggles[index] = SORD_DIRECTION.ASC;
     }
   });
 
-  this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'ID' : this.columnsNameMapping[columnIndex];
+  this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'ID' : this.columnsNameMapping[columnIndex];
   this.reload();
 }
 

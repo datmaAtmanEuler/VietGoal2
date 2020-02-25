@@ -58,7 +58,7 @@ export class ClassComponent implements OnInit {
   */
 
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT,null];
+  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,null];
   columnsName: string[] = ['Order', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'];
   columnsNameMapping: string[] = ['Id', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'];
   sortAbles: boolean[] = [false, true, true, true, false,false,true, false];

@@ -33,7 +33,7 @@ export class RecruitComponent implements OnInit {
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,SORD_DIRECTION.DEFAULT, null];
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'RecruitsCode', 'RecruitsName','RecruitsColor', 'Action'];
   columnsNameMapping: string[] = ['ID', 'RecruitsCode', 'RecruitsName','RecruitsColor', 'Action'];
   sortAbles: boolean[] = [false, true, true,true, false];
@@ -136,7 +136,7 @@ export class RecruitComponent implements OnInit {
     toggleSort(columnIndex: number): void {
       let toggleState =  this.sortToggles[columnIndex];
       switch(toggleState) {
-        case SORD_DIRECTION.DEFAULT: 
+        case SORD_DIRECTION.ASC: 
         {
           toggleState = SORD_DIRECTION.ASC;
           break;
@@ -148,7 +148,7 @@ export class RecruitComponent implements OnInit {
         }
         default:
         {
-          toggleState = SORD_DIRECTION.DEFAULT;
+          toggleState = SORD_DIRECTION.ASC;
           break;
         }
       }
@@ -156,11 +156,11 @@ export class RecruitComponent implements OnInit {
         if(index == columnIndex) {
           this.sortToggles[index] = this.sort.SortDirection = toggleState;
         } else {
-          this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+          this.sortToggles[index] = SORD_DIRECTION.ASC;
         }
       });
   
-      this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'Id' : this.columnsNameMapping[columnIndex];
+      this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'Id' : this.columnsNameMapping[columnIndex];
       this.reload();
     }
     

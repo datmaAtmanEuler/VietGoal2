@@ -31,7 +31,7 @@ export class StudentStatusComponent implements OnInit {
     sort: new ASCSort(),
     sortToggles: [
       null,
-      SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
       null, null
     ],
     columnsName: ['Order', 'StudentStatusName', 'StudentStatusCode', 'Color', 'Action'],

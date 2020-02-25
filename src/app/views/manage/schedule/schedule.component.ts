@@ -22,9 +22,9 @@ export class ScheduleComponent implements OnInit {
         sort: new ASCSort(),
         sortToggles: [
             null,
-            SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
-            SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
-            SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT,
+            SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+            SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+            SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
             null
         ],
         columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'ClassDay', 'ClassTime', 'Coach1', 'Coach2', 'Coach3', 'RealCoach1', 'RealCoach2', 'RealCoach3', 'Action'],

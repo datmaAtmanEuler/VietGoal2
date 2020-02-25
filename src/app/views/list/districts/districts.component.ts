@@ -43,7 +43,7 @@ export class DistrictsComponent implements OnInit {
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
   columnsNameMapping: string[] = ['ID', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
   sortAbles: boolean[] = [false, true, true, true, false];
@@ -161,7 +161,7 @@ reload() {
   toggleSort(columnIndex: number): void {
     let toggleState =  this.sortToggles[columnIndex];
     switch(toggleState) {
-      case SORD_DIRECTION.DEFAULT: 
+      case SORD_DIRECTION.ASC: 
       {
         toggleState = SORD_DIRECTION.ASC;
         break;
@@ -173,7 +173,7 @@ reload() {
       }
       default:
       {
-        toggleState = SORD_DIRECTION.DEFAULT;
+        toggleState = SORD_DIRECTION.ASC;
         break;
       }
     }
@@ -181,11 +181,11 @@ reload() {
       if(index == columnIndex) {
         this.sortToggles[index] = this.sort.SortDirection = toggleState;
       } else {
-        this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+        this.sortToggles[index] = SORD_DIRECTION.ASC;
       }
     });
 
-    this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'ID' : this.columnsNameMapping[columnIndex];
+    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'ID' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
   

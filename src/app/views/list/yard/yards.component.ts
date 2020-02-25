@@ -44,7 +44,7 @@ export class YardComponent implements OnInit {
    * BEGIN SORT SETTINGS
    */
   sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, SORD_DIRECTION.DEFAULT, null];
+  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'YardCode', 'YardName','Area','Address','CampusArea','Note', 'Action'];
   columnsNameMapping: string[] = ['Id', 'YardCode', 'YardName','Area','Address','CampusArea','Note', 'Action'];
   sortAbles: boolean[] = [false, true, true, true,true,true, false];
@@ -179,7 +179,7 @@ deleteYard() {
 toggleSort(columnIndex: number): void {
   let toggleState =  this.sortToggles[columnIndex];
   switch(toggleState) {
-    case SORD_DIRECTION.DEFAULT: 
+    case SORD_DIRECTION.ASC: 
     {
       toggleState = SORD_DIRECTION.ASC;
       break;
@@ -191,7 +191,7 @@ toggleSort(columnIndex: number): void {
     }
     default:
     {
-      toggleState = SORD_DIRECTION.DEFAULT;
+      toggleState = SORD_DIRECTION.ASC;
       break;
     }
   }
@@ -199,11 +199,11 @@ toggleSort(columnIndex: number): void {
     if(index == columnIndex) {
       this.sortToggles[index] = this.sort.SortDirection = toggleState;
     } else {
-      this.sortToggles[index] = SORD_DIRECTION.DEFAULT;
+      this.sortToggles[index] = SORD_DIRECTION.ASC;
     }
   });
 
-  this.sort.SortName = (toggleState == SORD_DIRECTION.DEFAULT) ? 'Id' : this.columnsNameMapping[columnIndex];
+  this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'Id' : this.columnsNameMapping[columnIndex];
   this.reload();
 }
 

@@ -12,6 +12,7 @@ import { ProvinceImportComponent } from '../../views/list/provinces/province-imp
 import { CentralComponent } from '../../views/manage/central/central.component';
 import { CentralEditComponent  } from '../../views/manage/central/central-edit/central-edit.component';
 import { DecentralizeUserComponent } from '../../views/manage/decentralize-user/decentralize-user.component';
+import { DecentralizeDataComponent } from '../../views/manage/decentralize-data/decentralize-data.component';
 
 import { WardsComponent } from '../../views/list/wards/wards.component';
 import { WardEditComponent } from '../../views/list/wards/wardedit/wardedit.component';
@@ -174,6 +175,7 @@ import { ApproveComponent } from 'app/views/manage/coachabsent/approve/approve.c
     AreaImportComponent,
     WardImportComponent,
     DecentralizeUserComponent,
+    DecentralizeDataComponent,
     CoachAbsentComponent,
     CoachAbsentEditComponent,
     ApproveComponent,

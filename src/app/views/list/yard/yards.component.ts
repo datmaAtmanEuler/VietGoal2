@@ -1,8 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { YardService } from '../../../services/list/yard.service';
+import { AreaService } from '../../../services/list/area.service';
+import { CentralService } from '../../../services/manage/central.service';
 import { UtilsService } from '../../../services/utils.service';
 import { Yard } from '../../../models/list/yard';
 import { YardFilter } from '../../../models/filter/yardfilter';
+import { AreaFilter } from '../../../models/filter/areafilter';
+import { CentralFilter } from '../../../models/filter/centralfilter';
 import { Router } from '@angular/router'; 
 import { NgbModal,NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
@@ -13,23 +17,28 @@ import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Area } from 'app/models/list/area';
 import { YardImportComponent } from './yard-import/yard-import.component';
+import { FormControl } from '@angular/forms';
+
 @Component({
   selector: 'app-yards',
   templateUrl: './yards.component.html',
   styleUrls: ['./yards.component.scss']
 })
 export class YardComponent implements OnInit {
-  yardsList:Yard[] = [];
-  areasList:Area[] = [];
-  yard: Yard;
+  yardsList:any[] = [];
+  areasList:any[] = [];
+  centralsList:any[] = [];
+  yard: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
-  loading: boolean = true;
-  Total: any;
+  isLoading: boolean = true;
   firstRowOnPage: any;
+  searchProvincesCtrl = new FormControl();
+  searchAreasCtrl = new FormControl();
+  searchCentralsCtrl = new FormControl();
 
   /**
    * BEGIN SORT SETTINGS
@@ -43,8 +52,13 @@ export class YardComponent implements OnInit {
    * END SORT SETTINGS
    */
 
+  filter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
+  areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
+  centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,null, null, null, 'Id','ASC');
+
   constructor(private translate: TranslateService,
-    private matCus: MatPaginatorIntl, config: NgbModalConfig,public util: UtilsService, private service: YardService, private modalService: NgbModal, private router: Router) {
+    private matCus: MatPaginatorIntl, config: NgbModalConfig,public util: UtilsService, 
+    private service: YardService, private centralService: CentralService, private areaService: AreaService, private modalService: NgbModal, private router: Router) {
     config.backdrop = 'static';
       config.keyboard = false;
       config.scrollable = false;
@@ -74,7 +88,7 @@ export class YardComponent implements OnInit {
         return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
       }
   }
-  remove(yard: Yard) {
+  remove(yard: any) {
     this.yard = yard;
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
@@ -90,22 +104,50 @@ pageEvent(variable: any){
 }
 reload() {
   const _this = this;
-  const filter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
-  this.loading = true;
-  _this.yardsList = [];
-  this.service.getYardsList(filter).subscribe(
+  this.isLoading = true;
+  this.centralsList = [];
+  this.centralService.getCentralsList(this.centralFilter).subscribe(
       (response: any) => {
         const list = response.results ? response.results : [];
-        this.Total = (response && response.rowCount) ? response.rowCount : 0;
         this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
         setTimeout(() => {
-          _this.yardsList = (list) ? list : [];
-          _this.loading = false;
+          _this.centralsList = (list) ? list : [];
+          _this.areasList = [];
+          _this.areaService.getAreasList(_this.areaFilter).subscribe(
+              (response: any) => {
+                const list = response.results ? response.results : [];
+                _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+                setTimeout(() => {
+                  _this.areasList = (list) ? list : [];
+                  _this.yardsList = [];
+                  _this.service.getYardsList(_this.filter).subscribe(
+                      (response: any) => {
+                        const list = response.results ? response.results : [];
+                        _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+                        setTimeout(() => {
+                          _this.yardsList = (list) ? list : [];
+                          _this.isLoading = false;
+                        }, 500);
+                      },
+                      (err: any) => {
+                        _this.yardsList = [];
+                        _this.isLoading = false;
+                      }
+                  );
+
+                }, 500);
+              },
+              (err: any) => {
+                _this.areasList = [];
+                _this.isLoading = false;
+              }
+          );
+
         }, 500);
       },
       (err: any) => {
-        _this.yardsList = [];
-        _this.loading = false;
+        _this.centralsList = [];
+        _this.isLoading = false;
       }
   );
 }
@@ -182,5 +224,31 @@ downloadTemplate() {
   a.click();
   a.remove();
 }
+
+displayCentralFn(central: any) {
+  return central && central.CentralName && !central.notfound ? central.CentralName : '';
+}
+
+displayAreasFn(area: any) {
+  return area && area.AreaName && !area.notfound ? area.AreaName : '';
+}
+
+
+changeCentral(centralID: number) {
+    this.areaFilter.CentralId = centralID;
+    this.areaService.getAreasList(this.areaFilter).subscribe((list) => {
+      this.areasList = list;
+      this.reload();
+    });
+  }
+
+  changeArea(areaID: number) {
+    this.filter.AreaId = areaID;
+    this.service.getYardsList(this.filter).subscribe((list) => {
+      this.yardsList = list;
+      this.reload();
+    });
+  }
+
 }
 

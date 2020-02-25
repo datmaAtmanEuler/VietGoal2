@@ -14,12 +14,29 @@
                                     Import</button>
                             </div>
                             <div class="row" style="padding-left: 50px;">
-
+                                <div class="col-sm-4">
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"
+                                        [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
+                                    <mat-autocomplete #CentralAC="matAutocomplete"
+                                        (optionSelected)="changeCentral(searchCentralsCtrl.value.ID)"
+                                        [displayWith]="displayCentralFn">
+                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                            <mat-spinner></mat-spinner>
+                                        </mat-option>
+                                        <ng-container *ngIf="!isLoading">
+                                            <mat-option *ngFor="let Central of listCentral" [value]="Central">
+                                                <span *ngIf="!Central.notfound">{{Central.CentralName}}</span>
+                                                <span *ngIf="Central.notfound" class="nofind">{{Central.notfound}}</span>
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-autocomplete>
+                                </div>
+                                
                                 <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
                                         [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
                                     <mat-autocomplete #AreasAC="matAutocomplete"
-                                        (optionSelected)="changeAreas(searchAreasCtrl.value.ID)"
+                                        (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
                                         [displayWith]="displayAreasFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
@@ -33,23 +50,7 @@
                                     </mat-autocomplete>
                                 </div>
                                 
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"
-                                        [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
-                                    <mat-autocomplete #CentralAC="matAutocomplete"
-                                        (optionSelected)="changeDistrict(searchCentralsCtrl.value.ID)"
-                                        [displayWith]="displayCentralFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Central of listCentral" [value]="Central">
-                                                <span *ngIf="!Central.notfound">{{Central.CentralName}}</span>
-                                                <span *ngIf="Central.notfound" class="nofind">{{Central.notfound}}</span>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-                                </div>
+                                
                                 
                             </div>
                         </div>
@@ -122,7 +123,9 @@
                                     </table>
                                 </div>
                                 </div>
-                                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                <mat-paginator 
+                                    [length]="(yardsList && yardsList.length > 0 && yardsList[0] && yardsList[0].Total) ? yardsList[0].Total : 0"
+                                     [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
                                     [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                 </mat-paginator>
                             </div>

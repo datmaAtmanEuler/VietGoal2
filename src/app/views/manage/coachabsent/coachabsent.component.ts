@@ -149,23 +149,10 @@ export class CoachAbsentComponent implements OnInit {
     this.pageSize = pageE.pageSize;
     this.reload();
   }
-  stringDate(date: Date){
-    var d = new Date(date),
-        month = '' + (d.getMonth() + 1),
-        day = '' + d.getDate(),
-        year = d.getFullYear();
-
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
-
-    return [year, month, day].join('-');
-  }
   reload() {
     const filter = {
-      fromDate: this.stringDate(this.fromDate),
-      toDate: this.stringDate(this.toDate),
+      fromDate: this.utilsService.stringDate(this.fromDate),
+      toDate: this.utilsService.stringDate(this.toDate),
       coachAbsentStatus: this.coachAbsentStatusName ? this.coachAbsentStatusName : '',
       coachId: this.coachId ? this.coachId : '',
       pageIndex: this.pageIndex,

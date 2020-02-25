@@ -41,6 +41,8 @@ import { RecruitComponent } from '../../views/list/recruits/recruit.component';
 import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/recruit-edit.component';
 import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
 import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
+import { StudentComponent } from 'app/views/manage/student/student.component';
+import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -353,6 +355,21 @@ export const AdminLayoutRoutes: Routes = [
         ,
         {
             path: 'edit', component: CoachAbsentEditComponent
+        }
+        ]
+    },
+    {
+        path: 'hosohocsinh',
+        children: [ {
+            path: '', component: StudentComponent
+        }
+        ,
+        {
+            path: 'add', component: StudentEditComponent
+        }
+        ,
+        {
+            path: 'edit', component: StudentEditComponent
         }
         ]
     }

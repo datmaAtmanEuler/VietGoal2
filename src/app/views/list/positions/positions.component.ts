@@ -6,16 +6,17 @@ import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.componen
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { PositionService } from 'app/services/list/position.service';
-import { Position } from 'app/models/list/position';
+import { Position } from '../../../models/list/position';
 import { PositionEditComponent } from './position-edit/position-edit.component';
-import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import { PositionImportComponent } from './position-import/position-import.component';
+import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
 
 @Component({
-  selector: 'app-position',
-  templateUrl: './position.component.html',
-  styleUrls: ['./position.component.scss']
+  selector: 'app-positions',
+  templateUrl: './positions.component.html',
+  styleUrls: ['./positions.component.scss']
 })
-export class PositionComponent implements OnInit {
+export class PositionsComponent implements OnInit {
   positionList: Position[] = [];
   Position: Position;
   searchTerm: string = '';
@@ -96,5 +97,23 @@ export class PositionComponent implements OnInit {
     modalRef.result.then(function (result) {
       _this.reload();
     });
+  }
+  
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(PositionImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Yards_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
   }
 }

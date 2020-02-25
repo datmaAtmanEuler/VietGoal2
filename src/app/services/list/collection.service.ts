@@ -4,6 +4,7 @@ import { Collection } from 'app/models/list/collection';
 import { environment } from 'environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ImportViewModel } from 'app/models/importviewmodel';
 
 @Injectable({
     providedIn: 'root'
@@ -39,5 +40,12 @@ export class CollectionService {
 
     deleteCollection(CollectionId: number, deletedBy: number): Observable<any> {
         return this.http.delete(environment.serverUrl + `Collections/${CollectionId}?deletedBy=${deletedBy}` , this.httpOptions);
+    }
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `Collections/import`, importViewModel , this.httpOptions);
     }
 }

@@ -7,6 +7,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { StudentStatus } from 'app/models/list/studentstatus';
 import { StudentStatusService } from 'app/services/list/studentstatus.service';
 import { StudentStatusEditComponent } from './studentstatus-edit/studentstatus-edit.component';
+import { StudentStatusImportComponent } from './studentstatus-import/studentstatus-import.component';
 import { SORD_DIRECTION, ASCSort } from 'app/models/sort';
 
 
@@ -98,4 +99,22 @@ export class StudentStatusComponent implements OnInit {
       _this.reload();
     });
   }
+
+  openImport() {
+  const _this = this;
+  const modalRef = this.modalService.open(StudentStatusImportComponent, { size: 'lg' });
+  modalRef.result.then(function(importModel: any){
+     
+  });
+}
+
+downloadTemplate() {
+  var fileName = 'Districts_Import.xlsx';
+  var a = document.createElement('a');
+  a.href = this.service.getTemplate(fileName);
+  a.download = fileName;
+  document.body.append(a);
+  a.click();
+  a.remove();
+}
 }

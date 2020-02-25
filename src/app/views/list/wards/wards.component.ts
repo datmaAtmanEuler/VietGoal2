@@ -5,7 +5,7 @@ import { ProvinceService } from '../../../services/list/province.service';
 import { Ward } from '../../../models/list/wards';
 import { WardFilter } from '../../../models/filter/wardfilter';
 import { Filter } from '../../../models/filter/filter';
-import { DistrictFilter } from '../../../models/filter/districtFilter';
+import { DistrictFilter } from '../../../models/filter/districtfilter';
 import { Router } from '@angular/router'; 
 import { WardEditComponent } from './wardedit/wardedit.component';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';

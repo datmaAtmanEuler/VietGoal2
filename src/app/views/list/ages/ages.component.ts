@@ -7,14 +7,15 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Age } from 'app/models/list/age';
 import { AgeService } from 'app/services/list/age.service';
 import { AgeEditComponent } from './age-edit/age-edit.component';
+import { AgeImportComponent } from './age-import/age-import.component';
 import { SORD_DIRECTION, ASCSort } from 'app/models/sort';
 
 @Component({
-  selector: 'app-age',
-  templateUrl: './age.component.html',
-  styleUrls: ['./age.component.scss']
+  selector: 'app-ages',
+  templateUrl: './ages.component.html',
+  styleUrls: ['./ages.component.scss']
 })
-export class AgeComponent implements OnInit {
+export class AgesComponent implements OnInit {
 
   AgeList: Age[] = [];
   Age: Age;
@@ -96,5 +97,21 @@ export class AgeComponent implements OnInit {
     modalRef.result.then(function (result) {
       _this.reload();
     });
+  }
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(AgeImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Areas_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
   }
 }

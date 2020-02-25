@@ -3,6 +3,7 @@ import { environment } from 'environments/environment';
 import { Age } from 'app/models/list/age';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ImportViewModel } from 'app/models/importviewmodel';
 
 @Injectable({
     providedIn: 'root'
@@ -36,5 +37,12 @@ export class AgeService {
 
     deleteAge(AgeId: number): Observable<any> {
         return this.http.delete(environment.serverUrl + `Ages/${AgeId}`, this.httpOptions);
+    }
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `Ages/import`, importViewModel , this.httpOptions);
     }
 }

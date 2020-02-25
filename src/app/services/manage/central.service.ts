@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { Central } from '../../models/manage/central';
 import { environment } from 'environments/environment';
 import { Filter } from 'app/models/filter/filter';
+import { ImportViewModel } from 'app/models/importviewmodel';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -39,5 +41,13 @@ export class CentralService {
 
     deleteCentral(CentralId: number, deletedBy: number): Observable<any> {
         return this.http.delete(environment.serverUrl + `Centrals/${CentralId}?deletedBy=${deletedBy}` , this.httpOptions);
+    }
+
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `Centrals/import`, importViewModel , this.httpOptions);
     }
 }

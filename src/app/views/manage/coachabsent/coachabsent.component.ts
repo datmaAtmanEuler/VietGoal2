@@ -4,9 +4,11 @@ import { UtilsService } from 'app/services/utils.service';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { CoachAbsentService } from 'app/services/manage/coachabsent.service';
 import { CoachAbsentEditComponent } from './coachabsent-edit/coachabsent-edit.component';
+import { CoachAbsentImportComponent } from './coachabsent-import/coachabsent-import.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
 import { CoachAbsentMapping } from 'app/models/manage/coachabsent';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-coachabsent',
@@ -115,6 +117,23 @@ export class CoachAbsentComponent implements OnInit {
       });
     });
   }
+  
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(CoachAbsentImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
 
+  downloadTemplate() {
+    var fileName = 'Yards_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
 
 }

@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation  } from '@angular/core';
-import { YardService } from '../../../../services/list/yard.service';
+import { FeeService } from '../../../../services/list/fee.service';
 import { ImportViewModel } from '../../../../models/importviewmodel';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-	selector: 'app-yard-import',
-	templateUrl: './yard-import.component.html',
-	styleUrls: ['./yard-import.component.scss'],
+	selector: 'app-fee-import',
+	templateUrl: './fee-import.component.html',
+	styleUrls: ['./fee-import.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 
-export class YardImportComponent implements OnInit {
+export class FeeImportComponent implements OnInit {
 	currentUser: any;
 	_files: any = null;
 	disabled: boolean = true;
@@ -20,7 +20,7 @@ export class YardImportComponent implements OnInit {
 
 	importViewModel: ImportViewModel = new ImportViewModel(null, 0);
 
-	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private yardService: YardService) {
+	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private feeService: FeeService) {
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
@@ -31,14 +31,16 @@ export class YardImportComponent implements OnInit {
 	ngOnInit() {
 	}
 	
-	ImportYards() {
+	ImportFees() {
 		const _this = this;
-		this.yardService.import(this.importViewModel).subscribe((result: any) => {
+		this.feeService.import(this.importViewModel).subscribe((result: any) => {
 			_this.errorsList = result.Error.filter((r: any) => r.isError == true);
 			_this.successList = result.Error.filter((r: any) => r.isError == false);
 			if(_this.errorsList.length < 1) {
 				//_this.closeMe({'success': _this.successList.length + ' record' + ((_this.successList.length > 1) ? 's' : '') + ' had been updated'});
 			}
+
+			console.log('Danh sach loi', _this.errorsList);
 		});
 	}
 

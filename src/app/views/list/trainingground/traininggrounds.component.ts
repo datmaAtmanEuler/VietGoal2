@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { AreaService } from '../../../services/list/area.service';
+import { YardService } from '../../../services/list/yard.service';
 import { TrainingGroundService } from '../../../services/list/training-ground.service';
 import { TrainingGround } from '../../../models/list/training-ground';
 import { TrainingGroundEditComponent } from './trainningground-edit/trainingground-edit.component';
@@ -8,16 +10,21 @@ import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.componen
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { TrainingGroundImportComponent } from './trainingground-import/trainingground-import.component';
+import { FormControl } from '@angular/forms';
+
+import { AreaFilter } from '../../../models/filter/areafilter';
+import { YardFilter } from '../../../models/filter/yardfilter';
+
 @Component({
   selector: 'app-training-grounds',
   templateUrl: './traininggrounds.component.html',
   styleUrls: ['./traininggrounds.component.scss']
 })
 export class TrainingGroundsComponent implements OnInit {ModalDirective;
-  trainingroundsList:TrainingGround[] = [];
+  trainingroundsList:any[] = [];
   traininground: any;
   areasList:any[] = [];
   area: any;
@@ -29,8 +36,14 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
   isLoading: boolean = true;
-  Total: any;
+  Total: number = 0;
   firstRowOnPage: any;
+  searchAreasCtrl = new FormControl();
+  searchYardsCtrl = new FormControl();
+
+  areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,null,'Id','ASC');
+  yardFilter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,null,'Id','ASC');
+  filter: TrainingGroundFilter = new TrainingGroundFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
 
   /**
    * BEGIN SORT SETTINGS
@@ -43,7 +56,8 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
   /**
    * END SORT SETTINGS
    */
-  constructor(private matCus: MatPaginatorIntl,private translate: TranslateService,config: NgbModalConfig, private service: TrainingGroundService, 
+  constructor(private matCus: MatPaginatorIntl,private translate: TranslateService,config: NgbModalConfig, 
+    private areaService: AreaService, private yardService: YardService, private service: TrainingGroundService, 
     private router: Router, private modalService: NgbModal) { 
     config.backdrop = 'static';
     config.keyboard = false;
@@ -90,21 +104,46 @@ pageEvent(variable: any){
 }
 reload() {
   const _this = this;
-  const filter: TrainingGroundFilter = new TrainingGroundFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
   this.isLoading = true;
-  _this.trainingroundsList = [];
-  this.service.getTrainingGroundsList(filter).subscribe(
+  _this.areasList = [];
+  this.areaService.getAreasList(this.areaFilter).subscribe(
       (response: any) => {
         const list = response.results ? response.results : [];
-        this.Total = (response && response.rowCount) ? response.rowCount : 0;
-        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
         setTimeout(() => {
-          _this.trainingroundsList = (list) ? list : [];
-          _this.isLoading = false;
+          _this.areasList = (list) ? list : [];
+          _this.yardsList = [];
+          _this.yardService.getYardsList(_this.yardFilter).subscribe(
+              (response: any) => {
+                const list = response.results ? response.results : [];
+                setTimeout(() => {
+                  _this.yardsList = (list) ? list : [];
+                  _this.trainingroundsList = [];
+                  _this.service.getTrainingGroundsList(_this.filter).subscribe(
+                      (response: any) => {
+                        const list = response.results ? response.results : [];
+                        _this.Total = (response && response.rowCount) ? response.rowCount : 0;
+                        _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+                        setTimeout(() => {
+                          _this.trainingroundsList = (list) ? list : [];
+                          _this.isLoading = false;
+                        }, 500);
+                      },
+                      (err: any) => {
+                        _this.trainingroundsList = [];
+                        _this.isLoading = false;
+                      }
+                  );
+                }, 500);
+              },
+              (err: any) => {
+                _this.yardsList = [];
+                _this.isLoading = false;
+              }
+          );
         }, 500);
       },
       (err: any) => {
-        _this.trainingroundsList = [];
+        _this.areasList = [];
         _this.isLoading = false;
       }
   );
@@ -167,6 +206,31 @@ toggleSort(columnIndex: number): void {
 }
 
 doNothing(): void {}
+
+displayAreaFn(area: any) {
+    return area && area.AreaName && !area.notfound ? area.AreaName : '';
+  }
+
+changeArea(areaId: number) {
+    this.yardFilter.AreaId = areaId;
+    this.yardService.getYardsList(this.yardFilter).subscribe((list) => {
+      this.yardsList = list;
+      this.reload();
+    });
+  }
+
+  displayYardFn(yard: any) {
+    return yard && yard.YardName && !yard.notfound ? yard.YardName : '';
+  }
+
+changeYard(yardId: number) {
+    this.filter.YardId = yardId;
+    this.service.getTrainingGroundsList(this.filter).subscribe((list) => {
+      this.trainingroundsList = list;
+      this.reload();
+    });
+  }
+  
 openImport() {
   const _this = this;
   const modalRef = this.modalService.open(TrainingGroundImportComponent, { size: 'lg' });

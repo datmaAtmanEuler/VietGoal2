@@ -23,8 +23,8 @@ import { CentralImportComponent } from './central-import/central-import.componen
 
 @Component({
   selector: 'app-Central',
-  templateUrl: './Central.component.html',
-  styleUrls: ['./Central.component.scss']
+  templateUrl: './central.component.html',
+  styleUrls: ['./central.component.scss']
 })
 export class CentralComponent implements OnInit {
   CentralList: any[] = [];
@@ -238,6 +238,7 @@ export class CentralComponent implements OnInit {
       return this.http.get(`${environment.serverUrl}Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
     }
   }
+  
   openImport() {
     const _this = this;
     const modalRef = this.modalService.open(CentralImportComponent, { size: 'lg' });
@@ -245,4 +246,15 @@ export class CentralComponent implements OnInit {
         console.log(importModel);
     });
   }
+
+  downloadTemplate() {
+    var fileName = 'Yards_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
+
 }

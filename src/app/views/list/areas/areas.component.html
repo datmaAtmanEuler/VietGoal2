@@ -14,8 +14,8 @@
                                     <div class="col-sm-4">
                                         <input class="form-control"
                                             placeholder="{{'MESSAGE.NameList.Central' |translate}}"
-                                            [matAutocomplete]="centralAC" [formControl]="searchCentralsCtrl">
-                                        <mat-autocomplete #centralAC="matAutocomplete"
+                                            [matAutocomplete]="centralsAC" [formControl]="searchCentralsCtrl">
+                                        <mat-autocomplete #centralsAC="matAutocomplete"
                                             (optionSelected)="changeCentral(searchCentralsCtrl.value.ID)"
                                             [displayWith]="displayCentralFn">
                                             <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
@@ -67,7 +67,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card-body table-responsive">
-                                <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
+                                <mat-spinner *ngIf="isLoading" class="myspinner" [diameter]="32"></mat-spinner>
                                 <div class="vietgoal-table-settings style-1">
                                     <div class="vietgoal-table-settings vg-scroll">
                                         <table class="table table-condensed table-striped table-bordered table-hover"

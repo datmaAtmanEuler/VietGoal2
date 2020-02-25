@@ -7,13 +7,14 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Fee } from 'app/models/list/fee';
 import { FeeService } from 'app/services/list/fee.service';
 import { FeeEditComponent } from './fee-edit/fee-edit.component';
+import { FeeImportComponent } from './fee-import/fee-import.component';
 
 @Component({
-  selector: 'app-fee',
-  templateUrl: './fee.component.html',
-  styleUrls: ['./fee.component.scss']
+  selector: 'app-fees',
+  templateUrl: './fees.component.html',
+  styleUrls: ['./fees.component.scss']
 })
-export class FeeComponent implements OnInit {
+export class FeesComponent implements OnInit {
 
   FeeList: Fee[] = [];
   Fee: Fee;
@@ -69,6 +70,22 @@ export class FeeComponent implements OnInit {
     modalRef.result.then(function (result) {
       _this.reload();
     });
+  }
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(FeeImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Areas_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
   }
 
 }

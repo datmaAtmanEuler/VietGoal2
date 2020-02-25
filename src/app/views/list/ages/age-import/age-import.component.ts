@@ -1,17 +1,17 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation  } from '@angular/core';
-import { RecruitStudentService } from '../../../../services/manage/recruit-student.service copy';
+import { AgeService } from '../../../../services/list/age.service';
 import { ImportViewModel } from '../../../../models/importviewmodel';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
-	selector: 'app-recruit-student-import',
-	templateUrl: './recruit-student-import.component.html',
-	styleUrls: ['./recruit-student-import.component.scss'],
+	selector: 'app-age-import',
+	templateUrl: './age-import.component.html',
+	styleUrls: ['./age-import.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 
-export class RecruitStudentImportComponent implements OnInit {
+export class AgeImportComponent implements OnInit {
 	currentUser: any;
 	_files: any = null;
 	disabled: boolean = true;
@@ -20,7 +20,7 @@ export class RecruitStudentImportComponent implements OnInit {
 
 	importViewModel: ImportViewModel = new ImportViewModel(null, 0);
 
-	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private recruitstudentService: RecruitStudentService) {
+	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private ageService: AgeService) {
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
@@ -31,14 +31,16 @@ export class RecruitStudentImportComponent implements OnInit {
 	ngOnInit() {
 	}
 	
-	ImportRecruitStudent() {
+	ImportProvince() {
 		const _this = this;
-		this.recruitstudentService.import(this.importViewModel).subscribe((result: any) => {
+		this.ageService.import(this.importViewModel).subscribe((result: any) => {
 			_this.errorsList = result.Error.filter((r: any) => r.isError == true);
 			_this.successList = result.Error.filter((r: any) => r.isError == false);
 			if(_this.errorsList.length < 1) {
 				//_this.closeMe({'success': _this.successList.length + ' record' + ((_this.successList.length > 1) ? 's' : '') + ' had been updated'});
 			}
+
+			console.log('Danh sach loi', _this.errorsList);
 		});
 	}
 

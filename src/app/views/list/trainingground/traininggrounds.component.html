@@ -19,7 +19,7 @@
                                 <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
                                         [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
-                                    <mat-autocomplete #AreaAC="matAutocomplete"
+                                    <mat-autocomplete #AreasAC="matAutocomplete"
                                         (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
                                         [displayWith]="displayAreaFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
@@ -36,9 +36,9 @@
 
                                 <div class="col-sm-4">
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
-                                        [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
-                                    <mat-autocomplete #YardAC="matAutocomplete"
-                                        (optionSelected)="changeDistrict(searchYardsCtrl.value.ID)"
+                                        [matAutocomplete]="YardsAC" [formControl]="searchYardsCtrl">
+                                    <mat-autocomplete #YardsAC="matAutocomplete"
+                                        (optionSelected)="changeYard(searchYardsCtrl.value.ID)"
                                         [displayWith]="displayYardFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>

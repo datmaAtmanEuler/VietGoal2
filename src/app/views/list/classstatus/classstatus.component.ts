@@ -7,6 +7,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ClassStatus } from 'app/models/list/classstatus';
 import { ClassStatusService } from 'app/services/list/classstatus.service';
 import { ClassStatusEditComponent } from './classstatus-edit/classstatus-edit.component';
+import { ClassStatusImportComponent } from './classstatus-import/classstatus-import.component';
 
 @Component({
   selector: 'app-classstatus',
@@ -83,5 +84,23 @@ export class ClassStatusComponent implements OnInit {
     modalRef.result.then(function (result) {
       _this.reload();
     });
+  }
+  
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(ClassStatusImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Yards_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
   }
 }

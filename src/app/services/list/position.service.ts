@@ -4,6 +4,7 @@ import { Filter } from '../../models/filter/filter';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { ImportViewModel } from 'app/models/importviewmodel';
 
 @Injectable({
   providedIn: 'root'
@@ -38,5 +39,13 @@ export class PositionService {
 
     deletePosition(PositionId: number, ): Observable<any> {
         return this.http.delete(environment.serverUrl + `Positions/${PositionId}` , this.httpOptions);
+    }
+    
+    getTemplate(fileName: string) {
+        return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
+    }
+
+    import(importViewModel: ImportViewModel): Observable<any> {
+        return this.http.post(environment.serverUrl_employee + `Positions/import`, importViewModel , this.httpOptions);
     }
 }

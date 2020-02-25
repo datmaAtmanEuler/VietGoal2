@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ImportViewModel } from '../../models/importviewmodel';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -44,6 +45,6 @@ export class AreaService {
     }
 
     import(importViewModel: ImportViewModel): Observable<any> {
-        return this.http.post(environment.serverUrl_employee + `provinces/import`, importViewModel , this.httpOptions);
+        return this.http.post(environment.serverUrl_employee + `Areas/import`, importViewModel , this.httpOptions);
     }
 }

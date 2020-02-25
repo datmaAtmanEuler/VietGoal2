@@ -4,11 +4,12 @@ import { UtilsService } from 'app/services/utils.service';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { CoachAbsentService } from 'app/services/manage/coachabsent.service';
 import { CoachAbsentEditComponent } from './coachabsent-edit/coachabsent-edit.component';
+import { CoachAbsentImportComponent } from './coachabsent-import/coachabsent-import.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
 import { CoachAbsentMapping } from 'app/models/manage/coachabsent';
-import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
 import { FormControl } from '@angular/forms';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
 import { startWith, map, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
@@ -227,13 +228,31 @@ export class CoachAbsentComponent implements OnInit {
       });
     });
   }
+
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(CoachAbsentImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
+  
   approveColor(absentItem){
     if (absentItem.coachAbsentStatusName == 'Approved') {
       return 'btn btn-danger btn-link btn-sm delete-button btn-just-icon' ;
     } else {
       return 'btn btn-primary edit-button btn-link btn-sm btn-just-icon';
-    } 
+    }
   }
 
+  downloadTemplate() {
+    var fileName = 'Yards_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
 
 }

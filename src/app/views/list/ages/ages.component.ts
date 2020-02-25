@@ -4,28 +4,30 @@ import { UtilsService } from '../../../services/utils.service';
 import { Router } from '@angular/router';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-
-import { PositionService } from 'app/services/list/position.service';
-import { Position } from 'app/models/list/position';
-import { PositionEditComponent } from './position-edit/position-edit.component';
-import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import { Age } from 'app/models/list/age';
+import { AgeService } from 'app/services/list/age.service';
+import { AgeEditComponent } from './age-edit/age-edit.component';
+import { AgeImportComponent } from './age-import/age-import.component';
+import { SORD_DIRECTION, ASCSort } from 'app/models/sort';
 
 @Component({
-  selector: 'app-position',
-  templateUrl: './position.component.html',
-  styleUrls: ['./position.component.scss']
+  selector: 'app-ages',
+  templateUrl: './ages.component.html',
+  styleUrls: ['./ages.component.scss']
 })
-export class PositionComponent implements OnInit {
-  positionList: Position[] = [];
-  Position: Position;
+export class AgesComponent implements OnInit {
+
+  AgeList: Age[] = [];
+  Age: Age;
   searchTerm: string = '';
   pageIndex: number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize: number = this.pageSizesList[1];
   currentUser: any;
-  Total:number;
-  firstRowOnPage:number;
   loading: boolean;
+  Total: any;
+  firstRowOnPage: any;
+
   paginationSettings: any = {
     sort: new ASCSort(),
     sortToggles: [
@@ -33,12 +35,12 @@ export class PositionComponent implements OnInit {
       SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
       null
     ],
-    columnsName: ['Order', 'PositionCode', 'PositionName', 'Action'],
-    columnsNameMapping: ['', 'positionCode', 'positionName', ''],
+    columnsName: ['Order', 'AgeCode', 'AgeName', 'Action'],
+    columnsNameMapping: ['', 'ageCode', 'ageName', ''],
     sortAbles: [false, true, true, false],
     visibles: [true, true, true, true]
   }
-  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: PositionService, private router: Router, private modalService: NgbModal) {
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: AgeService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
@@ -48,17 +50,6 @@ export class PositionComponent implements OnInit {
 
   ngOnInit() {
     this.reload();
-  }
-
-  remove(id: any) {
-    const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-    modalRef.componentInstance.confirmObject = 'Position';
-    modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deletePosition(id).subscribe(()=>{
-        _this.reload();
-      });
-    });
   }
   pageEvent(pageE: any) {
     this.pageIndex = pageE.pageIndex + 1;
@@ -73,14 +64,14 @@ export class PositionComponent implements OnInit {
       sortDirection: this.paginationSettings.sort.SortDirection
     };
     this.loading = true;
-    this.positionList = [];
-    this.service.getPositionList(filter).subscribe((response: any) => {
+    this.AgeList = [];
+    this.service.getAgeList(filter).subscribe((response: any) => {
       const list = response.results ? response.results : [];
       this.Total = (response && response.rowCount) ? response.rowCount : 0;
       this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
       setTimeout(() => {
         this.loading = false;
-        this.positionList = list || [];
+        this.AgeList = list || [];
       }, 500);
     });
   }
@@ -88,13 +79,39 @@ export class PositionComponent implements OnInit {
     this.edit(null);
   }
 
-  edit(PositionId: null | number) {
+  remove(id) {
     const _this = this;
-    const modalRef = this.modalService.open(PositionEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm'});
+    modalRef.componentInstance.confirmObject = 'Age';
+    modalRef.componentInstance.decide.subscribe(() => {
+      _this.service.deleteAge(id).subscribe(() => {
+        _this.reload();
+      });
+    });
+  }
+  edit(Ageid: null | number) {
+    const _this = this;
+    const modalRef = this.modalService.open(AgeEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    modalRef.componentInstance.PositionId = PositionId;
+    modalRef.componentInstance.AgeId = Ageid;
     modalRef.result.then(function (result) {
       _this.reload();
     });
+  }
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(AgeImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+    });
+  }
+
+  downloadTemplate() {
+    var fileName = 'Areas_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
   }
 }

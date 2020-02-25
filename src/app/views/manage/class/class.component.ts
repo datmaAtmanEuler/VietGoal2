@@ -275,5 +275,12 @@ export class ClassComponent implements OnInit {
     a.remove();
   }
 
+  displayAresFn(area: any) {
+    return area && area.AreaName && !area.notfound ? area.AreaName : '';
+  }
+
+  displayTrainingGroundFn(trainingground: any) {
+    return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
+  }
 }
 

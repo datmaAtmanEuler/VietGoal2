@@ -28,7 +28,7 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
-  loading: boolean = true;
+  isLoading: boolean = true;
   Total: any;
   firstRowOnPage: any;
 
@@ -91,7 +91,7 @@ pageEvent(variable: any){
 reload() {
   const _this = this;
   const filter: TrainingGroundFilter = new TrainingGroundFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
-  this.loading = true;
+  this.isLoading = true;
   _this.trainingroundsList = [];
   this.service.getTrainingGroundsList(filter).subscribe(
       (response: any) => {
@@ -100,12 +100,12 @@ reload() {
         this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
         setTimeout(() => {
           _this.trainingroundsList = (list) ? list : [];
-          _this.loading = false;
+          _this.isLoading = false;
         }, 500);
       },
       (err: any) => {
         _this.trainingroundsList = [];
-        _this.loading = false;
+        _this.isLoading = false;
       }
   );
 }

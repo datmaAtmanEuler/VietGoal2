@@ -126,7 +126,9 @@
                                         </table>
                                     </div>
                                 </div>
-                                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                <mat-paginator 
+                                    [length]="(trainingroundsList && trainingroundsList.length > 0 && trainingroundsList[0] && trainingroundsList[0].Total) ? trainingroundsList[0].Total : 0"
+                                     [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
                                     [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                 </mat-paginator>
                             </div>

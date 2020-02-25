@@ -49,6 +49,7 @@ export class CoachAbsentComponent implements OnInit {
 
   coachAbsentStatus: number;
   coachId:number;
+  searchAdvanced: boolean = false;
   
 
   paginationSettings: any = {

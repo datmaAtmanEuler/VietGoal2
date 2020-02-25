@@ -6,6 +6,7 @@ import { CoachAbsentService } from 'app/services/manage/coachabsent.service';
 import { CoachAbsentEditComponent } from './coachabsent-edit/coachabsent-edit.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
+import { CoachAbsentMapping } from 'app/models/manage/coachabsent';
 
 @Component({
   selector: 'app-coachabsent',
@@ -44,6 +45,23 @@ export class CoachAbsentComponent implements OnInit {
       this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
       utilsService.loadPaginatorLabels();
+  }
+  duyet(coach){
+    let obj: CoachAbsentMapping = new CoachAbsentMapping(0);
+    if(coach){
+      obj.id = coach.id;
+      obj.coachId = coach.coachId;
+      obj.coachAbsentDate = coach.coachAbsentDate;
+      obj.shiftType = coach.shiftType;
+      obj.coachAbsentReason = coach.coachAbsentReason;
+      obj.coachAbsentStatus = 1;
+      if(confirm('Duyệt Huấn luyện viên này')){
+        console.log(JSON.stringify(obj));
+        this.service.addOrUpdate(obj).subscribe(()=>{
+          this.reload();
+        });
+      }
+    }
   }
   pageEvent(pageE: any) {
     this.pageIndex = pageE.pageIndex + 1;

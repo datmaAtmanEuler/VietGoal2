@@ -21,7 +21,7 @@ export class RecruitStudent {
     AdmissionDate: Date;
     AreaId: number;
     YardId: number;
-    TrainingGroupId: number;
+    TrainingGroundId: number;
     ClassId: number;
     RecruitId: number;
     Address: string;
@@ -39,7 +39,7 @@ export class RecruitStudent {
         AdmissionDate: Date,
         AreaId: number,
         YardId: number,
-        TrainingGroupId: number,
+        TrainingGroundId: number,
         ClassId: number,
         RecruitId: number,
         Address: string,
@@ -63,7 +63,7 @@ export class RecruitStudent {
         this.UserId = UserId;
         this.StatusId = StatusId;
         this.AdmissionDate = AdmissionDate;
-        this.TrainingGroupId = TrainingGroupId;
+        this.TrainingGroundId = TrainingGroundId;
         this.ClassId = ClassId;
         this.RecruitId = RecruitId;
         this.Address = Address;

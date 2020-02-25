@@ -4,7 +4,7 @@
             <div class="col-lg-12 col-md-12">
                 <div class="card">
                     <div class="card-header card-header-warning" style="background: #023a54">
-                        <h4 class="card-title">{{ "MESSAGE.NameList.CentralManagement" | translate }}</h4>
+                        <h4 class="card-title">Danh Sách Học Viên Chiêu Sinh</h4>
                     </div>
                     <div class="row pt-3 pl-2 pr-3">
                         <div class="col-sm-9 input-group form-sm form-1 pl-0">
@@ -13,10 +13,14 @@
                                 <button class="btn btn-vietgoal btn-sm mr-2" (click)="downloadTemplate()">Mẫu
                                     Import</button>
                             </div>
-                            <div class="row" style="padding-left: 50px;">
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.AdmissionDay' |translate}}"
+                            <div class="form-group row" style="padding-left: 50px;">
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>Ngày CS:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control"
+                                        placeholder="Ngày Chiêu Sinh"
                                         [matAutocomplete]="AdmissionDayAC" [formControl]="searchAdmissionDaysCtrl">
+                                    </div>
                                     <mat-autocomplete #AdmissionDayAC="matAutocomplete"
                                         (optionSelected)="changeAdmissionDay(searchAdmissionDaysCtrl.value.ID)"
                                         [displayWith]="displayAresFn">
@@ -24,17 +28,23 @@
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let admissionday of admissiondaysList" [value]="admissionday">
-                                                <span *ngIf="!admissionday.notfound">{{admissionday.AdmissionDayName}}</span>
-                                                <span *ngIf="admissionday.notfound" class="nofind">{{ 'Not found' }}</span>
+                                            <mat-option *ngFor="let admissionday of admissiondaysList"
+                                                [value]="admissionday">
+                                                <span
+                                                    *ngIf="!admissionday.notfound">{{admissionday.AdmissionDayName}}</span>
+                                                <span *ngIf="admissionday.notfound"
+                                                    class="nofind">{{ 'Not found' }}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
 
-                                <div class="col-sm-4">
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' |translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
                                         [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
+                                    </div>
                                     <mat-autocomplete #areaAC="matAutocomplete"
                                         (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
                                         [displayWith]="displayAreaFn">
@@ -44,15 +54,18 @@
                                         <ng-container *ngIf="!isLoading">
                                             <mat-option *ngFor="let area of areadsList" [value]="area">
                                                 <span *ngIf="!area.notfound">{{area.AreaName}}</span>
-                                                <span *ngIf="area.notfound"
-                                                    class="nofind">{{area.notfound}}</span>
+                                                <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
-                                <div class="col-sm-4">
+
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Yard' |translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
                                         [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
+                                        </div>
                                     <mat-autocomplete #YardAC="matAutocomplete"
                                         (optionSelected)="changeYard(searchYardsCtrl.value.ID)"
                                         [displayWith]="displayAresFn">
@@ -68,9 +81,13 @@
                                     </mat-autocomplete>
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.TrainingGround' |translate}}"
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.YardArea' |translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control"
+                                        placeholder="{{'MESSAGE.NameList.YardArea' |translate}}"
                                         [matAutocomplete]="traininggroundAC" [formControl]="searchTrainingGroundsCtrl">
+                                    </div>
                                     <mat-autocomplete #traininggroundAC="matAutocomplete"
                                         (optionSelected)="changeTrainingGround(searchTrainingGroundsCtrl.value.ID)"
                                         [displayWith]="displayTrainingGroundFn">
@@ -78,19 +95,25 @@
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let trainingground of traininggroundsList" [value]="trainingground">
-                                                <span *ngIf="!trainingground.notfound">{{trainingground.TrainingGroundName}}</span>
-                                                <span *ngIf="trainingground.notfound" class="nofind">{{trainingground.notfound}}</span>
+                                            <mat-option *ngFor="let trainingground of traininggroundsList"
+                                                [value]="trainingground">
+                                                <span
+                                                    *ngIf="!trainingground.notfound">{{trainingground.TrainingGroundName}}</span>
+                                                <span *ngIf="trainingground.notfound"
+                                                    class="nofind">{{trainingground.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
 
-                                
 
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Class' |translate}}"
+
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>Lớp Học:</strong> </label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="Lớp Học"
                                         [matAutocomplete]="ClassAC" [formControl]="searchClasssCtrl">
+                                    </div>
                                     <mat-autocomplete #ClassAC="matAutocomplete"
                                         (optionSelected)="changeClass(searchClasssCtrl.value.ID)"
                                         [displayWith]="displayAresFn">
@@ -106,9 +129,12 @@
                                     </mat-autocomplete>
                                 </div>
 
-                                <div class="col-sm-4">
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>Người Chốt:</strong> </label>
+                                    <div  class="col-6 label-middling" >
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.User' |translate}}"
                                         [matAutocomplete]="UserAC" [formControl]="searchUsersCtrl">
+                                    </div>
                                     <mat-autocomplete #UserAC="matAutocomplete"
                                         (optionSelected)="changeUser(searchUsersCtrl.value.ID)"
                                         [displayWith]="displayAresFn">
@@ -124,9 +150,12 @@
                                     </mat-autocomplete>
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Recruit' |translate}}"
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>Kết Quả:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="Kết Quả"
                                         [matAutocomplete]="RecruitAC" [formControl]="searchRecruitsCtrl">
+                                    </div>
                                     <mat-autocomplete #RecruitAC="matAutocomplete"
                                         (optionSelected)="changeRecruit(searchRecruitsCtrl.value.ID)"
                                         [displayWith]="displayAresFn">
@@ -141,7 +170,7 @@
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
-                                
+
                             </div>
                         </div>
                         <div class="col-sm-3 input-group form-sm form-1 pl-0 search-form search-form">
@@ -180,9 +209,12 @@
                                                     </span>
                                                 </th>
                                             </ng-container>
+
                                         </thead>
+
                                         <tbody>
-                                            <ng-container *ngFor="let recruitstudent of recruitstudentList; let i = index;">
+                                            <ng-container
+                                                *ngFor="let recruitstudent of recruitstudentList; let i = index;">
                                                 <tr>
                                                     <td>{{ i + 1}}</td>
                                                     <td>Họ Tên Phụ Huynh</td>
@@ -193,20 +225,21 @@
                                                     <td>Ngày sinh</td>
                                                     <td>Địa chỉ</td>
                                                     <td>Kết quả</td>
-                                                    <td  class="my-action-item">
+                                                    <td class="my-action-item">
 
-                                                        <button mat-raised-button 
-                                                            type="button" (click)="edit(recruitstudent.ID)"
+                                                        <button mat-raised-button type="button"
+                                                            (click)="edit(recruitstudent.ID)"
                                                             title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                                                             class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                             <i class="material-icons">edit</i>
                                                         </button>
-                                                        <button mat-raised-button 
-                                                            type="button" (click)="remove(recruitstudent)"
+                                                        <button mat-raised-button type="button"
+                                                            (click)="remove(recruitstudent)"
                                                             title="{{ 'MESSAGE.NameList.Delete' | translate}}"
                                                             class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                             <i class="material-icons">close</i>
                                                         </button>
+
                                                     </td>
                                                 </tr>
                                             </ng-container>

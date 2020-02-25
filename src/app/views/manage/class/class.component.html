@@ -14,9 +14,13 @@
                                     Import</button>
                             </div>
                             <div class="row" style="padding-left: 50px;">
-                                <div class="col-sm-4">
+                                
+                                    <div class="form-group row">
+                                        <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' |translate}}:</strong></label>
+                                        <div  class="col-6 label-middling" >
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
                                         [matAutocomplete]="AreaAC" [formControl]="searchAreasCtrl">
+                                        </div>
                                     <mat-autocomplete #AreaAC="matAutocomplete"
                                         (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
                                         [displayWith]="displayAresFn">
@@ -31,9 +35,12 @@
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Yard' |translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.YardName' |translate}}"
                                         [matAutocomplete]="yardAC" [formControl]="searchYardsCtrl">
+                                    </div>
                                     <mat-autocomplete #yardAC="matAutocomplete"
                                         (optionSelected)="changeYard(searchYardsCtrl.value.ID)"
                                         [displayWith]="displayYardFn">
@@ -50,9 +57,12 @@
                                     </mat-autocomplete>
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.TrainingGround' |translate}}"
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.YardArea' |translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.YardArea' |translate}}"
                                         [matAutocomplete]="traininggroundAC" [formControl]="searchTrainingGroundsCtrl">
+                                    </div>
                                     <mat-autocomplete #traininggroundAC="matAutocomplete"
                                         (optionSelected)="changeTrainingGround(searchTrainingGroundsCtrl.value.ID)"
                                         [displayWith]="displayTrainingGroundFn">

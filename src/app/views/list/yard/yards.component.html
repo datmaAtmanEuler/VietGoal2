@@ -15,9 +15,12 @@
                             </div>
                             <div class="row" style="padding-left: 50px;">
 
-                                <div class="col-sm-4">
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
                                         [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
+                                        </div>
                                     <mat-autocomplete #AreasAC="matAutocomplete"
                                         (optionSelected)="changeAreas(searchAreasCtrl.value.ID)"
                                         [displayWith]="displayAreasFn">
@@ -33,9 +36,12 @@
                                     </mat-autocomplete>
                                 </div>
                                 
-                                <div class="col-sm-4">
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Central' | translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"
                                         [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
+                                    </div>
                                     <mat-autocomplete #CentralAC="matAutocomplete"
                                         (optionSelected)="changeDistrict(searchCentralsCtrl.value.ID)"
                                         [displayWith]="displayCentralFn">

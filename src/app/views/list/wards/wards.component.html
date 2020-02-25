@@ -14,9 +14,12 @@
                                     Import</button>
                             </div>
                             <div class="row" style="padding-left: 50px;">
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Province' |translate}}"
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Provinces' | translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.ProvinceName' |translate}}"
                                         [matAutocomplete]="ProvincesAC" [formControl]="searchProvincesCtrl">
+                                    </div>
                                     <mat-autocomplete #ProvinceAC="matAutocomplete"
                                         (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)"
                                         [displayWith]="displayProvinceFn">
@@ -32,9 +35,12 @@
                                     </mat-autocomplete>
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.District' |translate}}"
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Districts' | translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.DistrictName' |translate}}"
                                         [matAutocomplete]="DistrictAC" [formControl]="searchDistrictsCtrl">
+                                    </div>
                                     <mat-autocomplete #DistrictAC="matAutocomplete"
                                         (optionSelected)="changeDistrict(searchDistrictsCtrl.value.ID)"
                                         [displayWith]="displayDistrictFn">

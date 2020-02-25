@@ -94,8 +94,9 @@ export class RecruitStudentComponent implements OnInit {
         return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
       }
   }
-  ngOnInit() {
   
+  ngOnInit() {
+
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.reload();
     this.filtersEventsBinding();

@@ -33,6 +33,7 @@ import {
   MatTooltipModule,
   MatSelectModule,
   MatDatepickerModule,
+  MatNativeDateModule,
 } from '@angular/material';
 
 import { MatRadioModule } from '@angular/material/radio';
@@ -116,6 +117,7 @@ import { RecruitImportComponent } from '../../views/list/recruits/recruit-import
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDatepickerModule,
+    MatNativeDateModule ,
     MatTreeModule,
     MatIconModule
   ],
@@ -204,6 +206,9 @@ import { RecruitImportComponent } from '../../views/list/recruits/recruit-import
     PositionImportComponent,
     StudentStatusImportComponent
   ],
+  providers: [
+    MatDatepickerModule
+  ]
 })
 
 export class AdminLayoutModule {}

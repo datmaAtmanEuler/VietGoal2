@@ -36,12 +36,15 @@ export class CoachAbsentService {
     delete(id: number, ): Observable<any> {
         return this.http.delete(environment.serverUrl + `CoachAbsents/${id}` , this.httpOptions);
     }
-
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
     }
 
     import(importViewModel: ImportViewModel): Observable<any> {
         return this.http.post(environment.serverUrl_employee + `CoachAbsents/import`, importViewModel , this.httpOptions);
+    }
+    
+    toggleApprove(state, id){
+        return this.http.put(`${environment.serverUrl}CoachAbsents/${state}/${id}`, this.httpOptions);
     }
 }

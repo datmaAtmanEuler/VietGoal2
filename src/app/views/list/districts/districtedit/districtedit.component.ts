@@ -21,7 +21,7 @@ import { DistrictFilter } from 'app/models/filter/districtfilter';
 })
 export class DistrictEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('ID') ID: number;
+	@Input('id') id: number;
 	@Input('UserId') UserId: null | number;
 	listprovince: any;
 	searchProvincesCtrl = new FormControl();
@@ -31,8 +31,8 @@ export class DistrictEditComponent implements OnInit {
 	provincesList: Province[] = [];
 
 	constructor(public activeModal: NgbActiveModal, private provinceService: ProvinceService, config: NgbModalConfig, private modalService: NgbModal, private districtService: DistrictService, private route: ActivatedRoute, private router: Router) {
-		this.ID = this.route.snapshot.queryParams['ID'];
-		this.ID = (this.ID) ? this.ID : 0;
+		this.id = this.route.snapshot.queryParams['id'];
+		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
@@ -40,11 +40,11 @@ export class DistrictEditComponent implements OnInit {
 	GetDistrictById(Id:number)  
 	{  
 		const _this = this;
-		this.provinceService.getProvincesList(new Filter(null,1,100, 'Id','ASC')).subscribe((proList: Province[]) => {
+		this.provinceService.getProvincesList(new Filter(null,1,100, 'id','ASC')).subscribe((proList: Province[]) => {
 			_this.provincesList = (proList) ? proList : [];
 			_this.districtService.getDistrict(Id).subscribe((district: District) => {
 				_this.district = district;
-				if (_this.district == null || _this.district.Id==0) {
+				if (_this.district == null || _this.district.id==0) {
 					_this.district = new District(0, '', '',0, false, new Date(), null, 1, null, null, null);
 				}
 			});	
@@ -79,7 +79,7 @@ export class DistrictEditComponent implements OnInit {
 				}
 
 			});
-		this.GetDistrictById(this.ID);  
+		this.GetDistrictById(this.id);  
 	}
 
 	ReturnList() {
@@ -88,23 +88,21 @@ export class DistrictEditComponent implements OnInit {
 	}
 
 	displayProvinceFn(user): string {
-		return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
+		return user && user.provinceName && !user.notfound ? user.provinceName : '';
 	}
 	
 	UpdateDistrict() {
-		const _this = this;
-		this.districtService.addOrUpdateDistrict(_this.district, this.UserId).subscribe((result: any) => {
-			if (result) {
-				if(!_this.popup) {
-					_this.ReturnList();
+		this.districtService.addOrUpdateDistrict(this.district).subscribe(
+			() => {
+				if (!this.popup) {
+					this.ReturnList();
 				} else {
-					
-					_this.closeMe();
+					this.closeMe();
 				}
-			} else {
-				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
-			}
-		});
+			},
+			() => {
+				this.modalService.open(ConfirmComponent, { size: 'lg' });
+			});
 	}
 
 	closeMe() {

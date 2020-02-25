@@ -28,14 +28,14 @@ export class ProvinceService {
         return this.http.get(environment.apiUrl + `Provinces/${id}` , this.httpOptions);
     }
 
-    addOrUpdateProvince(province: Province, by: null | number): Observable<any> {
-        province.DisplayOrder = parseInt(province.DisplayOrder + '');
-        if (province.Id != 0 && province.Id) {
-            province.UpdatedBy = by;
+   
+
+    addOrUpdateProvince(province: Province): Observable<any> {
+        if (province.id == 0) {
+            return this.http.post(environment.serverUrl + 'Provinces', province, this.httpOptions);
         } else {
-            province.CreatedBy = by;
+            return this.http.put(environment.serverUrl + `Provinces/${province.id}`, province, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Provinces`, province, this.httpOptions);
     }
 
     deleteProvince(id: number, deletedBy: number): Observable<any> {
@@ -48,6 +48,6 @@ export class ProvinceService {
     }
 
     import(importViewModel: ImportViewModel): Observable<any> {
-        return this.http.post(environment.serverUrl_employee + `provinces/import`, importViewModel , this.httpOptions);
+        return this.http.post(environment.serverUrl_employee + `Provinces/import`, importViewModel , this.httpOptions);
     }
 }

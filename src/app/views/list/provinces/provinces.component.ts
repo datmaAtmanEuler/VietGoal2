@@ -36,7 +36,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'ProvinceCode', 'ProvinceName', 'Action'];
-  columnsNameMapping: string[] = ['ID', 'ProvinceCode', 'ProvinceName', 'Action'];
+  columnsNameMapping: string[] = ['id', 'ProvinceCode', 'ProvinceName', 'Action'];
   sortAbles: boolean[] = [false, true, true, false];
   /**
    * END SORT SETTINGS
@@ -122,12 +122,12 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     this.edit(null);
   }
 
-  edit(ID: number) {
+  edit(id: number) {
     const _this = this;
     const modalRef = this.modalService.open(ProvinceEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    if (ID) {
-      modalRef.componentInstance.ID = ID;
+    if (id) {
+      modalRef.componentInstance.id = id;
     }
     modalRef.result.then(function(){
         _this.reload();
@@ -168,7 +168,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
       }
     });
 
-    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'provinceName' : this.columnsNameMapping[columnIndex];
+    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
   

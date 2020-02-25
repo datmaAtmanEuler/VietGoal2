@@ -43,8 +43,7 @@ import { ShiftDay, ShiftDayToList, ShiftDayToListName } from 'app/models/enums/s
 
 export class ClassEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('ClassId') ClassId: number;
-	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
+	@Input('id') id: number;
 
 	currentUser: any = {};
 	areasList: any[] = [];
@@ -67,7 +66,7 @@ export class ClassEditComponent implements OnInit {
 	searchManagersCtrl = new FormControl();
 	searchMainCoachsCtrl = new FormControl();
 	searchViceCoachsCtrl = new FormControl();
-	yard: Class = new Class (0,'', '', 0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+	aclass : Class = new Class (0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
 	isLoading = false;
 	errorMsg: string;
 
@@ -79,8 +78,8 @@ export class ClassEditComponent implements OnInit {
 		private userService: UserService,
 		private ageService: AgeService,
 		private route: ActivatedRoute, private router: Router, private http: HttpClient) {
-		this.ClassId = this.route.snapshot.queryParams['ID'];
-		this.ClassId = (this.ClassId) ? this.ClassId : 0;
+		this.id = this.route.snapshot.queryParams['id'];
+		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
 		config.keyboard = false;
 		config.scrollable = false;
@@ -99,28 +98,36 @@ export class ClassEditComponent implements OnInit {
 		return user && user.TrainingGroundName && !user.notfound ? user.TrainingGroundName : '';
 	}
 	changeArea() {
-		this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
+		this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'id', 'ASC')).subscribe((list) => {
 			this.yardsList = list;
 		});
 	}
 	
 	changeYard() {
-		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null, null, 'ID', 'ASC')).subscribe((list) => {
+		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null, null, 'id', 'ASC')).subscribe((list) => {
 			this.trainingGroundsList = list;
 		});
 	}
-	GetClassById(Id: number) {
-		this.classService.getClass((Id) ? Id : this.ClassId).subscribe(
-			(aClass: any) => {
-				this.class = aClass || {};
-			},
-			() => {
-				this.class = {};
-			}
-		);
+	
+
+	GetClassById(id: number)  
+	{  
+		
+		const _this = this;
+		if(id){
+			this.classService.getClass(id).subscribe((aclass: Class) => {
+				_this.aclass = aclass;
+				if (_this.aclass == null || _this.aclass.id == null) {
+					_this.aclass = new Class(0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+				}
+			});
+		} 		else {
+					_this.aclass = new Class(0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+					}
 	}
 
 	ngOnInit() {
+		alert(this.id);
 		this.searchAreasCtrl.valueChanges
 			.pipe(
 				startWith(''),
@@ -130,7 +137,7 @@ export class ClassEditComponent implements OnInit {
 					this.areasList = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, this.class.CentralID, 'Id', 'ASC'))
+				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'id', 'ASC'))
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -157,7 +164,7 @@ export class ClassEditComponent implements OnInit {
 				this.yardsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'YardCode', 'ASC'))
+			switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -182,7 +189,7 @@ export class ClassEditComponent implements OnInit {
 				this.yardsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter(value, 1, 100, null, null, 'TrainingGroundCode', 'ASC'))
+			switchMap(value => this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter(value, 1, 100, null, null, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -199,7 +206,7 @@ export class ClassEditComponent implements OnInit {
 			}
 
 		});
-		this.GetClassById(this.ClassId);
+		this.GetClassById(this.id);
 	}
 
 	ReturnList() {
@@ -211,7 +218,7 @@ export class ClassEditComponent implements OnInit {
 		const _this= this
 		this.class.Week = Number.parseInt(_this.class.Week + "", 10);
 		this.class.ShiftDay = Number.parseInt(_this.class.ShiftDay + "", 10);
-		this.classService.addOrUpdateClass(_this.class, this.currentUser.UserId).subscribe(
+		this.classService.addOrUpdateClass(_this.class).subscribe(
 			() => {
 				if (!_this.popup) {
 					_this.ReturnList();

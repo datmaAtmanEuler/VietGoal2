@@ -1,29 +1,29 @@
 export class Ward {
-	Id:null | number;
-	WardCode: string;
-    WardName: string;
-    DistrictId: number;
+	id:null | number;
+	wardCode: string;
+    wardName: string;
+    districtId: number;
 	Deleted: boolean;
     CreatedDate: null | Date;
     UpdatedDate: null | Date;
     CreatedBy: null | number;
     UpdatedBy: null | number;
     DeletedBy: null | number;
-	DisplayOrder:number;
+	displayOrder:number;
 	
 	
-	constructor(Id: number, WardCode: string, WardName: string, DistrictId: number,  Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
-		UpdatedBy: null | number, DeletedBy: null | number, DisplayOrder:number) {
-	this.Id = Id;
-	this.WardCode = WardCode;
-    this.WardName = WardName;
-	this.DistrictId = DistrictId;	
+	constructor(id: number, wardCode: string, wardName: string, districtId: number,  Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
+		UpdatedBy: null | number, DeletedBy: null | number, displayOrder:number) {
+	this.id = id;
+	this.wardCode = wardCode;
+    this.wardName = wardName;
+	this.districtId = districtId;	
 	this.Deleted = Deleted;
 	this.CreatedDate = CreatedDate;
 	this.UpdatedDate = UpdatedDate;
 	this.CreatedBy = CreatedBy;
 	this.UpdatedBy = UpdatedBy;
 	this.DeletedBy = DeletedBy;
-	this.DisplayOrder = DisplayOrder;
+	this.displayOrder = displayOrder;
 }
 }

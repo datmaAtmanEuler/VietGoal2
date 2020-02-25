@@ -21,15 +21,15 @@
                                         [matAutocomplete]="CentralAC" [formControl]="searchCentralCtrl">
                                     </div>
                                     <mat-autocomplete #CentralAC="matAutocomplete"
-                                        (optionSelected)="changeCentral(searchCentralCtrl.value.ID)"
+                                        (optionSelected)="changeCentral(searchCentralCtrl.value.id)"
                                         [displayWith]="displayCentralFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
                                             <mat-option *ngFor="let central of centralsList" [value]="central">
-                                                <span *ngIf="!Central.notfound">{{Central.CentralName}}</span>
-                                                <span *ngIf="Central.notfound" class="nofind">{{Central.notfound}}</span>
+                                                <span *ngIf="!central.notfound">{{central.centralName}}</span>
+                                                <span *ngIf="central.notfound" class="nofind">{{central.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
@@ -86,13 +86,13 @@
                                                         <td>{{ area.centralId }}</td>
                                                         <td class="my-action-item">
 
-                                                            <button mat-raised-button *hasClaim="['CanEditAreas']"
-                                                                type="button" (click)="edit(area.ID)"
+                                                            <button mat-raised-button 
+                                                                type="button" (click)="edit(area.id)"
                                                                 title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                                                                 class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                                 <i class="material-icons">edit</i>
                                                             </button>
-                                                            <button mat-raised-button *hasClaim="['CanDeleteAreas']"
+                                                            <button mat-raised-button 
                                                                 type="button" (click)="remove(area)"
                                                                 title="{{ 'MESSAGE.NameList.Delete' | translate}}"
                                                                 class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
@@ -105,9 +105,11 @@
                                         </table>
                                     </div>
                                 </div>
-                                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
-                                    [showFirstLastButtons]="true" (page)="pageEvent($event)">
-                                </mat-paginator>
+                                <mat-paginator 
+                            [length]="(areasList && areasList.length > 0 && areasList[0] && areasList[0].Total) ? areasList[0].Total : 0"
+                             [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                            [showFirstLastButtons]="true" (page)="pageEvent($event)">
+                          </mat-paginator>
                             </div>
                         </div>
                     </div>

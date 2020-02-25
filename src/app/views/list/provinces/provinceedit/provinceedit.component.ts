@@ -14,13 +14,13 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 
 export class ProvinceEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('ID') ID: null | number;
+	@Input('id') id: null ;
 	currentUser: any;
 
 	province: Province = new Province(0, '', '', false, new Date(), null, 1, null, null, null);
 
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private provinceService: ProvinceService, private route: ActivatedRoute, private router: Router) {
-		this.ID = this.route.snapshot.queryParams['ID'];
+		this.id = this.route.snapshot.queryParams['id'];
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
@@ -32,7 +32,7 @@ export class ProvinceEditComponent implements OnInit {
 		if(id){
 			this.provinceService.getProvince(id).subscribe((province: Province) => {
 				_this.province = province;
-				if (_this.province == null || _this.province.Id == null) {
+				if (_this.province == null || _this.province.id == null) {
 					_this.province = new Province(0, '', '', false, new Date(), null, 1, null, null, null);
 				}
 			});
@@ -42,7 +42,7 @@ export class ProvinceEditComponent implements OnInit {
 	}
 	
 	ngOnInit() {
-		this.GetProvinceById(this.ID);  
+		this.GetProvinceById(this.id);  
 	}
 
 	ReturnList() {
@@ -51,7 +51,7 @@ export class ProvinceEditComponent implements OnInit {
 
 	UpdateProvince() {
 		const _this = this;
-		this.provinceService.addOrUpdateProvince(_this.province, this.currentUser.UserId).subscribe((result: any) => {
+		this.provinceService.addOrUpdateProvince(_this.province).subscribe((result: any) => {
 			if (result) {
 				if(!_this.popup) {
 					_this.ReturnList();

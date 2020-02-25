@@ -27,15 +27,12 @@ export class DistrictService {
         return this.http.get(environment.apiUrl + `Districts/${id}` , this.httpOptions);
     }
 
-    addOrUpdateDistrict(district: District, by: null | number): Observable<any> {
-        district.DisplayOrder = parseInt(district.DisplayOrder + '');
-        if (district.Id != 0 && district.Id) {
-            district.UpdatedBy = by;
+    addOrUpdateDistrict(District: District): Observable<any> {
+        if (District.id == 0) {
+            return this.http.post(environment.serverUrl + 'Districts', District, this.httpOptions);
         } else {
-            district.CreatedBy = by;
+            return this.http.put(environment.serverUrl + `Districts/${District.id}`, District, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Districts`, district, this.httpOptions);
-        
     }
 
     deleteDistrict(id: number, deletedBy: number): Observable<any> {

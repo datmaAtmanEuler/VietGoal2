@@ -1,32 +1,30 @@
 export class Area {
-	Id: null| number;
-	AreaCode: string;
-    AreaName: string;
-    CentralId: null | number;
+	id: null| number;
+	areaCode: string;
+    areaName: string;
+    centralId: null | number;
 	Deleted: boolean;
     CreatedDate: null | Date;
     UpdatedDate: null | Date;
     CreatedBy: null | number;
     UpdatedBy: null | number;
 	DeletedBy: null | number;
-	DisplayOrder
- : null | number;
+	displayOrder: null | number;
 	
-	constructor(Id: number, AreaCode: string,  AreaName: string,CentralId: null | number, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
-		UpdatedBy: null | number, DeletedBy: null | number, DisplayOrder
-: null | number) {
-		this.Id = Id;
-		this.AreaCode = AreaCode;
-		this.CentralId = CentralId;
-		this.AreaName = AreaName;	
+	constructor(id: number, areaCode: string,  areaName: string,centralId: null | number, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
+		UpdatedBy: null | number, DeletedBy: null | number, displayOrder: null | number) {
+		this.id = id;
+		this.areaCode = areaCode;
+		this.centralId = centralId;
+		this.areaName = areaName;	
 		this.Deleted = Deleted;
 		this.CreatedDate = CreatedDate;
 		this.UpdatedDate = UpdatedDate;
 		this.CreatedBy = CreatedBy;
 		this.UpdatedBy = UpdatedBy;
 		this.DeletedBy = DeletedBy;
-		this.DisplayOrder
- = DisplayOrder
+		this.displayOrder
+ = displayOrder
 ;
 	}
 }

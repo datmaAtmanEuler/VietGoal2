@@ -21,8 +21,8 @@ import { ProvinceService } from 'app/services/list/province.service';
 })
 export class WardEditComponent implements OnInit, AfterViewInit {
 	@Input('popup') popup: boolean;
-	@Input('Id') Id: number;
-	@Input('UserId') UserId: null | number;
+	@Input('id') id: number;
+	@Input('Userid') Userid: null | number;
 	ward: Ward = new Ward(0, '', '', 0,false, new Date(), null, 1, null, null, null);
 	listdistrict: any;
 	listprovince: any;
@@ -46,8 +46,8 @@ export class WardEditComponent implements OnInit, AfterViewInit {
   	isLoading = false;
 
 	constructor(private cd: ChangeDetectorRef,private provinceService: ProvinceService, private districtService: DistrictService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
-		this.Id = this.route.snapshot.queryParams['Id'];
-		this.Id = (this.Id) ? this.Id : 0;
+		this.id = this.route.snapshot.queryParams['id'];
+		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
@@ -59,13 +59,14 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	displayDistrictFn(user): string {
 		return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
 	}
-	changeProvince(provinceId) {
-		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,null,'Id','ASC')).subscribe((list) => {
+	changeProvince(provinceid) {
+		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,null,'id','ASC')).subscribe((list) => {
 			this.listdistrict = list;
 		});
 	}
-	GetWardById(Id: number) {
-		this.wardService.getWard((Id) ? Id : this.Id).subscribe(
+	GetWardById(id: number) {
+		alert(id);
+		this.wardService.getWard((id) ? id : this.id).subscribe(
 			(aWard) => {
 				this.ward = aWard || new Ward(0, '', '', 0, true, new Date(),null, null, null, null,0);
 			},
@@ -91,7 +92,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 					this.listprovince = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.provinceService.getProvincesList({ 'SearchTerm': value, 'PageIndex': 1, 'PageSize': 10, 'SortName': 'Id', 'SortDirection': 'ASC' })
+				switchMap(value => this.provinceService.getProvincesList({ 'SearchTerm': value, 'PageIndex': 1, 'PageSize': 10, 'SortName': 'id', 'SortDirection': 'ASC' })
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -114,7 +115,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 		  .pipe(
 	        debounceTime(300),
 	        tap(() => this.isLoading = true),
-	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, null,null, 'Id', 'ASC'))
+	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, null,null, 'id', 'ASC'))
 	        .pipe(
 	          finalize(() => this.isLoading = false),
 	          )
@@ -129,7 +130,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	        _this.checkDistricts();
 		  });
 		  
-		this.GetWardById(this.Id);  
+		this.GetWardById(this.id);  
 	}
 
 	ReturnList() {
@@ -139,7 +140,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 
 	UpdateWard() {
 		const _this = this;
-		 this.wardService.addOrUpdateWard(_this.ward, this.UserId).subscribe((result : any)=>{
+		 this.wardService.addOrUpdateWard(_this.ward).subscribe((result : any)=>{
 			if (result) {
 				if(!_this.popup) {
 					
@@ -166,9 +167,9 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	}
 
 	updateSelectedDistrict(event: any) {
-		const selectedDistricts = this.filteredDistricts.filter((district: District) => district.DistrictName == event.option.value);
+		const selectedDistricts = this.filteredDistricts.filter((district: District) => district.districtName == event.option.value);
 		if(selectedDistricts.length > 0) {
-			this.ward.DistrictId = selectedDistricts[0].Id;
+			this.ward.districtId = selectedDistricts[0].id;
 			console.log(this.ward);
 		}
 	}

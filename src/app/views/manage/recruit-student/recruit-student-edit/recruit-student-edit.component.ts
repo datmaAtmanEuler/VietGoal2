@@ -67,7 +67,7 @@ export class RecruitStudentEditComponent implements OnInit {
 	searchManagersCtrl = new FormControl();
 	searchMainCoachsCtrl = new FormControl();
 	searchViceCoachsCtrl = new FormControl();
-	yard: Class = new Class (0,'', '', 0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+	yard: Class = new Class (0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
 	isLoading = false;
 	errorMsg: string;
 
@@ -79,7 +79,7 @@ export class RecruitStudentEditComponent implements OnInit {
 		private userService: UserService,
 		private ageService: AgeService,
 		private route: ActivatedRoute, private router: Router, private http: HttpClient) {
-		this.ClassId = this.route.snapshot.queryParams['ID'];
+		this.ClassId = this.route.snapshot.queryParams['ClassId'];
 		this.ClassId = (this.ClassId) ? this.ClassId : 0;
 		config.backdrop = 'static';
 		config.keyboard = false;
@@ -211,7 +211,7 @@ export class RecruitStudentEditComponent implements OnInit {
 		const _this= this
 		this.class.Week = Number.parseInt(_this.class.Week + "", 10);
 		this.class.ShiftDay = Number.parseInt(_this.class.ShiftDay + "", 10);
-		this.classService.addOrUpdateClass(_this.class, this.currentUser.UserId).subscribe(
+		this.classService.addOrUpdateClass(_this.class).subscribe(
 			() => {
 				if (!_this.popup) {
 					_this.ReturnList();

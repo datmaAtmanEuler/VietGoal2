@@ -11,7 +11,6 @@ import { environment } from 'environments/environment';
 export class AuthenticationService {
     currentUserSubject: BehaviorSubject<Register>;
     currentUser: Observable<Register>;
-    serverURL  = `${environment.serverUrl}Login/`; 
     header: HttpHeaders;
     constructor(private http: HttpClient, private utils: UtilsService) {
         const headerSettings: {[name: string]: string | string[]; } = {};  
@@ -34,11 +33,15 @@ export class AuthenticationService {
     }
 
     login(username: string, password: string) {
-    password = this.utils.md5Encode(password);
+    let Email = '';
+    let PhoneNumber = '';
+    let PasswordHash = this.utils.md5Encode(password);
 	let body: HttpParams = new HttpParams();
-    	body = body.append('UserName', username);
-    	body = body.append('Password', password);
-	         return this.http.post<any>(this.serverURL+'UserLogin', body,{ headers: this.header})
+        body = body.append('UserName', username);
+        body = body.append('PhoneNumber', PhoneNumber);
+        body = body.append('Email', Email);
+    	body = body.append('passwordHash', PasswordHash);
+	         return this.http.post<any>(environment.serverUrl+'Users/Login', body,{ headers: this.header})
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.UserInfo) {

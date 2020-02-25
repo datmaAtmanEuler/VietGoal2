@@ -342,7 +342,7 @@ export const AdminLayoutRoutes: Routes = [
         path: 'decentralize-data', component: DecentralizeDataComponent
     },
     {
-        path: 'ngaynghi',
+        path: 'nghiphep',
         children: [ {
             path: '', component: CoachAbsentComponent
         }

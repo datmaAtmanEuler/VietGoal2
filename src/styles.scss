@@ -369,3 +369,26 @@ footer{
 .cdk-overlay-container {
     z-index: 2000;
 }
+.form-control[disabled], fieldset[disabled] .form-control, .form-group .form-control[disabled], fieldset[disabled] .form-group .form-control {
+    border-bottom: 1px solid #d2d2d2;
+    cursor: text;
+}
+.mat-form-field-underline{
+    display: none;
+}
+.calendar-btn{    
+    position: absolute!important;
+    top: 0!important;
+    right: 0!important;
+}
+.btn{
+    text-transform: none;
+}
+.mat-form-field-wrapper{
+    padding: 0;
+}
+.mat-form-field-infix{
+    margin: 0!important;
+    padding: 0!important;
+    border: 0!important;
+}

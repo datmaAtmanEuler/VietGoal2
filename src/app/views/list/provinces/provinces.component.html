@@ -41,18 +41,18 @@
                                     <table class="table table-condensed table-striped table-bordered table-hover"
                                         style="width: 100%">
                                         <thead>
-                                            <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
-                                                <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')"
-                                                    (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
-                                                    <span
-                                                        style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
-                                                        <i class="material-icons asc-sort-icons"
-                                                            *ngIf="sortAbles[colIndex]">
-                                                            {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
-                                                        </i>
-                                                    </span>
+                                            <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
+                                                <th *ngIf="paginationSettings.visibles[colIndex]"
+                                                  [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
+                                                  (click)="sortToggles(colIndex)">
+                                                  <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                                                    <i style="float: none;" class="material-icons asc-sort-icons"
+                                                      *ngIf="paginationSettings.sortAbles[colIndex]">
+                                                      {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                                                    </i>
+                                                  </span>
                                                 </th>
-                                            </ng-container>
+                                              </ng-container>
                                         </thead>
                                         <tbody>
                                             <ng-container *ngFor="let province of provincesList; let i = index;">
@@ -62,7 +62,7 @@
                                                     <td>{{ province.provinceName }}</td>
                                                     <td width="150px" class="my-action-item">
                                                         <button mat-raised-button type="button"
-                                                             (click)="edit(province.id)"
+                                                            *hasClaim="['CanUpdateProvinces']" (click)="edit(province.ID)"
                                                             title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                                                             class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                             <i class="material-icons">edit</i>
@@ -81,7 +81,7 @@
                                 </div>
                             </div>
                             <mat-paginator 
-                            [length]="(provincesList && provincesList.length > 0 && provincesList[0] && provincesList[0].Total) ? provincesList[0].Total : 0"
+                            [length]="Total"
                              [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
                                 [showFirstLastButtons]="true" (page)="pageEvent($event)">
                             </mat-paginator>

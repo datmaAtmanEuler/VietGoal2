@@ -13,6 +13,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import {TranslateService} from '@ngx-translate/core';
 import { elementAt } from 'rxjs/operators';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { UtilsService } from 'app/services/utils.service';
 
 @Component({
   selector: 'app-provinces',
@@ -28,16 +29,25 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
   loading: boolean = true;
-  Total: any;
+  Total: number = 0;
   firstRowOnPage: any;
   /**
    * BEGIN SORT SETTINGS
    */
-  sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
-  columnsName: string[] = ['Order', 'ProvinceCode', 'ProvinceName', 'Action'];
-  columnsNameMapping: string[] = ['id', 'ProvinceCode', 'ProvinceName', 'Action'];
-  sortAbles: boolean[] = [false, true, true, false];
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      null
+    ],
+    columnsName:  ['Order', 'ProvinceCode', 'ProvinceName', 'Action'],
+    columnsNameMapping: ['id', 'provinceCode', 'provinceName', ''],
+    sortAbles: [false, true, true, false],
+    columnsNameFilter: ['id', 'provinceCode', 'provinceName', ''],
+    visibles: [true, true, true, true]
+  };
+  
   /**
    * END SORT SETTINGS
    */
@@ -47,28 +57,12 @@ export class ProvincesComponent implements OnInit {ModalDirective;
               config: NgbModalConfig,
               private service: ProvinceService,
               private router: Router,
+              public utilsService: UtilsService, 
               private modalService: NgbModal) { 
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
-    this.updateMatTableLabel();
-    translate.onLangChange.subscribe((a: any) => {
-      this.updateMatTableLabel();
-      matCus.changes.next();
-    });
-  }
-
-  updateMatTableLabel() {
-    this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
-    this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
-        if (length === 0 || pageSize === 0) {
-          return this.translate.instant('MESSAGE.NameList.NoRecord');
-        }
-        length = Math.max(length, 0);
-        const startIndex = page * pageSize;
-        const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
-        return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
-      }
+    utilsService.loadPaginatorLabels();
   }
 
   ngOnInit() {
@@ -98,7 +92,13 @@ export class ProvincesComponent implements OnInit {ModalDirective;
 
     reload() {
       const _this = this;
-      const filter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'Id','ASC');
+      const filter = {
+        searchTerm: _this.searchTerm,
+        pageIndex: _this.pageIndex,
+        pageSize: _this.pageSize,
+        sortName: _this.paginationSettings.sort.SortName,
+        sortDirection: _this.paginationSettings.sort.SortDirection
+      };
       this.loading = true;
       _this.provincesList = [];
       this.service.getProvincesList(filter).subscribe(
@@ -106,10 +106,8 @@ export class ProvincesComponent implements OnInit {ModalDirective;
             const list = response.results ? response.results : [];
             this.Total = (response && response.rowCount) ? response.rowCount : 0;
             this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-            setTimeout(() => {
-              _this.provincesList = (list) ? list : [];
+            _this.provincesList = (list) ? list : [];
               _this.loading = false;
-            }, 500);
           },
           (err: any) => {
             _this.provincesList = [];
@@ -141,36 +139,16 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     });
   }
 
-  toggleSort(columnIndex: number): void {
-    let toggleState =  this.sortToggles[columnIndex];
-    switch(toggleState) {
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.DESC;
-        break;
-      }
-      default:
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
+  sortToggles(colIndex: number) {
+        const _this= this;
+        if(this.paginationSettings.sortAbles[colIndex]) 
+            this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles ,this.paginationSettings.sort , this.paginationSettings.columnsNameMapping)
+              .then(() => {
+                _this.reload();
+              });
+        else 
+          this.utilsService.doNothing();
     }
-    this.sortToggles.forEach((s: string, index: number) => {
-      if(index == columnIndex) {
-        this.sortToggles[index] = this.sort.SortDirection = toggleState;
-      } else {
-        this.sortToggles[index] = SORD_DIRECTION.ASC;
-      }
-    });
-
-    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : this.columnsNameMapping[columnIndex];
-    this.reload();
-  }
   
   doNothing(): void {}
 

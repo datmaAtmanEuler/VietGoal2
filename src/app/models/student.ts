@@ -1,10 +1,24 @@
 export class Student {
-    Id: number;
-    FirstName: string;
-    MiddleName: string;
-    LastName: string;
-    DOB: Date;
-    Designation: string;
-    ReportingTo: string;
-    Salary: number;
+  id: number;
+  studentCode: string;
+  firstName: string;
+  lastName: string;
+  userName: string;
+  password: string;
+  email: string;
+  address: string;
+  wardId: number;
+  phone: string;
+  dob: Date;
+  gender: number;
+  admissionDate: Date;
+  parentFullName: string;
+  parentPhone: string;
+  parentFacebook: string;
+  parentEmail: string;
+  parentNotes: string;
+  source: string;
+  approver: number | null;
+  studentStatusId: number | null;
+  displayOrder: number | null;
  }

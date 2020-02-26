@@ -43,9 +43,14 @@ export class UtilsService {
       const endIndex = startIndex < length ? Math.min(startIndex + pageSize, length) : startIndex + pageSize;
       return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
     }
+
+    this.matCus.nextPageLabel = '';
+    this.matCus.lastPageLabel = '';
+    this.matCus.previousPageLabel = '';
+    this.matCus.firstPageLabel = '';
   }
 
-  toggleSort(columnIndex: number, sortToggles: any, sort: any, columnsNameMapping: any[], reload: () => any): void {
+  async toggleSort(columnIndex: number, sortToggles: any, sort: any, columnsNameMapping: any[]) {
     let toggleState = sortToggles[columnIndex];
     switch (toggleState) {
       case SORD_DIRECTION.DESC:
@@ -73,7 +78,6 @@ export class UtilsService {
     });
 
     sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : columnsNameMapping[columnIndex];
-    reload();
   }
 
   doNothing(): void { }
@@ -87,5 +91,19 @@ export class UtilsService {
       this.updateMatTableLabel();
       this.matCus.changes.next();
     });
+  }
+  
+  stringDate(date: Date){
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 }  

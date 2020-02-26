@@ -1,0 +1,422 @@
+<div class="modal-body" *ngIf="popup">
+  <div class="text-center border border-light p-5">
+    <p class="h4 mb-4">Student Information</p>
+    <form class="row">
+      <p class="col-12 title-head">Thông tin học viên</p>
+      <div class="col-9 row">
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Họ Tên:</label>
+          <div class="col-sm-8">
+            <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="fullName">
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Địa chỉ:</label>
+          <div class="col-sm-8">
+            <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="Student.address">
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Giới tính:</label>
+          <div class="ml-4">
+            <mat-radio-group aria-labelledby="academy-radio-group-label"
+              class="academy-radio-group student-radio-gender" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="Student.gender">
+              <mat-radio-button class="academy-radio-button" [value]="1">
+                Nam
+              </mat-radio-button>
+              <mat-radio-button class="academy-radio-button ml-2" [value]="0">
+                Nữ
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Tỉnh thành:</label>
+          <div class="col-sm-8">
+            <!-- <input  type="text" id="" class="form-control"> -->
+            <input class="form-control" placeholder="{{'MESSAGE.NameList.Province' |translate}}"
+              [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
+            <mat-autocomplete #provinceAC="matAutocomplete"
+              (optionSelected)="changeProvince(searchProvincesCtrl.value.id)" [displayWith]="displayProvinceFn">
+              <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                <mat-spinner></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let province of listprovince" [value]="province">
+                  <span *ngIf="!province.notfound">{{province.provinceName}}</span>
+                  <span *ngIf="province.notfound" class="nofind">{{province.notfound}}</span>
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Ngày sinh:</label>
+          <div class="col-sm-8">
+            <mat-form-field>
+              <input matInput [disabled]="true" (dateChange)="dobEvent($event)" [matDatepicker]="dobDP"
+                class="col-sm-3 form-control">
+              <span mat-raised-button (click)="dobDP.open()"
+                class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
+                <i class="material-icons">date_range</i>
+              </span>
+              <!-- <mat-datepicker-toggle matSuffix [for]="startDateFilter"></mat-datepicker-toggle> -->
+              <mat-datepicker #dobDP disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Quận huyện:</label>
+          <div class="col-sm-8">
+            <!-- <input type="text" id="" class="form-control"> -->
+            <input class="form-control" placeholder="{{'MESSAGE.NameList.District' |translate}}"
+              [matAutocomplete]="districtAC" [formControl]="searchDistrictsCtrl">
+            <mat-autocomplete #districtAC="matAutocomplete"
+              (optionSelected)="changeDistrict(searchDistrictsCtrl.value.id)" [displayWith]="displayDistrictFn">
+              <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                <mat-spinner></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let district of listdistrict" [value]="district">
+                  <span *ngIf="!district.notfound">{{district.districtName}}</span>
+                  <span *ngIf="district.notfound" class="nofind">{{district.notfound}}</span>
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Ngày nhập học:</label>
+          <div class="col-sm-8">
+            <mat-form-field>
+              <input matInput [disabled]="true" (dateChange)="admissionDateEvent($event)"
+                [matDatepicker]="admissionDateDP" class="col-sm-3 form-control">
+              <span mat-raised-button (click)="admissionDateDP.open()"
+                class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
+                <i class="material-icons">date_range</i>
+              </span>
+              <!-- <mat-datepicker-toggle matSuffix [for]="admissionDateDP"></mat-datepicker-toggle> -->
+              <mat-datepicker #admissionDateDP disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Phường xã:</label>
+          <div class="col-sm-8">
+            <!-- <input type="text" id="" class="form-control"> -->
+            <input class="form-control" placeholder="{{'MESSAGE.NameList.Ward' |translate}}" [matAutocomplete]="wardAC"
+              [formControl]="searchWardsCtrl">
+            <mat-autocomplete #wardAC="matAutocomplete" (optionSelected)="changeWard(searchWardsCtrl.value.id)"
+              [displayWith]="displayWardFn">
+              <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                <mat-spinner></mat-spinner>
+              </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let ward of listward" [value]="ward">
+                  <span *ngIf="!ward.notfound">{{ward.wardName}}</span>
+                  <span *ngIf="ward.notfound" class="nofind">{{ward.notfound}}</span>
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+          </div>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="avatar">
+          <img src="https://pngimage.net/wp-content/uploads/2018/06/no-avatar-png-4-300x200.png" alt="">
+          <button type="button" class="btn btn-primary std-create search-button btn-link btn-sm btn-just-icon">
+            <i class="material-icons">create</i>
+          </button>
+          <button type="button" class="btn btn-primary std-clear search-button btn-link btn-sm btn-just-icon">
+            <i class="material-icons">clear</i>
+          </button>
+        </div>
+      </div>
+      <p class="col-12 title-head">Thông tin phụ huynh</p>
+      <div class="col-9 row">
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Họ Tên:</label>
+          <div class="col-sm-8">
+            <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="Student.parentFullName">
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Điện thoại:</label>
+          <div class="col-sm-8">
+            <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="Student.parentPhone">
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Facebook:</label>
+          <div class="col-sm-8">
+            <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="Student.parentFacebook">
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Email:</label>
+          <div class="col-sm-8">
+            <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="Student.parentEmail">
+          </div>
+        </div>
+        <div class="form-group col-12 row">
+          <label class="control-label col-sm-2 label-middling" for="">Ghi chú:</label>
+          <div class="col-sm-10">
+            <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="Student.parentNotes">
+          </div>
+        </div>
+      </div>
+      <div class="col-3"></div>
+      <p class="col-12 title-head">Thông tin khác</p>
+      <div class="col-9 row">
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Nguồn:</label>
+          <div class="col-sm-8">
+            <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="Student.source">
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Người chốt:</label>
+          <div class="col-sm-8">
+            <input type="number" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="Student.approver">
+          </div>
+        </div>
+        <div class="form-group col-6 row">
+          <label class="control-label col-sm-4 label-middling" for="">Trạng thái:</label>
+          <div class="col-sm-8">
+            <!-- <input type="text" id="" class="form-control"> -->
+            <input type="text" class=" form-control" [formControl]="statusControl"
+              [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayStatusFn"
+            (optionSelected)="changeStatus(statusControl.value[0])">
+              <mat-option  [value]="[1, 'Trạng thái 1']">Trạng thái 1</mat-option>
+              <mat-option  [value]="[1, 'Trạng thái 2']">Trạng thái 2</mat-option>
+            </mat-autocomplete>
+          </div>
+        </div>
+      </div>
+      <div class="col-3"></div>
+
+    </form>
+    <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>Close</button>
+    <button class="btn btn btn-info" (click)="Update()" alt=''>Update</button>
+  </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+  <p class="h4 mb-4">Student Information</p>
+  <form>
+    <p class="col-12 title-head">Thông tin học viên</p>
+    <div class="col-9 row">
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Họ Tên:</label>
+        <div class="col-sm-8">
+          <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="fullName">
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Địa chỉ:</label>
+        <div class="col-sm-8">
+          <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="Student.address">
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Giới tính:</label>
+        <div class="ml-4">
+          <mat-radio-group aria-labelledby="academy-radio-group-label"
+            class="academy-radio-group student-radio-gender" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="Student.gender">
+            <mat-radio-button class="academy-radio-button" [value]="'Male'">
+              Nam
+            </mat-radio-button>
+            <mat-radio-button class="academy-radio-button ml-2" [value]="'Female'">
+              Nữ
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Tỉnh thành:</label>
+        <div class="col-sm-8">
+          <!-- <input  type="text" id="" class="form-control"> -->
+          <input class="form-control" placeholder="{{'MESSAGE.NameList.Province' |translate}}"
+            [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
+          <mat-autocomplete #provinceAC="matAutocomplete"
+            (optionSelected)="changeProvince(searchProvincesCtrl.value.id)" [displayWith]="displayProvinceFn">
+            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+              <mat-spinner></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let province of listprovince" [value]="province">
+                <span *ngIf="!province.notfound">{{province.provinceName}}</span>
+                <span *ngIf="province.notfound" class="nofind">{{province.notfound}}</span>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Ngày sinh:</label>
+        <div class="col-sm-8">
+          <mat-form-field>
+            <input matInput [disabled]="true" (dateChange)="dobEvent($event)" [matDatepicker]="dobDP"
+              class="col-sm-3 form-control">
+            <span mat-raised-button (click)="dobDP.open()"
+              class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
+              <i class="material-icons">date_range</i>
+            </span>
+            <!-- <mat-datepicker-toggle matSuffix [for]="startDateFilter"></mat-datepicker-toggle> -->
+            <mat-datepicker #dobDP disabled="false"></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Quận huyện:</label>
+        <div class="col-sm-8">
+          <!-- <input type="text" id="" class="form-control"> -->
+          <input class="form-control" placeholder="{{'MESSAGE.NameList.District' |translate}}"
+            [matAutocomplete]="districtAC" [formControl]="searchDistrictsCtrl">
+          <mat-autocomplete #districtAC="matAutocomplete"
+            (optionSelected)="changeDistrict(searchDistrictsCtrl.value.id)" [displayWith]="displayDistrictFn">
+            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+              <mat-spinner></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let district of listdistrict" [value]="district">
+                <span *ngIf="!district.notfound">{{district.districtName}}</span>
+                <span *ngIf="district.notfound" class="nofind">{{district.notfound}}</span>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Ngày nhập học:</label>
+        <div class="col-sm-8">
+          <mat-form-field>
+            <input matInput [disabled]="true" (dateChange)="admissionDateEvent($event)"
+              [matDatepicker]="admissionDateDP" class="col-sm-3 form-control">
+            <span mat-raised-button (click)="admissionDateDP.open()"
+              class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
+              <i class="material-icons">date_range</i>
+            </span>
+            <!-- <mat-datepicker-toggle matSuffix [for]="admissionDateDP"></mat-datepicker-toggle> -->
+            <mat-datepicker #admissionDateDP disabled="false"></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Phường xã:</label>
+        <div class="col-sm-8">
+          <!-- <input type="text" id="" class="form-control"> -->
+          <input class="form-control" placeholder="{{'MESSAGE.NameList.Ward' |translate}}" [matAutocomplete]="wardAC"
+            [formControl]="searchWardsCtrl">
+          <mat-autocomplete #wardAC="matAutocomplete" (optionSelected)="changeWard(searchWardsCtrl.value.id)"
+            [displayWith]="displayWardFn">
+            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+              <mat-spinner></mat-spinner>
+            </mat-option>
+            <ng-container *ngIf="!isLoading">
+              <mat-option *ngFor="let ward of listward" [value]="ward">
+                <span *ngIf="!ward.notfound">{{ward.wardName}}</span>
+                <span *ngIf="ward.notfound" class="nofind">{{ward.notfound}}</span>
+              </mat-option>
+            </ng-container>
+          </mat-autocomplete>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">
+      <div class="avatar">
+        <img src="https://pngimage.net/wp-content/uploads/2018/06/no-avatar-png-4-300x200.png" alt="">
+        <button type="button" class="btn btn-primary std-create search-button btn-link btn-sm btn-just-icon">
+          <i class="material-icons">create</i>
+        </button>
+        <button type="button" class="btn btn-primary std-clear search-button btn-link btn-sm btn-just-icon">
+          <i class="material-icons">clear</i>
+        </button>
+      </div>
+    </div>
+    <p class="col-12 title-head">Thông tin phụ huynh</p>
+    <div class="col-9 row">
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Họ Tên:</label>
+        <div class="col-sm-8">
+          <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="Student.parentFullName">
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Điện thoại:</label>
+        <div class="col-sm-8">
+          <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="Student.parentPhone">
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Facebook:</label>
+        <div class="col-sm-8">
+          <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="Student.parentFacebook">
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Email:</label>
+        <div class="col-sm-8">
+          <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="Student.parentEmail">
+        </div>
+      </div>
+      <div class="form-group col-12 row">
+        <label class="control-label col-sm-2 label-middling" for="">Ghi chú:</label>
+        <div class="col-sm-10">
+          <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="Student.parentNotes">
+        </div>
+      </div>
+    </div>
+    <div class="col-3"></div>
+    <p class="col-12 title-head">Thông tin khác</p>
+    <div class="col-9 row">
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Nguồn:</label>
+        <div class="col-sm-8">
+          <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="Student.source">
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Người chốt:</label>
+        <div class="col-sm-8">
+          <input type="number" id="" class="form-control" [ngModelOptions]="{standalone: true}"
+            [(ngModel)]="Student.approver">
+        </div>
+      </div>
+      <div class="form-group col-6 row">
+        <label class="control-label col-sm-4 label-middling" for="">Trạng thái:</label>
+        <div class="col-sm-8">
+          <!-- <input type="text" id="" class="form-control"> -->
+          <input type="text" class=" form-control" [formControl]="statusControl"
+            [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayStatusFn"
+          (optionSelected)="changeStatus(statusControl.value[0])">
+            <mat-option  [value]="[1, 'Trạng thái 1']">Trạng thái 1</mat-option>
+            <mat-option  [value]="[1, 'Trạng thái 2']">Trạng thái 2</mat-option>
+          </mat-autocomplete>
+        </div>
+      </div>
+    </div>
+    <div class="col-3"></div>
+
+  </form>
+  <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>Back</button>
+  <button class="btn btn btn-info" (click)="Update()" alt=''>Update</button>
+</div>

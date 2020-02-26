@@ -28,15 +28,12 @@ export class WardService {
         return this.http.get(environment.apiUrl + `Wards/${id}`, this.httpOptions);
     }
 
-    addOrUpdateWard(ward: Ward , by: null | number): Observable<any> {
-        ward.DisplayOrder = parseInt(ward.DisplayOrder + '');
-        if(ward.Id != 0 && ward.Id){
-            ward.UpdatedBy = by;
-        }else
-        {
-            ward.CreatedBy = by;
+    addOrUpdateWard(ward: Ward ): Observable<any> {
+        if (ward.id == 0) {
+            return this.http.post(environment.serverUrl + 'Wards', ward, this.httpOptions);
+        } else {
+            return this.http.put(environment.serverUrl + `Wards/${ward.id}`, ward, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Wards`,ward, this.httpOptions);
     }
     
     deleteWard(id: number , deleteBy : number): Observable<any> {

@@ -17,33 +17,34 @@ import { Central } from 'app/models/manage/central';
 
 export class AreaEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('ID') ID: number;
+	@Input('id') id: number;
 	@Input('UserId') UserId: null | number;
 	area: Area = new Area(0, '', '',0, false, new Date(), null, 1, null, null, 0);
-	trungtamList: Central[] = [];
+	trungtamList: any[] = [];
 
 	constructor(private trungtamService: CentralService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private areaService: AreaService, private route: ActivatedRoute, private router: Router) {
-		this.ID = this.route.snapshot.queryParams['IdArea'];
-		this.ID = (this.ID) ? this.ID : 0;
+		this.id = this.route.snapshot.queryParams['IdArea'];
+		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
 	}  
-	GetAreaById(ID:number)  
+	GetAreaById(id:number)  
 	{  
+		alert(id);
 		const _this = this;
-		this.trungtamService.getCentralsList(new CentralFilter('',0,0,0,0,0,'','')).subscribe((ceList: Central[]) => {
+		this.trungtamService.getCentral(new CentralFilter('',0,0,0,0,0,'','')).subscribe((ceList: Central[]) => {
 			_this.trungtamList = (ceList) ? ceList : [];
-			_this.areaService.getArea(ID).subscribe((area: Area) => {
+			_this.areaService.getArea(id).subscribe((area: Area) => {
 				_this.area = area;
-				if (_this.area == null || _this.area.Id==0) {
+				if (_this.area == null || _this.area.id==0) {
 					_this.area =new Area(0, '', '',0, false, new Date(), null, 1, null, null, 0);
 				}
 			});	
 		  });
 	}
 	ngOnInit() {
-		this.GetAreaById(this.ID);  
+		this.GetAreaById(this.id);  
 	}
 
 	ReturnList() {
@@ -52,7 +53,7 @@ export class AreaEditComponent implements OnInit {
 
 	UpdateArea() {
 		const _this = this;
-		this.areaService.addOrUpdateArea(_this.area, this.UserId).subscribe((result: any) => {
+		this.areaService.addOrUpdateArea(_this.area).subscribe((result: any) => {
 			if (result) {
 				if(!_this.popup) {
 					_this.ReturnList();

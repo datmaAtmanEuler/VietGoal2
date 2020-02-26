@@ -13,46 +13,52 @@
                                 <button class="btn btn-vietgoal btn-sm mr-2" (click)="downloadTemplate()">Mẫu
                                     Import</button>
                             </div>
+
                             <div class="row" style="padding-left: 50px;">
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Province' |translate}}"
-                                        [matAutocomplete]="ProvincesAC" [formControl]="searchProvincesCtrl">
-                                    <mat-autocomplete #ProvincesAC="matAutocomplete"
-                                        (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)"
-                                        [displayWith]="displayProvinceFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let province of provincesList" [value]="province">
-                                                <span *ngIf="!Province.notfound">{{Provinces.ProvincesName}}</span>
-                                                <span *ngIf="Province.notfound" class="nofind">{{Provinces.notfound}}</span>
+                                <div class="form-group row">
+                                    <label class="col-4 label-middling"><strong>Tỉnh thành:</strong></label>
+                                    <div class="col-5 label-middling">
+                                        <input class="form-control" placeholder="Tỉnh thành "
+                                            [matAutocomplete]="ProvincesAC" [formControl]="searchProvincesCtrl">
+                                        <mat-autocomplete #ProvincesAC="matAutocomplete"
+                                            (optionSelected)="changeProvince(searchProvincesCtrl.value.id)"
+                                            [displayWith]="displayProvinceFn">
+                                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                <mat-spinner></mat-spinner>
                                             </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-                                </div>
+                                            <ng-container *ngIf="!isLoading">
+                                                <mat-option *ngFor="let province of provincesList" [value]="province">
+                                                    <span *ngIf="!province.notfound">{{province.provincesName}}</span>
+                                                    <span *ngIf="province.notfound"
+                                                        class="nofind">{{province.notfound}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-autocomplete>
+                                    </div>
 
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.District' |translate}}"
-                                        [matAutocomplete]="DistrictsAC" [formControl]="searchDistrictsCtrl">
-                                    <mat-autocomplete #DistrictsAC="matAutocomplete"
-                                        (optionSelected)="changeDistrict(searchDistrictsCtrl.value.ID)"
-                                        [displayWith]="displayDistrictFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let District of districtsList" [value]="DistrictId">
-                                                <span *ngIf="!District.notfound">{{District.DistrictName}}</span>
-                                                <span *ngIf="District.notfound" class="nofind">{{District.notfound}}</span>
+                                    <div class="form-group row">
+                                        <label class="col-5 label-middling"><strong>Quận Huyện:</strong></label>
+                                        <div class="col-6 label-middling">
+                                            <input class="form-control" placeholder="Quận Huyện"
+                                                [matAutocomplete]="DistrictAC" [formControl]="searchDistrictsCtrl">
+                                        </div>
+                                        <mat-autocomplete #DistrictAC="matAutocomplete"
+                                            (optionSelected)="changeDistrict(searchDistrictsCtrl.value.id)"
+                                            [displayWith]="displayDistrictFn">
+                                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                <mat-spinner></mat-spinner>
                                             </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-
+                                            <ng-container *ngIf="!isLoading">
+                                                <mat-option *ngFor="let district of districtsList" [value]="district">
+                                                    <span *ngIf="!district.notfound">{{district.districtName}}</span>
+                                                    <span *ngIf="district.notfound"
+                                                        class="nofind">{{district.notfound}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-autocomplete>
+                                    </div>
                                 </div>
                             </div>
-
-
                         </div>
                         <div class="col-sm-3 input-group form-sm form-1 pl-0 search-form search-form">
                             <button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}"
@@ -69,63 +75,66 @@
                                 </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card-body table-responsive">
-                                <div class="vietgoal-table-settings style-1">
-                                    <div class="vietgoal-table-settings vg-scroll">
-                                    <table class="table table-condensed table-striped table-bordered table-hover"
-                                        style="width: 100%">
-                                        <thead>
-                                            <ng-container *ngFor="let colName of columnsName; let colIndex = index;">
-                                                <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')"
-                                                    (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
-                                                    <span
-                                                        style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
-                                                        <i class="material-icons asc-sort-icons"
-                                                            *ngIf="sortAbles[colIndex]">
-                                                            {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
-                                                        </i>
-                                                    </span>
-                                                </th>
-                                            </ng-container>
-                                        </thead>
-                                        <tbody>
-                                            <ng-container *ngFor="let ward of wardsList; let i = index;">
-                                                <tr>
-                                                    <td width="100px">{{ i + 1}}</td>
-                                                    <td>{{ ward.wardCode }}</td>
-                                                    <td>{{ ward.wardName }}</td>
-                                                    <td>{{ ward.districtId }}</td>
-                                                    <td class="my-action-item">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-body table-responsive">
+                                    <div class="vietgoal-table-settings style-1">
+                                        <div class="vietgoal-table-settings vg-scroll">
+                                            <table
+                                                class="table table-condensed table-striped table-bordered table-hover"
+                                                style="width: 100%">
+                                                <thead>
+                                                    <ng-container
+                                                        *ngFor="let colName of columnsName; let colIndex = index;">
+                                                        <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')"
+                                                            (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
+                                                            <span
+                                                                style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                                                                <i class="material-icons asc-sort-icons"
+                                                                    *ngIf="sortAbles[colIndex]">
+                                                                    {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                                                                </i>
+                                                            </span>
+                                                        </th>
+                                                    </ng-container>
+                                                </thead>
+                                                <tbody>
+                                                    <ng-container *ngFor="let ward of wardsList; let i = index;">
+                                                        <tr>
+                                                            <td width="100px">{{ i + 1}}</td>
+                                                            <td>{{ ward.wardCode }}</td>
+                                                            <td>{{ ward.wardName }}</td>
+                                                            <td>{{ ward.districtId }}</td>
+                                                            <td class="my-action-item">
 
-                                                        <button mat-raised-button type="button" (click)="edit(ward.ID)"
-                                                            title="{{ 'MESSAGE.NameList.Edit' | translate}}"
-                                                            class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
-                                                            <i class="material-icons">edit</i>
-                                                        </button>
-                                                        <button mat-raised-button type="button" (click)="remove(ward)"
-                                                            title="{{ 'MESSAGE.NameList.Delete' | translate}}"
-                                                            class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
-                                                            <i class="material-icons">close</i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </ng-container>
-                                        </tbody>
-                                    </table>
+                                                                <button mat-raised-button type="button"
+                                                                    (click)="edit(ward.id)"
+                                                                    title="{{ 'MESSAGE.NameList.Edit' | translate}}"
+                                                                    class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
+                                                                    <i class="material-icons">edit</i>
+                                                                </button>
+                                                                <button mat-raised-button type="button"
+                                                                    (click)="remove(ward)"
+                                                                    title="{{ 'MESSAGE.NameList.Delete' | translate}}"
+                                                                    class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
+                                                                    <i class="material-icons">close</i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-container>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <mat-paginator
+                                        [length]="(wardsList && wardsList.length > 0 && wardsList[0] && wardsList[0].Total) ? wardsList[0].Total : 0"
+                                        [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                        [showFirstLastButtons]="true" (page)="pageEvent($event)">
+                                    </mat-paginator>
                                 </div>
-                            </div>
-                                <mat-paginator
-                                    [length]="(wardsList && wardsList.length > 0 && wardsList[0] && wardsList[0].Total) ? wardsList[0].Total : 0"
-                                    [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
-                                    [showFirstLastButtons]="true" (page)="pageEvent($event)">
-                                </mat-paginator>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>

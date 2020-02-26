@@ -16,11 +16,13 @@
                                     Import</button>
                             </div>
                             <div class="row" style="padding-left: 50px;">
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
                                         [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
                                     <mat-autocomplete #AreasAC="matAutocomplete"
-                                        (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
+                                        (optionSelected)="changeArea(searchAreasCtrl.value.id)"
                                         [displayWith]="displayAreaFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
@@ -34,11 +36,14 @@
                                     </mat-autocomplete>
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
-                                        [matAutocomplete]="YardsAC" [formControl]="searchYardsCtrl">
-                                    <mat-autocomplete #YardsAC="matAutocomplete"
-                                        (optionSelected)="changeYard(searchYardsCtrl.value.ID)"
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Yard' | translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.YardName' |translate}}"
+                                        [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
+                                    </div>
+                                    <mat-autocomplete #YardAC="matAutocomplete"
+                                        (optionSelected)="changeYard(searchYardsCtrl.value.id)"
                                         [displayWith]="displayYardFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
@@ -108,7 +113,7 @@
                                                         <td class="my-action-item">
 
                                                             <button mat-raised-button type="button"
-                                                                (click)="edit(traininground.ID)"
+                                                                (click)="edit(traininground.id)"
                                                                 title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                                                                 class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                                 <i class="material-icons">edit</i>

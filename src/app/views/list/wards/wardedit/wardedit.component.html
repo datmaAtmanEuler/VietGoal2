@@ -7,10 +7,10 @@
             <label class="col-sm-3 label-middling"
                 for="ProvinceAC">{{'MESSAGE.NameList.ProvinceName' |translate}}:</label>
             <div class="col-sm-6">
-                <input class="form-control" id="ProvinceAC" [value]="ward.ProvinceId"
+                <input class="form-control" id="ProvinceAC" [value]="ward.provinceId"
                     [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
                 <mat-autocomplete #provinceAC="matAutocomplete"
-                    (optionSelected)="changeProvince(searchProvincesCtrl.value.ID)"
+                    (optionSelected)="changeProvince(searchProvincesCtrl.value.id)"
                     [displayWith]="displayProvinceFn">
                     <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                         <mat-spinner></mat-spinner>
@@ -29,10 +29,10 @@
             <label class="col-sm-3 label-middling"
                 for="DistrictAC">{{'MESSAGE.NameList.DistrictName' |translate}}:</label>
             <div class="col-sm-6">
-                <input class="form-control" id="DistrictAC" [value]="ward.DistrictId"
+                <input class="form-control" id="DistrictAC" [value]="ward.districtId"
                     [matAutocomplete]="districtAC" [formControl]="searchDistrictsCtrl">
                 <mat-autocomplete #districtAC="matAutocomplete"
-                    (optionSelected)="changeDistrict(searchDistrictsCtrl.value.ID)"
+                    (optionSelected)="changeDistrict(searchDistrictsCtrl.value.id)"
                     [displayWith]="displayDistrictFn">
                     <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                         <mat-spinner></mat-spinner>
@@ -49,7 +49,7 @@
             <div class="form-group row">
                 <label class="col-3 label-middling">{{'MESSAGE.NameList.WardCode' |translate}}:<span class="text-danger">(*)</span></label>
                 <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.WardCode"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.wardCode"
                         class="form-control" placeholder='{{"MESSAGE.NameList.WardCode" |translate}}'>
                 </div>
             </div>
@@ -59,7 +59,7 @@
             <div class="form-group row">
                 <label class="col-3 label-middling">{{'MESSAGE.NameList.WardName' |translate}}:<span class="text-danger">(*)</span></label>
                 <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.WardName"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.wardName"
                         class="form-control" placeholder='{{"MESSAGE.NameList.WardName" |translate}}'>
                 </div>
             </div>
@@ -67,7 +67,7 @@
             <div class="form-group row">
                 <label class="col-3 label-middling">{{'MESSAGE.NameList.DisplayOrder' |translate}}:</label>
                 <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.DisplayOrder"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.displayOrder"
                         class="form-control" placeholder='{{"MESSAGE.NameList.DisplayOrder" |translate}}'>
                 </div>
             </div>

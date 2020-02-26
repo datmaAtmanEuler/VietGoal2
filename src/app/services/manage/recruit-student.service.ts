@@ -22,30 +22,30 @@ export class RecruitStudentService {
 
     getRecruitStudentList(filter: any): Observable<any>  {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'RecruitStudent?' + queryString , this.httpOptions);
+        return this.http.get(environment.apiUrl + 'Students?' + queryString , this.httpOptions);
     }
     
     getRecruitStudent(id: any): Observable<any>  {
-        return this.http.get(environment.apiUrl + `RecruitStudent/${id}` , this.httpOptions);
+        return this.http.get(environment.apiUrl + `Students/${id}` , this.httpOptions);
     }
 
-    addOrUpdateRecruitStudent(RecruitStudent: RecruitStudent, by: null | number): Observable<any> {
-        if(RecruitStudent.Id == 0) {
-            RecruitStudent.CreatedBy = by;
+    addOrUpdateRecruitStudent(student: RecruitStudent, by: null | number): Observable<any> {
+        if(student.id == 0) {
+            student.CreatedBy = by;
         } else {
-            RecruitStudent.UpdatedBy = by;
+            student.UpdatedBy = by;
         }
-        return this.http.post(environment.apiUrl + `RecruitStudent`, RecruitStudent, this.httpOptions);
+        return this.http.post(environment.apiUrl + `Students`, student, this.httpOptions);
     }
 
     deleteRecruitStudent(RecruitStudentId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `RecruitStudent/${RecruitStudentId}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.apiUrl + `Students/${RecruitStudentId}?deletedBy=${deletedBy}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
     }
 
     import(importViewModel: ImportViewModel): Observable<any> {
-        return this.http.post(environment.serverUrl_employee + `RecruitStudent/import`, importViewModel , this.httpOptions);
+        return this.http.post(environment.serverUrl_employee + `Students/import`, importViewModel , this.httpOptions);
     }
 }

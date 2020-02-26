@@ -50,14 +50,14 @@ export class WardsComponent implements OnInit {
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'WardCode', 'WardName',  'DistrictName', 'Action'];
-  columnsNameMapping: string[] = ['ID', 'WardCode', 'WardName',  'DistrictName', 'Action'];
+  columnsNameMapping: string[] = ['id', 'WardCode', 'WardName',  'DistrictName', 'Action'];
   sortAbles: boolean[] = [false, true, true, true, false];
   /**
    * END SORT SETTINGS
    */
 
    filter: WardFilter = new WardFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
-   districtFilter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
+   districtFilter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
    provinceFilter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'Id','ASC');
 
   constructor(private translate: TranslateService, private service: WardService, private provinceService: ProvinceService, private districtService: DistrictService, private router: Router,
@@ -162,12 +162,12 @@ reload() {
     this.edit(null);
   }
 
-  edit(ID: null | number) {
+  edit(id: null | number) {
     const _this = this;
     const modalRef = this.modalService.open(WardEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    if (ID) {
-      modalRef.componentInstance.ID = ID;
+    if (id) {
+      modalRef.componentInstance.id = id;
       modalRef.componentInstance.UserId = _this.currentUser.UserId;
     }
     modalRef.result.then(function(){
@@ -177,7 +177,7 @@ reload() {
 
   deleteWard() {
     const _this = this;
-    this.service.deleteWard(this.ward.Id, this.currentUser.UserID).subscribe((rs:any)=>{
+    this.service.deleteWard(this.ward.id, this.currentUser.Userid).subscribe((rs:any)=>{
       this.reload();
     }); 
   }
@@ -209,7 +209,7 @@ reload() {
       }
     });
 
-    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'ID' : this.columnsNameMapping[columnIndex];
+    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
   

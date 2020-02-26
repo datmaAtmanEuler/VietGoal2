@@ -36,8 +36,8 @@ export class DistrictsComponent implements OnInit {
   firstRowOnPage: any;
   searchProvincesCtrl = new FormControl();
 
-  provinceFilter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'Id','ASC');
-  filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
+  provinceFilter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'id','ASC');
+  filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'id','ASC');
 
   /**
    * BEGIN SORT SETTINGS
@@ -45,13 +45,13 @@ export class DistrictsComponent implements OnInit {
   sort: ASCSort = new ASCSort();
   sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
   columnsName: string[] = ['Order', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
-  columnsNameMapping: string[] = ['ID', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
+  columnsNameMapping: string[] = ['id', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
   sortAbles: boolean[] = [false, true, true, true, false];
   /**
    * END SORT SETTINGS
    */
 
-  isLoading: boolean  = false;
+  isLoading: boolean  = true;
 
   constructor(private translate: TranslateService, public util: UtilsService,
     private provinceService: ProvinceService,
@@ -102,9 +102,9 @@ pageEvent(variable: any){
 }
 reload() {
   const _this = this;
-  _this.isLoading = true;
   _this.provincesList = [];
-  _this.provinceService.getProvincesList(_this.provinceFilter).subscribe(
+  this.isLoading = true;
+  this.provinceService.getProvincesList(_this.provinceFilter).subscribe(
       (response: any) => {
         const list = response.results ? response.results : [];
         _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
@@ -138,17 +138,16 @@ reload() {
     this.edit(null);
   }
 
-  edit(ID: null | number) {
+  edit(id: number) {
     const _this = this;
-    const modalRef = _this.modalService.open(DistrictEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(DistrictEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    if (ID) {
-      modalRef.componentInstance.ID = ID;
-      modalRef.componentInstance.UserId = _this.currentUser.UserId;
+    if (id) {
+      modalRef.componentInstance.id = id;
     }
     modalRef.result.then(function(){
-      _this.reload();
-  });
+        _this.reload();
+    });
   }
 
   deleteDistrict() {
@@ -185,7 +184,7 @@ reload() {
       }
     });
 
-    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'ID' : this.columnsNameMapping[columnIndex];
+    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : this.columnsNameMapping[columnIndex];
     this.reload();
   }
   
@@ -213,10 +212,10 @@ reload() {
     return province && province.ProvinceName && !province.notfound ? province.ProvinceName : '';
   }
 
-  changeProvince(provinceID) {
-    this.service.getDistrictsList(new DistrictFilter('', 1, 100, provinceID, null, 'Id', 'ASC')).subscribe((list) => {
+  changeProvince(provinceid) {
+    this.service.getDistrictsList(new DistrictFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
       this.districtsList = list;
-      this.filter.ProvinceId = provinceID;
+      this.filter.ProvinceId = provinceid;
       this.reload();
     });
   }

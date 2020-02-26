@@ -41,6 +41,8 @@ import { RecruitComponent } from '../../views/list/recruits/recruit.component';
 import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/recruit-edit.component';
 import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
 import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
+import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
+import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
 import { GomuComponent } from 'app/views/manage/gomu/gomu.component';
@@ -336,6 +338,21 @@ export const AdminLayoutRoutes: Routes = [
         ,
         {
             path: 'edit', component: ClassEditComponent
+        }
+        ]
+    },
+    {
+        path: 'recruit-student',
+        children: [ {
+            path: '', component: RecruitStudentComponent
+        }
+        ,
+        {
+            path: 'add', component: RecruitStudentEditComponent
+        }
+        ,
+        {
+            path: 'edit', component: RecruitStudentEditComponent
         }
         ]
     }

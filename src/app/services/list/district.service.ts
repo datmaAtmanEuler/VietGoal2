@@ -20,11 +20,11 @@ export class DistrictService {
 
     getDistrictsList(filter: any): Observable<any> {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'Districts?' + queryString , this.httpOptions);
+        return this.http.get(environment.serverUrl + 'Districts?' + queryString , this.httpOptions);
     }
     
     getDistrict(id: any): Observable<any> {
-        return this.http.get(environment.apiUrl + `Districts/${id}` , this.httpOptions);
+        return this.http.get(environment.serverUrl + `Districts/${id}` , this.httpOptions);
     }
 
     addOrUpdateDistrict(District: District): Observable<any> {
@@ -36,7 +36,7 @@ export class DistrictService {
     }
 
     deleteDistrict(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `Districts/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.serverUrl + `Districts/${id}?deletedBy=${deletedBy}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

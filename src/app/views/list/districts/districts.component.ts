@@ -138,17 +138,16 @@ reload() {
     this.edit(null);
   }
 
-  edit(id: null | number) {
+  edit(id: number) {
     const _this = this;
-    const modalRef = _this.modalService.open(DistrictEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(DistrictEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
     if (id) {
       modalRef.componentInstance.id = id;
-      modalRef.componentInstance.UserId = _this.currentUser.UserId;
     }
     modalRef.result.then(function(){
-      _this.reload();
-  });
+        _this.reload();
+    });
   }
 
   deleteDistrict() {

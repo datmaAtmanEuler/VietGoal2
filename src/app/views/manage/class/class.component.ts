@@ -33,16 +33,17 @@ import { ClassImportComponent } from './class-import/class-import.component';
   styleUrls: ['./class.component.scss']
 })
 export class ClassComponent implements OnInit {
-  classList: any[] = [];
+  classList: Class[] = [];
   Class: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
-  
+  loading: boolean = true;
   Total: any;
   firstRowOnPage: any;
+
   areasList: any;
   yarddsList: any;
   traininggroundsList: any;
@@ -51,7 +52,7 @@ export class ClassComponent implements OnInit {
   searchYardsCtrl = new FormControl();
   searchTrainingGroundsCtrl = new FormControl();
 
-  isLoading: boolean = true;
+  isLoading = false;
   /**
   * BEGIN SORT SETTINGS
   */
@@ -66,9 +67,7 @@ export class ClassComponent implements OnInit {
   /**
    * END SORT SETTINGS
    */
-  filter: ClassFilter = new ClassFilter(this.searchTerm, this.pageIndex, this.pageSize, null, null, null, 'id', 'ASC',null,null,null);
-  areaFilter : AreaFilter = new AreaFilter(this.searchTerm, this.pageIndex, this.pageSize, null ,'id', 'ASC');
-  yardFilter : YardFilter = new YardFilter(this.searchTerm, this.pageIndex, this.pageSize, null ,'id', 'ASC');
+  filter: ClassFilter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, 'id', 'ASC',null,null,null);
 
   constructor(private matCus: MatPaginatorIntl, private translate: TranslateService,public utilsService: UtilsService, config: NgbModalConfig, private service: ClassService,private traininggroundservice: TrainingGroundService, private router: Router, private modalService: NgbModal,
     private areaService: AreaService, private yardService: YardService, private http: HttpClient) {
@@ -95,74 +94,123 @@ export class ClassComponent implements OnInit {
       }
   }
   ngOnInit() {
+  
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.reload();
+    this.filtersEventsBinding();
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
   }
- remove(aclass: any) {
+
+  filtersEventsBinding() {
+
+    this.searchAreasCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(500),
+        tap(() => {
+          this.areasList = [];
+          this.isLoading = true;
+        }),
+        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'Id', 'ASC'))
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            }),
+          )
+        )
+      )
+      .subscribe(data => {
+        if (data == undefined) {
+          this.areasList = [{ notfound: 'Not Found' }];
+        } else {
+          this.areasList = data.length ? data : [{ notfound: 'Not Found' }];
+        }
+
+      });
+    this.searchYardsCtrl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(500),
+      tap(() => {
+        this.yarddsList = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'Id', 'ASC'))
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+      .subscribe(data => {
+        if (data == undefined) {
+          this.yarddsList = [{ notfound: 'Not Found' }];
+        } else {
+          this.yarddsList = data.length ? data : [{ notfound: 'Not Found' }];
+        }
+
+      });
+    this.searchTrainingGroundsCtrl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(500),
+      tap(() => {
+        this.traininggroundsList = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'Id', 'ASC'))
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+      .subscribe(data => {
+        if (data == undefined) {
+          this.traininggroundsList = [{ notfound: 'Not Found' }];
+        } else {
+          this.traininggroundsList = data.length ? data : [{ notfound: 'Not Found' }];
+        }
+
+      });
+  }
+
+  remove(aclass: any) {
     this.Class = aclass;
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'class';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deleteClass(aclass.id, this.currentUser.UserId).subscribe(() => {
+      _this.service.deleteClass(aclass.ID, this.currentUser.UserId).subscribe(() => {
         _this.reload();
       });
     });
   }
   pageEvent(variable: any) {
-    this.filter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, 'id','ASC',null,null,null);
+    this.filter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, 'Id','ASC',null,null,null);
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
     this.reload();
   }
-
   reload() {
     const _this = this;
-    this.isLoading = true;
-    _this.areasList = [];
-    this.areaService.getAreasList(this.areaFilter).subscribe(
+    const filter: ClassFilter = new ClassFilter( '',this.pageIndex, this.pageSize,0,0,0, 'Id','ASC',0,0,0);
+    this.loading = true;
+    _this.classList = [];
+    this.service.getClassList(filter).subscribe(
         (response: any) => {
           const list = response.results ? response.results : [];
+          this.Total = (response && response.rowCount) ? response.rowCount : 0;
           this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
           setTimeout(() => {
-            _this.areasList = (list) ? list : [];
-            _this.yarddsList = [];
-            this.yardService.getYardsList(this.yardFilter).subscribe(
-                (response: any) => {
-                  const list = response.results ? response.results : [];
-                  this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-                  setTimeout(() => {
-                    _this.yarddsList = (list) ? list : [];
-                    _this.traininggroundsList = [];
-                    this.traininggroundservice.getTrainingGroundsList(this.filter).subscribe(
-                        (response: any) => {
-                          const list = response.results ? response.results : [];
-                          this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-                          setTimeout(() => {
-                            _this.traininggroundsList = (list) ? list : [];
-                            _this.isLoading = false;
-                          }, 500);
-                        },
-                        (err: any) => {
-                          _this.traininggroundsList = [];
-                          _this.isLoading = false;
-                        }
-                    );
-                  }, 500);
-                },
-                (err: any) => {
-                  _this.yarddsList = [];
-                  _this.isLoading = false;
-                }
-            );
-  
+            _this.classList = (list) ? list : [];
+            _this.loading = false;
           }, 500);
         },
         (err: any) => {
-          _this.areasList = [];
-          _this.isLoading = false;
+          _this.classList = [];
+          _this.loading = false;
         }
     );
   }
@@ -180,57 +228,24 @@ export class ClassComponent implements OnInit {
     });
   }
 
-  toggleSort(columnIndex: number): void {
-    let toggleState =  this.sortToggles[columnIndex];
-    switch(toggleState) {
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.DESC;
-        break;
-      }
-      default:
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
-    }
-    this.sortToggles.forEach((s: string, index: number) => {
-      if(index == columnIndex) {
-        this.sortToggles[index] = this.sort.SortDirection = toggleState;
-      } else {
-        this.sortToggles[index] = SORD_DIRECTION.ASC;
-      }
-    });
-
-    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : this.columnsNameMapping[columnIndex];
-    this.reload();
+  displayAreaFn(user): string {
+    return user && user.AreaName && !user.notfound ? user.AreaName : '';
   }
-  
-  doNothing(): void {}
-
-  displayAreaFn(area): string {
-    return area && area.AreaName && !area.notfound ? area.AreaName : '';
+  displayYardFn(user): string {
+    return user && user.YardName && !user.notfound ? user.YardName : '';
   }
-  displayYardFn(yard): string {
-    return yard && yard.YardName && !yard.notfound ? yard.YardName : '';
-  }
-  displayTraininggroundFn(train): string {
-    return train && train.TraininggroundName && !train.notfound ? train.TraininggroundName : '';
+  displayTraininggroundFn(user): string {
+    return user && user.TraininggroundName && !user.notfound ? user.TraininggroundName : '';
   }
   changeArea(areaID: number) {
-    this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'id', 'ASC')).subscribe((list) => {
+    this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
       this.yarddsList = list;
       this.filter.AreaId = areaID;
       this.reload();
     });
   }
   changeYard(yardID) {
-    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'id', 'ASC')).subscribe((list) => {
+    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'Id', 'ASC')).subscribe((list) => {
       this.traininggroundsList = list;
       this.filter.YardId = yardID;
       this.reload();
@@ -241,14 +256,7 @@ export class ClassComponent implements OnInit {
     this.reload();
   }
 
-  displayAresFn(area: any) {
-    return area && area.AreaName && !area.notfound ? area.AreaName : '';
-  }
-
-  displayTrainingGroundFn(trainingground: any) {
-    return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
-  }
-
+  doNothing(): void {}
   openImport() {
     const _this = this;
     const modalRef = this.modalService.open(ClassImportComponent, { size: 'lg' });
@@ -258,13 +266,21 @@ export class ClassComponent implements OnInit {
   }
 
   downloadTemplate() {
-    var fileName = 'Class_Import.xlsx';
+    var fileName = 'Districts_Import.xlsx';
     var a = document.createElement('a');
     a.href = this.service.getTemplate(fileName);
     a.download = fileName;
     document.body.append(a);
     a.click();
     a.remove();
+  }
+
+  displayAresFn(area: any) {
+    return area && area.AreaName && !area.notfound ? area.AreaName : '';
+  }
+
+  displayTrainingGroundFn(trainingground: any) {
+    return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
   }
 }
 

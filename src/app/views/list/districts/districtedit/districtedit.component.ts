@@ -37,12 +37,13 @@ export class DistrictEditComponent implements OnInit {
      	config.keyboard = false;
 		config.scrollable = false;
 	}  
-	GetDistrictById(Id:number)  
+	GetDistrictById(id:number)  
 	{  
+		alert(id);
 		const _this = this;
-		this.provinceService.getProvincesList(new Filter(null,1,100, 'id','ASC')).subscribe((proList: Province[]) => {
+		this.provinceService.getProvincesList(new Filter(null,1,100, 'id','ASC')).subscribe((proList: any[]) => {
 			_this.provincesList = (proList) ? proList : [];
-			_this.districtService.getDistrict(Id).subscribe((district: District) => {
+			_this.districtService.getDistrict(id).subscribe((district: District) => {
 				_this.district = district;
 				if (_this.district == null || _this.district.id==0) {
 					_this.district = new District(0, '', '',0, false, new Date(), null, 1, null, null, null);

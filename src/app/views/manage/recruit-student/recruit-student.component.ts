@@ -51,23 +51,33 @@ export class RecruitStudentComponent implements OnInit {
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
   searchTrainingGroundsCtrl = new FormControl();
-
+  searchClasssCtrl = new FormControl();
+  searchUsersCtrl = new FormControl();
+  searchRecruitsCtrl = new FormControl();
   isLoading = false;
   /**
   * BEGIN SORT SETTINGS
   */
 
-  sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,null];
-  columnsName: string[] = ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Action'];
-  columnsNameMapping: string[] = ['Id', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Action'];
-  sortAbles: boolean[] = [false, true, true, true, false,false,true,false, false];
-  visibles:boolean[]= [true, true, true, true, true, true,true,true, true];
-
+ 
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      SORD_DIRECTION.ASC,SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      null
+    ],
+    columnsName:  ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Action'],
+    columnsNameMapping:  ['id', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address',''],
+    columnsNameFilter: ['id', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address',''],
+    sortAbles:  [false, true, true, true, false,false,true,false, false],
+    visibles: [true, true, true, true, true, true,true,true, true]
+  }
   /**
    * END SORT SETTINGS
    */
-  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0, 0, 'Id', 'ASC',0,0,0,0,0,0,0,0,0,0);
+  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0, 0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0,0,0,0,0,0,0,0);
 
   constructor(private matCus: MatPaginatorIntl, private translate: TranslateService,public utilsService: UtilsService, config: NgbModalConfig, private service: RecruitStudentService,private traininggroundservice: TrainingGroundService, private router: Router, private modalService: NgbModal,
     private areaService: AreaService, private yardService: YardService, private http: HttpClient) {
@@ -112,7 +122,7 @@ export class RecruitStudentComponent implements OnInit {
           this.areasList = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'Id', 'ASC'))
+        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -135,7 +145,7 @@ export class RecruitStudentComponent implements OnInit {
         this.yarddsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'Id', 'ASC'))
+      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -158,7 +168,7 @@ export class RecruitStudentComponent implements OnInit {
         this.traininggroundsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'Id', 'ASC'))
+      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -188,14 +198,15 @@ export class RecruitStudentComponent implements OnInit {
     });
   }
   pageEvent(variable: any) {
-    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0, 0, 'Id', 'ASC',0,0,0,0,0,0,0,0,0,0);
+    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0, 0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0,0,0,0,0,0,0,0);
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
     this.reload();
   }
   reload() {
+    
     const _this = this;
-    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize, 0, 0, 0, 'Id', 'ASC',0,0,0,0,0,0,0,0,0,0);
+    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize, 0, 0, 0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0,0,0,0,0,0,0,0);
     this.loading = true;
     _this.recruitstudentList = [];
     this.service.getRecruitStudentList(filter).subscribe(
@@ -238,14 +249,14 @@ export class RecruitStudentComponent implements OnInit {
     return user && user.TraininggroundName && !user.notfound ? user.TraininggroundName : '';
   }
   changeArea(areaID: number) {
-    this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
+    this.yardService.getYardsList(new YardFilter('', 1, 100, null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection)).subscribe((list) => {
       this.yarddsList = list;
       this.filter.AreaId = areaID;
       this.reload();
     });
   }
   changeYard(yardID) {
-    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'Id', 'ASC')).subscribe((list) => {
+    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection)).subscribe((list) => {
       this.traininggroundsList = list;
       this.filter.YardId = yardID;
       this.reload();

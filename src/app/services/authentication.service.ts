@@ -14,7 +14,8 @@ export class AuthenticationService {
     header: HttpHeaders;
     constructor(private http: HttpClient, private utils: UtilsService) {
         const headerSettings: {[name: string]: string | string[]; } = {};  
-        this.header = new HttpHeaders(headerSettings); 
+        this.header = new HttpHeaders(headerSettings);
+        this.header.append('Content-Type', 'application/json');
         let obj = localStorage.getItem("currentUser");
         if(obj != null){
             try{
@@ -37,11 +38,11 @@ export class AuthenticationService {
     let PhoneNumber = '';
     let PasswordHash = this.utils.md5Encode(password);
 	let body: HttpParams = new HttpParams();
-        body = body.append('UserName', username);
-        body = body.append('PhoneNumber', PhoneNumber);
-        body = body.append('Email', Email);
+        body = body.append('userName', username);
+        body = body.append('phoneNumber', PhoneNumber);
+        body = body.append('email', Email);
     	body = body.append('passwordHash', PasswordHash);
-	         return this.http.post<any>(environment.serverUrl+'Users/Login', body,{ headers: this.header})
+             return this.http.post<any>(environment.serverUrl+'Users/Login', body,{ headers: this.header})
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.UserInfo) {

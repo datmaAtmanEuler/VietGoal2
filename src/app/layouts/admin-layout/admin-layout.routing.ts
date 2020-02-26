@@ -51,7 +51,8 @@ export const AdminLayoutRoutes: Routes = [
  },
  {
     path: 'danhmuc',
-    children: [ {
+    children: [
+	{
         path: 'tinhthanh',
         children: [ {
             path: '', component: ProvincesComponent

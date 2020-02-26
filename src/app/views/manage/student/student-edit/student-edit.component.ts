@@ -82,7 +82,7 @@ export class StudentEditComponent implements OnInit {
 			});
 	}
 	getName(arg0: string, fullName: any): string {
-		const objfullName = fullName.split(" ");
+		const objfullName = fullName.split(' ');
 		let lastname = objfullName[objfullName.length - 1]
 		let firstname = fullName.replace(' ' + lastname, '');
 		switch (arg0) {

@@ -149,7 +149,8 @@ export class CoachAbsentComponent implements OnInit {
     this.pageSize = pageE.pageSize;
     this.reload();
   }
-  reload() {
+  reload = function() {
+    const _this= this;
     const filter = {
       fromDate: this.utilsService.stringDate(this.fromDate),
       toDate: this.utilsService.stringDate(this.toDate),
@@ -160,6 +161,7 @@ export class CoachAbsentComponent implements OnInit {
       sortName: this.paginationSettings.sort.SortName,
       sortDirection: this.paginationSettings.sort.SortDirection
     };
+
     this.loading = true;
     this.coachabsentsList = [];
     this.service.getList(filter).subscribe((response: any) => {
@@ -268,4 +270,15 @@ export class CoachAbsentComponent implements OnInit {
     // a.remove();
   }
 
+
+    sortToggles(colIndex: number) {
+    const _this= this;
+        if(this.paginationSettings.sortAbles[colIndex]) 
+            this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles ,this.paginationSettings.sort , this.paginationSettings.columnsNameMapping)
+              .then(() => {
+                _this.reload();
+              });
+        else 
+          this.utilsService.doNothing();
+    }
 }

@@ -222,7 +222,7 @@ export class ClassComponent implements OnInit {
     const _this = this;
     const modalRef = this.modalService.open(ClassEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
-    modalRef.componentInstance.ClassID = ClassID;
+    modalRef.componentInstance.ClassId = ClassID;
     modalRef.result.then(function (result) {
       _this.reload();
     });

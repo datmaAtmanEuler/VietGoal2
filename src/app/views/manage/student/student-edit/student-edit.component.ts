@@ -45,6 +45,33 @@ export class StudentEditComponent implements OnInit {
 			(object) => {
 				this.Student = object || new Student();
 				this.fullName = this.Student.firstName + ' ' + this.Student.lastName;
+				
+				const ipDOBDP = <HTMLInputElement>document.getElementById('ipDOBDP');
+				const ipadmissionDateDP = <HTMLInputElement>document.getElementById('ipadmissionDateDP');
+				const ipWardAC = <HTMLInputElement>document.getElementById('ipWardAC');
+				const ipProvinceAC = <HTMLInputElement>document.getElementById('ipProvinceAC');
+				const ipDistrictAC = <HTMLInputElement>document.getElementById('ipDistrictAC');
+				const ipStatusAC = <HTMLInputElement>document.getElementById('ipStatusAC');
+				ipDOBDP.value = this.utilsService.stringDate(this.Student.dob);
+				ipadmissionDateDP.value = this.utilsService.stringDate(this.Student.admissionDate);
+				this.http.get(environment.serverUrl+'Wards/'+this.Student.wardId).subscribe((response: any) => {
+					ipWardAC.value = response.wardName;
+					this.http.get(environment.serverUrl+'Districts/'+response.districtId).subscribe((response: any) => {
+						ipProvinceAC.value = response.districtName;
+						this.http.get(environment.serverUrl+'Provinces/'+response.provinceId).subscribe((response: any) => {
+							ipDistrictAC.value = response.provinceName;
+						});
+					});
+					
+				});
+				switch(this.Student.studentStatusId){
+					case 1:
+						ipStatusAC.value = 'Trạng Thái 1'
+						break;
+					case 2:
+						ipStatusAC.value = 'Trạng Thái 2'
+						break;
+				}
 				console.log("get");
 				console.log(this.Student);
 			},

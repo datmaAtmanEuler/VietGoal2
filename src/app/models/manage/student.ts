@@ -4,10 +4,11 @@ export class Student{
     firstName: string;
     lastName: string;
     displayOrder: number;
-    gender: string;
+    gender: number;
     dob: string;
     wardId: number;
     admissionDate: string;
+    endTermDate: string
     parentFullName: string;
     parentPhone: string;
     parentFacebook: string;

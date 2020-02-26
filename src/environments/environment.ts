@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  serverOriginUrl: 'https://localhost:44353/',
-  serverUrl: 'https://localhost:44353/Api/',
-  serverUrl_employee: 'https://localhost:44353/Api/',
-  apiUrl: 'https://localhost:44353/api/',
-  apiOriginalUrl: 'https://localhost:44353/'
+  serverOriginUrl: 'http://192.168.0.22:8877/',
+  serverUrl: 'http://192.168.0.22:8877/Api/',
+  serverUrl_employee: 'http://192.168.0.22:8877/Api/',
+  apiUrl: 'http://192.168.0.22:8877/api/',
+  apiOriginalUrl: 'http://192.168.0.22:8877/'
 };
 
 /*

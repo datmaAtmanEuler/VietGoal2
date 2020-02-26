@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilsService } from '../../../services/utils.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
@@ -39,7 +39,8 @@ export class StudentComponent implements OnInit {
     sortAbles: [false, true, true, true, true, true, true, true, true, false, false],
     visibles: [true, true, true, true, true, true, true, true, true, true, true]
   }
-  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: StudentService, private router: Router, private modalService: NgbModal) {
+  classID: number;
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: StudentService, private modalService: NgbModal, private route: ActivatedRoute) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
@@ -51,6 +52,7 @@ export class StudentComponent implements OnInit {
     
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
+    this.classID = parseInt(this.route.snapshot.paramMap.get('classID'));
     this.reload();
   }
 
@@ -71,6 +73,7 @@ export class StudentComponent implements OnInit {
   }
   reload() {
     const filter = {
+      idClass: this.classID,
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
       sortName: this.paginationSettings.sort.SortName,
@@ -97,6 +100,7 @@ export class StudentComponent implements OnInit {
     const modalRef = this.modalService.open(StudentEditComponent, { size: 'xl'  });
     modalRef.componentInstance.popup = true;
     modalRef.componentInstance.StudentId = StudentId;
+    modalRef.componentInstance.classID = this.classID;
     modalRef.result.then(function (result) {
       _this.reload();
     });

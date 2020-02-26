@@ -359,19 +359,10 @@ export const AdminLayoutRoutes: Routes = [
         ]
     },
     {
-        path: 'hosohocsinh',
+        path: 'hosohocsinhtheolop',
         children: [ {
-            path: '', component: StudentComponent
-        }
-        ,
-        {
-            path: 'add', component: StudentEditComponent
-        }
-        ,
-        {
-            path: 'edit', component: StudentEditComponent
-        }
-        ]
+            path: ':classID', component: StudentComponent
+        }]
     }
     ,
     ]

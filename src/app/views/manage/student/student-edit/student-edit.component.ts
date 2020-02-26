@@ -24,6 +24,7 @@ export class StudentEditComponent implements OnInit {
 
 	@Input() popup: boolean;
 	@Input() StudentId: number;
+	@Input() classID: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
 
 	Student: Student = new Student();
@@ -43,6 +44,9 @@ export class StudentEditComponent implements OnInit {
 		this.StudentService.get((StudentId) ? StudentId : this.StudentId).subscribe(
 			(object) => {
 				this.Student = object || new Student();
+				this.fullName = this.Student.firstName + ' ' + this.Student.lastName;
+				console.log("get");
+				console.log(this.Student);
 			},
 			() => {
 				this.Student = new Student();
@@ -62,8 +66,10 @@ export class StudentEditComponent implements OnInit {
 	Update() {
 		this.Student.lastName = this.getName('last', this.fullName);
 		this.Student.firstName = this.getName('first', this.fullName);
+		this.Student.displayOrder = 0;
+		console.log("update");
 		console.log(this.Student);
-		this.StudentService.addOrUpdate(this.Student).subscribe(
+		this.StudentService.addOrUpdate(this.Student, this.classID).subscribe(
 			() => {
 				if (!this.popup) {
 					this.ReturnList();

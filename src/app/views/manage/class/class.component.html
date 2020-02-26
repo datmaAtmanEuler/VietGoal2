@@ -118,7 +118,9 @@
                                                     <td>{{ class.mainCoachId }}</td>
                                                     <td>{{ class.trainingGroundId }}</td>
                                                     <td  class="my-action-item">
-
+                                                        <button (click)="studentProfile(class.id)" title="Hồ sơ học sinh" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
+                                                            <i class="material-icons">account_box</i>
+                                                        </button>
                                                         <button mat-raised-button 
                                                             type="button" (click)="edit(class.ID)"
                                                             title="{{ 'MESSAGE.NameList.Edit' | translate}}"

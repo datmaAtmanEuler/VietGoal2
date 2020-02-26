@@ -210,7 +210,8 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
     TrainingGroundImportComponent,
     AreaImportComponent,
     PositionImportComponent,
-    StudentStatusImportComponent
+    StudentStatusImportComponent,
+    StudentEditComponent
   ],
   providers: [
     MatDatepickerModule

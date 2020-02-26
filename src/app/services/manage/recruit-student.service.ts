@@ -29,13 +29,13 @@ export class RecruitStudentService {
         return this.http.get(environment.apiUrl + `Students/${id}` , this.httpOptions);
     }
 
-    addOrUpdateRecruitStudent(RecruitStudent: RecruitStudent, by: null | number): Observable<any> {
-        if(RecruitStudent.id == 0) {
-            RecruitStudent.CreatedBy = by;
+    addOrUpdateRecruitStudent(student: RecruitStudent, by: null | number): Observable<any> {
+        if(student.id == 0) {
+            student.CreatedBy = by;
         } else {
-            RecruitStudent.UpdatedBy = by;
+            student.UpdatedBy = by;
         }
-        return this.http.post(environment.apiUrl + `Students`, RecruitStudent, this.httpOptions);
+        return this.http.post(environment.apiUrl + `Students`, student, this.httpOptions);
     }
 
     deleteRecruitStudent(RecruitStudentId: number, deletedBy: number): Observable<any> {

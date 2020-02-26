@@ -100,6 +100,7 @@ import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recrui
 import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
+import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
 
 
 @NgModule({
@@ -195,7 +196,9 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
     RecruitStudentComponent,
     RecruitStudentEditComponent,
     StudentComponent,
-    StudentEditComponent
+    StudentEditComponent,
+    RecruitStudentImportComponent
+    
   ],
   entryComponents: [
     ProvinceImportComponent,
@@ -204,6 +207,7 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
     WardImportComponent,
     UserGroupImportComponent,
     YardImportComponent,
+    RecruitStudentImportComponent,
     RecruitImportComponent,
     ClassImportComponent,
     ClassStatusImportComponent,

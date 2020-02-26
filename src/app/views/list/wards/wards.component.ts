@@ -57,7 +57,7 @@ export class WardsComponent implements OnInit {
    */
 
    filter: WardFilter = new WardFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
-   districtFilter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
+   districtFilter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
    provinceFilter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'Id','ASC');
 
   constructor(private translate: TranslateService, private service: WardService, private provinceService: ProvinceService, private districtService: DistrictService, private router: Router,

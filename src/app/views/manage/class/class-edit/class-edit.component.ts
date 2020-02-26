@@ -110,21 +110,19 @@ export class ClassEditComponent implements OnInit {
 	}
 	
 
-	GetClassById(id: number)  
-	{  
-		
-		const _this = this;
-		if(id){
-			this.classService.getClass(id).subscribe((aclass: Class) => {
-				_this.aclass = aclass;
-				if (_this.aclass == null || _this.aclass.id == null) {
-					_this.aclass = new Class(0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
-				}
-			});
-		} 		else {
-					_this.aclass = new Class(0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
-					}
+
+	GetClassById(id: number) {
+		alert(id);
+		this.classService.getClass((id) ? id : this.id).subscribe(
+			(aaclass) => {
+				this.aclass = aaclass || new Class(0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+			},
+			() => {
+				this.aclass = new Class(0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+			}
+		);
 	}
+	
 
 	ngOnInit() {
 		

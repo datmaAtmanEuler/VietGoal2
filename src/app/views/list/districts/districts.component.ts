@@ -37,7 +37,7 @@ export class DistrictsComponent implements OnInit {
   searchProvincesCtrl = new FormControl();
 
   provinceFilter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'id','ASC');
-  filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'id','ASC');
+  filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'id','ASC');
 
   /**
    * BEGIN SORT SETTINGS
@@ -213,7 +213,7 @@ reload() {
   }
 
   changeProvince(provinceid) {
-    this.service.getDistrictsList(new DistrictFilter('', 1, 100, provinceid, null, 'Id', 'ASC')).subscribe((list) => {
+    this.service.getDistrictsList(new DistrictFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
       this.districtsList = list;
       this.filter.ProvinceId = provinceid;
       this.reload();

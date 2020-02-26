@@ -60,12 +60,12 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 		return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
 	}
 	changeProvince(provinceid) {
-		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,null,'id','ASC')).subscribe((list) => {
+		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,'id','ASC')).subscribe((list) => {
 			this.listdistrict = list;
 		});
 	}
 	GetWardById(id: number) {
-		alert(id);
+		
 		this.wardService.getWard((id) ? id : this.id).subscribe(
 			(aWard) => {
 				this.ward = aWard || new Ward(0, '', '', 0, true, new Date(),null, null, null, null,0);
@@ -115,7 +115,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 		  .pipe(
 	        debounceTime(300),
 	        tap(() => this.isLoading = true),
-	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, null,null, 'id', 'ASC'))
+	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, null, 'id', 'ASC'))
 	        .pipe(
 	          finalize(() => this.isLoading = false),
 	          )

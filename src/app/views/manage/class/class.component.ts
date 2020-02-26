@@ -51,7 +51,7 @@ export class ClassComponent implements OnInit {
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
   searchTrainingGroundsCtrl = new FormControl();
-
+  searchAdvanced: boolean = false;
   isLoading = false;
   /**
   * BEGIN SORT SETTINGS

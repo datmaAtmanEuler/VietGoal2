@@ -23,10 +23,12 @@ import { RecruitStudentService } from 'app/services/manage/recruit-student.servi
 import { TrainingGroundService } from 'app/services/list/training-ground.service';
 import { TrainingGroundFilter } from 'app/models/filter/trainingroundfilter';
 import { AreaFilter } from 'app/models/filter/areafilter';
-import { MatPaginatorIntl } from '@angular/material';
+import { MatPaginatorIntl, MatDatepickerInputEvent } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { ClassFilter } from 'app/models/filter/classfilter';
 import { ClassService } from 'app/services/manage/class.service';
+import { ClassField } from '@angular/compiler';
+import { RecruitStudentImportComponent } from '../recruit-student/recruit-student-import/recruit-student-import.component';
 
 
 @Component({
@@ -35,7 +37,7 @@ import { ClassService } from 'app/services/manage/class.service';
   styleUrls: ['./recruit-student.component.scss']
 })
 export class RecruitStudentComponent implements OnInit {
-  recruitstudentList: RecruitStudent[] = [];
+  recruitstudentList: any[] = [];
   RecruitStudent: any;
   searchTerm:string = '';
   pageIndex:number = 1;
@@ -50,14 +52,16 @@ export class RecruitStudentComponent implements OnInit {
   yardsList: any;
   traininggroundsList: any;
   classList: any;
-
+  toDate: Date;
+  fromDate: Date;
+  originMin: Date;
+  originMax: Date;
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
   searchTrainingGroundsCtrl = new FormControl();
-  searchClasssCtrl = new FormControl();
-  searchUsersCtrl = new FormControl();
-  searchRecruitsCtrl = new FormControl();
+  searchClassCtrl = new FormControl();
   isLoading = false;
+  searchAdvanced: boolean = false;
   /**
   * BEGIN SORT SETTINGS
   */
@@ -73,7 +77,7 @@ export class RecruitStudentComponent implements OnInit {
     ],
     columnsName:  ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Action'],
     columnsNameMapping:  ['id', 'parentsName', 'faceBook', 'email', 'phone', 'fullName','dayofBirth','address',''],
-    columnsNameFilter: ['id', 'ParentsName', 'FaceBook', 'email', 'phone', 'fullName','dayofBirth','address',''],
+    columnsNameFilter: ['id', 'parentsName', 'faceBook', 'email', 'phone', 'fullName','dayofBirth','address',''],
     sortAbles:  [false, true, true, true, false,false,true,false, false],
     visibles: [true, true, true, true, true, true,true,true, true]
   }
@@ -96,6 +100,12 @@ export class RecruitStudentComponent implements OnInit {
       this.updateMatTableLabel();
       matCus.changes.next();
     });
+    const currentYear = new Date().getFullYear();
+    const currentMonth = new Date().getMonth();
+    this.fromDate = new Date(currentYear - 20, 0, 1);
+    this.toDate = new Date(currentYear + 1, 11, 31);
+    this.originMin = new Date(currentYear, currentMonth - 6,1);
+    this.originMax = new Date(currentYear + 1, 11, 31);
   }
   updateMatTableLabel() {
     this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
@@ -117,7 +127,17 @@ export class RecruitStudentComponent implements OnInit {
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
   }
-
+  dateEvent(type: string, event: MatDatepickerInputEvent<Date>){
+    const theDate = event.value;
+    switch(type){
+      case 'start':
+        this.fromDate = theDate;
+        break;
+      case 'end':
+        this.fromDate = event.value;
+        break;
+    }
+  }
   filtersEventsBinding() {
 
     this.searchAreasCtrl.valueChanges
@@ -190,6 +210,29 @@ export class RecruitStudentComponent implements OnInit {
         }
 
       });
+      this.searchClassCtrl.valueChanges.pipe(
+        startWith(''),
+        debounceTime(500),
+        tap(() => {
+          this.classList = [];
+          this.isLoading = true;
+        }),
+        switchMap(value => this.classService.getClassList(new ClassFilter('', this.pageIndex, this.pageSize, 0,0,0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0))
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            }),
+          )
+        )
+      )
+        .subscribe(data => {
+          if (data == undefined) {
+            this.classList = [{ notfound: 'Not Found' }];
+          } else {
+            this.classList = data.length ? data : [{ notfound: 'Not Found' }];
+          }
+  
+        });
   }
 
   remove(aclass: any) {
@@ -251,7 +294,7 @@ export class RecruitStudentComponent implements OnInit {
   displayYardFn(user): string {
     return user && user.YardName && !user.notfound ? user.YardName : '';
   }
-  displayTraininggroundFn(user): string {
+  displayTrainingGroundFn(user): string {
     return user && user.TraininggroundName && !user.notfound ? user.TraininggroundName : '';
   }
   changeArea(areaID: number) {
@@ -277,11 +320,27 @@ export class RecruitStudentComponent implements OnInit {
     this.classService.getClassList(this.classfilter).subscribe((list)=>{
       this.classList = list;
       this.reload();
-    })
-    
+    }) 
   }
-
+ 
   doNothing(): void {}
+
+  openImport() {
+    const _this = this;
+    const modalRef = this.modalService.open(RecruitStudentImportComponent, { size: 'lg' });
+    modalRef.result.then(function(importModel: any){
+        console.log(importModel);
+    });
+  }
+  downloadTemplate() {
+    var fileName = 'RecruitStudent_Import.xlsx';
+    var a = document.createElement('a');
+    a.href = this.service.getTemplate(fileName);
+    a.download = fileName;
+    document.body.append(a);
+    a.click();
+    a.remove();
+  }
   
 
 }

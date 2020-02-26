@@ -6,6 +6,7 @@ export class Student{
     displayOrder: number;
     gender: string;
     dob: string;
+    address: string;
     wardId: number;
     admissionDate: string;
     parentFullName: string;

@@ -17,19 +17,21 @@ import { Observable } from 'rxjs';
  * Begin import services
  * **/
 import { ClassService } from '../../../../services/manage/class.service';
-import { AreaService } from '../../../../services/list/area.service';
-import { YardService } from '../../../../services/list/yard.service';
-import { TrainingGroundService } from '../../../../services/list/training-ground.service';
+import { ProvinceService } from '../../../../services/list/province.service';
+import { DistrictService } from '../../../../services/list/district.service';
+import { WardService } from '../../../../services/list/ward.service';
 import { UserService } from '../../../../services/acl/user.service';
 import { AgeService } from '../../../../services/list/age.service';
 import { Class } from '../../../../models/manage/class';
 import { ClassFilter } from 'app/models/filter/classfilter';
-import { AreaFilter } from 'app/models/filter/areafilter';
+import { Filter } from 'app/models/filter/filter';
 
-import { YardFilter } from 'app/models/filter/yardfilter';
-import { TrainingGroundFilter } from 'app/models/filter/trainingroundfilter';
+import { DistrictFilter } from 'app/models/filter/districtfilter';
+import { WardFilter } from 'app/models/filter/wardfilter';
 import { Week, WeekToList, WeekToListName } from 'app/models/enums/week.enums';
 import { ShiftDay, ShiftDayToList, ShiftDayToListName } from 'app/models/enums/shiftday.enums';
+import { RecruitStudentService } from 'app/services/manage/recruit-student.service';
+import { StudentService } from 'app/services/manage/student.service';
 /**
  * End import services
  * **/
@@ -47,22 +49,23 @@ export class RecruitStudentEditComponent implements OnInit {
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
 
 	currentUser: any = {};
-	areasList: any[] = [];
-	yardsList: any[] = [];
-	trainingGroundsList: any[] = [];
+	provincesList: any[] = [];
+	districtsList: any[] = [];
+	wardsList: any[] = [];
 	agesList: any[] = [];
 	managersList: any[] = [];
 	mainCoachsList: any[] = [];
 	viceCoachsList: any[] = [];
-	class: any = {};
+	student: any;
 	weeksList: Week[] = WeekToList();
 	weeksListName: string[] = WeekToListName();
 	shiftDaysList: ShiftDay[] = ShiftDayToList();
 	shiftDaysListName: string[] = ShiftDayToListName();
 
-	searchAreasCtrl = new FormControl();
-	searchYardsCtrl = new FormControl();
-	searchTrainingGroundsCtrl = new FormControl();
+	searchProvincesCtrl = new FormControl();
+	searchDistrictsCtrl = new FormControl();
+	searchWardsCtrl = new FormControl();
+
 	searchAgesCtrl = new FormControl();
 	searchManagersCtrl = new FormControl();
 	searchMainCoachsCtrl = new FormControl();
@@ -72,10 +75,10 @@ export class RecruitStudentEditComponent implements OnInit {
 	errorMsg: string;
 
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal,
-		private classService: ClassService,
-		private areaService: AreaService,
-		private yardService: YardService,
-		private trainingGroundService: TrainingGroundService,
+		private studentService: StudentService,
+		private provinceService: ProvinceService,
+		private districtService: DistrictService,
+		private wardService: WardService,
 		private userService: UserService,
 		private ageService: AgeService,
 		private route: ActivatedRoute, private router: Router, private http: HttpClient) {
@@ -88,49 +91,55 @@ export class RecruitStudentEditComponent implements OnInit {
 
 		// this.getProvince();
 	}
+	filter:	Filter = new Filter ('', 1, 100, 'id', 'ASC');
+	districtfilter:	DistrictFilter = new DistrictFilter ('', 1, 100,null, 'id', 'ASC');
+	wardfilter: WardFilter = new WardFilter ('', 1, 100,null,null, 'id', 'ASC');
 
-	displayAreaFn(user): string {
-		return user && user.AreaName && !user.notfound ? user.AreaName : '';
+	displayProvinceFn(user): string {
+		return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
 	}
-	displayYardFn(user): string {
-		return user && user.YardName && !user.notfound ? user.YardName : '';
+	displayDistrictFn(user): string {
+		return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
 	}
-	displayTrainingGroundFn(user): string {
-		return user && user.TrainingGroundName && !user.notfound ? user.TrainingGroundName : '';
+	displayWardFn(user): string {
+		return user && user.WardName && !user.notfound ? user.WardName : '';
 	}
-	changeArea() {
-		this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
-			this.yardsList = list;
+	changeProvince(provinceID) {
+		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null, 'id','ASC')).subscribe((list) => {
+			this.districtsList = list;
 		});
+	}
+	changeDistrict(districtID) {
+		this.wardService.getWardsList(new WardFilter('', 1, 100, null, null,'id','ASC')).subscribe((list) => {
+			this.wardfilter = list;
+		});
+	}
+	changeWard(wardID) {
+		this.student.wardId = wardID;
 	}
 	
-	changeYard() {
-		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null, null, 'ID', 'ASC')).subscribe((list) => {
-			this.trainingGroundsList = list;
-		});
-	}
-	GetClassById(Id: number) {
-		this.classService.getClass((Id) ? Id : this.ClassId).subscribe(
+	GetStudentById(Id: number) {
+		this.studentService.getList((Id) ? Id : this.ClassId).subscribe(
 			(aClass: any) => {
-				this.class = aClass || {};
+				this.student = aClass || {};
 			},
 			() => {
-				this.class = {};
+				this.student = {};
 			}
 		);
 	}
 
 	ngOnInit() {
-		this.searchAreasCtrl.valueChanges
+		this.searchProvincesCtrl.valueChanges
 			.pipe(
 				startWith(''),
 				debounceTime(500),
 				tap(() => {
 					this.errorMsg = "";
-					this.areasList = [];
+					this.provincesList = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, this.class.CentralID, 'Id', 'ASC'))
+				switchMap(value => this.provinceService.getProvincesList(new Filter(value, 1, 100, 'id', 'ASC'))
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -141,23 +150,23 @@ export class RecruitStudentEditComponent implements OnInit {
 			.subscribe(data => {
 				if (data == undefined) {
 					this.errorMsg = 'error';
-					this.areasList = [{ notfound: 'Not Found' }];
+					this.provincesList = [{ notfound: 'Not Found' }];
 				} else {
 					this.errorMsg = "";
-					this.areasList = data.length ? data : [{ notfound: 'Not Found' }];
+					this.provincesList = data.length ? data : [{ notfound: 'Not Found' }];
 				}
 
 			});
 
-		this.searchYardsCtrl.valueChanges.pipe(
+		this.searchDistrictsCtrl.valueChanges.pipe(
 			startWith(''),
 			debounceTime(500),
 			tap(() => {
 				this.errorMsg = "";
-				this.yardsList = [];
+				this.districtsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'YardCode', 'ASC'))
+			switchMap(value => this.districtService.getDistrictsList(new DistrictFilter(value, 1, 100, null, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -167,22 +176,22 @@ export class RecruitStudentEditComponent implements OnInit {
 		).subscribe(data => {
 			if (data == undefined) {
 				this.errorMsg = 'error';
-				this.yardsList = [{ notfound: 'Not Found' }];
+				this.districtsList = [{ notfound: 'Not Found' }];
 			} else {
 				this.errorMsg = "";
-				this.yardsList = data.length ? data : [{ notfound: 'Not Found' }];
+				this.districtsList = data.length ? data : [{ notfound: 'Not Found' }];
 			}
 		});
 
-		this.searchTrainingGroundsCtrl.valueChanges.pipe(
+		this.searchWardsCtrl.valueChanges.pipe(
 			startWith(''),
 			debounceTime(500),
 			tap(() => {
 				this.errorMsg = "";
-				this.yardsList = [];
+				this.wardsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter(value, 1, 100, null, null, 'TrainingGroundCode', 'ASC'))
+			switchMap(value => this.wardService.getWardsList(new WardFilter(value, 1, 100, null, null, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -192,14 +201,14 @@ export class RecruitStudentEditComponent implements OnInit {
 		).subscribe(data => {
 			if (data == undefined) {
 				this.errorMsg = 'error';
-				this.trainingGroundsList = [{ notfound: 'Not Found' }];
+				this.wardsList = [{ notfound: 'Not Found' }];
 			} else {
 				this.errorMsg = "";
-				this.trainingGroundsList = data.length ? data : [{ notfound: 'Not Found' }];
+				this.wardsList = data.length ? data : [{ notfound: 'Not Found' }];
 			}
 
 		});
-		this.GetClassById(this.ClassId);
+		this.GetStudentById(this.ClassId);
 	}
 
 	ReturnList() {
@@ -207,22 +216,23 @@ export class RecruitStudentEditComponent implements OnInit {
 
 	}
 
-	UpdateClass() {
-		const _this= this
-		this.class.Week = Number.parseInt(_this.class.Week + "", 10);
-		this.class.ShiftDay = Number.parseInt(_this.class.ShiftDay + "", 10);
-		this.classService.addOrUpdateClass(_this.class).subscribe(
-			() => {
-				if (!_this.popup) {
+	UpdateStudent() {
+		const _this = this;
+		 this.studentService.addOrUpdate(_this.student).subscribe((result : any)=>{
+			if (result) {
+				if(!_this.popup) {
+					
 					_this.ReturnList();
 				} else {
+				
 					_this.closeMe();
 				}
-			},
-			() => {
-				_this.modalService.open(ConfirmComponent, { size: 'lg' });
-			});
+			} else {
+				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
+			}
+		 });
 	}
+	
 	
 
 	closeMe() {

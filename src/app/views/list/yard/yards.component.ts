@@ -242,7 +242,7 @@ changeCentral(centralID: number) {
     });
   }
 
-  changeArea(areaID: number) {
+  changeAreas(areaID: number) {
     this.filter.AreaId = areaID;
     this.service.getYardsList(this.filter).subscribe((list) => {
       this.yardsList = list;

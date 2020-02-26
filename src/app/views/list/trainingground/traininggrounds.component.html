@@ -22,7 +22,7 @@
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
                                         [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
                                     <mat-autocomplete #AreasAC="matAutocomplete"
-                                        (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
+                                        (optionSelected)="changeArea(searchAreasCtrl.value.id)"
                                         [displayWith]="displayAreaFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
@@ -43,7 +43,7 @@
                                         [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
                                     </div>
                                     <mat-autocomplete #YardAC="matAutocomplete"
-                                        (optionSelected)="changeDistrict(searchYardsCtrl.value.ID)"
+                                        (optionSelected)="changeYard(searchYardsCtrl.value.id)"
                                         [displayWith]="displayYardFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
@@ -113,7 +113,7 @@
                                                         <td class="my-action-item">
 
                                                             <button mat-raised-button type="button"
-                                                                (click)="edit(traininground.ID)"
+                                                                (click)="edit(traininground.id)"
                                                                 title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                                                                 class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                                 <i class="material-icons">edit</i>

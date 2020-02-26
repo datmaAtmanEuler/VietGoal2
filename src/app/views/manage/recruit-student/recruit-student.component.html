@@ -39,8 +39,7 @@
                                 <label class="m-0">{{ "MESSAGE.NameList.Day" | translate }}</label>
                                 <mat-form-field>
                                     <input matInput [disabled]="true"
-                                        (dateChange)="dateEvent('start',$event)" [min]="originMin"
-                                        [max]="maxDate" [matDatepicker]="startDateFilter"
+                                        (dateChange)="dateEvent('start',$event)" [matDatepicker]="startDateFilter"
                                         class="col-sm-3 form-control">
                                     <span mat-raised-button (click)="startDateFilter.open()"
                                         class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
@@ -54,7 +53,7 @@
                                 <label class="m-0">&nbsp;</label>
                                 <mat-form-field>
                                     <input matInput [disabled]="true" (dateChange)="dateEvent('end',$event)"
-                                        [min]="minDate" [max]="originMax" [matDatepicker]="endDateFilter"
+                                        [matDatepicker]="endDateFilter"
                                         class="col-sm-3 form-control">
                                     <span mat-raised-button (click)="endDateFilter.open()"
                                         class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
@@ -97,7 +96,7 @@
                         </div>
                         <mat-autocomplete #YardAC="matAutocomplete"
                             (optionSelected)="changeYard(searchYardsCtrl.value.id)"
-                            [displayWith]="displayAresFn">
+                            [displayWith]="displayAreaFn">
                             <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                 <mat-spinner></mat-spinner>
                             </mat-option>
@@ -142,24 +141,37 @@
                     <div class="form-group row">
                         <label class="col-5 label-middling"><strong>Lớp Học:</strong></label>
                         <div class="col-6 label-middling">
-                            <input class="form-control" placeholder="Lớp học" [matAutocomplete]="ClassAC"
-                                [formControl]="searchClasssCtrl">
+                            <input class="form-control" placeholder="Lớp học" 
+                            [matAutocomplete]="classAC"
+                            [formControl]="searchClassCtrl">
                         </div>
+                        <mat-autocomplete #classAC="matAutocomplete">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let class of classList"
+                                [value]="class">
+                                <span
+                                    *ngIf="!class.notfound">{{class.Class}}</span>
+                                <span *ngIf="class.notfound"
+                                    class="nofind">{{class.notfound}}</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-5 label-middling"><strong>Người Chốt:</strong></label>
                         <div class="col-6 label-middling">
-                            <input class="form-control" placeholder="Người chốt" [matAutocomplete]="UserAC"
-                                [formControl]="searchUsersCtrl">
+                            <input class="form-control" placeholder="Người chốt">
                         </div>
                     </div>
 
                     <div class="form-group row">
                         <label class="col-5 label-middling"><strong>Kết quả:</strong></label>
                         <div class="col-6 label-middling">
-                            <input class="form-control" placeholder="Kết quả" [matAutocomplete]="RecruitAC"
-                                [formControl]="searchRecruitsCtrl">
+                            <input class="form-control" placeholder="Kết quả">
                         </div>
                     </div>
 

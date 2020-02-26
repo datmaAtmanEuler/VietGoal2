@@ -18,10 +18,10 @@
                                     <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Central' | translate}}:</strong></label>
                                     <div  class="col-6 label-middling" >
                                     <input class="form-control" placeholder="{{'MESSAGE.NameList.CentralName' |translate}}"
-                                        [matAutocomplete]="CentralAC" [formControl]="searchCentralCtrl">
+                                        [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
                                     </div>
                                     <mat-autocomplete #CentralAC="matAutocomplete"
-                                        (optionSelected)="changeCentral(searchCentralCtrl.value.id)"
+                                        (optionSelected)="changeCentral(searchCentralsCtrl.value.id)"
                                         [displayWith]="displayCentralFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>

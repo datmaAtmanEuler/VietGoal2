@@ -22,7 +22,7 @@
                                         [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
                                         </div>
                                     <mat-autocomplete #AreasAC="matAutocomplete"
-                                        (optionSelected)="changeAreas(searchAreasCtrl.value.ID)"
+                                        (optionSelected)="changeAreas(searchAreasCtrl.value.id)"
                                         [displayWith]="displayAreasFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
@@ -43,7 +43,7 @@
                                         [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
                                     </div>
                                     <mat-autocomplete #CentralAC="matAutocomplete"
-                                        (optionSelected)="changeDistrict(searchCentralsCtrl.value.ID)"
+                                        (optionSelected)="changeCentral(searchCentralsCtrl.value.id)"
                                         [displayWith]="displayCentralFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
@@ -112,7 +112,7 @@
                                                     <td  class="my-action-item">
 
                                                         <button mat-raised-button *hasClaim="['CanEditYards']"
-                                                            type="button" (click)="edit(yard.ID)"
+                                                            type="button" (click)="edit(yard.id)"
                                                             title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                                                             class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                             <i class="material-icons">edit</i>

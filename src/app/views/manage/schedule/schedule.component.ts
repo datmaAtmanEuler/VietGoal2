@@ -3,7 +3,9 @@ import { Schedule } from 'app/models/schedule';
 import { ScheduleService } from 'app/services/manage/schedule.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AreaService } from '../../../services/list/area.service';
-import { CentralService } from '../../../services/manage/central.service';
+import { YardService } from '../../../services/list/yard.service';
+import { ClassService } from '../../../services/manage/class.service';
+import { CoachService } from '../../../services/manage/coach.service';
 import { Area } from '../../../models/list/area';
 import { Filter } from '../../../models/filter/filter';
 import { Router } from '@angular/router'; 
@@ -11,9 +13,14 @@ import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.componen
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { FormControl } from '@angular/forms';
+
+import { startWith, map, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { from } from 'rxjs';
+
+declare var $: any;
 
 @Component({
     selector: 'app-schedule',
@@ -25,8 +32,29 @@ export class ScheduleComponent implements OnInit {
     pageIndex: number = 1;
     pageSizesList: number[] = [5, 10, 20, 100];
     pageSize: number = this.pageSizesList[3];
+
+    areaPageIndex: number = 1;
+    yardPageIndex: number = 1;
+    classPageIndex: number = 1;
+    coachPageIndex: number = 1;
+
     Total: number;
     isLoading: boolean = true;
+    searchAdvanced:boolean = false;
+    showMoreArea: boolean = false;
+    showMoreYard: boolean = false;
+    showMoreClass: boolean = false;
+    showMoreCoach: boolean = false;
+
+    scheduleFilter: any = {
+        areaId: null,
+        yardId: null,
+        coachId: null,
+        dayOrderInWeek: null,
+        classTime: null,
+        month: null,
+        week: null
+    };
 
     paginationSettings: any = {
         sort: new ASCSort(),
@@ -37,7 +65,7 @@ export class ScheduleComponent implements OnInit {
             SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
             null
         ],
-        columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'ClassDay', 'ClassTime', 'Coach1', 'Coach2', 'Coach3', 'RealCoach1', 'RealCoach2', 'RealCoach3', 'Action'],
+        columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'Coach1', 'Coach2', 'Coach3', 'RealCoach1', 'RealCoach2', 'RealCoach3', 'Action'],
         columnsNameMapping: ['Id', 'Area', 'Yard', 'YardArea', 'Class', 'ClassDay', 'ClassTime', 'Coach1', 'Coach2', 'Coach3', 'RealCoach1', 'RealCoach2', 'RealCoach3', ''],
         sortAbles: [false, true, true, true, true, true, true, true, true, true, true, true, true, false],
         visibles: [true, true, true, true, true, true, true, true, true, true, true, true, true, true]
@@ -46,8 +74,38 @@ export class ScheduleComponent implements OnInit {
 
     schedulesList: any[];
     loading: boolean;
+
+    areasList: any[] = [];
+    yardsList: any[] = [];
+    classList: any[] = [];
+    coachsList: any[] = [];
+
+    dayOrderInWeeksList: any[] = [];
+    monthsList: any[] = [];
+    weeksList: any[] = [];
+
+    searchAreasCtrl = new FormControl();
+    searchYardsCtrl = new FormControl();
+    searchClassCtrl = new FormControl();
+    searchCoachsCtrl = new FormControl();
+
+    searchDayOrderInWeeksCtrl = new FormControl();
+    searchMonthsCtrl = new FormControl();
+    searchWeeksCtrl = new FormControl();
+
+    totalAreaPages: number = 0;
+    totalYardPages: number = 0;
+    totalClassPages: number = 0;
+    totalCoachPages: number = 0;
     
-    constructor(private translate: TranslateService, private matCus: MatPaginatorIntl,config: NgbModalConfig, public utilsService: UtilsService,
+
+    
+    constructor(public translate: TranslateService, private matCus: MatPaginatorIntl,config: NgbModalConfig,
+        public utilsService: UtilsService,
+        private areaService: AreaService,
+        private yardService: YardService,
+        private classService: ClassService,
+        private coachService: CoachService,
         private service: ScheduleService, private modalService: NgbModal) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         config.backdrop = 'static';
@@ -57,6 +115,11 @@ export class ScheduleComponent implements OnInit {
     }
 
     reload = () => {
+        const now = new Date();
+        this.scheduleFilter.classTime = now.getHours() + ':' + now.getMinutes();
+        this.scheduleFilter.month = now.getMonth() + 1;
+        this.scheduleFilter.dayOrderInWeek = now.getDay() + 1;
+
         this.isLoading = true;
         this.schedulesList = [];
         setTimeout(() => {
@@ -71,6 +134,191 @@ export class ScheduleComponent implements OnInit {
         this.reload();
         const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
         new PerfectScrollbar(vgscroll);
+        this.searchAreasCtrl.valueChanges.pipe(
+            startWith(''),
+            debounceTime(500),
+            tap(() => {
+              this.areasList = this.areasList.concat([]);
+              this.isLoading = true;
+            }),
+            switchMap(value => this.areaService.getAreasList({centralId: null, searchTerm: (value && Object.keys(value).length > 0) ? value.areaName : value, pageIndex: this.areaPageIndex, pageSize: 10})
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false
+                }),
+              )
+            )
+        ).subscribe((response: any) => {
+            const data = response.results;
+            this.totalAreaPages = response.pageCount | 0;
+            if (data == undefined) {
+                this.totalAreaPages = 0;
+                this.areasList = (this.areasList.length < 1) ? [{ notfound: 'Not Found' }] : this.areasList;
+            } else {
+                this.areasList = data && data.length ? this.areasList.concat(data) : this.areasList;
+            }
+        });
+        this.searchYardsCtrl.valueChanges.pipe(
+            startWith(''),
+            debounceTime(500),
+            tap(() => {
+              this.yardsList = this.yardsList.concat([]);
+              this.isLoading = true;
+            }),
+            switchMap(value => this.yardService.getYardsList({areaId: this.scheduleFilter.areaId, searchTerm: (value && Object.keys(value).length > 1) ? value.yardName : value, pageIndex: this.yardPageIndex, pageSize: 10})
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false
+                }),
+              )
+            )
+        ).subscribe((response: any) => {
+            const data = response.results;
+            this.totalYardPages = response.pageCount | 0;
+            if (data == undefined) {
+                this.totalYardPages = 0;
+                this.yardsList = (this.yardsList.length < 1) ? [{ notfound: 'Not Found' }] : this.yardsList;
+            } else {
+                this.yardsList = data && data.length ? this.yardsList.concat(data) : this.yardsList;
+            }
+        });
+        this.searchClassCtrl.valueChanges.pipe(
+            startWith(''),
+            debounceTime(500),
+            tap(() => {
+              this.classList = this.classList.concat([]);
+              this.isLoading = true;
+            }),
+            switchMap(value => this.classService.getClassList({areaId: this.scheduleFilter.areaId, yardId: this.scheduleFilter.yardId, searchTerm: (value && Object.keys(value).length > 1) ? value.className : value, pageIndex: this.classPageIndex, pageSize: 10})
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false
+                }),
+              )
+            )
+        ).subscribe((response: any) => {
+            const data = response.results;
+            this.totalClassPages = response.pageCount | 0;
+            if (data == undefined) {
+                this.totalClassPages = 0;
+                this.classList = (this.classList.length < 1) ? [{ notfound: 'Not Found' }] : this.classList;
+            } else {
+                this.classList = data && data.length ? this.classList.concat(data) : this.classList;
+            }
+        });
+
+        this.searchCoachsCtrl.valueChanges.pipe(
+            startWith(''),
+            debounceTime(500),
+            tap(() => {
+              this.coachsList = this.coachsList.concat([]);
+              this.isLoading = true;
+            }),
+            switchMap(value => this.coachService.getCoachsList({centralId: null, searchTerm: (value && Object.keys(value).length > 0) ? value.firstName + ' ' + value.lastName : value, pageIndex: this.coachPageIndex, pageSize: 10})
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false
+                }),
+              )
+            )
+        ).subscribe((response: any) => {
+            const data = response.results;
+            this.totalCoachPages = response.pageCount | 0;
+            if (data == undefined) {
+                this.totalCoachPages = 0;
+                this.coachsList = (this.coachsList.length < 1) ? [{ notfound: 'Not Found' }] : this.coachsList;
+            } else {
+                this.coachsList = data && data.length ? this.coachsList.concat(data) : this.coachsList;
+            }
+        });
+
+        this.searchDayOrderInWeeksCtrl.valueChanges.pipe(
+            startWith(''),
+            debounceTime(500),
+            tap(() => {
+              this.dayOrderInWeeksList = [];
+              this.isLoading = true;
+            }),
+            switchMap(value => this.utilsService.dayInWeekList((value && Object.keys(value).length > 1) ? value.value : value, (value && Object.keys(value).length > 1) ? 2 : 1)
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false
+                }),
+              )
+            )
+        ).subscribe((response: any) => {
+            if (response == undefined || response.length < 1) {
+                this.yardsList = [{ notfound: 'Not Found' }];
+            } else {
+                this.dayOrderInWeeksList = response && response.length ? response : [];
+            }
+        });
+
+        this.searchMonthsCtrl.valueChanges.pipe(
+            startWith(''),
+            debounceTime(500),
+            tap(() => {
+              this.monthsList = [];
+              this.isLoading = true;
+            }),
+            switchMap(value => this.utilsService.monthList((value && Object.keys(value).length > 1) ? value.value : value, (value && Object.keys(value).length > 1) ? 2 : 1)
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false
+                }),
+              )
+            )
+        ).subscribe((response: any) => {
+            if (response == undefined || response.length < 1) {
+                this.monthsList = [{ notfound: 'Not Found' }];
+            } else {
+                this.monthsList = response && response.length ? response : [];
+            }
+        });
+
+        this.searchWeeksCtrl.valueChanges.pipe(
+            startWith(''),
+            debounceTime(500),
+            tap(() => {
+              this.weeksList = [];
+              this.isLoading = true;
+            }),
+            switchMap(value => this.utilsService.weekNumberList((value && Object.keys(value).length > 1) ? value.value : value, (value && Object.keys(value).length > 1) ? 2 : 1)
+              .pipe(
+                finalize(() => {
+                  this.isLoading = false
+                }),
+              )
+            )
+        ).subscribe((response: any) => {
+            if (response == undefined || response.length < 1) {
+                this.weeksList = [{ notfound: 'Not Found' }];
+            } else {
+                this.weeksList = response && response.length ? response : [];
+            }
+        });
+
+        const _this = this;
+
+        this.translate.onLangChange.subscribe((a: any) => {
+            if(_this.searchMonthsCtrl && _this.searchMonthsCtrl.value && _this.searchMonthsCtrl.value.title) {
+                _this.utilsService.monthList(_this.searchMonthsCtrl.value.value, 2).subscribe((r1: any) => {
+                    _this.searchMonthsCtrl.setValue({ value: r1[0].value, title: _this.translate.instant(r1[0].title) });
+                });
+            }
+
+            if(_this.searchDayOrderInWeeksCtrl && _this.searchDayOrderInWeeksCtrl.value && _this.searchDayOrderInWeeksCtrl.value.title) {
+                _this.utilsService.dayInWeekList(_this.searchDayOrderInWeeksCtrl.value.value, 2).subscribe((r2: any) => {
+                    _this.searchDayOrderInWeeksCtrl.setValue({ value: r2[0].value, title: _this.translate.instant(r2[0].title) });
+                });
+            }
+
+            if(_this.searchWeeksCtrl && _this.searchWeeksCtrl.value && _this.searchWeeksCtrl.value.title) {
+                _this.utilsService.weekNumberList(_this.searchWeeksCtrl.value.value, 2).subscribe((r3: any) => {
+                    _this.searchWeeksCtrl.setValue({ value: r3[0].value, title: _this.translate.instant(r3[0].title) });
+                });
+            }
+          });
     } 
 
 
@@ -92,6 +340,10 @@ export class ScheduleComponent implements OnInit {
     });*/
   }
 
+  openExport() {
+
+  }
+
   downloadTemplate() {
     /*var fileName = 'Areas_Import.xlsx';
     var a = document.createElement('a');
@@ -100,5 +352,91 @@ export class ScheduleComponent implements OnInit {
     document.body.append(a);
     a.click();
     a.remove();*/
+  }
+
+  /**
+  * For selects
+  */
+  displayAreaFn(area: any): string {
+    return area && area.areaName && !area.notfound ? area.areaName : '';
+  }
+  
+  changeArea(areaId: number){
+    this.scheduleFilter.areaId = areaId;
+  }
+
+  updateAreaShowMore() {
+      this.showMoreArea = false;
+      this.areaPageIndex++;
+      this.searchAreasCtrl.enable({emitEvent: true});
+  }
+
+  displayYardFn(yard: any): string {
+    return yard && yard.yardName && !yard.notfound ? yard.yardName : '';
+  }
+  
+  changeYard(yardId: number){
+    this.scheduleFilter.yardId = yardId;
+  }
+
+  updateYardShowMore() {
+      this.showMoreYard = false;
+      this.yardPageIndex++;
+      this.searchYardsCtrl.enable({emitEvent: true});
+  }
+
+  displayClassFn(aclass: any): string {
+    return aclass && aclass.className && !aclass.notfound ? aclass.className : '';
+  }
+  
+  changeClass(classId: number){
+    this.scheduleFilter.classId = classId;
+  }
+
+  updateClassShowMore() {
+      this.showMoreClass = false;
+      this.classPageIndex++;
+      this.searchClassCtrl.enable({emitEvent: true});
+  }
+
+  displayCoachFn(coach: any): string {
+    return coach && coach.firstName && coach.lastName && !coach.notfound ? coach.firstName + ' ' + coach.lastName : '';
+  }
+  
+  changeCoach(coachId: number){
+    this.scheduleFilter.coachId = coachId;
+  }
+
+  updatCoachShowMore() {
+      this.showMoreCoach= false;
+      this.coachPageIndex++;
+      this.searchCoachsCtrl.enable({emitEvent: true});
+  }
+
+  displayDayOrderInWeekFn(dayS: any): string {
+    return (dayS && dayS.title && !dayS.notfound) ? dayS.title : '';
+  }
+  
+  changeDayOrderInWeek(dayValue: number){
+    this.scheduleFilter.dayOrderInWeek = dayValue;
+    this.searchDayOrderInWeeksCtrl.setValue({ value: this.searchDayOrderInWeeksCtrl.value.value, title: this.translate.instant(this.searchDayOrderInWeeksCtrl.value.title) });
+  }
+
+  displayWeekFn(week: any): string {
+    return (week && week.title && !week.notfound) ? (week.title) : '';
+  }
+  
+  changeWeek(weekValue: number){
+    this.scheduleFilter.week = weekValue;
+    this.searchWeeksCtrl.setValue({ value: this.searchWeeksCtrl.value.value, title: this.translate.instant(this.searchWeeksCtrl.value.title) });
+  }
+
+  displayMonthFn(month: any): string {
+    return (month && month.title && !month.notfound) ? (month.title) : '';
+  }
+  
+  changeMonth(monthValue: number){
+    this.scheduleFilter.month = monthValue;
+    this.searchMonthsCtrl.setValue({ value: this.searchMonthsCtrl.value.value, title: this.translate.instant(this.searchMonthsCtrl.value.title) });
   }
 }

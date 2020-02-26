@@ -392,3 +392,26 @@ footer{
     padding: 0!important;
     border: 0!important;
 }
+.material-icons.advanced-search-btn{
+    font-size: 34px !important;
+}
+
+.show_more{
+    display: none;
+    z-index: 99;
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+}
+.show_more_show {
+    display: block;
+    z-index: 99;
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+}
+.btn.advanced-search-others{
+    position: absolute !important;
+    top: -80px !important;
+    right: 20px !important;
+}

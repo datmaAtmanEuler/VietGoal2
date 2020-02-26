@@ -42,6 +42,7 @@ export const ROUTES: RouteInfo[] = [
       { path: '/quanly/decentralize-user', title: 'MESSAGE.NameList.DecentralizeUser', icon: '', class: '' },
       { path: '/quanly/decentralize-data', title: 'MESSAGE.NameList.DataDecentralization', icon: '', class: '' },
       { path: '/quanly/nghiphep', title: 'MESSAGE.NameList.CoachAbsent', icon: '', class: '' },
+      { path: '/quanly/schedule', title: 'MESSAGE.NameList.Schedule', icon: '', class: '' },
       { path: '/quanly/hosohocsinh', title: 'MESSAGE.NameList.StudentProfile', icon: '', class: '' }
     ]
   },

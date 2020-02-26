@@ -28,11 +28,15 @@ import { ConfirmComponent } from './shared/modal/confirm/confirm.component';
 import { environment } from 'environments/environment';
 import { ApproveComponent } from './views/manage/coachabsent/approve/approve.component';
 
+
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, `${environment.apiOriginalUrl}i18n/`, '.json');
 }
 @NgModule({
   imports: [
+  NgxMaterialTimepickerModule,
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
@@ -46,6 +50,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MatInputModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

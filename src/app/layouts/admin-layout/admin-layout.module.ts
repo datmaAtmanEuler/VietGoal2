@@ -25,6 +25,7 @@ import { FileUploadModule } from '../../shared/file-upload/file-upload.module';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import {
   MatButtonModule,
@@ -101,6 +102,7 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
 
 @NgModule({
   imports: [
+    NgxMaterialTimepickerModule,
     FileUploadModule,
     NgbModalModule,
     TranslateModule,
@@ -210,9 +212,11 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
     TrainingGroundImportComponent,
     AreaImportComponent,
     PositionImportComponent,
-    StudentStatusImportComponent
+    StudentStatusImportComponent,
+    ScheduleComponent,
   ],
   providers: [
+    NgxMaterialTimepickerModule,
     MatDatepickerModule
   ]
 })

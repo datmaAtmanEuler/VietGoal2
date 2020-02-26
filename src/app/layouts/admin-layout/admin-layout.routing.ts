@@ -34,11 +34,11 @@ import { FeesComponent } from 'app/views/list/fees/fees.component';
 import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.component';
 import { AgesComponent } from 'app/views/list/ages/ages.component';
 import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.component';
-import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
 import { ClassComponent } from '../../views/manage/class/class.component';
 import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 import { RecruitComponent } from '../../views/list/recruits/recruit.component';
 import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/recruit-edit.component';
+import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
 import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
 import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
@@ -313,12 +313,11 @@ export const AdminLayoutRoutes: Routes = [
     }
     ,
     {
-        path: 'thoikhoabieu',
-        children: [ {
-            path: '', component: ScheduleComponent
-        }
-        , // { path: 'add', component: CentralEditComponent },
-        // { path: 'edit', component: CentralEditComponent }
+        path: 'schedule',
+        children: [ 
+            {
+                path: '', component: ScheduleComponent
+            }
         ]
     }
     ,

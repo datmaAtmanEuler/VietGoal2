@@ -3,6 +3,7 @@ import { Md5 } from 'ts-md5/dist/md5';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { TranslateService } from '@ngx-translate/core';
 import { SORD_DIRECTION } from 'app/models/sort';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -105,5 +106,87 @@ export class UtilsService {
         day = '0' + day;
 
     return [year, month, day].join('-');
+  }
+
+  weekNumber(inputDate: Date): number {
+    return 0 | inputDate.getDate() / 7;
+  }
+
+  dayInWeekList(value: any, type: number | null = 1): Observable<any[]> {
+    if(type == 1) {
+       return of([
+          {value: 1, title: "DATEFORMAT.DAYORDERINWEEK.Monday"},
+          {value: 2, title: "DATEFORMAT.DAYORDERINWEEK.Tuesday"},
+          {value: 3, title: "DATEFORMAT.DAYORDERINWEEK.Wednesday"},
+          {value: 4, title: "DATEFORMAT.DAYORDERINWEEK.Thursday"},
+          {value: 5, title: "DATEFORMAT.DAYORDERINWEEK.Friday"},
+          {value: 6, title: "DATEFORMAT.DAYORDERINWEEK.Saturday"},
+          {value: 0, title: "DATEFORMAT.DAYORDERINWEEK.Sunday"}
+        ].filter((day: any) => value == '' || value == undefined || day.title.toLowerCase().indexOf(value.toString()) != -1)); 
+     } else {
+        return of([
+          {value: 1, title: "DATEFORMAT.DAYORDERINWEEK.Monday"},
+          {value: 2, title: "DATEFORMAT.DAYORDERINWEEK.Tuesday"},
+          {value: 3, title: "DATEFORMAT.DAYORDERINWEEK.Wednesday"},
+          {value: 4, title: "DATEFORMAT.DAYORDERINWEEK.Thursday"},
+          {value: 5, title: "DATEFORMAT.DAYORDERINWEEK.Friday"},
+          {value: 6, title: "DATEFORMAT.DAYORDERINWEEK.Saturday"},
+          {value: 0, title: "DATEFORMAT.DAYORDERINWEEK.Sunday"}
+        ].filter((day: any) => value == '' || value == undefined || day.value.toString().toLowerCase() == value.toString())); 
+     }
+  }
+
+  weekNumberList(value: any,type: number | null = 1): Observable<any[]> {
+    if(type == 1) {
+      return of([
+        {value: 1, title: "DATEFORMAT.WEEK.First"},
+        {value: 2, title: "DATEFORMAT.WEEK.Second"},
+        {value: 3, title: "DATEFORMAT.WEEK.Third"},
+        {value: 4, title: "DATEFORMAT.WEEK.Fourth"},
+        {value: 5, title: "DATEFORMAT.WEEK.Fifth"}
+      ].filter((week: any) => value == '' || value == undefined || week.title.toLowerCase().indexOf(value.toString()) != -1));
+    } else {
+      return of([
+        {value: 1, title: "DATEFORMAT.WEEK.First"},
+        {value: 2, title: "DATEFORMAT.WEEK.Second"},
+        {value: 3, title: "DATEFORMAT.WEEK.Third"},
+        {value: 4, title: "DATEFORMAT.WEEK.Fourth"},
+        {value: 5, title: "DATEFORMAT.WEEK.Fifth"}
+      ].filter((week: any) => value == '' || value == undefined || week.value.toString().toLowerCase() == value.toString())); 
+    }
+  }
+
+  monthList(value: any, type: number | null = 1): Observable<any[]> {
+    if(type == 1) {
+     return of( [
+        {value: 1, title: "DATEFORMAT.Jan"},
+        {value: 2, title: "DATEFORMAT.Feb"},
+        {value: 3, title: "DATEFORMAT.Mar"},
+        {value: 4, title: "DATEFORMAT.Apr"},
+        {value: 5, title: "DATEFORMAT.May"},
+        {value: 6, title: "DATEFORMAT.Jun"},
+        {value: 7, title: "DATEFORMAT.Jul"},
+        {value: 8, title: "DATEFORMAT.Aug"},
+        {value: 9, title: "DATEFORMAT.Sep"},
+        {value: 10, title: "DATEFORMAT.Oct"},
+        {value: 11, title: "DATEFORMAT.Nov"},
+        {value: 12, title: "DATEFORMAT.Dec"}
+      ].filter((month: any) => value == '' || value == undefined || month.title.toLowerCase().indexOf(value.toString()) != -1)); 
+    } else {
+      return of( [
+        {value: 1, title: "DATEFORMAT.Jan"},
+        {value: 2, title: "DATEFORMAT.Feb"},
+        {value: 3, title: "DATEFORMAT.Mar"},
+        {value: 4, title: "DATEFORMAT.Apr"},
+        {value: 5, title: "DATEFORMAT.May"},
+        {value: 6, title: "DATEFORMAT.Jun"},
+        {value: 7, title: "DATEFORMAT.Jul"},
+        {value: 8, title: "DATEFORMAT.Aug"},
+        {value: 9, title: "DATEFORMAT.Sep"},
+        {value: 10, title: "DATEFORMAT.Oct"},
+        {value: 11, title: "DATEFORMAT.Nov"},
+        {value: 12, title: "DATEFORMAT.Dec"}
+      ].filter((month: any) => value == '' || value == undefined || month.value.toString().toLowerCase() == value.toString())); 
+    }
   }
 }  

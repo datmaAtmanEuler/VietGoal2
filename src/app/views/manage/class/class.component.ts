@@ -290,5 +290,9 @@ export class ClassComponent implements OnInit {
   displayTrainingGroundFn(trainingground: any) {
     return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
   }
+
+  studentProfile(classId){
+    if (classId) this.router.navigate(['quanly/hosohocsinhtheolop/'+classId]);
+  }
 }
 

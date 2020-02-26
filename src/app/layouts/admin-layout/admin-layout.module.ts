@@ -219,7 +219,8 @@ import { RecruitStudentImportComponent } from '../../views/manage/recruit-studen
     TrainingGroundImportComponent,
     AreaImportComponent,
     PositionImportComponent,
-    StudentStatusImportComponent
+    StudentStatusImportComponent,
+    StudentEditComponent
   ],
   providers: [
     MatDatepickerModule

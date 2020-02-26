@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilsService } from '../../../services/utils.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,6 +9,8 @@ import { StudentEditComponent } from './student-edit/student-edit.component';
 import { Student } from 'app/models/manage/student';
 import { StudentService } from 'app/services/manage/student.service';
 import PerfectScrollbar from 'perfect-scrollbar';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 @Component({
   selector: 'app-student',
@@ -38,11 +40,13 @@ export class StudentComponent implements OnInit {
       null
     ],
     columnsName: ['Order', 'Mã học viên', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Số thứ tự', 'Ngày nhập học', 'Ngày kết thúc học phần', 'Action'],
-    columnsNameMapping: ['Id', 'studentCode', 'firstName', 'lastName', 'gender', 'dob', 'displayOrder', 'admissionDate', 'admissionDate', ''],
+    columnsNameMapping: ['Id', 'studentCode', 'firstName', 'lastName', 'gender', 'dob', 'displayOrder', 'admissionDate', 'endTermDate', ''],
     sortAbles: [false, true, true, true, true, true, true, true, true, false, false],
     visibles: [true, true, true, true, true, true, true, true, true, true, true]
   }
-  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: StudentService, private router: Router, private modalService: NgbModal) {
+  classID: number;
+  className: string;
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: StudentService, private modalService: NgbModal, private route: ActivatedRoute, private http: HttpClient) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
@@ -54,6 +58,10 @@ export class StudentComponent implements OnInit {
     
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
+    this.classID = parseInt(this.route.snapshot.paramMap.get('classID'));
+    this.http.get(environment.serverUrl+'Class/'+this.classID).subscribe((response: any) => {
+      this.className = response.className;
+    });
     this.reload();
   }
 
@@ -74,7 +82,7 @@ export class StudentComponent implements OnInit {
   }
   reload() {
     const filter = {
-      idClass: this.idClass,
+      idClass: this.classID,
       searchTerm: this.searchTerm,
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
@@ -102,6 +110,7 @@ export class StudentComponent implements OnInit {
     const modalRef = this.modalService.open(StudentEditComponent, { size: 'xl'  });
     modalRef.componentInstance.popup = true;
     modalRef.componentInstance.StudentId = StudentId;
+    modalRef.componentInstance.classID = this.classID;
     modalRef.result.then(function (result) {
       _this.reload();
     });

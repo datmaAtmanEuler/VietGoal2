@@ -25,9 +25,9 @@ export class StudentService {
         return this.http.get(environment.serverUrl + `Students/${id}` , this.httpOptions);
     }
 
-    addOrUpdate(model: Student): Observable<any> {
-        if (model.id == 0) {
-            return this.http.post(environment.serverUrl + 'Students', model, this.httpOptions);
+    addOrUpdate(model: Student, classId?: number): Observable<any> {
+        if (model.id == 0 && classId) {
+            return this.http.post(environment.serverUrl + `Students/${classId}`, model, this.httpOptions);
         } else {
             return this.http.put(environment.serverUrl + `Students/${model.id}`, model, this.httpOptions);
         }

@@ -43,6 +43,7 @@ export class StudentEditComponent implements OnInit {
 		this.StudentService.get((StudentId) ? StudentId : this.StudentId).subscribe(
 			(object) => {
 				this.Student = object || new Student();
+				this.fullName = this.Student.firstName + ' ' + this.Student.lastName;
 			},
 			() => {
 				this.Student = new Student();
@@ -76,7 +77,7 @@ export class StudentEditComponent implements OnInit {
 			});
 	}
 	getName(arg0: string, fullName: any): string {
-		const objfullName = fullName.split(" ");
+		const objfullName = fullName.split(' ');
 		let lastname = objfullName[objfullName.length - 1]
 		let firstname = fullName.replace(' ' + lastname, '');
 		switch (arg0) {

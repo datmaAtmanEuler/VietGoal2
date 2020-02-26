@@ -14,7 +14,18 @@ export class HasClaimDirective {
     private viewContainer: ViewContainerRef,
     private authenticationService: AuthenticationService
   ) { 
-    this.claims = authenticationService.currentUserValue.Claims;
+    this.claims = this.mapJwtClaimsFunction(authenticationService.currentUserValue.Claims);
+  }
+
+  private mapJwtClaimsFunction(claimsJsonString: string): Claim[] {
+    const claimsBackend = JSON.parse(claimsJsonString);
+    const claims: Claim[] = [];
+    if(claimsBackend && claimsBackend.length > 0) {
+      claimsBackend.forEach(function(cl: any){
+        claims.push(new Claim('Can' + cl.Action + cl.Controller, true));
+      });
+    }
+    return claims;
   }
 
   @Input() set hasClaim(claimType: any) {

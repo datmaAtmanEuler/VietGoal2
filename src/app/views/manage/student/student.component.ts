@@ -27,6 +27,9 @@ export class StudentComponent implements OnInit {
   Total:number;
   firstRowOnPage:number;
   loading: boolean;
+
+  idClass: number = 0;
+
   paginationSettings: any = {
     sort: new ASCSort(),
     sortToggles: [
@@ -35,7 +38,7 @@ export class StudentComponent implements OnInit {
       null
     ],
     columnsName: ['Order', 'Mã học viên', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Số thứ tự', 'Ngày nhập học', 'Ngày kết thúc học phần', 'Action'],
-    columnsNameMapping: ['', 'studentCode', 'firstName', 'lastName', 'gender', 'dob', 'displayOrder', 'admissionDate', 'admissionDate', ''],
+    columnsNameMapping: ['Id', 'studentCode', 'firstName', 'lastName', 'gender', 'dob', 'displayOrder', 'admissionDate', 'admissionDate', ''],
     sortAbles: [false, true, true, true, true, true, true, true, true, false, false],
     visibles: [true, true, true, true, true, true, true, true, true, true, true]
   }
@@ -71,6 +74,8 @@ export class StudentComponent implements OnInit {
   }
   reload() {
     const filter = {
+      idClass: this.idClass,
+      searchTerm: this.searchTerm,
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
       sortName: this.paginationSettings.sort.SortName,

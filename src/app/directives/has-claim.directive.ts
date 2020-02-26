@@ -19,6 +19,7 @@ export class HasClaimDirective {
 
   private mapJwtClaimsFunction(claimsJsonString: string): Claim[] {
     const claimsBackend = JSON.parse(claimsJsonString);
+    
     const claims: Claim[] = [];
     if(claimsBackend && claimsBackend.length > 0) {
       claimsBackend.forEach(function(cl: any){

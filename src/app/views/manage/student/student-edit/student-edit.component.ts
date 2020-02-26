@@ -52,8 +52,8 @@ export class StudentEditComponent implements OnInit {
 				const ipProvinceAC = <HTMLInputElement>document.getElementById('ipProvinceAC');
 				const ipDistrictAC = <HTMLInputElement>document.getElementById('ipDistrictAC');
 				const ipStatusAC = <HTMLInputElement>document.getElementById('ipStatusAC');
-				ipDOBDP.value = this.utilsService.stringDate(this.Student.dob);
-				ipadmissionDateDP.value = this.utilsService.stringDate(this.Student.admissionDate);
+				ipDOBDP.value = this.utilsService.stringDate(this.Student.dob, true);
+				ipadmissionDateDP.value = this.utilsService.stringDate(this.Student.admissionDate, true);
 				this.http.get(environment.serverUrl+'Wards/'+this.Student.wardId).subscribe((response: any) => {
 					ipWardAC.value = response.wardName;
 					this.http.get(environment.serverUrl+'Districts/'+response.districtId).subscribe((response: any) => {

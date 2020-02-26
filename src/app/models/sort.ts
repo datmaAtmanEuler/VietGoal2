@@ -1,8 +1,8 @@
 export class ASCSort {
-    SortName: string = 'Id';
+    SortName: string = 'id';
     SortDirection: string = SORD_DIRECTION.ASC;
 
-    constructor(sN: string = 'Id', sD: string = SORD_DIRECTION.ASC) {
+    constructor(sN: string = 'id', sD: string = SORD_DIRECTION.ASC) {
         this.SortName = sN;
         this.SortDirection = sD;
     }

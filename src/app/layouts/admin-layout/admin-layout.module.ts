@@ -97,6 +97,8 @@ import { YardImportComponent } from '../../views/list/yard/yard-import/yard-impo
 import { RecruitImportComponent } from '../../views/list/recruits/recruit-import/recruit-import.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
+import { GomuComponent } from 'app/views/manage/gomu/gomu.component';
+import { GomuAddComponent } from 'app/views/manage/gomu/gomu-add/gomu-add.component';
 
 
 @NgModule({
@@ -190,7 +192,9 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
     PositionImportComponent,
     StudentStatusImportComponent,
     StudentComponent,
-    StudentEditComponent
+    StudentEditComponent,
+    GomuComponent,
+    GomuAddComponent
   ],
   entryComponents: [
     ProvinceImportComponent,

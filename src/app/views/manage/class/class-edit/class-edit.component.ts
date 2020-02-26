@@ -127,7 +127,7 @@ export class ClassEditComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		alert(this.id);
+		
 		this.searchAreasCtrl.valueChanges
 			.pipe(
 				startWith(''),

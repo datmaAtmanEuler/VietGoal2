@@ -11,11 +11,11 @@ export class ClassFilter {
     SecondaryCoachId: null | number = null;
     Ages: number;
     TrainingGroundId: null | number = null;
-    SortName: string = 'ID';
+    SortName: string = 'id';
     SortDirection: string = SORD_DIRECTION.ASC;
 
     constructor(searchTerm: string, pageIndex: number, pageSize: number, AreaId: null | number, YardId: null | number, 
-        TrainingGroundId: null | number, sN: string = 'ID', sD: string = SORD_DIRECTION.ASC,
+        TrainingGroundId: null | number, sN: string = 'id', sD: string = SORD_DIRECTION.ASC,
         ManagerId: null | number, CoachId: null | number, SecondaryCoachId: null | number) {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;

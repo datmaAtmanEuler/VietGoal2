@@ -64,7 +64,6 @@
                                 </mat-form-field>
                             </div>
                         </div>
-
                     </div>
                     <div class="form-group row">
                         <label
@@ -81,7 +80,7 @@
                                 <mat-spinner></mat-spinner>
                             </mat-option>
                             <ng-container *ngIf="!isLoading">
-                                <mat-option *ngFor="let area of areadsList" [value]="area">
+                                <mat-option *ngFor="let area of areasList" [value]="area">
                                     <span *ngIf="!area.notfound">{{area.AreaName}}</span>
                                     <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
                                 </mat-option>
@@ -146,19 +145,6 @@
                             <input class="form-control" placeholder="Lớp học" [matAutocomplete]="ClassAC"
                                 [formControl]="searchClasssCtrl">
                         </div>
-                        <mat-autocomplete #ClassAC="matAutocomplete"
-                            (optionSelected)="changeClass(searchClasssCtrl.value.id)"
-                            [displayWith]="displayAresFn">
-                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                <mat-spinner></mat-spinner>
-                            </mat-option>
-                            <ng-container *ngIf="!isLoading">
-                                <mat-option *ngFor="let class of classsList" [value]="class">
-                                    <span *ngIf="!class.notfound">{{class.ClassName}}</span>
-                                    <span *ngIf="class.notfound" class="nofind">{{ 'Not found' }}</span>
-                                </mat-option>
-                            </ng-container>
-                        </mat-autocomplete>
                     </div>
 
                     <div class="form-group row">
@@ -167,19 +153,6 @@
                             <input class="form-control" placeholder="Người chốt" [matAutocomplete]="UserAC"
                                 [formControl]="searchUsersCtrl">
                         </div>
-                        <mat-autocomplete #UserAC="matAutocomplete"
-                            (optionSelected)="changeUser(searchUsersCtrl.value.id)"
-                            [displayWith]="displayAresFn">
-                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                <mat-spinner></mat-spinner>
-                            </mat-option>
-                            <ng-container *ngIf="!isLoading">
-                                <mat-option *ngFor="let user of usersList" [value]="user">
-                                    <span *ngIf="!user.notfound">{{user.UserName}}</span>
-                                    <span *ngIf="user.notfound" class="nofind">{{ 'Not found' }}</span>
-                                </mat-option>
-                            </ng-container>
-                        </mat-autocomplete>
                     </div>
 
                     <div class="form-group row">
@@ -187,22 +160,9 @@
                         <div class="col-6 label-middling">
                             <input class="form-control" placeholder="Kết quả" [matAutocomplete]="RecruitAC"
                                 [formControl]="searchRecruitsCtrl">
-                            <mat-autocomplete #RecruitAC="matAutocomplete"
-                                (optionSelected)="changeRecruit(searchRecruitsCtrl.value.id)"
-                                [displayWith]="displayAresFn">
-                                <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                    <mat-spinner></mat-spinner>
-                                </mat-option>
-                                <ng-container *ngIf="!isLoading">
-                                    <mat-option *ngFor="let recruit of recruitsList" [value]="recruit">
-                                        <span *ngIf="!recruit.notfound">{{recruit.RecruitName}}</span>
-                                        <span *ngIf="recruit.notfound"
-                                            class="nofind">{{ 'Not found' }}</span>
-                                    </mat-option>
-                                </ng-container>
-                            </mat-autocomplete>
                         </div>
                     </div>
+
                 </div>
             </div>
               </div>

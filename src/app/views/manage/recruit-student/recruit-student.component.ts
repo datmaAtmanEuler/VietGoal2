@@ -25,6 +25,8 @@ import { TrainingGroundFilter } from 'app/models/filter/trainingroundfilter';
 import { AreaFilter } from 'app/models/filter/areafilter';
 import { MatPaginatorIntl } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
+import { ClassFilter } from 'app/models/filter/classfilter';
+import { ClassService } from 'app/services/manage/class.service';
 
 
 @Component({
@@ -45,8 +47,9 @@ export class RecruitStudentComponent implements OnInit {
   firstRowOnPage: any;
 
   areasList: any;
-  yarddsList: any;
+  yardsList: any;
   traininggroundsList: any;
+  classList: any;
 
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
@@ -69,18 +72,21 @@ export class RecruitStudentComponent implements OnInit {
       null
     ],
     columnsName:  ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Action'],
-    columnsNameMapping:  ['id', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address',''],
-    columnsNameFilter: ['id', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address',''],
+    columnsNameMapping:  ['id', 'parentsName', 'faceBook', 'email', 'phone', 'fullName','dayofBirth','address',''],
+    columnsNameFilter: ['id', 'ParentsName', 'FaceBook', 'email', 'phone', 'fullName','dayofBirth','address',''],
     sortAbles:  [false, true, true, true, false,false,true,false, false],
     visibles: [true, true, true, true, true, true,true,true, true]
   }
   /**
    * END SORT SETTINGS
    */
-  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0, 0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0,0,0,0,0,0,0,0);
-
+  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
+  areafilter: AreaFilter = new AreaFilter('', this.pageIndex, this.pageSize, 0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection);
+  yardfilter: YardFilter = new YardFilter('', this.pageIndex, this.pageSize, 0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection);
+  classfilter: ClassFilter = new ClassFilter('', this.pageIndex, this.pageSize, 0,0,0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0);
+  traininggroundfilter: TrainingGroundFilter = new TrainingGroundFilter('', this.pageIndex, this.pageSize, 0,0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection)
   constructor(private matCus: MatPaginatorIntl, private translate: TranslateService,public utilsService: UtilsService, config: NgbModalConfig, private service: RecruitStudentService,private traininggroundservice: TrainingGroundService, private router: Router, private modalService: NgbModal,
-    private areaService: AreaService, private yardService: YardService, private http: HttpClient) {
+    private areaService: AreaService,private classService: ClassService, private yardService: YardService, private http: HttpClient) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
@@ -142,7 +148,7 @@ export class RecruitStudentComponent implements OnInit {
       startWith(''),
       debounceTime(500),
       tap(() => {
-        this.yarddsList = [];
+        this.yardsList = [];
         this.isLoading = true;
       }),
       switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
@@ -155,9 +161,9 @@ export class RecruitStudentComponent implements OnInit {
     )
       .subscribe(data => {
         if (data == undefined) {
-          this.yarddsList = [{ notfound: 'Not Found' }];
+          this.yardsList = [{ notfound: 'Not Found' }];
         } else {
-          this.yarddsList = data.length ? data : [{ notfound: 'Not Found' }];
+          this.yardsList = data.length ? data : [{ notfound: 'Not Found' }];
         }
 
       });
@@ -198,7 +204,7 @@ export class RecruitStudentComponent implements OnInit {
     });
   }
   pageEvent(variable: any) {
-    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0, 0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0,0,0,0,0,0,0,0);
+    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
     this.reload();
@@ -206,7 +212,7 @@ export class RecruitStudentComponent implements OnInit {
   reload() {
     
     const _this = this;
-    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize, 0, 0, 0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0,0,0,0,0,0,0,0);
+    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize, 0, 0,0,0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
     this.loading = true;
     _this.recruitstudentList = [];
     this.service.getRecruitStudentList(filter).subscribe(
@@ -249,22 +255,30 @@ export class RecruitStudentComponent implements OnInit {
     return user && user.TraininggroundName && !user.notfound ? user.TraininggroundName : '';
   }
   changeArea(areaID: number) {
-    this.yardService.getYardsList(new YardFilter('', 1, 100, null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection)).subscribe((list) => {
-      this.yarddsList = list;
-      this.filter.AreaId = areaID;
+    this.yardfilter.AreaId = areaID;
+    this.yardService.getYardsList(this.yardfilter).subscribe((list) => {
+      this.yardsList = list;
       this.reload();
+     
     });
   }
-  changeYard(yardID) {
-    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection)).subscribe((list) => {
+ 
+  changeYard(yardID : number) {
+    this.traininggroundfilter.YardId = yardID;
+    this.traininggroundservice.getTrainingGroundsList(this.traininggroundfilter).subscribe((list) => {
       this.traininggroundsList = list;
-      this.filter.YardId = yardID;
       this.reload();
+     
     });
   }
-  changeTrainingGround(traininggroundID) {
-    this.filter.TrainingGroundId = traininggroundID;
-    this.reload();
+
+  changeTrainingGround(traininggroundID : number) {
+    this.classfilter.TrainingGroundId = traininggroundID;
+    this.classService.getClassList(this.classfilter).subscribe((list)=>{
+      this.classList = list;
+      this.reload();
+    })
+    
   }
 
   doNothing(): void {}

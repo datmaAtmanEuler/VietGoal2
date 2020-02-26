@@ -9,7 +9,7 @@
                         <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
                             [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
                     </div>
-                    <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
+                    <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.id)"
                         [displayWith]="displayAreaFn">
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                             <mat-spinner></mat-spinner>
@@ -29,7 +29,7 @@
                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
                         [matAutocomplete]="yardAC" [formControl]="searchYardsCtrl">
                         </div>
-                    <mat-autocomplete #yardAC="matAutocomplete" (optionSelected)="changeYard(searchYardsCtrl.value.ID)"
+                    <mat-autocomplete #yardAC="matAutocomplete" (optionSelected)="changeYard(searchYardsCtrl.value.id)"
                         [displayWith]="displayYardFn">
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                             <mat-spinner></mat-spinner>
@@ -65,7 +65,7 @@
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.DisplayOrder' |translate}}:<span class="text-danger">(*)</span></label>
                     <div  class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="class.DisplayOrder"
+                    <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="aclass.displayOrder"
                         class="form-control" placeholder="{{'MESSAGE.NameList.DisplayOrder' |translate}}">
                     </div>
                 </div>
@@ -73,14 +73,14 @@
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.ClassCode' |translate}}:<span class="text-danger">(*)</span></label>
                     <div  class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="class.ClassCode"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="aclass.classCode"
                         class="form-control" placeholder="{{'MESSAGE.NameList.ClassCode' |translate}}"> 
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.ClassName' |translate}}:<span class="text-danger">(*)</span></label>
                     <div  class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="class.ClassName"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="aclass.className"
                         class="form-control" placeholder="{{'MESSAGE.NameList.ClassName' |translate}}">
                     </div>
                 </div>
@@ -160,7 +160,7 @@
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.Week' |translate}}:</label>
                     <div  class="col-6 label-middling" >
-                    <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="class.Week">
+                    <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="aclass.week">
                         <option>---- Select week ----</option>
                         <ng-container *ngFor="let week of weeksList">
                             <option [value]="week">{{ weeksListName[week - 1] }}</option>
@@ -172,7 +172,7 @@
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.ShiftDay' |translate}}:</label>
                     <div  class="col-6 label-middling" >
-                    <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="class.ShiftDay">
+                    <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="aclass.shiftDay">
                         <option>---- Select shift day ----</option>
                         <ng-container *ngFor="let shiftDay of shiftDaysList">
                             <option [value]="shiftDay">{{ shiftDaysListName[shiftDay - 1] }}</option>

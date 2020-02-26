@@ -62,7 +62,7 @@ export class CentralEditComponent implements OnInit {
 		return user && user.WardName && !user.notfound ? user.WardName : '';
 	}
 	changeProvince(provinceID) {
-		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,null,'Id','ASC')).subscribe((list) => {
+		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,'Id','ASC')).subscribe((list) => {
 			this.listdistrict = list;
 		});
 	}

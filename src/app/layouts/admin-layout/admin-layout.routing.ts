@@ -41,8 +41,12 @@ import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/rec
 import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
 import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
 import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
+import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
+import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
+import { GomuComponent } from 'app/views/manage/gomu/gomu.component';
+import { GomuAddComponent } from 'app/views/manage/gomu/gomu-add/gomu-add.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -335,6 +339,21 @@ export const AdminLayoutRoutes: Routes = [
             path: 'edit', component: ClassEditComponent
         }
         ]
+    },
+    {
+        path: 'recruit-student',
+        children: [ {
+            path: '', component: RecruitStudentComponent
+        }
+        ,
+        {
+            path: 'add', component: RecruitStudentEditComponent
+        }
+        ,
+        {
+            path: 'edit', component: RecruitStudentEditComponent
+        }
+        ]
     }
     ,
     {
@@ -359,21 +378,23 @@ export const AdminLayoutRoutes: Routes = [
         ]
     },
     {
-        path: 'hosohocsinh',
+        path: 'hosohocsinhtheolop',
         children: [ {
-            path: '', component: StudentComponent
-        }
-        ,
-        {
-            path: 'add', component: StudentEditComponent
-        }
-        ,
-        {
-            path: 'edit', component: StudentEditComponent
-        }
-        ]
+            path: ':classID', component: StudentComponent
+        }]
     }
     ,
+    {
+        path: 'diemdanhhocvienngoai',
+        children: [ {
+            path: '', component: GomuComponent
+        }
+        ,
+        {
+            path: 'add', component: GomuAddComponent
+        }
+        ]
+    },
     ]
 }
 

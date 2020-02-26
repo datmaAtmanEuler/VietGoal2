@@ -33,7 +33,7 @@ import { ClassImportComponent } from './class-import/class-import.component';
   styleUrls: ['./class.component.scss']
 })
 export class ClassComponent implements OnInit {
-  classList: Class[] = [];
+  classList: any[] = [];
   Class: any;
   searchTerm:string = '';
   pageIndex:number = 1;
@@ -45,29 +45,37 @@ export class ClassComponent implements OnInit {
   firstRowOnPage: any;
 
   areasList: any;
-  yarddsList: any;
+  yardsList: any;
   traininggroundsList: any;
 
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
   searchTrainingGroundsCtrl = new FormControl();
-
+  searchAdvanced: boolean = false;
   isLoading = false;
   /**
   * BEGIN SORT SETTINGS
   */
+ paginationSettings: any = {
+  sort: new ASCSort(),
+  sortToggles: [
+    null,
+    SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+    SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+    null
+  ],
+  columnsName: ['Order', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'],
+  columnsNameMapping: ['id', 'classCode', 'className', 'displayOrder', 'studentCounts', 'coachsList','yardName',''],
+  columnsNameFilter: ['id', 'classCode', 'className', 'displayOrder', 'studentCounts', 'coachsList','yardName',''],
+  sortAbles: [false, true, true, true, false,false,true, false],
+  visibles:  [true, true, true, true, true, true,true, true]
+}
 
-  sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null,SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,null];
-  columnsName: string[] = ['Order', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'];
-  columnsNameMapping: string[] = ['Id', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'];
-  sortAbles: boolean[] = [false, true, true, true, false,false,true, false];
-  visibles:boolean[]= [true, true, true, true, true, true,true, true];
 
   /**
    * END SORT SETTINGS
    */
-  filter: ClassFilter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, 'Id', 'ASC',null,null,null);
+  filter: ClassFilter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, 'id', 'ASC',null,null,null);
 
   constructor(private matCus: MatPaginatorIntl, private translate: TranslateService,public utilsService: UtilsService, config: NgbModalConfig, private service: ClassService,private traininggroundservice: TrainingGroundService, private router: Router, private modalService: NgbModal,
     private areaService: AreaService, private yardService: YardService, private http: HttpClient) {
@@ -112,7 +120,7 @@ export class ClassComponent implements OnInit {
           this.areasList = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'Id', 'ASC'))
+        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'id', 'ASC'))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -132,10 +140,10 @@ export class ClassComponent implements OnInit {
       startWith(''),
       debounceTime(500),
       tap(() => {
-        this.yarddsList = [];
+        this.yardsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'Id', 'ASC'))
+      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'id', 'ASC'))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -145,9 +153,9 @@ export class ClassComponent implements OnInit {
     )
       .subscribe(data => {
         if (data == undefined) {
-          this.yarddsList = [{ notfound: 'Not Found' }];
+          this.yardsList = [{ notfound: 'Not Found' }];
         } else {
-          this.yarddsList = data.length ? data : [{ notfound: 'Not Found' }];
+          this.yardsList = data.length ? data : [{ notfound: 'Not Found' }];
         }
 
       });
@@ -158,7 +166,7 @@ export class ClassComponent implements OnInit {
         this.traininggroundsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'Id', 'ASC'))
+      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'id', 'ASC'))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -182,7 +190,7 @@ export class ClassComponent implements OnInit {
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'class';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deleteClass(aclass.ID, this.currentUser.UserId).subscribe(() => {
+      _this.service.deleteClass(aclass.id, this.currentUser.UserId).subscribe(() => {
         _this.reload();
       });
     });
@@ -239,7 +247,7 @@ export class ClassComponent implements OnInit {
   }
   changeArea(areaID: number) {
     this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
-      this.yarddsList = list;
+      this.yardsList = list;
       this.filter.AreaId = areaID;
       this.reload();
     });
@@ -281,6 +289,10 @@ export class ClassComponent implements OnInit {
 
   displayTrainingGroundFn(trainingground: any) {
     return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
+  }
+
+  studentProfile(classId){
+    if (classId) this.router.navigate(['quanly/hosohocsinhtheolop/'+classId]);
   }
 }
 

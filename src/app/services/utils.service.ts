@@ -78,7 +78,7 @@ export class UtilsService {
       }
     });
 
-    sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : columnsNameMapping[columnIndex];
+    sort.SortName = columnsNameMapping[columnIndex];
   }
 
   doNothing(): void { }
@@ -94,7 +94,7 @@ export class UtilsService {
     });
   }
   
-  stringDate(date: Date){
+  stringDate(date: any, slash = false){
     var d = new Date(date),
         month = '' + (d.getMonth() + 1),
         day = '' + d.getDate(),
@@ -105,7 +105,7 @@ export class UtilsService {
     if (day.length < 2) 
         day = '0' + day;
 
-    return [year, month, day].join('-');
+    return slash ? [d.getMonth() + 1, day, year].join('/') : [year, month, day].join('-');
   }
 
   weekNumber(inputDate: Date): number {

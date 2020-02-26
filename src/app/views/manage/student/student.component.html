@@ -4,7 +4,10 @@
       <div class="col-lg-12 col-md-12">
         <div class="card">
           <div class="card-header card-header-warning" style="background: #023a54">
-            <h4 class="card-title">{{ "MESSAGE.NameList.StudentProfile" | translate }}</h4>
+            <h4 class="card-title">{{ "MESSAGE.NameList.StudentProfile" | translate }} {{className}}</h4>
+            <a class="nav-link special back-to-class-btn" [routerLink]="'/quanly/class'" title="Trở về lớp học">
+              <i class="material-icons">arrow_back</i>
+            </a>
           </div>
           <div class="row ">
             <div class="col-12">
@@ -71,7 +74,7 @@
                       <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
                         <th *ngIf="paginationSettings.visibles[colIndex]"
                           [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
-                          (click)="paginationSettings.sortAbles[colIndex] ? utilsService.toggleSort(colIndex,paginationSettings.sortToggles ,paginationSettings.sort ,paginationSettings.columnsNameMapping ,reload()) : utilsService.doNothing()">
+                          (click)="sortToggles(colIndex)">
                           <!-- <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }} -->
                           <span style="vertical-align: middle;">{{colName}}
                             <i style="float: none;" class="material-icons asc-sort-icons"

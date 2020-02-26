@@ -1,5 +1,5 @@
 export class Central{
-    Id: number;
+    id: number;
     CentralCode: string;
     CentralName: string;
     Address: string;
@@ -12,8 +12,8 @@ export class Central{
     CreatedBy: number;
     UpdatedBy: number;
     
-    constructor(Id: number, CentralCode: string, CentralName: string, Address: string, Area: number, WardId: number, Phone: string, EstablishedDate: string, Description: string, Visible: boolean){
-        this.Id = Id;
+    constructor(id: number, CentralCode: string, CentralName: string, Address: string, Area: number, WardId: number, Phone: string, EstablishedDate: string, Description: string, Visible: boolean){
+        this.id = id;
         this.CentralCode = CentralCode;
         this.CentralName = CentralName;
         this.Address = Address;

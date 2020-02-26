@@ -1,0 +1,130 @@
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-warning" style="background: #023a54">
+            <h4 class="card-title">{{ "MESSAGE.NameList.GomuAdd" | translate }}</h4>
+            <a class="nav-link special back-to-list-btn" [routerLink]="'/quanly/diemdanhhocvienngoai'" title="Trở về danh sách">
+              <i class="material-icons">arrow_back</i>
+            </a>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card-body">
+                <div class="row">
+                  <div class="form-body col-sm-12">
+                    <div class="row form-group">
+                      <div class="col-4">
+                        <label class="m-0">{{ "MESSAGE.NameList.Area" | translate }}</label>
+                        <input type="text" class=" form-control" [matAutocomplete]="areaAC"
+                          [formControl]="searchAreasCtrl">
+                        <mat-autocomplete #areaAC="matAutocomplete"
+                          (optionSelected)="changeArea(searchAreasCtrl.value.id)" [displayWith]="displayAreaFn">
+                          <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                          </mat-option>
+                          <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let area of listareaes" [value]="area">
+                              <span *ngIf="!area.notfound">{{area.areaName}}</span>
+                              <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
+                      </div>
+                      <div class="col-4">
+                        <label class="m-0">{{ "MESSAGE.NameList.Yard" | translate }}</label>
+                        <input type="text" class=" form-control" [matAutocomplete]="yardAC"
+                          [formControl]="searchYardsCtrl">
+                        <mat-autocomplete #yardAC="matAutocomplete"
+                          (optionSelected)="changeYard(searchYardsCtrl.value.id)" [displayWith]="displayYardFn">
+                          <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                          </mat-option>
+                          <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let yard of listyardes" [value]="yard">
+                              <span *ngIf="!yard.notfound">{{yard.yardName}}</span>
+                              <span *ngIf="yard.notfound" class="nofind">{{yard.notfound}}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
+                      </div>
+                      <div class="col-4">
+                        <label class="m-0">{{ "MESSAGE.NameList.ClassName" | translate }}</label>
+                        <input type="text" class=" form-control" [matAutocomplete]="classAC"
+                          [formControl]="searchClassesCtrl">
+                        <mat-autocomplete #classAC="matAutocomplete"
+                          (optionSelected)="changeClass(searchClassesCtrl.value.id)" [displayWith]="displayClassFn">
+                          <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                          </mat-option>
+                          <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let class of listclasses" [value]="class">
+                              <span *ngIf="!class.notfound">{{class.className}}</span>
+                              <span *ngIf="class.notfound" class="nofind">{{class.notfound}}</span>
+                            </mat-option>
+                          </ng-container>
+                        </mat-autocomplete>
+                        <button class="btn btn-vietgoal btn-sm" id="btn-search-student" (click)="reload()">
+                          {{ 'MESSAGE.NameList.Search' | translate }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <div class="card-body table-responsive">
+                <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
+                <div class="vietgoal-table-settings style-1 vg-scroll">
+                  <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
+                    <thead>
+                      <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
+                        <th *ngIf="paginationSettings.visibles[colIndex]"
+                          [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
+                          (click)="sortToggles(colIndex)">
+                          <!-- <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }} -->
+                          <span style="vertical-align: middle;">{{colName}}
+                            <i style="float: none;" class="material-icons asc-sort-icons"
+                              *ngIf="paginationSettings.sortAbles[colIndex]">
+                              {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                            </i>
+                          </span>
+                        </th>
+                      </ng-container>
+                    </thead>
+                    <tbody>
+                      <ng-container *ngFor="let gomuadd of GomuAddList; let i = index;">
+                        <tr>
+                          <td>{{ firstRowOnPage + i }}</td>
+                          <ng-container
+                              *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
+                              <td
+                                  *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
+                                  {{ utilsService.getColumnValue(gomuadd, colIndex, paginationSettings.columnsNameMapping) }}
+                              </td>
+                          </ng-container>
+                          <td class="my-action-item">
+                            <button class="btn btn-vietgoal btn-sm" (click)="select(gomuadd.id)">
+                              <!-- {{ 'MESSAGE.NameList.Select' | translate }} -->
+                              Chọn
+                            </button>
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+                <mat-paginator [length]="Total" [pageSize]="filter.pageSize" [pageSizeOptions]="pageSizesList"
+                  [showFirstLastButtons]="true" (page)="pageEvent($event)">
+                </mat-paginator>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

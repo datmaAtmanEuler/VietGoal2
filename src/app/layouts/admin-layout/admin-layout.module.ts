@@ -96,8 +96,14 @@ import { TrainingGroundImportComponent } from '../../views/list/trainingground/t
 import { UserGroupImportComponent } from '../../views/list/usergroups/usergroup-import/usergroup-import.component';
 import { YardImportComponent } from '../../views/list/yard/yard-import/yard-import.component';
 import { RecruitImportComponent } from '../../views/list/recruits/recruit-import/recruit-import.component';
+import { ApproveComponent } from 'app/views/manage/coachabsent/approve/approve.component';
+import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
+import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
+import { GomuComponent } from 'app/views/manage/gomu/gomu.component';
+import { GomuAddComponent } from 'app/views/manage/gomu/gomu-add/gomu-add.component';
+import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
 
 
 @NgModule({
@@ -191,8 +197,14 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
     AreaImportComponent,
     PositionImportComponent,
     StudentStatusImportComponent,
+    RecruitStudentComponent,
+    RecruitStudentEditComponent,
     StudentComponent,
-    StudentEditComponent
+    StudentEditComponent,
+    GomuComponent,
+    GomuAddComponent,
+    RecruitStudentImportComponent
+    
   ],
   entryComponents: [
     ProvinceImportComponent,
@@ -201,6 +213,7 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
     WardImportComponent,
     UserGroupImportComponent,
     YardImportComponent,
+    RecruitStudentImportComponent,
     RecruitImportComponent,
     ClassImportComponent,
     ClassStatusImportComponent,
@@ -214,6 +227,7 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
     PositionImportComponent,
     StudentStatusImportComponent,
     ScheduleComponent,
+    StudentEditComponent
   ],
   providers: [
     NgxMaterialTimepickerModule,

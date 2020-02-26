@@ -2,29 +2,29 @@ import { tick } from "@angular/core/testing";
 import { Age } from "../list/age";
 
 export class RecruitStudent {
-    Id: number;
-    FullName: string;
-    Gender: number;
+    id: number;
+    fullName: string;
+    gender: number;
     DOB: Date;
-    ProvinceId: number;
-    DistrictId: number;
-    WardId: number;
-    AdmissionDay: Date;
-    Images: string;
-    ParentsName: string;
-    Phone: string;
-    Email: string;
-    FaceBook: string;
-    Description: string;
-    UserId: number;
-    StatusId: number;
-    AdmissionDate: Date;
-    AreaId: number;
-    YardId: number;
-    TrainingGroupId: number;
-    ClassId: number;
-    RecruitId: number;
-    Address: string;
+    provinceId: number;
+    districtId: number;
+    wardId: number;
+    admissionDay: Date;
+    images: string;
+    parentsName: string;
+    phone: string;
+    email: string;
+    faceBook: string;
+    description: string;
+    userId: number;
+    statusId: number;
+    admissionDate: Date;
+    areaId: number;
+    yardId: number;
+    trainingGroundId: number;
+    classId: number;
+    recruitId: number;
+    address: string;
 
     CreatedDate: Date;
     CreatedBy: number;
@@ -33,40 +33,40 @@ export class RecruitStudent {
     DeletedDate: null | Date;
     DeletedBy: null | number;
 
-    constructor(Id: number, FullName: string, Gender: number, DOB: Date, ProvinceId: number, DistrictId: number, WardId: number,
-        AdmissionDay: Date, Images: string, ParentsName: string, Phone: string, Email: string, FaceBook: string, Description: string, UserId: number,
-        StatusId: number,
-        AdmissionDate: Date,
-        AreaId: number,
-        YardId: number,
-        TrainingGroupId: number,
-        ClassId: number,
-        RecruitId: number,
-        Address: string,
+    constructor(id: number, fullName: string, gender: number, DOB: Date, provinceId: number, districtId: number, wardId: number,
+        admissionDay: Date, images: string, parentsName: string, phone: string, email: string, faceBook: string, description: string, userId: number,
+        statusId: number,
+        admissionDate: Date,
+        areaId: number,
+        yardId: number,
+        trainingGroundId: number,
+        classId: number,
+        recruitId: number,
+        address: string,
         CreatedDate: Date, CreatedBy: number, UpdatedDate: null | Date, UpdatedBy: null | number,
         DeletedDate: Date, DeletedBy: number) {
-        this.Id = Id;
-        this.FullName = FullName;
-        this.Gender = Gender;
-        this.AreaId = AreaId;
-        this.YardId = YardId;
+        this.id = id;
+        this.fullName = fullName;
+        this.gender = gender;
+        this.areaId = areaId;
+        this.yardId = yardId;
         this.DOB = DOB;
-        this.ProvinceId = ProvinceId;
-        this.DistrictId = DistrictId;
-        this.WardId = WardId;
-        this.AdmissionDay = AdmissionDay;
-        this.Images = Images;
-        this.ParentsName = ParentsName;
-        this.Phone = Phone;
-        this.FaceBook = FaceBook;
-        this.Description = Description;
-        this.UserId = UserId;
-        this.StatusId = StatusId;
-        this.AdmissionDate = AdmissionDate;
-        this.TrainingGroupId = TrainingGroupId;
-        this.ClassId = ClassId;
-        this.RecruitId = RecruitId;
-        this.Address = Address;
+        this.provinceId = provinceId;
+        this.districtId = districtId;
+        this.wardId = wardId;
+        this.admissionDay = admissionDay;
+        this.images = images;
+        this.parentsName = parentsName;
+        this.phone = phone;
+        this.faceBook = faceBook;
+        this.description = description;
+        this.userId = userId;
+        this.statusId = statusId;
+        this.admissionDate = admissionDate;
+        this.trainingGroundId = trainingGroundId;
+        this.classId = classId;
+        this.recruitId = recruitId;
+        this.address = address;
         this.CreatedDate = CreatedDate;
         this.CreatedBy = CreatedBy;
         this.UpdatedDate = UpdatedDate;

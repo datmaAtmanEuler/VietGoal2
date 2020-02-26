@@ -31,12 +31,11 @@ export class CentralService {
     }
 
     addOrUpdateCentral(Central: Central, by: null | number): Observable<any> {
-        if(Central.Id == 0) {
-            Central.CreatedBy = by;
+        if (Central.id == 0) {
+            return this.http.post(environment.serverUrl + 'Centrals', Central, this.httpOptions);
         } else {
-            Central.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `Centrals/${Central.id}`, Central, this.httpOptions);
         }
-        return this.http.post(environment.serverUrl + `Centrals`, Central, this.httpOptions);
     }
 
     deleteCentral(CentralId: number, deletedBy: number): Observable<any> {

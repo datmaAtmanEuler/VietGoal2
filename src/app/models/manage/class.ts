@@ -2,16 +2,18 @@ import { tick } from "@angular/core/testing";
 import { Age } from "../list/age";
 
 export class Class{
-    Id: number;
+    id: number;
     classCode: string;
     className: string;
-    AreaId: number;
-    YardId: number;
+    areaId: number;
+    yardId: number;
     trainingGroundId: number;
-    DisplayOrder: number;
+    displayOrder: number;
     managerId: number;
+    studentCounts: number;
     mainCoachId: number;
     viceCoachList: number;
+    
     shiftId: number;
     ageId: number;
     description: string;
@@ -23,18 +25,19 @@ export class Class{
     DeletedDate: null | Date;
     DeletedBy: null | number;
     
-    constructor(Id: number,classCode : string,className: string,AreaId: number, YardId: number, trainingGroundId: number,  DisplayOrder: number,
-        managerId: number, mainCoachId: number, viceCoachList: number,shiftId: number, ageId: number,  description: string, classStatusId: number,
+    constructor(id: number,classCode : string,className: string,areaId: number, yardId: number, trainingGroundId: number,  displayOrder: number,
+        managerId: number, studentCounts: number, mainCoachId: number, viceCoachList: number,shiftId: number, ageId: number,  description: string, classStatusId: number,
          CreatedDate: Date, CreatedBy: number, UpdatedDate: null | Date, UpdatedBy: null | number,
         DeletedDate: Date, DeletedBy: number){
-        this.Id = Id;   
+        this.id = id;   
         this.classCode =classCode;
         this.className =className;
-        this.AreaId = AreaId;
-        this.YardId = YardId;
+        this.areaId = areaId;
+        this.yardId = yardId;
         this.trainingGroundId = trainingGroundId;
-        this.DisplayOrder = DisplayOrder;
+        this.displayOrder = displayOrder;
         this.managerId = managerId;
+        this.studentCounts = studentCounts;
         this.mainCoachId = mainCoachId;
         this.viceCoachList = viceCoachList;
         this.shiftId = shiftId;

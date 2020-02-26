@@ -22,24 +22,23 @@ export class ClassService {
 
     getClassList(filter: any): Observable<any>  {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'Class?' + queryString , this.httpOptions);
+        return this.http.get(environment.serverUrl + 'Class?' + queryString , this.httpOptions);
     }
     
     getClass(id: any): Observable<any>  {
-        return this.http.get(environment.apiUrl + `Class/${id}` , this.httpOptions);
+        return this.http.get(environment.serverUrl + `Class/${id}` , this.httpOptions);
     }
 
-    addOrUpdateClass(Class: Class, by: null | number): Observable<any> {
-        if(Class.Id == 0) {
-            Class.CreatedBy = by;
+    addOrUpdateClass(aClass: Class): Observable<any> {
+        if (aClass.id == 0) {
+            return this.http.post(environment.serverUrl + 'Class', aClass, this.httpOptions);
         } else {
-            Class.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `Class/${aClass.id}`, aClass, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Class`, Class, this.httpOptions);
     }
 
     deleteClass(ClassId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `Class/${ClassId}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.serverUrl + `Class/${ClassId}?deletedBy=${deletedBy}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

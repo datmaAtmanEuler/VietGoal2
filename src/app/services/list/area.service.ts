@@ -20,25 +20,23 @@ export class AreaService {
 
     getAreasList(filter: any): Observable<any> {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'Areas?' + queryString , this.httpOptions);
+        return this.http.get(environment.serverUrl + 'Areas?' + queryString , this.httpOptions);
     }
     
     getArea(id: any): Observable<any> {
-        return this.http.get(environment.apiUrl + `Areas/${id}` , this.httpOptions);
+        return this.http.get(environment.serverUrl + `Areas/${id}` , this.httpOptions);
     }
 
-    addOrUpdateArea(area: Area, by: null | number): Observable<any> {
-        area.DisplayOrder = parseInt(area.DisplayOrder+ '');
-        if (area.Id != 0 && area.Id) {
-            area.UpdatedBy = by;
+    addOrUpdateArea(area: Area): Observable<any> {
+        if (area.id == 0) {
+            return this.http.post(environment.serverUrl + 'Areas', area, this.httpOptions);
         } else {
-            area.CreatedBy = by;
+            return this.http.put(environment.serverUrl + `Areas/${area.id}`, area, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Areas`, area, this.httpOptions);
     }
 
     deleteArea(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `Areas/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+        return this.http.delete(environment.serverUrl + `Areas/${id}?deletedBy=${deletedBy}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

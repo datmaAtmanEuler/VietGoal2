@@ -14,12 +14,16 @@
                                     Import</button>
                             </div>
                             <div class="row" style="padding-left: 50px;">
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"
-                                        [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
-                                    <mat-autocomplete #CentralAC="matAutocomplete"
-                                        (optionSelected)="changeCentral(searchCentralsCtrl.value.ID)"
-                                        [displayWith]="displayCentralFn">
+
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
+                                        [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
+                                        </div>
+                                    <mat-autocomplete #AreasAC="matAutocomplete"
+                                        (optionSelected)="changeAreas(searchAreasCtrl.value.id)"
+                                        [displayWith]="displayAreasFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
@@ -32,12 +36,15 @@
                                     </mat-autocomplete>
                                 </div>
                                 
-                                <div class="col-sm-4">
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
-                                        [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
-                                    <mat-autocomplete #AreasAC="matAutocomplete"
-                                        (optionSelected)="changeArea(searchAreasCtrl.value.ID)"
-                                        [displayWith]="displayAreasFn">
+                                <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Central' | translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"
+                                        [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
+                                    </div>
+                                    <mat-autocomplete #CentralAC="matAutocomplete"
+                                        (optionSelected)="changeCentral(searchCentralsCtrl.value.id)"
+                                        [displayWith]="displayCentralFn">
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
@@ -105,7 +112,7 @@
                                                     <td  class="my-action-item">
 
                                                         <button mat-raised-button *hasClaim="['CanEditYards']"
-                                                            type="button" (click)="edit(yard.ID)"
+                                                            type="button" (click)="edit(yard.id)"
                                                             title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                                                             class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                             <i class="material-icons">edit</i>

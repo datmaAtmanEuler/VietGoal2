@@ -29,6 +29,7 @@ export class YardComponent implements OnInit {
   areasList:any[] = [];
   centralsList:any[] = [];
   yard: any;
+  Total: number = 0;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
@@ -39,7 +40,7 @@ export class YardComponent implements OnInit {
   searchProvincesCtrl = new FormControl();
   searchAreasCtrl = new FormControl();
   searchCentralsCtrl = new FormControl();
-
+  searchAdvanced: boolean = false;
   /**
    * BEGIN SORT SETTINGS
    */
@@ -127,6 +128,7 @@ reload() {
                 _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
                 setTimeout(() => {
                   _this.areasList = (list) ? list : [];
+                  _this.Total = 0;
                   _this.yardsList = [];
                   _this.service.getYardsList(_this.filter).subscribe(
                       (response: any) => {
@@ -135,10 +137,12 @@ reload() {
                         setTimeout(() => {
                           _this.yardsList = (list) ? list : [];
                           _this.isLoading = false;
+                          _this.Total = response.rowCount || 0;
                         }, 500);
                       },
                       (err: any) => {
                         _this.yardsList = [];
+                        _this.Total = 0;
                         _this.isLoading = false;
                       }
                   );

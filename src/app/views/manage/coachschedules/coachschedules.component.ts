@@ -20,7 +20,7 @@ export class CoachSchedulesComponent implements OnInit {
   totalYardPages: number = 0;
   currentUser: any;
   coachSchedulesList: any[] = [];
-  dayInWeeksList: any[] = []
+  dayInWeeksList: any[] = [];
 
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
@@ -58,8 +58,20 @@ export class CoachSchedulesComponent implements OnInit {
       this.filter.year = new Date().getFullYear();
       this.filter.month = new Date().getMonth() + 1;
       this.filter.week = utilsService.weekNumber(new Date());
+      const _this = this;
+
       utilsService.dayInWeekList('', 1).subscribe((ls: any[]) => {
-          this.dayInWeeksList = ls.map((d: any) => d.title);
+          _this.dayInWeeksList = ls;
+          _this.utilsService.yearsList(_this.filter.year, 2).subscribe((r1: any) => {
+            _this.searchYearsCtrl.setValue({ value: r1[0].value, title: _this.translate.instant('MESSAGE.NameList.Year') + ' ' + r1[0].title });  
+            _this.utilsService.monthList(_this.filter.month, 2).subscribe((r2: any) => {
+              _this.searchMonthsCtrl.setValue({ value: r2[0].value, title: _this.translate.instant(r2[0].title) });
+              _this.utilsService.weekNumberList(_this.filter.week, 2).subscribe((r3: any) => {
+                _this.searchWeeksCtrl.setValue({ value: r3[0].value, title: _this.translate.instant(r3[0].title) });
+                _this.reload();
+              });
+            });
+          });
       });
   }
 
@@ -78,7 +90,6 @@ export class CoachSchedulesComponent implements OnInit {
   }
   
   ngOnInit() {
-      this.reload();
       const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
       new PerfectScrollbar(vgscroll);
       this.searchAreasCtrl.valueChanges.pipe(
@@ -104,6 +115,7 @@ export class CoachSchedulesComponent implements OnInit {
             } else {
                 this.areasList = data && data.length ? this.areasList.concat(data) : this.areasList;
             }
+            this.reload();
         });
         this.searchYardsCtrl.valueChanges.pipe(
             startWith(''),
@@ -128,6 +140,7 @@ export class CoachSchedulesComponent implements OnInit {
             } else {
                 this.yardsList = data && data.length ? this.yardsList.concat(data) : this.yardsList;
             }
+            this.reload();
         });
       this.searchYearsCtrl.valueChanges.pipe(
             startWith(''),
@@ -149,6 +162,7 @@ export class CoachSchedulesComponent implements OnInit {
             } else {
                 this.yearsList = response && response.length ? response : [];
             }
+            this.reload();
         });
 
         this.searchMonthsCtrl.valueChanges.pipe(
@@ -171,6 +185,7 @@ export class CoachSchedulesComponent implements OnInit {
             } else {
                 this.monthsList = response && response.length ? response : [];
             }
+            this.reload();
         });
 
         this.searchWeeksCtrl.valueChanges.pipe(
@@ -193,6 +208,7 @@ export class CoachSchedulesComponent implements OnInit {
             } else {
                 this.weeksList = response && response.length ? response : [];
             }
+            this.reload();
         });
 
         const _this = this;
@@ -200,7 +216,7 @@ export class CoachSchedulesComponent implements OnInit {
         this.translate.onLangChange.subscribe((a: any) => {
             if(_this.searchMonthsCtrl && _this.searchMonthsCtrl.value && _this.searchMonthsCtrl.value.title) {
                 _this.utilsService.monthList(_this.searchMonthsCtrl.value.value, 2).subscribe((r1: any) => {
-                    _this.searchMonthsCtrl.setValue({ value: r1[0].value, title: _this.translate.instant('MESSAGE.NameList.Year') + ' ' + r1[0].title });
+                    _this.searchMonthsCtrl.setValue({ value: r1[0].value, title: _this.translate.instant(r1[0].title) });
                 });
             }
 

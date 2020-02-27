@@ -120,20 +120,37 @@
                         <div class="col-12">
                             <div class="card-body table-responsive">
                                 <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
-                                <div class="vietgoal-table-settings vg-scroll">
+                                <div class="vietgoal-schedules-table-settings vg-scroll">
                                     <table class="table table-condensed table-striped table-bordered table-hover">
                                         <thead>
 					                                 <th [style.width]="'9%'">{{ "MESSAGE.NameList.Time" | translate }}</th>
                                             <ng-container *ngFor="let dayInWeek of dayInWeeksList; let colIndex = index;">
                                                 <th [style.width]="'13%'">
-                                                    <span style="vertical-align: middle;">
-                                                      {{ ( dayInWeek | translate) }}
+                                                    <span style="font-weight: bold; vertical-align: middle;">
+                                                      {{ ( dayInWeek.title | translate) }}
                                                     </span>
                                                 </th>
                                             </ng-container>
                                         </thead>
                                         <tbody>
                                           <ng-container *ngIf="coachSchedulesList.length < 1"><tr><td colspan="8" class="my-action-item">{{ "MESSAGE.NameList.NoCoachSchedule" | translate }}</td></tr></ng-container>
+                                          <ng-container *ngFor="let coachSchedule of coachSchedulesList; let i = index;">
+                                              <tr>
+                                                <td [style.width]="'9%'" style="font-weight: bold; vertical-align: top;" class="text-center">
+                                                  {{ utilsService.padIntegerLeftWithZeros(coachSchedule.fromHour.hours, 2) + "h" + utilsService.padIntegerLeftWithZeros(coachSchedule.fromHour.minutes, 2)}}
+                                                </td>
+                                                <ng-container *ngFor="let dayInWeek of dayInWeeksList">
+                                                    <td [style.width]="'13%'">
+                                                         <div style="vertical-align: top;" *ngIf="coachSchedule.dayOfWeek == dayInWeek.value" title="{{ coachSchedule | json }}">
+                                                            <p style="font-weight: bold;">{{ coachSchedule.className }}</p>
+                                                            <p *ngFor="let coachName of coachSchedule.realViceCoachListForGrid.split(',')">
+                                                              {{ coachName.replace(" ", "") }}
+                                                            </p>
+                                                          </div>
+                                                    </td>
+                                                </ng-container>
+                                              </tr>
+                                            </ng-container>
                                         </tbody>
                                     </table>
                                 </div>

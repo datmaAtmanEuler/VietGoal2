@@ -88,6 +88,7 @@ import { PositionImportComponent } from '../../views/list/positions/position-imp
 
 import { AreaImportComponent } from 'app/views/list/areas/area-import/area-import.component';
 import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
+import { CoachSchedulesComponent } from 'app/views/manage/coachschedules/coachschedules.component';
 import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
 import { CoachAbsentImportComponent } from 'app/views/manage/coachabsent/coachabsent-import/coachabsent-import.component';
 
@@ -212,8 +213,8 @@ import { StudentRegistrationImportComponent } from 'app/views/manage/student-reg
     StudentAtendanceComponent,
     RecruitStudentImportComponent,
     RecruitStudentImportComponent,
-    StudentRegistrationImportComponent
-    
+    StudentRegistrationImportComponent,
+    CoachSchedulesComponent
   ],
   entryComponents: [
     ProvinceImportComponent,

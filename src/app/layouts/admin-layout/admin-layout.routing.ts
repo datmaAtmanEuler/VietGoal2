@@ -41,6 +41,7 @@ import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/rec
 import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
 import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
 import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
+import { CoachSchedulesComponent } from 'app/views/manage/coachschedules/coachschedules.component';
 import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
 import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
@@ -326,8 +327,15 @@ export const AdminLayoutRoutes: Routes = [
                 path: '', component: ScheduleComponent
             }
         ]
-    }
-    ,
+    },
+    {
+        path: 'coachschedules',
+        children: [
+            {
+                path: '', component: CoachSchedulesComponent
+            }
+        ]
+    },
     {
         path: 'class',
         children: [ {

@@ -59,6 +59,10 @@ export class KpiConfigEditComponent implements OnInit {
 	}
 
 	UpdateKpiConfig() {
+		this.kpiConfig.studentAmountMin = parseInt(this.kpiConfig.studentAmountMin);
+		this.kpiConfig.studentAmountMax = parseInt(this.kpiConfig.studentAmountMax);
+		this.kpiConfig.coachAmount = parseInt(this.kpiConfig.coachAmount);
+		this.kpiConfig.kpi = parseFloat(this.kpiConfig.kpi);
 		this.kpiConfigService.addOrUpdateKpiConfig(this.kpiConfig).subscribe(
 			() => {
 				if (!this.popup) {

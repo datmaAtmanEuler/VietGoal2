@@ -90,28 +90,28 @@ import { DistrictImportComponent } from '../../views/list/districts/districts-im
 import { WardImportComponent } from '../../views/list/wards/wards-import/ward-import.component';
 import { PositionImportComponent } from '../../views/list/positions/position-import/position-import.component';
 
-import { AreaImportComponent } from 'app/views/list/areas/area-import/area-import.component';
-import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
-import { CoachSchedulesComponent } from 'app/views/manage/coachschedules/coachschedules.component';
-import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
-import { CoachAbsentImportComponent } from 'app/views/manage/coachabsent/coachabsent-import/coachabsent-import.component';
+import { AreaImportComponent } from '../../views/list/areas/area-import/area-import.component';
+import { CoachAbsentComponent } from '../../views/manage/coachabsent/coachabsent.component';
+import { CoachSchedulesComponent } from '../../views/manage/coachschedules/coachschedules.component';
+import { CoachAbsentEditComponent } from '../../views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
+import { CoachAbsentImportComponent } from '../../views/manage/coachabsent/coachabsent-import/coachabsent-import.component';
 
 import { ClassImportComponent } from '../../views/manage/class/class-import/class-import.component';
 import { TrainingGroundImportComponent } from '../../views/list/trainingground/trainingground-import/trainingground-import.component';
 import { UserGroupImportComponent } from '../../views/list/usergroups/usergroup-import/usergroup-import.component';
 import { YardImportComponent } from '../../views/list/yard/yard-import/yard-import.component';
 import { RecruitImportComponent } from '../../views/list/recruits/recruit-import/recruit-import.component';
-import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
-import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
-import { StudentComponent } from 'app/views/manage/student/student.component';
-import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
-import { StudentAttendanceOverRangeComponent } from 'app/views/manage/studentattendanceoverrange/studentattendanceoverrange.component';
-import { StudentAttendanceOverRangeAddComponent } from 'app/views/manage/studentattendanceoverrange/studentattendanceoverrange-add/studentattendanceoverrange-add.component';
+import { RecruitStudentComponent } from '../../views/manage/recruit-student/recruit-student.component';
+import { RecruitStudentEditComponent } from '../../views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
+import { StudentComponent } from '../../views/manage/student/student.component';
+import { StudentEditComponent } from '../../views/manage/student/student-edit/student-edit.component';
+import { StudentAttendanceOverRangeComponent } from '../../views/manage/studentattendanceoverrange/studentattendanceoverrange.component';
+import { StudentAttendanceOverRangeAddComponent } from '../../views/manage/studentattendanceoverrange/studentattendanceoverrange-add/studentattendanceoverrange-add.component';
 import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
-import { StudentAttendanceComponent } from 'app/views/manage/studentattendance/studentattendance.component';
-import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
-import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
-import { StudentRegistrationImportComponent } from 'app/views/manage/student-registration/student-registration-import/student-registration-import.component';
+import { StudentAttendanceComponent } from '../../views/manage/studentattendance/studentattendance.component';
+import { StudentRegistrationComponent } from '../../views/manage/student-registration/student-registration.component';
+import { StudentRegistrationEditComponent } from '../../views/manage/student-registration/student-registration-edit/student-registration-edit.component';
+import { StudentRegistrationImportComponent } from '../../views/manage/student-registration/student-registration-import/student-registration-import.component';
 
 
 @NgModule({

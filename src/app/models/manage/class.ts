@@ -13,7 +13,6 @@ export class Class{
     studentCounts: number;
     mainCoachId: number;
     viceCoachList: number;
-    
     shiftId: number;
     ageId: number;
     description: string;

@@ -3,28 +3,24 @@ import { Age } from "../list/age";
 
 export class RecruitStudent {
     id: number;
-    fullName: string;
-    gender: number;
-    DOB: Date;
-    provinceId: number;
-    districtId: number;
-    wardId: number;
-    admissionDay: Date;
-    images: string;
-    parentsName: string;
-    phone: string;
-    email: string;
-    faceBook: string;
-    description: string;
-    userId: number;
-    statusId: number;
-    admissionDate: Date;
-    areaId: number;
-    yardId: number;
-    trainingGroundId: number;
+    studentId: number;
     classId: number;
+    recruitDate: Date;
+    trainingGroundId: number;
+    approverId:number;
     recruitId: number;
+    recruitName: string;
+    parentFullName: string;
+    parentPhone: string;
+    parentFacebook: string;
+    parentEmail: string;
+    studentFullName: string;
+    displayOrder: number;
+    gender: number;
+    dob: Date;
     address: string;
+    source: string;
+    
 
     CreatedDate: Date;
     CreatedBy: number;
@@ -33,36 +29,32 @@ export class RecruitStudent {
     DeletedDate: null | Date;
     DeletedBy: null | number;
 
-    constructor(id: number, fullName: string, gender: number, DOB: Date, provinceId: number, districtId: number, wardId: number,
-        admissionDay: Date, images: string, parentsName: string, phone: string, email: string, faceBook: string, description: string, userId: number,
-        statusId: number,
-        admissionDate: Date,
-        areaId: number,
-        yardId: number,
+    constructor(id: number, studentId: number, dob: Date,recruitDate: Date, parentFullName: string, parentPhone: string, parentFacebook: string,
+        parentEmail: string, recruitName: string, studentFullName: string, 
         trainingGroundId: number,
         classId: number,
         recruitId: number,
+        approverId:number,
         address: string,
+        gender: number,
+        displayOrder:number,
+        source: string,
         CreatedDate: Date, CreatedBy: number, UpdatedDate: null | Date, UpdatedBy: null | number,
         DeletedDate: Date, DeletedBy: number) {
         this.id = id;
-        this.fullName = fullName;
+        this.studentId = studentId;
+        this.dob = dob;
+        this.parentFullName = parentFullName;
+        this.parentPhone = parentPhone;
+        this.parentFacebook = parentFacebook;
+        this.parentEmail = parentEmail;
+        this.recruitName = recruitName;
+        this.studentFullName = studentFullName;
+        this.displayOrder = displayOrder;
+        this.source = source;
+        this.approverId = approverId;
         this.gender = gender;
-        this.areaId = areaId;
-        this.yardId = yardId;
-        this.DOB = DOB;
-        this.provinceId = provinceId;
-        this.districtId = districtId;
-        this.wardId = wardId;
-        this.admissionDay = admissionDay;
-        this.images = images;
-        this.parentsName = parentsName;
-        this.phone = phone;
-        this.faceBook = faceBook;
-        this.description = description;
-        this.userId = userId;
-        this.statusId = statusId;
-        this.admissionDate = admissionDate;
+        this.recruitDate = recruitDate;
         this.trainingGroundId = trainingGroundId;
         this.classId = classId;
         this.recruitId = recruitId;

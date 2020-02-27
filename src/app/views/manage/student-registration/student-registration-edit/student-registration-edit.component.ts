@@ -37,13 +37,13 @@ import { StudentService } from 'app/services/manage/student.service';
  * **/
 
 @Component({
-	selector: 'app-recruit-student-edit',
-	templateUrl: './recruit-student-edit.component.html',
-	styleUrls: ['./recruit-student-edit.component.scss'],
+	selector: 'app-student-registration-edit',
+	templateUrl: './student-registration-edit.component.html',
+	styleUrls: ['./student-registration-edit.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 
-export class RecruitStudentEditComponent implements OnInit {
+export class StudentRegistrationEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('ClassId') ClassId: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
@@ -119,7 +119,7 @@ export class RecruitStudentEditComponent implements OnInit {
 	}
 	
 	GetStudentById(Id: number) {
-		this.studentService.get((Id) ? Id : this.ClassId).subscribe(
+		this.studentService.getList((Id) ? Id : this.ClassId).subscribe(
 			(aClass: any) => {
 				this.student = aClass || {};
 			},

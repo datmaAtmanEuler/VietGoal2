@@ -47,6 +47,8 @@ import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
 import { GomuComponent } from 'app/views/manage/gomu/gomu.component';
 import { GomuAddComponent } from 'app/views/manage/gomu/gomu-add/gomu-add.component';
+import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
+import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -337,6 +339,21 @@ export const AdminLayoutRoutes: Routes = [
         ,
         {
             path: 'edit', component: ClassEditComponent
+        }
+        ]
+    },
+    {
+        path: 'dangky-hocsinh',
+        children: [ {
+            path: '', component: StudentRegistrationComponent
+        }
+        ,
+        {
+            path: 'add', component: StudentRegistrationEditComponent
+        }
+        ,
+        {
+            path: 'edit', component: StudentRegistrationEditComponent
         }
         ]
     },

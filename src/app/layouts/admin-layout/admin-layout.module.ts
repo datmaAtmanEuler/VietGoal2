@@ -104,6 +104,9 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
 import { GomuComponent } from 'app/views/manage/gomu/gomu.component';
 import { GomuAddComponent } from 'app/views/manage/gomu/gomu-add/gomu-add.component';
 import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
+import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
+import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
+import { StudentRegistrationImportComponent } from 'app/views/manage/student-registration/student-registration-import/student-registration-import.component';
 
 
 @NgModule({
@@ -133,6 +136,8 @@ import { RecruitStudentImportComponent } from '../../views/manage/recruit-studen
     MatIconModule
   ],
   declarations: [
+    StudentRegistrationComponent,
+    StudentRegistrationEditComponent,
     ClassComponent,
     ClassEditComponent,
     CategoriesComponent,
@@ -203,11 +208,14 @@ import { RecruitStudentImportComponent } from '../../views/manage/recruit-studen
     StudentEditComponent,
     GomuComponent,
     GomuAddComponent,
-    RecruitStudentImportComponent
+    RecruitStudentImportComponent,
+    RecruitStudentImportComponent,
+    StudentRegistrationImportComponent
     
   ],
   entryComponents: [
     ProvinceImportComponent,
+    StudentRegistrationImportComponent,
     CentralImportComponent,
     DistrictImportComponent,
     WardImportComponent,

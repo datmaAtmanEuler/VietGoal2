@@ -23,6 +23,11 @@ export class CoachService {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
         return this.http.get(environment.serverUrl_employee + 'Coachs?' + queryString , this.httpOptions);
     }
+
+    getCoachSchedulesList(filter: any): Observable<any>  {
+        let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
+        return this.http.get(environment.serverUrl_employee + 'CoachSchedules?' + queryString , this.httpOptions);
+    }
     
     getCoach(id: any): Observable<any>  {
         return this.http.get(environment.serverUrl_employee + `Coach/${id}` , this.httpOptions);
@@ -40,6 +45,7 @@ export class CoachService {
     deleteCoach(CoachId: number, deletedBy: number): Observable<any> {
         return this.http.delete(environment.serverUrl_employee + `Coachs/${CoachId}?deletedBy=${deletedBy}` , this.httpOptions);
     }
+
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
     }

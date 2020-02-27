@@ -156,6 +156,22 @@ export class UtilsService {
     }
   }
 
+  yearsList(value: any, type: number | null = 1): Observable<any[]> {
+    let list: any[] = [];
+
+    for(let i = 1975; i <= 2100; i++) {
+      list.push({
+        value: i, title: '' + i
+      });
+    }
+
+    if(type == 1) {
+     return of( list.filter((month: any) => value == '' || value == undefined || month.title.toLowerCase().indexOf(value.toString()) != -1)); 
+    } else {
+      return of(list.filter((month: any) => value == '' || value == undefined || month.value.toString().toLowerCase() == value.toString())); 
+    }
+  }
+
   monthList(value: any, type: number | null = 1): Observable<any[]> {
     if(type == 1) {
      return of( [

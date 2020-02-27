@@ -45,7 +45,7 @@ export class ClassComponent implements OnInit {
   Total: any;
   firstRowOnPage: any;
 
-  areasList: any[]= [];
+  areasList: any[];
   yardsList: any[]= [];
   traininggroundsList: any[]= [];
 
@@ -154,7 +154,7 @@ export class ClassComponent implements OnInit {
         )
       )
     )
-      .subscribe((response: any) => {
+      .subscribe((response : any) => {
         const data = response.results;
         if (data == undefined) {
           this.yardsList = [{ notfound: 'Not Found' }];
@@ -178,7 +178,8 @@ export class ClassComponent implements OnInit {
         )
       )
     )
-      .subscribe(data => {
+      .subscribe((response: any) => {
+        const data = response.results;
         if (data == undefined) {
           this.traininggroundsList = [{ notfound: 'Not Found' }];
         } else {
@@ -241,7 +242,7 @@ export class ClassComponent implements OnInit {
   }
 
   displayAreaFn(area): string {
-    return area && area.AreaName && !area.notfound ? area.AreaName : '';
+    return area && area.areaName && !area.notfound ? area.areaName : '';
   }
  
   displayYardFn(yard): string {
@@ -251,15 +252,15 @@ export class ClassComponent implements OnInit {
     return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
   }
   changeArea(areaID: number) {
-    this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'id', 'ASC')).subscribe((list) => {
-      this.yardsList = list;
+    this.yardService.getYardsList(new YardFilter('', 1, 100, areaID, 'id', 'ASC')).subscribe((response : any) => {
+      this.yardsList = response.result;
       this.filter.AreaId = areaID;
       this.reload();
     });
   }
   changeYard(yardID) {
-    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'id', 'ASC')).subscribe((list) => {
-      this.traininggroundsList = list;
+    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, yardID,null, 'id', 'ASC')).subscribe((response : any) => {
+      this.traininggroundsList = response.result;
       this.filter.YardId = yardID;
       this.reload();
     });

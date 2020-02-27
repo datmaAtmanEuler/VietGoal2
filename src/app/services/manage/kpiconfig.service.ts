@@ -35,6 +35,6 @@ export class KpiConfigService {
     }
 
     deleteKpiConfig(kpiCongigId: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `KpiConfigs/${kpiConfigId}` , this.httpOptions);
+        return this.http.delete(environment.serverUrl + `KpiConfigs/${kpiCongigId}` , this.httpOptions);
     }
 }

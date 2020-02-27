@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { FormControl } from '@angular/forms';
 
-import { startWith, map, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { startWith, map, debounceTime, tap, switchMap, finalize, filter } from 'rxjs/operators';
 import { from } from 'rxjs';
 
 declare var $: any;
@@ -65,8 +65,8 @@ export class ScheduleComponent implements OnInit {
             SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
             null
         ],
-        columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'Coach1', 'Coach2', 'Coach3', 'RealCoach1', 'RealCoach2', 'RealCoach3', 'Action'],
-        columnsNameMapping: ['Id', 'Area', 'Yard', 'YardArea', 'Class', 'ClassDay', 'ClassTime', 'Coach1', 'Coach2', 'Coach3', 'RealCoach1', 'RealCoach2', 'RealCoach3', ''],
+        columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'MainCoach', 'ViceCoach', 'MainCoachReal', 'ViceCoachReal', 'Action'],
+        columnsNameMapping: ['Id', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'MainCoach', 'ViceCoach', 'MainCoachReal', 'ViceCoachReal', ''],
         sortAbles: [false, true, true, true, true, true, true, true, true, true, true, true, true, false],
         visibles: [true, true, true, true, true, true, true, true, true, true, true, true, true, true]
     }
@@ -121,7 +121,7 @@ export class ScheduleComponent implements OnInit {
         this.isLoading = true;
         this.schedulesList = [];
         setTimeout(() => {
-          this.schedulesList = this.service.getListScheduledemo();
+         this.service.getSchedulesList(filter).subscribe();
           this.isLoading = false;
         }, 500);
     };

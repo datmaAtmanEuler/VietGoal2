@@ -32,152 +32,123 @@
                     </div>
                   </div>
                 </div>
-                <div class="row" style="padding-left: 50px;">
-                    <div class="form-group row">
-                        <div class="row form-group">
-                            <div class="offset-2 col-4">
-                                <label class="m-0">{{ "MESSAGE.NameList.Day" | translate }}</label>
-                                <mat-form-field>
-                                    <input matInput [disabled]="true"
-                                        (dateChange)="dateEvent('start',$event)" [matDatepicker]="startDateFilter"
-                                        class="col-sm-3 form-control">
-                                    <span mat-raised-button (click)="startDateFilter.open()"
-                                        class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
-                                        <i class="material-icons">date_range</i>
-                                    </span>
-                                    <!-- <mat-datepicker-toggle matSuffix [for]="startDateFilter"></mat-datepicker-toggle> -->
-                                    <mat-datepicker #startDateFilter disabled="false"></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                            <div class="col-4">
-                                <label class="m-0">&nbsp;</label>
-                                <mat-form-field>
-                                    <input matInput [disabled]="true" (dateChange)="dateEvent('end',$event)"
-                                        [matDatepicker]="endDateFilter"
-                                        class="col-sm-3 form-control">
-                                    <span mat-raised-button (click)="endDateFilter.open()"
-                                        class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
-                                        <i class="material-icons">date_range</i>
-                                    </span>
-                                    <mat-datepicker #endDateFilter disabled="false"></mat-datepicker>
-                                </mat-form-field>
-                            </div>
-                        </div>
+                <div class="row" *ngIf="searchAdvanced">
+                  <div class="form-group row">
+                    <label
+                        class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
+                    <div class="col-6 label-middling">
+                        <input class="form-control"
+                            placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
+                            [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
                     </div>
-                    <div class="form-group row">
-                        <label
-                            class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
-                        <div class="col-6 label-middling">
-                            <input class="form-control"
-                                placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
-                                [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
-                        </div>
-                        <mat-autocomplete #areaAC="matAutocomplete"
-                            (optionSelected)="changeArea(searchAreasCtrl.value.id)"
-                            [displayWith]="displayAreaFn">
-                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                <mat-spinner></mat-spinner>
-                            </mat-option>
-                            <ng-container *ngIf="!isLoading">
-                                <mat-option *ngFor="let area of areasList" [value]="area">
-                                  
-                                    <span *ngIf="area">{{area.areaName}}</span>
-                                    <span *ngIf="!area.notfound" class="nofind">{{area.notfound}}</span>
-                                
-                                </mat-option>
-                            </ng-container>
-                        </mat-autocomplete>
-                    </div>
-                    <div class="form-group row">
-                        <label
-                            class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Yard' | translate}}:</strong></label>
-                        <div class="col-6 label-middling">
-                            <input class="form-control"
-                                placeholder="{{'MESSAGE.NameList.YardName' |translate}}"
-                                [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
-                        </div>
-                        <mat-autocomplete #YardAC="matAutocomplete"
-                            (optionSelected)="changeYard(searchYardsCtrl.value.id)"
-                            [displayWith]="displayYardFn">
-                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                <mat-spinner></mat-spinner>
-                            </mat-option>
-                            <ng-container *ngIf="!isLoading">
-                                <mat-option *ngFor="let yard of yardsList" [value]="yard">
-                                    <span *ngIf="yard">{{yard.yardName}}</span>
-                                    <span *ngIf="!yard.notfound" class="nofind">{{ 'Not found' }}</span>
-                                </mat-option>
-                            </ng-container>
-                        </mat-autocomplete>
-                    </div>
-
-                    <div class="form-group row">
-                        <label
-                            class="col-5 label-middling"><strong>{{'MESSAGE.NameList.YardArea' | translate}}:</strong></label>
-                        <div class="col-6 label-middling">
-                            <input class="form-control"
-                                placeholder="{{'MESSAGE.NameList.YardArea' |translate}}"
-                                [matAutocomplete]="traininggroundAC"
-                                [formControl]="searchTrainingGroundsCtrl">
-                        </div>
-                        <mat-autocomplete #traininggroundAC="matAutocomplete"
-                            (optionSelected)="changeTrainingGround(searchTrainingGroundsCtrl.value.id)"
-                            [displayWith]="displayTrainingGroundFn">
-                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                <mat-spinner></mat-spinner>
-                            </mat-option>
-                            <ng-container *ngIf="!isLoading">
-                                <mat-option *ngFor="let trainingground of traininggroundsList"
-                                    [value]="trainingground">
-                                    <span
-                                        *ngIf="trainingground">{{trainingground.trainingGroundName}}</span>
-                                    <span *ngIf="!trainingground.notfound"
-                                        class="nofind">{{trainingground.notfound}}</span>
-                                </mat-option>
-                            </ng-container>
-                        </mat-autocomplete>
-                    </div>
-
-
-
-                    <div class="form-group row">
-                        <label class="col-5 label-middling"><strong>Lớp Học:</strong></label>
-                        <div class="col-6 label-middling">
-                            <input class="form-control" placeholder="Lớp học" 
-                            [matAutocomplete]="classAC"
-                            [formControl]="searchClassCtrl">
-                        </div>
-                        <mat-autocomplete #classAC="matAutocomplete">
+                    <mat-autocomplete #areaAC="matAutocomplete"
+                        (optionSelected)="changeArea(searchAreasCtrl.value.id)"
+                        [displayWith]="displayAreaFn">
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                             <mat-spinner></mat-spinner>
                         </mat-option>
                         <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let class of classList"
-                                [value]="class">
-                                <span
-                                    *ngIf="!class.notfound">{{class.Class}}</span>
-                                <span *ngIf="class.notfound"
-                                    class="nofind">{{class.notfound}}</span>
+                            <mat-option *ngFor="let area of areasList" [value]="area">
+                              
+                                <span *ngIf="area">{{area.areaName}}</span>
+                                <span *ngIf="!area.notfound" class="nofind">{{area.notfound}}</span>
+                            
                             </mat-option>
                         </ng-container>
                     </mat-autocomplete>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-5 label-middling"><strong>Người Chốt:</strong></label>
-                        <div class="col-6 label-middling">
-                            <input class="form-control" placeholder="Người chốt">
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-5 label-middling"><strong>Kết quả:</strong></label>
-                        <div class="col-6 label-middling">
-                            <input class="form-control" placeholder="Kết quả">
-                        </div>
-                    </div>
-
                 </div>
+                <div class="form-group row">
+                    <label
+                        class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Yard' | translate}}:</strong></label>
+                    <div class="col-6 label-middling">
+                        <input class="form-control"
+                            placeholder="{{'MESSAGE.NameList.YardName' |translate}}"
+                            [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
+                    </div>
+                    <mat-autocomplete #YardAC="matAutocomplete"
+                        (optionSelected)="changeYard(searchYardsCtrl.value.id)"
+                        [displayWith]="displayYardFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let yard of yardsList" [value]="yard">
+                                <span *ngIf="yard">{{yard.yardName}}</span>
+                                <span *ngIf="!yard.notfound" class="nofind">{{ 'Not found' }}</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
+                </div>
+
+                <div class="form-group row">
+                    <label
+                        class="col-5 label-middling"><strong>{{'MESSAGE.NameList.YardArea' | translate}}:</strong></label>
+                    <div class="col-6 label-middling">
+                        <input class="form-control"
+                            placeholder="{{'MESSAGE.NameList.YardArea' |translate}}"
+                            [matAutocomplete]="traininggroundAC"
+                            [formControl]="searchTrainingGroundsCtrl">
+                    </div>
+                    <mat-autocomplete #traininggroundAC="matAutocomplete"
+                        (optionSelected)="changeTrainingGround(searchTrainingGroundsCtrl.value.id)"
+                        [displayWith]="displayTrainingGroundFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                            <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                            <mat-option *ngFor="let trainingground of traininggroundsList"
+                                [value]="trainingground">
+                                <span
+                                    *ngIf="trainingground">{{trainingground.trainingGroundName}}</span>
+                                <span *ngIf="!trainingground.notfound"
+                                    class="nofind">{{trainingground.notfound}}</span>
+                            </mat-option>
+                        </ng-container>
+                    </mat-autocomplete>
+                </div>
+
+
+
+                <div class="form-group row">
+                    <label class="col-5 label-middling"><strong>Lớp Học:</strong></label>
+                    <div class="col-6 label-middling">
+                        <input class="form-control" placeholder="Lớp học" 
+                        [matAutocomplete]="classAC"
+                        [formControl]="searchClassCtrl">
+                    </div>
+                    <mat-autocomplete #classAC="matAutocomplete">
+                    <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                        <mat-spinner></mat-spinner>
+                    </mat-option>
+                    <ng-container *ngIf="!isLoading">
+                        <mat-option *ngFor="let class of classList"
+                            [value]="class">
+                            <span
+                                *ngIf="!class.notfound">{{class.Class}}</span>
+                            <span *ngIf="class.notfound"
+                                class="nofind">{{class.notfound}}</span>
+                        </mat-option>
+                    </ng-container>
+                </mat-autocomplete>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-5 label-middling"><strong>Người Chốt:</strong></label>
+                    <div class="col-6 label-middling">
+                        <input class="form-control" placeholder="Người chốt">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-5 label-middling"><strong>Kết quả:</strong></label>
+                    <div class="col-6 label-middling">
+                        <input class="form-control" placeholder="Kết quả">
+                    </div>
+                </div>
+                    </div>
+                    
+
+               
             </div>
               </div>
             </div>

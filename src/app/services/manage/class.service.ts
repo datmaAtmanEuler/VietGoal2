@@ -26,7 +26,6 @@ export class ClassService {
     }
 
     getClass(id: any): Observable<any>  {
-        console.log(id);
         return this.http.get(environment.serverUrl + `Class/${id}` , this.httpOptions);
         
     }

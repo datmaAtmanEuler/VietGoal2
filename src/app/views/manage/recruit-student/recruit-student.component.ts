@@ -75,11 +75,10 @@ export class RecruitStudentComponent implements OnInit {
       SORD_DIRECTION.ASC,SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
       null
     ],
-    columnsName:  ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Result','Action'],
-    columnsNameMapping:  ['id', 'parentsName', 'faceBook', 'email', 'phone', 'fullName','dayofBirth','address','result',''],
-    columnsNameFilter: ['id', 'parentsName', 'faceBook', 'email', 'phone', 'fullName','dayofBirth','address','result',''],
+    columnsName:  ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Source','Recruit','Action'],
+    columnsNameMapping:  ['id', 'parentFullName', 'parentFacebook', 'parentEmail', 'parentPhone', 'studentFullName','dob','address','source','recruitName','result',''],
     sortAbles:  [false, true, true, true, false,false,true,false, false,false],
-    visibles: [true, true, true, true, true, true,true,true, true,true]
+    visibles: [true, true, true, true, true, true,true,true, true,true,true]
   }
   /**
    * END SORT SETTINGS
@@ -100,12 +99,7 @@ export class RecruitStudentComponent implements OnInit {
       this.updateMatTableLabel();
       matCus.changes.next();
     });
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
-    this.fromDate = new Date(currentYear - 20, 0, 1);
-    this.toDate = new Date(currentYear + 1, 11, 31);
-    this.originMin = new Date(currentYear, currentMonth - 6,1);
-    this.originMax = new Date(currentYear + 1, 11, 31);
+   
   }
   updateMatTableLabel() {
     this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
@@ -155,7 +149,8 @@ export class RecruitStudentComponent implements OnInit {
           )
         )
       )
-      .subscribe(data => {
+      .subscribe((response: any) => {
+        const data= response.result;
         if (data == undefined) {
           this.areasList = [{ notfound: 'Not Found' }];
         } else {
@@ -178,7 +173,8 @@ export class RecruitStudentComponent implements OnInit {
         )
       )
     )
-      .subscribe(data => {
+    .subscribe((response: any) => {
+      const data= response.result;
         if (data == undefined) {
           this.yardsList = [{ notfound: 'Not Found' }];
         } else {
@@ -201,7 +197,8 @@ export class RecruitStudentComponent implements OnInit {
         )
       )
     )
-      .subscribe(data => {
+    .subscribe((response: any) => {
+      const data= response.result;
         if (data == undefined) {
           this.traininggroundsList = [{ notfound: 'Not Found' }];
         } else {
@@ -224,7 +221,8 @@ export class RecruitStudentComponent implements OnInit {
           )
         )
       )
-        .subscribe(data => {
+      .subscribe((response: any) => {
+        const data= response.result;
           if (data == undefined) {
             this.classList = [{ notfound: 'Not Found' }];
           } else {
@@ -299,8 +297,8 @@ export class RecruitStudentComponent implements OnInit {
   }
   changeArea(areaID: number) {
     this.yardfilter.AreaId = areaID;
-    this.yardService.getYardsList(this.yardfilter).subscribe((list) => {
-      this.yardsList = list;
+    this.yardService.getYardsList(this.yardfilter).subscribe((response:any) => {
+      this.yardsList = response.result;
       this.reload();
      
     });
@@ -308,8 +306,8 @@ export class RecruitStudentComponent implements OnInit {
  
   changeYard(yardID : number) {
     this.traininggroundfilter.YardId = yardID;
-    this.traininggroundservice.getTrainingGroundsList(this.traininggroundfilter).subscribe((list) => {
-      this.traininggroundsList = list;
+    this.traininggroundservice.getTrainingGroundsList(this.traininggroundfilter).subscribe((response: any) => {
+      this.traininggroundsList = response.result;
       this.reload();
      
     });
@@ -317,10 +315,14 @@ export class RecruitStudentComponent implements OnInit {
 
   changeTrainingGround(traininggroundID : number) {
     this.classfilter.TrainingGroundId = traininggroundID;
-    this.classService.getClassList(this.classfilter).subscribe((list)=>{
-      this.classList = list;
+    this.classService.getClassList(this.classfilter).subscribe((response: any)=>{
+      this.classList =  response.result;
       this.reload();
     }) 
+  }
+  changeClass(aclassId : number) {
+      this.filter.classId = aclassId;
+      this.reload();
   }
  
   doNothing(): void {}

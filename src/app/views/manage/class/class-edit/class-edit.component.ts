@@ -54,11 +54,7 @@ export class ClassEditComponent implements OnInit {
 	mainCoachsList: any[] = [];
 	viceCoachsList: any[] = [];
 	class: any = {};
-	weeksList: Week[] = WeekToList();
-	weeksListName: string[] = WeekToListName();
-	shiftDaysList: ShiftDay[] = ShiftDayToList();
-	shiftDaysListName: string[] = ShiftDayToListName();
-
+	
 	searchAreasCtrl = new FormControl();
 	searchYardsCtrl = new FormControl();
 	searchTrainingGroundsCtrl = new FormControl();
@@ -89,38 +85,31 @@ export class ClassEditComponent implements OnInit {
 	}
 
 	displayAreaFn(user): string {
-		return user && user.AreaName && !user.notfound ? user.AreaName : '';
+		return user && user.areaName && !user.notfound ? user.areaName : '';
 	}
 	displayYardFn(user): string {
-		return user && user.YardName && !user.notfound ? user.YardName : '';
+		return user && user.yardName && !user.notfound ? user.yardName : '';
 	}
 	displayTrainingGroundFn(user): string {
-		return user && user.TrainingGroundName && !user.notfound ? user.TrainingGroundName : '';
+		return user && user.trainingGroundName && !user.notfound ? user.trainingGroundName : '';
 	}
-	changeArea() {
-		this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'id', 'ASC')).subscribe((list) => {
+	changeArea(areaId) {
+		this.yardService.getYardsList(new YardFilter('', 1, 100, areaId, 'id', 'ASC')).subscribe((list) => {
 			this.yardsList = list;
 		});
 	}
-	
 	changeYard() {
 		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null, null, 'id', 'ASC')).subscribe((list) => {
 			this.trainingGroundsList = list;
 		});
 	}
-	
-
-
 	GetClassById(id: number) {
-		
 		this.classService.getClass((id) ? id : this.id).subscribe(
 			(aaclass) => {
 				this.aclass = aaclass ;
 			},
 		);
 	}
-	
-
 	ngOnInit() {
 		
 		this.searchAreasCtrl.valueChanges
@@ -140,7 +129,7 @@ export class ClassEditComponent implements OnInit {
 					)
 				)
 			)
-			.subscribe(data => {
+			.subscribe((data) => {
 				if (data == undefined) {
 					this.errorMsg = 'error';
 					this.areasList = [{ notfound: 'Not Found' }];

@@ -43,22 +43,30 @@ export class YardComponent implements OnInit {
   /**
    * BEGIN SORT SETTINGS
    */
-  sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
-  columnsName: string[] = ['Order', 'YardCode', 'YardName','Area','Address','CampusArea','Note', 'Action'];
-  columnsNameMapping: string[] = ['Id', 'YardCode', 'YardName','Area','Address','CampusArea','Note', 'Action'];
-  sortAbles: boolean[] = [false, true, true, true,true,true, false];
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      null
+    ],
+    columnsName:['Order', 'YardCode', 'YardName','Central','Area','Address','CampusArea','Note', 'Action'],
+    columnsNameMapping: ['id', 'yardCode', 'yardName','centralName','areaName','address','area','description', ''],
+    sortAbles: [false, true, true, true, false,false,true, false],
+    visibles:  [true, true, true, true, true, true,true, true,true]
+  }
   /**
    * END SORT SETTINGS
    */
 
-  filter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
-  areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'Id','ASC');
-  centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,null, null, null, 'Id','ASC');
+  filter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'id','ASC');
+  areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'id','ASC');
+  centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,null, null, null, 'id','ASC');
 
   constructor(private translate: TranslateService,
     private matCus: MatPaginatorIntl, config: NgbModalConfig,public util: UtilsService, 
-    private service: YardService, private centralService: CentralService, private areaService: AreaService, private modalService: NgbModal, private router: Router) {
+    private service: YardService, private centralService: CentralService,public utilsService: UtilsService, private areaService: AreaService, private modalService: NgbModal, private router: Router) {
     config.backdrop = 'static';
       config.keyboard = false;
       config.scrollable = false;
@@ -160,13 +168,10 @@ edit(Id: null | number) {
   const _this = this;
   const modalRef = this.modalService.open(YardEditComponent, { size: 'lg' });
   modalRef.componentInstance.popup = true;
-  if (Id) {
-    modalRef.componentInstance.Id = Id;
-    modalRef.componentInstance.UserId = _this.currentUser.UserId;
-  }
-  modalRef.result.then(function(){
+  modalRef.componentInstance.id = Id;
+  modalRef.result.then(function (result) {
     _this.reload();
-});
+  });
 }
 
 deleteYard() {
@@ -176,36 +181,7 @@ deleteYard() {
   });
 }
 
-toggleSort(columnIndex: number): void {
-  let toggleState =  this.sortToggles[columnIndex];
-  switch(toggleState) {
-    case SORD_DIRECTION.ASC: 
-    {
-      toggleState = SORD_DIRECTION.ASC;
-      break;
-    }
-    case SORD_DIRECTION.ASC: 
-    {
-      toggleState = SORD_DIRECTION.DESC;
-      break;
-    }
-    default:
-    {
-      toggleState = SORD_DIRECTION.ASC;
-      break;
-    }
-  }
-  this.sortToggles.forEach((s: string, index: number) => {
-    if(index == columnIndex) {
-      this.sortToggles[index] = this.sort.SortDirection = toggleState;
-    } else {
-      this.sortToggles[index] = SORD_DIRECTION.ASC;
-    }
-  });
 
-  this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'Id' : this.columnsNameMapping[columnIndex];
-  this.reload();
-}
 
 doNothing(): void {}
 openImport() {

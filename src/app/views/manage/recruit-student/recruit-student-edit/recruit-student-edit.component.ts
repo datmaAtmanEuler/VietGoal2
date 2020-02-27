@@ -45,7 +45,7 @@ import { StudentService } from 'app/services/manage/student.service';
 
 export class RecruitStudentEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('ClassId') ClassId: number;
+	@Input('id') id: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
 
 	currentUser: any = {};
@@ -76,14 +76,15 @@ export class RecruitStudentEditComponent implements OnInit {
 
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal,
 		private studentService: StudentService,
+		private studentrecruitService: RecruitStudentService,
 		private provinceService: ProvinceService,
 		private districtService: DistrictService,
 		private wardService: WardService,
 		private userService: UserService,
 		private ageService: AgeService,
 		private route: ActivatedRoute, private router: Router, private http: HttpClient) {
-		this.ClassId = this.route.snapshot.queryParams['ClassId'];
-		this.ClassId = (this.ClassId) ? this.ClassId : 0;
+		this.id = this.route.snapshot.queryParams['id'];
+		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
 		config.keyboard = false;
 		config.scrollable = false;
@@ -117,18 +118,16 @@ export class RecruitStudentEditComponent implements OnInit {
 	changeWard(wardID) {
 		this.student.wardId = wardID;
 	}
-	
 	GetStudentById(Id: number) {
-		this.studentService.get((Id) ? Id : this.ClassId).subscribe(
-			(aClass: any) => {
-				this.student = aClass || {};
+		this.studentService.get((Id) ? Id : this.id).subscribe(
+			(stu: any) => {
+				this.student = stu || {};
 			},
 			() => {
 				this.student = {};
 			}
 		);
 	}
-
 	ngOnInit() {
 		this.searchProvincesCtrl.valueChanges
 			.pipe(
@@ -208,7 +207,7 @@ export class RecruitStudentEditComponent implements OnInit {
 			}
 
 		});
-		this.GetStudentById(this.ClassId);
+		this.GetStudentById(this.id);
 	}
 
 	ReturnList() {

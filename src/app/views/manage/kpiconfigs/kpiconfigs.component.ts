@@ -38,7 +38,7 @@ export class KpiConfigsComponent implements OnInit {
       null
     ],
     columnsName: ['Order', 'CoachAmount', 'StudentAmountMin', 'StudentAmountMax', 'Kpi', 'Action'],
-    columnsNameMapping: ['Id', 'CoachAmount', 'StudentAmountMin', 'StudentAmountMax', 'Kpi', 'Action'],
+    columnsNameMapping: ['id', 'coachAmount', 'studentAmountMin', 'studentAmountMax', 'kpi', ''],
     sortAbles: [false, true, true, true, true, false],
     visibles: [true, true, true, true, true, true]
   };
@@ -81,13 +81,13 @@ export class KpiConfigsComponent implements OnInit {
     this.reload();
   }
   reload() {
-    this.loading = true;
+    this.isLoading = true;
     this.kpiConfigsList = [];
     this.service.getKpiConfigsList(this.filter).subscribe((list: any) => {
-      this.Total = (list && list[0]) ? list[0].Total : 0;
+      this.Total = (list && list.rowCount) ? list.rowCount : 0;
       setTimeout(() => {
-        this.loading = false;
-        this.kpiConfigsList = list || [];
+        this.isLoading = false;
+        this.kpiConfigsList = list.results || [];
       }, 500);
     });
   }

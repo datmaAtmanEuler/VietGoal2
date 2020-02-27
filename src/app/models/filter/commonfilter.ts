@@ -5,6 +5,7 @@ export class CommonFilter {
     areaId: number;
     yardId: number;
     classId: number;
+    idClass: number;
     sortName: number;
     sortDirection: number;
     addedDate: string;

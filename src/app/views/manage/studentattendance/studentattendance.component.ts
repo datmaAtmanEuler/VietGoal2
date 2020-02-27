@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { UtilsService } from 'app/services/utils.service';
+import { UtilsService } from '../../../services/utils.service';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { FormControl } from '@angular/forms';
 import { environment } from 'environments/environment';
-import { CommonFilter } from 'app/models/filter/commonfilter';
+import { CommonFilter } from '../../../models/filter/commonfilter';
 import { finalize, switchMap, debounceTime, startWith, tap } from 'rxjs/operators';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
+import { StudentAttendanceService } from '../../../services/manage/studentattendance.service';
+import { StudentAttendance } from 'app/models/manage/studentattendance';
 
 @Component({
   selector: 'app-studentattendance',
@@ -31,12 +33,12 @@ export class StudentAttendanceComponent implements OnInit {
     sort: new ASCSort(),
     sortToggles: [
       null,
-      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
-      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC
     ],
     columnsName: ['Order', 'Mã học sinh', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Vắng', 'Lý do'],
     // columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'Absent', 'Reason'],
-    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7'],
+    columnsNameMapping: [null, 'studentCode', 'firstName', 'lastName', 'gender', 'dob', 'isAbsent', 'reason'],
     sortAbles: [false, true, true, true, true, true, true, false],
     visibles: [true, true, true, true, true, true, true, true]
   }
@@ -44,6 +46,7 @@ export class StudentAttendanceComponent implements OnInit {
     private router: Router,
     config: NgbModalConfig,
     private modalService: NgbModal,
+    private service: StudentAttendanceService,
     private route: ActivatedRoute,
     private http: HttpClient) {
     config.backdrop = 'static';
@@ -53,15 +56,15 @@ export class StudentAttendanceComponent implements OnInit {
     utilsService.loadPaginatorLabels();
 
   }
-  
+
   ngOnInit() {
-    
+
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
-    
+
     this.filter.pageIndex = 1;
     this.filter.pageSize = this.pageSizesList[1];
-    this.reload();
+    // this.reload();
     this.filtersEventsBinding();
   }
 
@@ -81,79 +84,55 @@ export class StudentAttendanceComponent implements OnInit {
     this.reload();
   }
   reload() {
-    this.StudentAttendanceList = [
-      {
-        id: 1,
-        field1: 1,
-        field2: 1,
-        field3: 1,
-        field4: 1,
-        field5: 1,
-        field6: true,
-        field7: 'sdfdsfds'
-      },
-      {
-        id: 2,
-        field1: 2,
-        field2: 2,
-        field3: 2,
-        field4: 2,
-        field5: 2,
-        field6: false,
-        field7: 'sdfdsfds'
-      },
-      {
-        id: 3,
-        field1: 3,
-        field2: 3,
-        field3: 3,
-        field4: 3,
-        field5: 3,
-        field6: true,
-        field7: 'sdfdsfds'
-      },
-      {
-        id: 4,
-        field1: 4,
-        field2: 4,
-        field3: 4,
-        field4: 4,
-        field5: 4,
-        field6: false,
-        field7: 'sdfdsfds'
-      },
-      {
-        id: 5,
-        field1: 5,
-        field2: 5,
-        field3: 5,
-        field4: 5,
-        field5: 5,
-        field6: true,
-        field7: 'sdfdsfds'
-      }
-    ];
-    this.Total = 10;
-    this.firstRowOnPage = 1;
 
-    this.filter.sortName = this.paginationSettings.sort.SortName;
-    this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
-    console.log('filter');
-    console.log(this.filter);
-    // this.loading = true;
-    // this.StudentAttendanceList = [];
-    // this.service.getList(this.filter).subscribe((response: any) => {
-    //   const list = response.results ? response.results : [];
-    //   this.Total = (response && response.rowCount) ? response.rowCount : 0;
-    //   this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-    //   setTimeout(() => {
-    //     this.loading = false;
-    //     this.StudentAttendanceList = list || [];
-    //   }, 500);
-    // });
+    // if(this.filter.absentDate && this.filter.classId){
+    if (this.filter.classId) {
+      this.filter.sortName = this.paginationSettings.sort.SortName;
+      this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
+      console.log('filter');
+      console.log(this.filter);
+      this.loading = true;
+      this.StudentAttendanceList = [];
+      this.service.getList(this.filter).subscribe((response: any) => {
+        const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        setTimeout(() => {
+          this.loading = false;
+          this.StudentAttendanceList = list || [];
+        }, 500);
+      });
+      // }else if(!this.filter.absentDate){
+      //   this.utilsService.showNotification('top','center','Vui lòng nhập <strong>ngày</strong>!',3);
+    } else if (!this.filter.classId) {
+      this.utilsService.showNotification('top', 'center', 'Vui lòng nhập <strong>lớp học</strong>!', 3);
+    }
   }
-  save(){
-    console.log(this.StudentAttendanceList);
+  save() {
+    if(this.filter.absentDate){
+      console.log(this.StudentAttendanceList);
+      var listtoput = this.StudentAttendanceList.map(object => {
+        return {
+          id: object.id,
+          studentId: object.studentId,
+          classId: object.classId,
+          date: this.filter.absentDate,
+          isAbsent: object.isAbsent,
+          reason: object.reason,
+          attendanceType: object.attendanceType
+        }
+      });
+      console.log(listtoput);
+      this.service.put(listtoput,this.filter.classId,this.filter.absentDate).subscribe((response) => {
+        if(response.message) {
+          this.utilsService.showNotification('top', 'center', response.message, 4);
+        }else{
+          this.utilsService.showNotification('top', 'center', JSON.stringify(response), 1);
+        }
+      });
+    } else{
+      this.utilsService.showNotification('top', 'center', 'Chưa chọn ngày điểm danh', 3);
+    }
   }
 
   sortToggles(colIndex: number) {
@@ -167,9 +146,9 @@ export class StudentAttendanceComponent implements OnInit {
       this.utilsService.doNothing();
   }
   //Date Events
-  
-	addedDateEvent(event: MatDatepickerInputEvent<Date>) {
-		this.filter.addedDate = this.utilsService.stringDate(event.value);
+
+  addedDateEvent(event: MatDatepickerInputEvent<Date>) {
+    this.filter.absentDate = this.utilsService.stringDate(event.value);
   }
   //load Autocomplete
 
@@ -192,14 +171,15 @@ export class StudentAttendanceComponent implements OnInit {
   displayClassFn(object): string {
     return object && object.className && !object.notfound ? object.className : '';
   }
-  changeArea(areaId){
-    this.filter.areaId = areaId;
+  changeArea(areaId) {
+    // this.filter.areaId = areaId;
   }
-  changeYard(yardId){
-    this.filter.yardId = yardId;
+  changeYard(yardId) {
+    // this.filter.yardId = yardId;
   }
-  changeClass(classId){
+  changeClass(classId) {
     this.filter.classId = classId;
+    this.reload();
   }
   filtersEventsBinding() {
 
@@ -279,6 +259,6 @@ export class StudentAttendanceComponent implements OnInit {
 
       });
   }
-  
+
 }
 

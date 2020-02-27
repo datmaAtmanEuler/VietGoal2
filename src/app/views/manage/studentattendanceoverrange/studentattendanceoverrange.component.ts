@@ -21,7 +21,7 @@ export class StudentAttendanceOverRangeComponent implements OnInit {
   StudentAttendanceOverRangeList: any[] = [];
   filter: CommonFilter = new CommonFilter();
   searchTerm: string = '';
-  searchAdvanced: boolean = false;
+  searchAdvanced: boolean = true;
   pageSizesList: number[] = [5, 10, 20, 100];
   currentUser: any;
   Total: number;
@@ -64,7 +64,6 @@ export class StudentAttendanceOverRangeComponent implements OnInit {
     
     this.filter.pageIndex = 1;
     this.filter.pageSize = this.pageSizesList[1];
-    this.reload();
     this.filtersEventsBinding();
   }
 
@@ -84,31 +83,42 @@ export class StudentAttendanceOverRangeComponent implements OnInit {
     this.reload();
   }
   reload() {
-    
-    this.filter.searchTerm = this.searchTerm;
-    this.filter.sortName = this.paginationSettings.sort.SortName;
-    this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
-    console.log('filter');
-    console.log(this.filter);
-    if(this.filter.classId) {
-      this.loading = true;
-      this.StudentAttendanceOverRangeList = [];
-      this.service.getList(this.filter).subscribe((response: any) => {
-        const list = response.results ? response.results : [];
-        this.Total = (response && response.rowCount) ? response.rowCount : 0;
-        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-        setTimeout(() => {
-          this.loading = false;
-          this.StudentAttendanceOverRangeList = list || [];
-          this.filter.classId = undefined;
-        }, 500);
-      });
+    if(this.filter.absentDate && this.filter.classId){
       
+      this.filter.searchTerm = this.searchTerm;
+      this.filter.sortName = this.paginationSettings.sort.SortName;
+      this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
+      console.log('filter');
+      console.log(this.filter);
+      if(this.filter.classId) {
+        this.loading = true;
+        this.StudentAttendanceOverRangeList = [];
+        this.service.getList(this.filter).subscribe((response: any) => {
+          const list = response.results ? response.results : [];
+          this.Total = (response && response.rowCount) ? response.rowCount : 0;
+          this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+          setTimeout(() => {
+            this.loading = false;
+            this.StudentAttendanceOverRangeList = list || [];
+            this.filter.classId = undefined;
+          }, 500);
+        });
+        
+      }
+    } else if(!this.filter.absentDate){
+      this.utilsService.showNotification('top','center','Vui lòng nhập <strong>ngày</strong>!',3);
+    }else if(!this.filter.classId){
+      this.utilsService.showNotification('top','center','Vui lòng nhập <strong>lớp học</strong>!',3);
     }
+  
   }
   add() {
-    if(this.filter.classId) {
-      this.router.navigate(['quanly/diemdanhhocvienngoai/add/'+this.filter.classId]);
+    if(this.filter.absentDate && this.filter.classId) {
+      this.router.navigate(['quanly/diemdanhhocvienngoai/add/'+this.filter.classId+'/'+this.filter.absentDate]);
+    } else if(!this.filter.absentDate){
+      this.utilsService.showNotification('top','center','Vui lòng nhập <strong>ngày</strong>!',3);
+    } else if(!this.filter.classId){
+      this.utilsService.showNotification('top','center','Vui lòng nhập <strong>lớp học</strong>!',3);
     }
   }
 
@@ -154,7 +164,7 @@ export class StudentAttendanceOverRangeComponent implements OnInit {
   //Date Events
   
 	addedDateEvent(event: MatDatepickerInputEvent<Date>) {
-		this.filter.addedDate = this.utilsService.stringDate(event.value);
+		this.filter.absentDate = this.utilsService.stringDate(event.value);
   }
   
   //load Autocomplete

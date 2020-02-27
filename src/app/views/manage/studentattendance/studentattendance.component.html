@@ -125,10 +125,10 @@
                                   {{ utilsService.getColumnValue(studentattendance, colIndex, paginationSettings.columnsNameMapping) }}
                               </td>
                               <td *ngIf="colIndex == paginationSettings.columnsName.length - 2" class="text-center">
-                                <mat-checkbox [(ngModel)]="studentattendance.field6" ></mat-checkbox>
+                                <mat-checkbox [(ngModel)]="studentattendance.isAbsent" ></mat-checkbox>
                               </td>
                               <td *ngIf="colIndex == paginationSettings.columnsName.length - 1">
-                                <input type="text" [(ngModel)]="studentattendance.field7" class="form-control">
+                                <input type="text" [(ngModel)]="studentattendance.reason" class="form-control">
                               </td>
                           </ng-container>
                         </tr>

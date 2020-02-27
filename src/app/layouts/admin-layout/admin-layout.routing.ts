@@ -409,7 +409,7 @@ export const AdminLayoutRoutes: Routes = [
         }
         ,
         {
-            path: 'add/:classID', component: StudentAttendanceOverRangeAddComponent
+            path: 'add/:classID/:absentDate', component: StudentAttendanceOverRangeAddComponent
         }
         ]
     },{

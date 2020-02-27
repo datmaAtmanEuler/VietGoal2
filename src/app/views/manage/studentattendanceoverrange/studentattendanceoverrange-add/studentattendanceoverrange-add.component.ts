@@ -11,6 +11,8 @@ import { CommonFilter } from 'app/models/filter/commonfilter';
 import { finalize, switchMap, debounceTime, startWith, tap } from 'rxjs/operators';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
 import { StudentAttendanceOverRangeService } from 'app/services/manage/studentattendanceoverrange.service';
+import { StudentService } from 'app/services/manage/student.service';
+import { StudentAttendanceOverRange } from 'app/models/manage/studentattendanceoverrange';
 
 @Component({
   selector: 'app-studentattendanceoverrange-add',
@@ -26,6 +28,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
   currentUser: any;
   Total: number;
   classID: number;
+  absentDate: string;
   firstRowOnPage: number;
   loading: boolean;
 
@@ -41,7 +44,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
     ],
     columnsName: ['Order', 'Mã học sinh', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Số thứ tự', 'Ngày nhập học', 'Ngày kết thúc học phần', 'Action'],
     // columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'DisplayOrder', 'AdmissionDate', 'EndTermDate', 'Action'],
-    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7', 'field8', null],
+    columnsNameMapping: [null, 'studentCode', 'firstName', 'lastName', 'gender', 'dob', 'displayOrder', 'admissionDate', 'endTermDate', null],
     sortAbles: [false, true, true, true, true, true, true, true, true, false],
     visibles: [true, true, true, true, true, true, true, true, true, true]
   }
@@ -51,6 +54,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
     private modalService: NgbModal,
     private route: ActivatedRoute,
     private service: StudentAttendanceOverRangeService,
+    private studentService: StudentService,
     private http: HttpClient) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -66,6 +70,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
     new PerfectScrollbar(vgscroll);
 
     this.classID = parseInt(this.route.snapshot.paramMap.get('classID'));
+    this.absentDate = this.route.snapshot.paramMap.get('absentDate'); 
     
     this.filter.pageIndex = 1;
     this.filter.pageSize = this.pageSizesList[1];
@@ -80,6 +85,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
   }
   reload() {
     
+    this.filter.idClass = this.classID;
     this.filter.sortName = this.paginationSettings.sort.SortName;
     this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
     console.log('filter');
@@ -87,7 +93,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
     if(this.classID) {
       this.loading = true;
       this.StudentAttendanceOverRangeAddList = [];
-      this.service.getList(this.filter).subscribe((response: any) => {
+      this.studentService.getList(this.filter).subscribe((response: any) => {
         const list = response.results ? response.results : [];
         this.Total = (response && response.rowCount) ? response.rowCount : 0;
         this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
@@ -98,9 +104,27 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
       });
     }
   }
-  select(id){
-    alert(`chọn học viên id:${id} qua lớp id:${this.intoClassId}`)
-    this.router.navigate(['quanly/diemdanhhocvienngoai']);
+  select(one: any){
+    if(this.intoClassId){
+      let modelSelect = new StudentAttendanceOverRange();
+      modelSelect.studentId = one.id;
+      modelSelect.classId = this.intoClassId;
+      modelSelect.date = this.absentDate;
+      modelSelect.isAbsent = false;
+      modelSelect.reason = 'bận lớp cũ';
+      modelSelect.attendanceType = 0;
+      const listtoput: StudentAttendanceOverRange[] = [];
+      listtoput.push(modelSelect);
+      // alert(`chọn học viên id:${one.id} qua lớp id:${this.intoClassId}`)
+      this.service.put(listtoput, this.intoClassId, this.absentDate).subscribe((response) => {
+        if(response.message) {
+          this.utilsService.showNotification('top', 'center', response.message, 4);
+          // this.router.navigate(['quanly/diemdanhhocvienngoai']);
+        }
+      });
+    } else{
+      this.utilsService.showNotification('top', 'center', 'Chưa chọn lớp học', 3);
+    }
   }
 
 
@@ -223,6 +247,5 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
 
       });
   }
-  
 }
 

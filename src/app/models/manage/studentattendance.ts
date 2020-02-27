@@ -1,4 +1,4 @@
-export class StudentAttendanceOverRange{
+export class StudentAttendance{
     id: number;
     studentId: number;
     classId: number;

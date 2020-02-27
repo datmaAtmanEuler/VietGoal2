@@ -40,6 +40,7 @@ export class StudentComponent implements OnInit {
       null
     ],
     columnsName: ['Order', 'Mã học viên', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Số thứ tự', 'Ngày nhập học', 'Ngày kết thúc học phần', 'Action'],
+    // columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'DisplayOrder', 'AdmissionDate', 'EndTermDate', 'Action'],
     columnsNameMapping: ['Id', 'studentCode', 'firstName', 'lastName', 'gender', 'dob', 'displayOrder', 'admissionDate', 'endTermDate', ''],
     sortAbles: [false, true, true, true, true, true, true, true, true, false, false],
     visibles: [true, true, true, true, true, true, true, true, true, true, true]

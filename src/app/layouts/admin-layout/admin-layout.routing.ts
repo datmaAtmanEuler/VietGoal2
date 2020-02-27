@@ -20,36 +20,41 @@ import { AreasComponent } from '../../views/list/areas/areas.component';
 import { AreaEditComponent } from '../../views/list/areas/area-edit/area-edit.component';
 import { CategoriesComponent } from '../../views/controlmanagement/categories/categories.component';
 import { CategoryEditComponent } from '../../views/controlmanagement/categories/categoryedit/categoryedit.component';
-import { PositionEditComponent } from 'app/views/list/positions/position-edit/position-edit.component';
-import { PositionsComponent } from 'app/views/list/positions/positions.component';
-import { ClassStatusEditComponent } from 'app/views/list/classstatus/classstatus-edit/classstatus-edit.component';
-import { ClassStatusComponent } from 'app/views/list/classstatus/classstatus.component';
-import { StudentStatusComponent } from 'app/views/list/studentstatus/studentstatus.component';
-import { StudentStatusEditComponent } from 'app/views/list/studentstatus/studentstatus-edit/studentstatus-edit.component';
-import { CoachStatusComponent } from 'app/views/list/coachstatus/coachstatus.component';
-import { CoachStatusEditComponent } from 'app/views/list/coachstatus/coachstatus-edit/coachstatus-edit.component';
-import { CollectionComponent } from 'app/views/list/collections/collection.component';
-import { CollectionEditComponent } from 'app/views/list/collections/collection-edit/collection-edit.component';
-import { FeesComponent } from 'app/views/list/fees/fees.component';
-import { FeeEditComponent } from 'app/views/list/fees/fee-edit/fee-edit.component';
-import { AgesComponent } from 'app/views/list/ages/ages.component';
-import { AgeEditComponent } from 'app/views/list/ages/age-edit/age-edit.component';
+import { PositionEditComponent } from '../../views/list/positions/position-edit/position-edit.component';
+import { PositionsComponent } from '../../views/list/positions/positions.component';
+import { ClassStatusEditComponent } from '../../views/list/classstatus/classstatus-edit/classstatus-edit.component';
+import { ClassStatusComponent } from '../../views/list/classstatus/classstatus.component';
+import { StudentStatusComponent } from '../../views/list/studentstatus/studentstatus.component';
+import { StudentStatusEditComponent } from '../../views/list/studentstatus/studentstatus-edit/studentstatus-edit.component';
+import { CoachStatusComponent } from '../../views/list/coachstatus/coachstatus.component';
+import { CoachStatusEditComponent } from '../../views/list/coachstatus/coachstatus-edit/coachstatus-edit.component';
+
+import { KpiConfigsComponent } from '../../views/manage/kpiconfigs/kpiconfigs.component';
+import { KpiConfigEditComponent } from '../../views/manage/kpiconfigs/kpiconfig-edit/kpiconfig-edit.component';
+
+import { CollectionComponent } from '../../views/list/collections/collection.component';
+import { CollectionEditComponent } from '../../views/list/collections/collection-edit/collection-edit.component';
+import { FeesComponent } from '../../views/list/fees/fees.component';
+import { FeeEditComponent } from '../../views/list/fees/fee-edit/fee-edit.component';
+import { AgesComponent } from '../../views/list/ages/ages.component';
+import { AgeEditComponent } from '../../views/list/ages/age-edit/age-edit.component';
 import { ClassComponent } from '../../views/manage/class/class.component';
 import { ClassEditComponent } from '../../views/manage/class/class-edit/class-edit.component';
 import { RecruitComponent } from '../../views/list/recruits/recruit.component';
 import { RecruitEditComponent } from '../../views/list/recruits/recruit-edit/recruit-edit.component';
-import { ScheduleComponent } from 'app/views/manage/schedule/schedule.component';
-import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
-import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
-import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
-import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
-import { StudentComponent } from 'app/views/manage/student/student.component';
-import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
-import { StudentAtendanceOverRangeComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange.component';
-import { StudentAtendanceOverRangeAddComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange-add/studentatendanceoverrange-add.component';
-import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/studentatendance.component';
-import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
-import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
+import { ScheduleComponent } from '../../views/manage/schedule/schedule.component';
+import { CoachAbsentComponent } from '../../views/manage/coachabsent/coachabsent.component';
+import { CoachAbsentEditComponent } from '../../views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
+import { CoachSchedulesComponent } from '../../views/manage/coachschedules/coachschedules.component';
+import { RecruitStudentComponent } from '../../views/manage/recruit-student/recruit-student.component';
+import { RecruitStudentEditComponent } from '../../views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
+import { StudentComponent } from '../../views/manage/student/student.component';
+import { StudentEditComponent } from '../../views/manage/student/student-edit/student-edit.component';
+import { StudentAttendanceOverRangeComponent } from '../../views/manage/studentattendanceoverrange/studentattendanceoverrange.component';
+import { StudentAttendanceOverRangeAddComponent } from '../../views/manage/studentattendanceoverrange/studentattendanceoverrange-add/studentattendanceoverrange-add.component';
+import { StudentAttendanceComponent } from '../../views/manage/studentattendance/studentattendance.component';
+import { StudentRegistrationComponent } from '../../views/manage/student-registration/student-registration.component';
+import { StudentRegistrationEditComponent } from '../../views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -326,8 +331,29 @@ export const AdminLayoutRoutes: Routes = [
                 path: '', component: ScheduleComponent
             }
         ]
-    }
-    ,
+    },
+    {
+        path: 'coachschedules',
+        children: [
+            {
+                path: '', component: CoachSchedulesComponent
+            }
+        ]
+    },
+    {
+        path: 'kpiconfigs',
+        children: [
+            {
+                path: '', component: KpiConfigsComponent
+            },
+            {
+                path: 'add', component: KpiConfigEditComponent
+            },
+            {
+                path: 'edit', component: KpiConfigEditComponent
+            }
+        ]
+    },
     {
         path: 'class',
         children: [ {
@@ -405,15 +431,15 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'diemdanhhocvienngoai',
         children: [ {
-            path: '', component: StudentAtendanceOverRangeComponent
+            path: '', component: StudentAttendanceOverRangeComponent
         }
         ,
         {
-            path: 'add', component: StudentAtendanceOverRangeAddComponent
+            path: 'add/:classID', component: StudentAttendanceOverRangeAddComponent
         }
         ]
     },{
-        path: 'diemdanhhocvien', component: StudentAtendanceComponent
+        path: 'diemdanhhocvien', component: StudentAttendanceComponent
     }
     ]
 }

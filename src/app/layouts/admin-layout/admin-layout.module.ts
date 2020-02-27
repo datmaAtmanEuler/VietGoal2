@@ -14,6 +14,10 @@ import { CentralEditComponent  } from '../../views/manage/central/central-edit/c
 import { DecentralizeUserComponent } from '../../views/manage/decentralize-user/decentralize-user.component';
 import { DecentralizeDataComponent } from '../../views/manage/decentralize-data/decentralize-data.component';
 
+
+import { KpiConfigsComponent } from '../../views/manage/kpiconfigs/kpiconfigs.component';
+import { KpiConfigEditComponent } from '../../views/manage/kpiconfigs/kpiconfig-edit/kpiconfig-edit.component';
+
 import { WardsComponent } from '../../views/list/wards/wards.component';
 import { WardEditComponent } from '../../views/list/wards/wardedit/wardedit.component';
 import { UserGroupComponent } from '../../views/list/usergroups/usergroup.component';
@@ -88,6 +92,7 @@ import { PositionImportComponent } from '../../views/list/positions/position-imp
 
 import { AreaImportComponent } from 'app/views/list/areas/area-import/area-import.component';
 import { CoachAbsentComponent } from 'app/views/manage/coachabsent/coachabsent.component';
+import { CoachSchedulesComponent } from 'app/views/manage/coachschedules/coachschedules.component';
 import { CoachAbsentEditComponent } from 'app/views/manage/coachabsent/coachabsent-edit/coachabsent-edit.component';
 import { CoachAbsentImportComponent } from 'app/views/manage/coachabsent/coachabsent-import/coachabsent-import.component';
 
@@ -100,10 +105,10 @@ import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recrui
 import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
-import { StudentAtendanceOverRangeComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange.component';
-import { StudentAtendanceOverRangeAddComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange-add/studentatendanceoverrange-add.component';
+import { StudentAttendanceOverRangeComponent } from 'app/views/manage/studentattendanceoverrange/studentattendanceoverrange.component';
+import { StudentAttendanceOverRangeAddComponent } from 'app/views/manage/studentattendanceoverrange/studentattendanceoverrange-add/studentattendanceoverrange-add.component';
 import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
-import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/studentatendance.component';
+import { StudentAttendanceComponent } from 'app/views/manage/studentattendance/studentattendance.component';
 import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
 import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 import { StudentRegistrationImportComponent } from 'app/views/manage/student-registration/student-registration-import/student-registration-import.component';
@@ -136,6 +141,8 @@ import { StudentRegistrationImportComponent } from 'app/views/manage/student-reg
     MatIconModule
   ],
   declarations: [
+    KpiConfigsComponent,
+    KpiConfigEditComponent,
     StudentRegistrationComponent,
     StudentRegistrationEditComponent,
     ClassComponent,
@@ -206,14 +213,14 @@ import { StudentRegistrationImportComponent } from 'app/views/manage/student-reg
     RecruitStudentEditComponent,
     StudentComponent,
     StudentEditComponent,
-    StudentAtendanceOverRangeComponent,
-    StudentAtendanceOverRangeAddComponent,
+    StudentAttendanceOverRangeComponent,
+    StudentAttendanceOverRangeAddComponent,
     RecruitStudentImportComponent,
-    StudentAtendanceComponent,
+    StudentAttendanceComponent,
     RecruitStudentImportComponent,
     RecruitStudentImportComponent,
-    StudentRegistrationImportComponent
-    
+    StudentRegistrationImportComponent,
+    CoachSchedulesComponent
   ],
   entryComponents: [
     ProvinceImportComponent,
@@ -237,7 +244,8 @@ import { StudentRegistrationImportComponent } from 'app/views/manage/student-reg
     PositionImportComponent,
     StudentStatusImportComponent,
     ScheduleComponent,
-    StudentEditComponent
+    StudentEditComponent,
+    KpiConfigEditComponent
   ],
   providers: [
     NgxMaterialTimepickerModule,

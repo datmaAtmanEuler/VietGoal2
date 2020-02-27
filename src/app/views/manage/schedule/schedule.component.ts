@@ -307,10 +307,10 @@ export class ScheduleComponent implements OnInit {
 
             if(_this.searchYearsCtrl && _this.searchYearsCtrl.value && _this.searchYearsCtrl.value.title) {
                 _this.utilsService.yearsList(_this.searchYearsCtrl.value.value, 2).subscribe((r2: any) => {
-                    _this.searchYearsCtrl.setValue({ value: r2[0].value, title: _this.translate.instant(r2[0].title) });
+                    _this.searchYearsCtrl.setValue({ value: r2[0].value, title: _this.translate.instant('MESSAGE.NameList.Year') + ' ' + r2[0].title });
                 });
             }
-
+            
             if(_this.searchWeeksCtrl && _this.searchWeeksCtrl.value && _this.searchWeeksCtrl.value.title) {
                 _this.utilsService.weekNumberList(_this.searchWeeksCtrl.value.value, 2).subscribe((r3: any) => {
                     _this.searchWeeksCtrl.setValue({ value: r3[0].value, title: _this.translate.instant(r3[0].title) });
@@ -417,6 +417,7 @@ export class ScheduleComponent implements OnInit {
   
   changeYear(yearValue: number){
     this.scheduleFilter.year = yearValue;
+    this.searchYearsCtrl.setValue({ value: this.searchYearsCtrl.value.value, title: this.translate.instant('MESSAGE.NameList.Year') + ' ' + this.searchYearsCtrl.value.title });
   }
 
   displayWeekFn(week: any): string {

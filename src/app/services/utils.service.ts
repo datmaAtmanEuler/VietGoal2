@@ -112,7 +112,7 @@ export class UtilsService {
     return 0 | inputDate.getDate() / 7;
   }
 
-  dayInWeekList(value: any, type: number | null = 1): Observable<any[]> {
+  dayInWeekList(value?: any, type: number | null = 1): Observable<any[]> {
     if(type == 1) {
        return of([
           {value: 1, title: "DATEFORMAT.DAYORDERINWEEK.Monday"},

@@ -4,49 +4,17 @@
       <div class="col-lg-12 col-md-12">
         <div class="card">
           <div class="card-header card-header-warning" style="background: #023a54">
-            <h4 class="card-title">{{ "MESSAGE.NameList.StudentAtendanceOverRange" | translate }}</h4>
+            <h4 class="card-title">{{ "MESSAGE.NameList.StudentAttendanceOverRangeAdd" | translate }}</h4>
+            <a class="nav-link special back-to-list-btn" [routerLink]="'/quanly/diemdanhhocvienngoai'" title="Trở về danh sách">
+              <i class="material-icons">arrow_back</i>
+            </a>
           </div>
           <div class="row">
             <div class="col-12">
               <div class="card-body">
                 <div class="row">
-                  <div class="col-sm-12 search-form">
-                    <div class="row">
-                      <!-- <div class="offset-4 col-8 input-group form-sm "> -->
-                      <div class="offset-6 col-6 input-group form-sm ">
-                        <!-- <button class="btn btn-vietgoal btn-sm mr-2" (click)="openImport()">Import</button>
-                        <button class="btn btn-primary btn-sm mr-2" (click)="downloadTemplate()">Mẫu Import</button> -->
-                        <button class="btn btn-success btn-sm mr-2" (click)="add()">
-                          {{ 'MESSAGE.NameList.Create' | translate}}
-                        </button>
-                        <button class="btn btn-vietgoal btn-sm mr-2" (click)="searchAdvanced = !searchAdvanced">
-                          {{ 'MESSAGE.NameList.SearchAdvanced' | translate}}
-                        </button>
-                        <input [(ngModel)]="searchTerm" class="form-control" type="text"
-                          placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                        <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
-                          class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
-                          <i class="material-icons">search</i>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row" *ngIf="searchAdvanced">
                   <div class="form-body col-sm-12">
                     <div class="row form-group">
-                      <div class="offset-2 col-4">
-                        <label class="m-0">{{ "MESSAGE.NameList.Day" | translate }}</label>
-                        <mat-form-field>
-                          <input matInput [disabled]="true" (dateChange)="addedDateEvent($event)" [matDatepicker]="addedDateFilter" class="col-sm-3 form-control">
-                          <span mat-raised-button (click)="addedDateFilter.open()"
-                            class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
-                            <i class="material-icons">date_range</i>
-                          </span>
-                          <!-- <mat-datepicker-toggle matSuffix [for]="addedDateFilter"></mat-datepicker-toggle> -->
-                          <mat-datepicker #addedDateFilter disabled="false"></mat-datepicker>
-                        </mat-form-field>
-                      </div>
                       <div class="col-4">
                         <label class="m-0">{{ "MESSAGE.NameList.Area" | translate }}</label>
                         <input type="text" class=" form-control" [matAutocomplete]="areaAC"
@@ -64,11 +32,7 @@
                           </ng-container>
                         </mat-autocomplete>
                       </div>
-                    </div>
-                  </div>
-                  <div class="form-body col-sm-12">
-                    <div class="row form-group">
-                      <div class="offset-2 col-4">
+                      <div class="col-4">
                         <label class="m-0">{{ "MESSAGE.NameList.Yard" | translate }}</label>
                         <input type="text" class=" form-control" [matAutocomplete]="yardAC"
                           [formControl]="searchYardsCtrl">
@@ -101,6 +65,9 @@
                             </mat-option>
                           </ng-container>
                         </mat-autocomplete>
+                        <button class="btn btn-vietgoal btn-sm" id="btn-search-student" (click)="reload()">
+                          {{ 'MESSAGE.NameList.Search' | translate }}
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -130,25 +97,20 @@
                       </ng-container>
                     </thead>
                     <tbody>
-                      <ng-container *ngFor="let studentatendanceoverrange of StudentAtendanceOverRangeList; let i = index;">
+                      <ng-container *ngFor="let studentattendanceoverrangeadd of StudentAttendanceOverRangeAddList; let i = index;">
                         <tr>
                           <td>{{ firstRowOnPage + i }}</td>
                           <ng-container
                               *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
                               <td
                                   *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
-                                  {{ utilsService.getColumnValue(studentatendanceoverrange, colIndex, paginationSettings.columnsNameMapping) }}
+                                  {{ utilsService.getColumnValue(studentattendanceoverrangeadd, colIndex, paginationSettings.columnsNameMapping) }}
                               </td>
                           </ng-container>
                           <td class="my-action-item">
-                            <button type="button" (click)="edit(studentatendanceoverrange.id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}"
-                              class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" (click)="remove(studentatendanceoverrange.id)"
-                              title="{{ 'MESSAGE.NameList.Delete' | translate}}"
-                              class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
-                              <i class="material-icons">close</i>
+                            <button class="btn btn-vietgoal btn-sm" (click)="select(studentattendanceoverrangeadd.id)">
+                              <!-- {{ 'MESSAGE.NameList.Select' | translate }} -->
+                              Chọn
                             </button>
                           </td>
                         </tr>

@@ -6,7 +6,7 @@ import { environment } from 'environments/environment';
 @Injectable({
     providedIn: 'root'
 })
-export class StudentAtendanceOverRangeService {
+export class StudentAttendanceOverRangeService {
     httpOptions = { 
           headers: new HttpHeaders({  
             'Content-Type': 'application/json; charset=utf-8'  
@@ -21,13 +21,7 @@ export class StudentAtendanceOverRangeService {
     }
     
 
-    put(model: any): Observable<any> {
-        return this.http.put(environment.serverUrl + `StudentAttendanceOverRanges/${model.id}`, model, this.httpOptions);
+    put(list: any, classid: any, absentDate: any ): Observable<any> {
+        return this.http.put(environment.serverUrl + `StudentAttendanceOverRanges/${classid}/${absentDate}`, list, this.httpOptions);
     }
 }
-//absentDate
-//classId
-//pageIndex
-//pageSize
-//sortName
-//sortDirection

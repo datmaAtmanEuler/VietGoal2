@@ -40,13 +40,14 @@ export const ROUTES: RouteInfo[] = [
       { path: '/quanly/thoikhoabieu', title: 'MESSAGE.NameList.Schedule', icon: '', class: '' },
       { path: '/quanly/class', title: 'MESSAGE.NameList.ClassManagement', icon: '', class: '' },
       { path: '/quanly/decentralize-user', title: 'MESSAGE.NameList.DecentralizeUser', icon: '', class: '' },
-      { path: '/quanly/ngaynghi', title: 'MESSAGE.NameList.CoachAbsent', icon: '', class: '' },
       { path: '/quanly/recruit-student', title: 'Danh sách học sinh chiêu sinh', icon: '', class: '' },
       { path: '/quanly/decentralize-data', title: 'MESSAGE.NameList.DataDecentralization', icon: '', class: '' },
       { path: '/quanly/nghiphep', title: 'MESSAGE.NameList.CoachAbsent', icon: '', class: '' },
       { path: '/quanly/schedule', title: 'MESSAGE.NameList.Schedule', icon: '', class: '' },
       { path: '/quanly/hosohocsinh', title: 'MESSAGE.NameList.StudentProfile', icon: '', class: '' },
-      { path: '/quanly/dangky-hocsinh', title: 'Danh sách học sinh đăng ký', icon: '', class: '' }
+      { path: '/quanly/dangky-hocsinh', title: 'Danh sách học sinh đăng ký', icon: '', class: '' },
+      { path: '/quanly/diemdanhhocvienngoai', title: 'Điểm danh học viên ngoài', icon: '', class: '' },
+      { path: '/quanly/diemdanhhocvien', title: 'Điểm danh học viên', icon: '', class: '' }
     ]
   },
 ];

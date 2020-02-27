@@ -274,7 +274,7 @@ export class CoachAbsentComponent implements OnInit {
     sortToggles(colIndex: number) {
     const _this= this;
         if(this.paginationSettings.sortAbles[colIndex]) 
-            this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles ,this.paginationSettings.sort , this.paginationSettings.columnsNameMapping)
+            this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles ,this.paginationSettings.sort , this.paginationSettings.columnsNameFilter)
               .then(() => {
                 _this.reload();
               });

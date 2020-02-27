@@ -45,9 +45,9 @@ import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recrui
 import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
-import { StudentAtendanceOverRangeComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange.component';
-import { StudentAtendanceOverRangeAddComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange-add/studentatendanceoverrange-add.component';
-import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/studentatendance.component';
+import { StudentAttendanceOverRangeComponent } from 'app/views/manage/studentattendanceoverrange/studentattendanceoverrange.component';
+import { StudentAttendanceOverRangeAddComponent } from 'app/views/manage/studentattendanceoverrange/studentattendanceoverrange-add/studentattendanceoverrange-add.component';
+import { StudentAttendanceComponent } from 'app/views/manage/studentattendance/studentattendance.component';
 import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
 import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 
@@ -405,15 +405,15 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'diemdanhhocvienngoai',
         children: [ {
-            path: '', component: StudentAtendanceOverRangeComponent
+            path: '', component: StudentAttendanceOverRangeComponent
         }
         ,
         {
-            path: 'add', component: StudentAtendanceOverRangeAddComponent
+            path: 'add/:classID', component: StudentAttendanceOverRangeAddComponent
         }
         ]
     },{
-        path: 'diemdanhhocvien', component: StudentAtendanceComponent
+        path: 'diemdanhhocvien', component: StudentAttendanceComponent
     }
     ]
 }

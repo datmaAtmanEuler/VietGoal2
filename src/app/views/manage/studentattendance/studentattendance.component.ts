@@ -12,12 +12,12 @@ import { finalize, switchMap, debounceTime, startWith, tap } from 'rxjs/operator
 import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
 
 @Component({
-  selector: 'app-studentatendanceoverrange-add',
-  templateUrl: './studentatendanceoverrange-add.component.html',
-  styleUrls: ['./studentatendanceoverrange-add.component.scss']
+  selector: 'app-studentattendance',
+  templateUrl: './studentattendance.component.html',
+  styleUrls: ['./studentattendance.component.scss']
 })
-export class StudentAtendanceOverRangeAddComponent implements OnInit {
-  StudentAtendanceOverRangeAddList: any[] = [];
+export class StudentAttendanceComponent implements OnInit {
+  StudentAttendanceList: any[] = [];
   filter: CommonFilter = new CommonFilter();
   searchAdvanced: boolean = false;
   pageSizesList: number[] = [5, 10, 20, 100];
@@ -26,21 +26,19 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
   firstRowOnPage: number;
   loading: boolean;
 
-  intoClassId: number;
 
   paginationSettings: any = {
     sort: new ASCSort(),
     sortToggles: [
       null,
       SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
-      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
-      null
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC
     ],
-    columnsName: ['Order', 'Mã học sinh', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Số thứ tự', 'Ngày nhập học', 'Ngày kết thúc học phần', 'Action'],
-    // columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'DisplayOrder', 'AdmissionDate', 'EndTermDate', 'Action'],
-    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7', 'field8', null],
-    sortAbles: [false, true, true, true, true, true, true, true, true, false],
-    visibles: [true, true, true, true, true, true, true, true, true, true]
+    columnsName: ['Order', 'Mã học sinh', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Vắng', 'Lý do'],
+    // columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'Absent', 'Reason'],
+    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7'],
+    sortAbles: [false, true, true, true, true, true, true, false],
+    visibles: [true, true, true, true, true, true, true, true]
   }
   constructor(public utilsService: UtilsService,
     private router: Router,
@@ -67,13 +65,23 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
     this.filtersEventsBinding();
   }
 
+  remove(id: any) {
+    // const _this = this;
+    // const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
+    // modalRef.componentInstance.confirmObject = 'StudentAttendance';
+    // modalRef.componentInstance.decide.subscribe(() => {
+    //   _this.service.delete(id).subscribe(() => {
+    //     _this.reload();
+    //   });
+    // });
+  }
   pageEvent(pageE: any) {
     this.filter.pageIndex = pageE.pageIndex + 1;
     this.filter.pageSize = pageE.pageSize;
     this.reload();
   }
   reload() {
-    this.StudentAtendanceOverRangeAddList = [
+    this.StudentAttendanceList = [
       {
         id: 1,
         field1: 1,
@@ -81,9 +89,8 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
         field3: 1,
         field4: 1,
         field5: 1,
-        field6: 1,
-        field7: 1,
-        field8: 1
+        field6: true,
+        field7: 'sdfdsfds'
       },
       {
         id: 2,
@@ -92,9 +99,8 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
         field3: 2,
         field4: 2,
         field5: 2,
-        field6: 2,
-        field7: 2,
-        field8: 2
+        field6: false,
+        field7: 'sdfdsfds'
       },
       {
         id: 3,
@@ -103,9 +109,8 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
         field3: 3,
         field4: 3,
         field5: 3,
-        field6: 3,
-        field7: 3,
-        field8: 3
+        field6: true,
+        field7: 'sdfdsfds'
       },
       {
         id: 4,
@@ -114,9 +119,8 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
         field3: 4,
         field4: 4,
         field5: 4,
-        field6: 4,
-        field7: 4,
-        field8: 4
+        field6: false,
+        field7: 'sdfdsfds'
       },
       {
         id: 5,
@@ -125,9 +129,8 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
         field3: 5,
         field4: 5,
         field5: 5,
-        field6: 5,
-        field7: 5,
-        field8: 5
+        field6: true,
+        field7: 'sdfdsfds'
       }
     ];
     this.Total = 10;
@@ -138,22 +141,20 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
     console.log('filter');
     console.log(this.filter);
     // this.loading = true;
-    // this.StudentAtendanceOverRangeAddList = [];
+    // this.StudentAttendanceList = [];
     // this.service.getList(this.filter).subscribe((response: any) => {
     //   const list = response.results ? response.results : [];
     //   this.Total = (response && response.rowCount) ? response.rowCount : 0;
     //   this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
     //   setTimeout(() => {
     //     this.loading = false;
-    //     this.StudentAtendanceOverRangeAddList = list || [];
+    //     this.StudentAttendanceList = list || [];
     //   }, 500);
     // });
   }
-  select(id){
-    alert(`chọn học viên id:${id} qua lớp id:${this.intoClassId}`)
-    this.router.navigate(['quanly/diemdanhhocvienngoai']);
+  save(){
+    console.log(this.StudentAttendanceList);
   }
-
 
   sortToggles(colIndex: number) {
     const _this = this;
@@ -165,7 +166,11 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
     else
       this.utilsService.doNothing();
   }
-
+  //Date Events
+  
+	addedDateEvent(event: MatDatepickerInputEvent<Date>) {
+		this.filter.addedDate = this.utilsService.stringDate(event.value);
+  }
   //load Autocomplete
 
   listareaes: any;
@@ -188,13 +193,13 @@ export class StudentAtendanceOverRangeAddComponent implements OnInit {
     return object && object.className && !object.notfound ? object.className : '';
   }
   changeArea(areaId){
-    // this.filter.areaId = areaId;
+    this.filter.areaId = areaId;
   }
   changeYard(yardId){
-    // this.filter.yardId = yardId;
+    this.filter.yardId = yardId;
   }
   changeClass(classId){
-    this.intoClassId = classId;
+    this.filter.classId = classId;
   }
   filtersEventsBinding() {
 

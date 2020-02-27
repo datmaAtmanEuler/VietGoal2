@@ -10,42 +10,47 @@ import { environment } from 'environments/environment';
 import { CommonFilter } from 'app/models/filter/commonfilter';
 import { finalize, switchMap, debounceTime, startWith, tap } from 'rxjs/operators';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
+import { StudentAttendanceOverRangeService } from 'app/services/manage/studentattendanceoverrange.service';
 
 @Component({
-  selector: 'app-studentatendanceoverrange',
-  templateUrl: './studentatendanceoverrange.component.html',
-  styleUrls: ['./studentatendanceoverrange.component.scss']
+  selector: 'app-studentattendanceoverrange-add',
+  templateUrl: './studentattendanceoverrange-add.component.html',
+  styleUrls: ['./studentattendanceoverrange-add.component.scss']
 })
-export class StudentAtendanceOverRangeComponent implements OnInit {
-  StudentAtendanceOverRangeList: any[] = [];
+export class StudentAttendanceOverRangeAddComponent implements OnInit {
+  StudentAttendanceOverRangeAddList: any[] = [];
+  studentAttendance
   filter: CommonFilter = new CommonFilter();
-  searchTerm: string = '';
   searchAdvanced: boolean = false;
   pageSizesList: number[] = [5, 10, 20, 100];
   currentUser: any;
   Total: number;
+  classID: number;
   firstRowOnPage: number;
   loading: boolean;
 
+  intoClassId: number;
 
   paginationSettings: any = {
     sort: new ASCSort(),
     sortToggles: [
       null,
       SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
       null
     ],
-    columnsName: ['Order', 'Họ tên', 'Ngày sinh', 'Từ lớp', 'Sang lớp', 'Action'],
-    // columnsName: ['Order', 'FullName', 'DateOfBirth', 'FromClass', 'ToClass', 'Action'],
-    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', null],
-    sortAbles: [false, true, true, true, true, false],
-    visibles: [true, true, true, true, true, true]
+    columnsName: ['Order', 'Mã học sinh', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Số thứ tự', 'Ngày nhập học', 'Ngày kết thúc học phần', 'Action'],
+    // columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'DisplayOrder', 'AdmissionDate', 'EndTermDate', 'Action'],
+    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7', 'field8', null],
+    sortAbles: [false, true, true, true, true, true, true, true, true, false],
+    visibles: [true, true, true, true, true, true, true, true, true, true]
   }
   constructor(public utilsService: UtilsService,
     private router: Router,
     config: NgbModalConfig,
     private modalService: NgbModal,
     private route: ActivatedRoute,
+    private service: StudentAttendanceOverRangeService,
     private http: HttpClient) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -59,6 +64,8 @@ export class StudentAtendanceOverRangeComponent implements OnInit {
     
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
+
+    this.classID = parseInt(this.route.snapshot.paramMap.get('classID'));
     
     this.filter.pageIndex = 1;
     this.filter.pageSize = this.pageSizesList[1];
@@ -66,111 +73,36 @@ export class StudentAtendanceOverRangeComponent implements OnInit {
     this.filtersEventsBinding();
   }
 
-  remove(id: any) {
-    // const _this = this;
-    // const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-    // modalRef.componentInstance.confirmObject = 'StudentAtendanceOverRange';
-    // modalRef.componentInstance.decide.subscribe(() => {
-    //   _this.service.delete(id).subscribe(() => {
-    //     _this.reload();
-    //   });
-    // });
-  }
   pageEvent(pageE: any) {
     this.filter.pageIndex = pageE.pageIndex + 1;
     this.filter.pageSize = pageE.pageSize;
     this.reload();
   }
   reload() {
-    this.StudentAtendanceOverRangeList = [
-      {
-        id: 1,
-        field1: 1,
-        field2: 1,
-        field3: 1,
-        field4: 1
-      },
-      {
-        id: 2,
-        field1: 2,
-        field2: 2,
-        field3: 2,
-        field4: 2
-      },
-      {
-        id: 3,
-        field1: 3,
-        field2: 3,
-        field3: 3,
-        field4: 3
-      },
-      {
-        id: 4,
-        field1: 4,
-        field2: 4,
-        field3: 4,
-        field4: 4
-      },
-      {
-        id: 5,
-        field1: 5,
-        field2: 5,
-        field3: 5,
-        field4: 5
-      }
-    ];
-    this.Total = 10;
-    this.firstRowOnPage = 1;
-
-    this.filter.searchTerm = this.searchTerm;
+    
     this.filter.sortName = this.paginationSettings.sort.SortName;
     this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
     console.log('filter');
     console.log(this.filter);
-    // this.loading = true;
-    // this.StudentAtendanceOverRangeList = [];
-    // this.service.getList(this.filter).subscribe((response: any) => {
-    //   const list = response.results ? response.results : [];
-    //   this.Total = (response && response.rowCount) ? response.rowCount : 0;
-    //   this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-    //   setTimeout(() => {
-    //     this.loading = false;
-    //     this.StudentAtendanceOverRangeList = list || [];
-    //   }, 500);
-    // });
+    if(this.classID) {
+      this.loading = true;
+      this.StudentAttendanceOverRangeAddList = [];
+      this.service.getList(this.filter).subscribe((response: any) => {
+        const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        setTimeout(() => {
+          this.loading = false;
+          this.StudentAttendanceOverRangeAddList = list || [];
+        }, 500);
+      });
+    }
   }
-  add() {
-    this.router.navigate(['quanly/diemdanhhocvienngoai/add']);
-  }
-
-  edit(StudentAtendanceOverRangeId: null | number) {
-    // const _this = this;
-    // const modalRef = this.modalService.open(StudentAtendanceOverRangeEditComponent, { size: 'xl' });
-    // modalRef.componentInstance.popup = true;
-    // modalRef.componentInstance.StudentAtendanceOverRangeId = StudentAtendanceOverRangeId;
-    // modalRef.componentInstance.classID = this.classID;
-    // modalRef.result.then(function (result) {
-    //   _this.reload();
-    // });
+  select(id){
+    alert(`chọn học viên id:${id} qua lớp id:${this.intoClassId}`)
+    this.router.navigate(['quanly/diemdanhhocvienngoai']);
   }
 
-  openImport() {
-    // const _this = this;
-    // const modalRef = this.modalService.open(StudentAtendanceOverRangeImportComponent, { size: 'lg' });
-    // modalRef.result.then(function(importModel: any){
-    //     console.log(importModel);
-    // });
-  }
-
-  downloadTemplate() {
-    // var fileName = 'Yards_Import.xlsx';
-    // var a = document.createElement('a');
-    // a.href = this.service.getTemplate(fileName);
-    // a.download = fileName;
-    // document.body.append(a);
-    // a.click();
-    // a.remove();
-  }
 
   sortToggles(colIndex: number) {
     const _this = this;
@@ -182,12 +114,7 @@ export class StudentAtendanceOverRangeComponent implements OnInit {
     else
       this.utilsService.doNothing();
   }
-  //Date Events
-  
-	addedDateEvent(event: MatDatepickerInputEvent<Date>) {
-		this.filter.addedDate = this.utilsService.stringDate(event.value);
-  }
-  
+
   //load Autocomplete
 
   listareaes: any;
@@ -210,13 +137,13 @@ export class StudentAtendanceOverRangeComponent implements OnInit {
     return object && object.className && !object.notfound ? object.className : '';
   }
   changeArea(areaId){
-    this.filter.areaId = areaId;
+    // this.filter.areaId = areaId;
   }
   changeYard(yardId){
-    this.filter.yardId = yardId;
+    // this.filter.yardId = yardId;
   }
   changeClass(classId){
-    this.filter.classId = classId;
+    this.intoClassId = classId;
   }
   filtersEventsBinding() {
 

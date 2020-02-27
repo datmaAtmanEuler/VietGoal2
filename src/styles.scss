@@ -267,7 +267,11 @@ footer{
     margin-top: unset!important;
     margin-bottom: unset!important;
 }
-.vietgoal-table-settings {
+
+.vietgoal-schedules-table-settings {
+    max-height: 450px !important;
+}
+.vietgoal-table-settings, .vietgoal-schedules-table-settings {
     overflow-y: auto;
     min-height: 200px;
     max-height: 300px;

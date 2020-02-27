@@ -10,15 +10,17 @@ import { environment } from 'environments/environment';
 import { CommonFilter } from 'app/models/filter/commonfilter';
 import { finalize, switchMap, debounceTime, startWith, tap } from 'rxjs/operators';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
+import { StudentAttendanceOverRangeService } from 'app/services/manage/studentattendanceoverrange.service';
 
 @Component({
-  selector: 'app-studentatendance',
-  templateUrl: './studentatendance.component.html',
-  styleUrls: ['./studentatendance.component.scss']
+  selector: 'app-studentattendanceoverrange',
+  templateUrl: './studentattendanceoverrange.component.html',
+  styleUrls: ['./studentattendanceoverrange.component.scss']
 })
-export class StudentAtendanceComponent implements OnInit {
-  StudentAtendanceList: any[] = [];
+export class StudentAttendanceOverRangeComponent implements OnInit {
+  StudentAttendanceOverRangeList: any[] = [];
   filter: CommonFilter = new CommonFilter();
+  searchTerm: string = '';
   searchAdvanced: boolean = false;
   pageSizesList: number[] = [5, 10, 20, 100];
   currentUser: any;
@@ -32,19 +34,20 @@ export class StudentAtendanceComponent implements OnInit {
     sortToggles: [
       null,
       SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
-      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC
+      null
     ],
-    columnsName: ['Order', 'Mã học sinh', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Vắng', 'Lý do'],
-    // columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'Absent', 'Reason'],
-    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7'],
-    sortAbles: [false, true, true, true, true, true, true, false],
-    visibles: [true, true, true, true, true, true, true, true]
+    columnsName: ['Order', 'Họ tên', 'Ngày sinh', 'Từ lớp', 'Sang lớp', 'Action'],
+    // columnsName: ['Order', 'FullName', 'DateOfBirth', 'FromClass', 'ToClass', 'Action'],
+    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', null],
+    sortAbles: [false, true, true, true, true, false],
+    visibles: [true, true, true, true, true, true]
   }
   constructor(public utilsService: UtilsService,
     private router: Router,
     config: NgbModalConfig,
     private modalService: NgbModal,
     private route: ActivatedRoute,
+    private service: StudentAttendanceOverRangeService,
     private http: HttpClient) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -68,7 +71,7 @@ export class StudentAtendanceComponent implements OnInit {
   remove(id: any) {
     // const _this = this;
     // const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-    // modalRef.componentInstance.confirmObject = 'StudentAtendance';
+    // modalRef.componentInstance.confirmObject = 'StudentAttendanceOverRange';
     // modalRef.componentInstance.decide.subscribe(() => {
     //   _this.service.delete(id).subscribe(() => {
     //     _this.reload();
@@ -81,79 +84,61 @@ export class StudentAtendanceComponent implements OnInit {
     this.reload();
   }
   reload() {
-    this.StudentAtendanceList = [
-      {
-        id: 1,
-        field1: 1,
-        field2: 1,
-        field3: 1,
-        field4: 1,
-        field5: 1,
-        field6: true,
-        field7: 'sdfdsfds'
-      },
-      {
-        id: 2,
-        field1: 2,
-        field2: 2,
-        field3: 2,
-        field4: 2,
-        field5: 2,
-        field6: false,
-        field7: 'sdfdsfds'
-      },
-      {
-        id: 3,
-        field1: 3,
-        field2: 3,
-        field3: 3,
-        field4: 3,
-        field5: 3,
-        field6: true,
-        field7: 'sdfdsfds'
-      },
-      {
-        id: 4,
-        field1: 4,
-        field2: 4,
-        field3: 4,
-        field4: 4,
-        field5: 4,
-        field6: false,
-        field7: 'sdfdsfds'
-      },
-      {
-        id: 5,
-        field1: 5,
-        field2: 5,
-        field3: 5,
-        field4: 5,
-        field5: 5,
-        field6: true,
-        field7: 'sdfdsfds'
-      }
-    ];
-    this.Total = 10;
-    this.firstRowOnPage = 1;
-
+    
+    this.filter.searchTerm = this.searchTerm;
     this.filter.sortName = this.paginationSettings.sort.SortName;
     this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
     console.log('filter');
     console.log(this.filter);
-    // this.loading = true;
-    // this.StudentAtendanceList = [];
-    // this.service.getList(this.filter).subscribe((response: any) => {
-    //   const list = response.results ? response.results : [];
-    //   this.Total = (response && response.rowCount) ? response.rowCount : 0;
-    //   this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-    //   setTimeout(() => {
-    //     this.loading = false;
-    //     this.StudentAtendanceList = list || [];
-    //   }, 500);
+    if(this.filter.classId) {
+      this.loading = true;
+      this.StudentAttendanceOverRangeList = [];
+      this.service.getList(this.filter).subscribe((response: any) => {
+        const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+        setTimeout(() => {
+          this.loading = false;
+          this.StudentAttendanceOverRangeList = list || [];
+          this.filter.classId = undefined;
+        }, 500);
+      });
+      
+    }
+  }
+  add() {
+    if(this.filter.classId) {
+      this.router.navigate(['quanly/diemdanhhocvienngoai/add/'+this.filter.classId]);
+    }
+  }
+
+  edit(StudentAttendanceOverRangeId: null | number) {
+    // const _this = this;
+    // const modalRef = this.modalService.open(StudentAttendanceOverRangeEditComponent, { size: 'xl' });
+    // modalRef.componentInstance.popup = true;
+    // modalRef.componentInstance.StudentAttendanceOverRangeId = StudentAttendanceOverRangeId;
+    // modalRef.componentInstance.classID = this.classID;
+    // modalRef.result.then(function (result) {
+    //   _this.reload();
     // });
   }
-  save(){
-    console.log(this.StudentAtendanceList);
+
+  openImport() {
+    // const _this = this;
+    // const modalRef = this.modalService.open(StudentAttendanceOverRangeImportComponent, { size: 'lg' });
+    // modalRef.result.then(function(importModel: any){
+    //     console.log(importModel);
+    // });
+  }
+
+  downloadTemplate() {
+    // var fileName = 'Yards_Import.xlsx';
+    // var a = document.createElement('a');
+    // a.href = this.service.getTemplate(fileName);
+    // a.download = fileName;
+    // document.body.append(a);
+    // a.click();
+    // a.remove();
   }
 
   sortToggles(colIndex: number) {
@@ -171,6 +156,7 @@ export class StudentAtendanceComponent implements OnInit {
 	addedDateEvent(event: MatDatepickerInputEvent<Date>) {
 		this.filter.addedDate = this.utilsService.stringDate(event.value);
   }
+  
   //load Autocomplete
 
   listareaes: any;
@@ -193,10 +179,10 @@ export class StudentAtendanceComponent implements OnInit {
     return object && object.className && !object.notfound ? object.className : '';
   }
   changeArea(areaId){
-    this.filter.areaId = areaId;
+    // this.filter.areaId = areaId;
   }
   changeYard(yardId){
-    this.filter.yardId = yardId;
+    // this.filter.yardId = yardId;
   }
   changeClass(classId){
     this.filter.classId = classId;

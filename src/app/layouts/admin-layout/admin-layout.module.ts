@@ -101,10 +101,10 @@ import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recrui
 import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
-import { StudentAtendanceOverRangeComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange.component';
-import { StudentAtendanceOverRangeAddComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange-add/studentatendanceoverrange-add.component';
+import { StudentAttendanceOverRangeComponent } from 'app/views/manage/studentattendanceoverrange/studentattendanceoverrange.component';
+import { StudentAttendanceOverRangeAddComponent } from 'app/views/manage/studentattendanceoverrange/studentattendanceoverrange-add/studentattendanceoverrange-add.component';
 import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
-import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/studentatendance.component';
+import { StudentAttendanceComponent } from 'app/views/manage/studentattendance/studentattendance.component';
 import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
 import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 import { StudentRegistrationImportComponent } from 'app/views/manage/student-registration/student-registration-import/student-registration-import.component';
@@ -207,10 +207,10 @@ import { StudentRegistrationImportComponent } from 'app/views/manage/student-reg
     RecruitStudentEditComponent,
     StudentComponent,
     StudentEditComponent,
-    StudentAtendanceOverRangeComponent,
-    StudentAtendanceOverRangeAddComponent,
+    StudentAttendanceOverRangeComponent,
+    StudentAttendanceOverRangeAddComponent,
     RecruitStudentImportComponent,
-    StudentAtendanceComponent,
+    StudentAttendanceComponent,
     RecruitStudentImportComponent,
     RecruitStudentImportComponent,
     StudentRegistrationImportComponent,

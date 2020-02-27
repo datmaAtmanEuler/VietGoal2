@@ -45,8 +45,9 @@ import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recrui
 import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
-import { GomuComponent } from 'app/views/manage/gomu/gomu.component';
-import { GomuAddComponent } from 'app/views/manage/gomu/gomu-add/gomu-add.component';
+import { StudentAtendanceOverRangeComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange.component';
+import { StudentAtendanceOverRangeAddComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange-add/studentatendanceoverrange-add.component';
+import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/studentatendance.component';
 import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
 import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 
@@ -404,14 +405,16 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'diemdanhhocvienngoai',
         children: [ {
-            path: '', component: GomuComponent
+            path: '', component: StudentAtendanceOverRangeComponent
         }
         ,
         {
-            path: 'add', component: GomuAddComponent
+            path: 'add', component: StudentAtendanceOverRangeAddComponent
         }
         ]
-    },
+    },{
+        path: 'diemdanhhocvien', component: StudentAtendanceComponent
+    }
     ]
 }
 

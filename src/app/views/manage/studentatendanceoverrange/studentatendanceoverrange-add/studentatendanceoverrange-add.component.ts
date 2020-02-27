@@ -12,14 +12,13 @@ import { finalize, switchMap, debounceTime, startWith, tap } from 'rxjs/operator
 import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
 
 @Component({
-  selector: 'app-gomu',
-  templateUrl: './gomu.component.html',
-  styleUrls: ['./gomu.component.scss']
+  selector: 'app-studentatendanceoverrange-add',
+  templateUrl: './studentatendanceoverrange-add.component.html',
+  styleUrls: ['./studentatendanceoverrange-add.component.scss']
 })
-export class GomuComponent implements OnInit {
-  GomuList: any[] = [];
+export class StudentAtendanceOverRangeAddComponent implements OnInit {
+  StudentAtendanceOverRangeAddList: any[] = [];
   filter: CommonFilter = new CommonFilter();
-  searchTerm: string = '';
   searchAdvanced: boolean = false;
   pageSizesList: number[] = [5, 10, 20, 100];
   currentUser: any;
@@ -27,19 +26,21 @@ export class GomuComponent implements OnInit {
   firstRowOnPage: number;
   loading: boolean;
 
+  intoClassId: number;
 
   paginationSettings: any = {
     sort: new ASCSort(),
     sortToggles: [
       null,
       SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
       null
     ],
-    columnsName: ['Order', 'Họ tên', 'Ngày sinh', 'Từ lớp', 'Sang lớp', 'Action'],
-    // columnsName: ['Order', 'FullName', 'DateOfBirth', 'FromClass', 'ToClass', 'Action'],
-    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', null],
-    sortAbles: [false, true, true, true, true, false],
-    visibles: [true, true, true, true, true, true]
+    columnsName: ['Order', 'Mã học sinh', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Số thứ tự', 'Ngày nhập học', 'Ngày kết thúc học phần', 'Action'],
+    // columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'DisplayOrder', 'AdmissionDate', 'EndTermDate', 'Action'],
+    columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', 'field5', 'field6', 'field7', 'field8', null],
+    sortAbles: [false, true, true, true, true, true, true, true, true, false],
+    visibles: [true, true, true, true, true, true, true, true, true, true]
   }
   constructor(public utilsService: UtilsService,
     private router: Router,
@@ -66,111 +67,93 @@ export class GomuComponent implements OnInit {
     this.filtersEventsBinding();
   }
 
-  remove(id: any) {
-    // const _this = this;
-    // const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-    // modalRef.componentInstance.confirmObject = 'Gomu';
-    // modalRef.componentInstance.decide.subscribe(() => {
-    //   _this.service.delete(id).subscribe(() => {
-    //     _this.reload();
-    //   });
-    // });
-  }
   pageEvent(pageE: any) {
     this.filter.pageIndex = pageE.pageIndex + 1;
     this.filter.pageSize = pageE.pageSize;
     this.reload();
   }
   reload() {
-    this.GomuList = [
+    this.StudentAtendanceOverRangeAddList = [
       {
         id: 1,
         field1: 1,
         field2: 1,
         field3: 1,
-        field4: 1
+        field4: 1,
+        field5: 1,
+        field6: 1,
+        field7: 1,
+        field8: 1
       },
       {
         id: 2,
         field1: 2,
         field2: 2,
         field3: 2,
-        field4: 2
+        field4: 2,
+        field5: 2,
+        field6: 2,
+        field7: 2,
+        field8: 2
       },
       {
         id: 3,
         field1: 3,
         field2: 3,
         field3: 3,
-        field4: 3
+        field4: 3,
+        field5: 3,
+        field6: 3,
+        field7: 3,
+        field8: 3
       },
       {
         id: 4,
         field1: 4,
         field2: 4,
         field3: 4,
-        field4: 4
+        field4: 4,
+        field5: 4,
+        field6: 4,
+        field7: 4,
+        field8: 4
       },
       {
         id: 5,
         field1: 5,
         field2: 5,
         field3: 5,
-        field4: 5
+        field4: 5,
+        field5: 5,
+        field6: 5,
+        field7: 5,
+        field8: 5
       }
     ];
     this.Total = 10;
     this.firstRowOnPage = 1;
 
-    this.filter.searchTerm = this.searchTerm;
     this.filter.sortName = this.paginationSettings.sort.SortName;
     this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
     console.log('filter');
     console.log(this.filter);
     // this.loading = true;
-    // this.GomuList = [];
+    // this.StudentAtendanceOverRangeAddList = [];
     // this.service.getList(this.filter).subscribe((response: any) => {
     //   const list = response.results ? response.results : [];
     //   this.Total = (response && response.rowCount) ? response.rowCount : 0;
     //   this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
     //   setTimeout(() => {
     //     this.loading = false;
-    //     this.GomuList = list || [];
+    //     this.StudentAtendanceOverRangeAddList = list || [];
     //   }, 500);
     // });
   }
-  add() {
-    this.router.navigate(['quanly/diemdanhhocvienngoai/add']);
+  select(id){
+    alert(`chọn học viên id:${id} qua lớp id:${this.intoClassId}`)
+    this.router.navigate(['quanly/diemdanhhocvienngoai']);
   }
 
-  edit(GomuId: null | number) {
-    // const _this = this;
-    // const modalRef = this.modalService.open(GomuEditComponent, { size: 'xl' });
-    // modalRef.componentInstance.popup = true;
-    // modalRef.componentInstance.GomuId = GomuId;
-    // modalRef.componentInstance.classID = this.classID;
-    // modalRef.result.then(function (result) {
-    //   _this.reload();
-    // });
-  }
-
-  openImport() {
-    // const _this = this;
-    // const modalRef = this.modalService.open(GomuImportComponent, { size: 'lg' });
-    // modalRef.result.then(function(importModel: any){
-    //     console.log(importModel);
-    // });
-  }
-
-  downloadTemplate() {
-    // var fileName = 'Yards_Import.xlsx';
-    // var a = document.createElement('a');
-    // a.href = this.service.getTemplate(fileName);
-    // a.download = fileName;
-    // document.body.append(a);
-    // a.click();
-    // a.remove();
-  }
 
   sortToggles(colIndex: number) {
     const _this = this;
@@ -182,12 +165,7 @@ export class GomuComponent implements OnInit {
     else
       this.utilsService.doNothing();
   }
-  //Date Events
-  
-	addedDateEvent(event: MatDatepickerInputEvent<Date>) {
-		this.filter.addedDate = this.utilsService.stringDate(event.value);
-  }
-  
+
   //load Autocomplete
 
   listareaes: any;
@@ -210,13 +188,13 @@ export class GomuComponent implements OnInit {
     return object && object.className && !object.notfound ? object.className : '';
   }
   changeArea(areaId){
-    this.filter.areaId = areaId;
+    // this.filter.areaId = areaId;
   }
   changeYard(yardId){
-    this.filter.yardId = yardId;
+    // this.filter.yardId = yardId;
   }
   changeClass(classId){
-    this.filter.classId = classId;
+    this.intoClassId = classId;
   }
   filtersEventsBinding() {
 

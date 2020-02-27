@@ -130,7 +130,8 @@ export class ClassComponent implements OnInit {
           )
         )
       )
-      .subscribe(data => {
+      .subscribe((response: any) => {
+        const data = response.results;
         if (data == undefined) {
           this.areasList = [{ notfound: 'Not Found' }];
         } else {
@@ -153,7 +154,8 @@ export class ClassComponent implements OnInit {
         )
       )
     )
-      .subscribe(data => {
+      .subscribe((response: any) => {
+        const data = response.results;
         if (data == undefined) {
           this.yardsList = [{ notfound: 'Not Found' }];
         } else {

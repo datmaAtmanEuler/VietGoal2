@@ -96,14 +96,14 @@ import { TrainingGroundImportComponent } from '../../views/list/trainingground/t
 import { UserGroupImportComponent } from '../../views/list/usergroups/usergroup-import/usergroup-import.component';
 import { YardImportComponent } from '../../views/list/yard/yard-import/yard-import.component';
 import { RecruitImportComponent } from '../../views/list/recruits/recruit-import/recruit-import.component';
-import { ApproveComponent } from 'app/views/manage/coachabsent/approve/approve.component';
 import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recruit-student.component';
 import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
-import { GomuComponent } from 'app/views/manage/gomu/gomu.component';
-import { GomuAddComponent } from 'app/views/manage/gomu/gomu-add/gomu-add.component';
+import { StudentAtendanceOverRangeComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange.component';
+import { StudentAtendanceOverRangeAddComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange-add/studentatendanceoverrange-add.component';
 import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
+import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/studentatendance.component';
 import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
 import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 import { StudentRegistrationImportComponent } from 'app/views/manage/student-registration/student-registration-import/student-registration-import.component';
@@ -206,8 +206,10 @@ import { StudentRegistrationImportComponent } from 'app/views/manage/student-reg
     RecruitStudentEditComponent,
     StudentComponent,
     StudentEditComponent,
-    GomuComponent,
-    GomuAddComponent,
+    StudentAtendanceOverRangeComponent,
+    StudentAtendanceOverRangeAddComponent,
+    RecruitStudentImportComponent,
+    StudentAtendanceComponent,
     RecruitStudentImportComponent,
     RecruitStudentImportComponent,
     StudentRegistrationImportComponent

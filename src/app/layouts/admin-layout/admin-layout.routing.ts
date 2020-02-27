@@ -319,7 +319,7 @@ export const AdminLayoutRoutes: Routes = [
     }
     ,
     {
-        path: 'schedule',
+        path: 'thoikhoabieu',
         children: [ 
             {
                 path: '', component: ScheduleComponent

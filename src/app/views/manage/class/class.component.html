@@ -19,9 +19,14 @@
                           <button class="btn btn-success btn-sm mr-2" (click)="add()">
                             {{ 'MESSAGE.NameList.Create' | translate}}
                           </button>
+
                           <button class="btn btn-vietgoal btn-sm mr-2" (click)="searchAdvanced = !searchAdvanced">
                             {{ 'MESSAGE.NameList.SearchAdvanced' | translate}}
                           </button>
+                          <button type="button" (click)="searchAdvanced = !searchAdvanced" title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                                          class="btn btn-primary search-button advanced-search-others btn-link btn-sm btn-just-icon">
+                                          <i class="material-icons advanced-search-btn">search</i>
+                                        </button>
                           <input [(ngModel)]="searchTerm" class="form-control" type="text"
                             placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
                           <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
@@ -34,78 +39,52 @@
                   </div>
                   <div class="row" *ngIf="searchAdvanced">
                     <div class="form-body col-sm-12">
-                      <div class="row form-group">
-                        <div class="offset-2 col-4">
-                          <label class="m-0">{{ "MESSAGE.NameList.Day" | translate }}</label>
-                          <mat-form-field>
-                            <input matInput [disabled]="true" (dateChange)="dateEvent('start',$event)" [min]="originMin"
-                              [max]="toDate" [matDatepicker]="startDateFilter" class="col-sm-3 form-control">
-                            <span mat-raised-button (click)="startDateFilter.open()"
-                              class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
-                              <i class="material-icons">date_range</i>
-                            </span>
-                            <!-- <mat-datepicker-toggle matSuffix [for]="startDateFilter"></mat-datepicker-toggle> -->
-                            <mat-datepicker #startDateFilter disabled="false"></mat-datepicker>
-                          </mat-form-field>
+                      <div class="form-group row">
+                        <label
+                            class="col-1 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
+                        <div class="col-2 label-middling">
+                            <input class="form-control"
+                                placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
+                                [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
                         </div>
-                        <div class="col-4">
-                          <label class="m-0">&nbsp;</label>
-                          <mat-form-field>
-                            <input matInput [disabled]="true" (dateChange)="dateEvent('end',$event)" [min]="fromDate"
-                              [max]="originMax" [matDatepicker]="endDateFilter" class="col-sm-3 form-control">
-                            <span mat-raised-button (click)="endDateFilter.open()"
-                              class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
-                              <i class="material-icons">date_range</i>
-                            </span>
-                            <mat-datepicker #endDateFilter disabled="false"></mat-datepicker>
-                          </mat-form-field>
-                        </div>
+                        <mat-autocomplete #areaAC="matAutocomplete"
+                            (optionSelected)="changeArea(searchAreasCtrl.value.id)"
+                            [displayWith]="displayAreaFn">
+                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                <mat-spinner></mat-spinner>
+                            </mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let area of areasList" [value]="area">
+                                  <span *ngIf="!area.notfound">{{area.areaName}}</span>
+                                  <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-1 label-middling"><strong>{{'MESSAGE.NameList.Yard' | translate}}:</strong></label>
+                      <div class="col-2 label-middling">
+                          <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' | translate}}"
+                              [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
                       </div>
+                      <mat-autocomplete #YardAC="matAutocomplete"
+                          (optionSelected)="changeYard(searchYardsCtrl.value.id)"
+                          [displayWith]="displayYardFn">
+                          <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                              <mat-spinner></mat-spinner>
+                          </mat-option>
+                          <ng-container *ngIf="!isLoading">
+                              <mat-option *ngFor="let yard of yardsList" [value]="yard">
+                                  <span *ngIf="yard">{{yard.yardName}}</span>
+                                      <span *ngIf="!yard.notfound" class="nofind">{{yard.notfound}}</span>
+                              </mat-option>
+                          </ng-container>
+                      </mat-autocomplete>
+                  </div>
+
                     </div>
                   </div>
-                  <div class="form-group row">
-                    <label
-                        class="col-1 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
-                    <div class="col-2 label-middling">
-                        <input class="form-control"
-                            placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
-                            [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
-                    </div>
-                    <mat-autocomplete #areaAC="matAutocomplete"
-                        (optionSelected)="changeArea(searchAreasCtrl.value.id)"
-                        [displayWith]="displayAreaFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let area of areasList" [value]="area">
-                                <span *ngIf="area">{{area.AreaName}}</span>
-                                <span *ngIf="!area.notfound" class="nofind">{{area.notfound}}</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-1 label-middling"><strong>{{'MESSAGE.NameList.Yard' | translate}}:</strong></label>
-                    <div class="col-2 label-middling">
-                        <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' | translate}}"
-                            [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
-                    </div>
-                    <mat-autocomplete #YardAC="matAutocomplete"
-                        (optionSelected)="changeYard(searchYardsCtrl.value.id)"
-                        [displayWith]="displayYardFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let yard of yardsList" [value]="yard">
-                                <span *ngIf="yard">{{yard.YardName}}</span>
-                                    <span *ngIf="!yard.notfound" class="nofind">{{yard.notfound}}</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
                 </div>
               </div>
             </div>

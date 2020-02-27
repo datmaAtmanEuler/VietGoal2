@@ -17,7 +17,7 @@ import { TranslateService } from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { FormControl } from '@angular/forms';
 
-import { startWith, map, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { startWith, map, debounceTime, tap, switchMap, finalize, filter } from 'rxjs/operators';
 import { from } from 'rxjs';
 
 declare var $: any;
@@ -123,7 +123,7 @@ export class ScheduleComponent implements OnInit {
         this.isLoading = true;
         this.schedulesList = [];
         setTimeout(() => {
-          this.schedulesList = this.service.getListScheduledemo();
+         this.service.getSchedulesList(filter).subscribe();
           this.isLoading = false;
         }, 500);
     };

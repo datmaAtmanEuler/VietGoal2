@@ -6,54 +6,6 @@ import { environment } from 'environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class ScheduleService {
-
-    getListScheduledemo(): any[]{
-        const arr = [
-            {
-                Area: 1,
-                Yard: 1,
-                Class: 1,
-                ClassDay: 'Monday',
-                YardArea: 'Monday',
-                Coach1: 'Monday',
-                Coach2: 'Monday',
-                Coach3: 'Monday',
-                RealCoach1: 'Monday',
-                RealCoach2: 'Monday',
-                RealCoach3: 'Monday',
-                ClassTime: '6h30'
-            },
-            {
-                Area: 1,
-                Yard: 1,
-                Class: 1,
-                ClassDay: 'Monday',
-                YardArea: 'Monday',
-                Coach1: 'Monday',
-                Coach2: 'Monday',
-                Coach3: 'Monday',
-                RealCoach1: 'Monday',
-                RealCoach2: 'Monday',
-                RealCoach3: 'Monday',
-                ClassTime: '6h30'
-            },
-            {
-                Area: 1,
-                Yard: 1,
-                Class: 1,
-                ClassDay: 'Monday',
-                YardArea: 'Monday',
-                Coach1: 'Monday',
-                Coach2: 'Monday',
-                Coach3: 'Monday',
-                RealCoach1: 'Monday',
-                RealCoach2: 'Monday',
-                RealCoach3: 'Monday',
-                ClassTime: '6h30'
-            }
-        ];
-        return arr;
-    }
     httpOptions = {
         headers: new HttpHeaders({
             'Content-Type': 'application/json; charset=utf-8'

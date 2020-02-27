@@ -46,7 +46,9 @@ export const ROUTES: RouteInfo[] = [
       { path: '/quanly/nghiphep', title: 'MESSAGE.NameList.CoachAbsent', icon: '', class: '' },
       { path: '/quanly/schedule', title: 'MESSAGE.NameList.Schedule', icon: '', class: '' },
       { path: '/quanly/hosohocsinh', title: 'MESSAGE.NameList.StudentProfile', icon: '', class: '' },
-      { path: '/quanly/dangky-hocsinh', title: 'Danh sách học sinh đăng ký', icon: '', class: '' }
+      { path: '/quanly/dangky-hocsinh', title: 'Danh sách học sinh đăng ký', icon: '', class: '' },
+      
+
     ]
   },
 ];

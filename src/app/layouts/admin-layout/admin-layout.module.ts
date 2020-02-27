@@ -104,6 +104,9 @@ import { StudentAtendanceOverRangeComponent } from 'app/views/manage/studentaten
 import { StudentAtendanceOverRangeAddComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange-add/studentatendanceoverrange-add.component';
 import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
 import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/studentatendance.component';
+import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
+import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
+import { StudentRegistrationImportComponent } from 'app/views/manage/student-registration/student-registration-import/student-registration-import.component';
 
 
 @NgModule({
@@ -133,6 +136,8 @@ import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/stu
     MatIconModule
   ],
   declarations: [
+    StudentRegistrationComponent,
+    StudentRegistrationEditComponent,
     ClassComponent,
     ClassEditComponent,
     CategoriesComponent,
@@ -204,11 +209,15 @@ import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/stu
     StudentAtendanceOverRangeComponent,
     StudentAtendanceOverRangeAddComponent,
     RecruitStudentImportComponent,
-    StudentAtendanceComponent
+    StudentAtendanceComponent,
+    RecruitStudentImportComponent,
+    RecruitStudentImportComponent,
+    StudentRegistrationImportComponent
     
   ],
   entryComponents: [
     ProvinceImportComponent,
+    StudentRegistrationImportComponent,
     CentralImportComponent,
     DistrictImportComponent,
     WardImportComponent,

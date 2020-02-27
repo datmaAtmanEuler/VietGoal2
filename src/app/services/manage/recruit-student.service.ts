@@ -22,20 +22,20 @@ export class RecruitStudentService {
 
     getRecruitStudentList(filter: any): Observable<any>  {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'Students?' + queryString , this.httpOptions);
+        return this.http.get(environment.serverUrl + 'Students?' + queryString , this.httpOptions);
     }
     
     getRecruitStudent(id: any): Observable<any>  {
-        return this.http.get(environment.apiUrl + `Students/${id}` , this.httpOptions);
+       
+        return this.http.get(environment.serverUrl + `StudentRecruits/${id}` , this.httpOptions);
     }
 
-    addOrUpdateRecruitStudent(student: RecruitStudent, by: null | number): Observable<any> {
-        if(student.id == 0) {
-            student.CreatedBy = by;
+    addOrUpdateRecruitStudent(student: RecruitStudent): Observable<any> {
+        if (student.id == 0) {
+            return this.http.post(environment.serverUrl + 'StudentRecruits', student, this.httpOptions);
         } else {
-            student.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `StudentRecruits/${student.id}`, student, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Students`, student, this.httpOptions);
     }
 
     deleteRecruitStudent(RecruitStudentId: number, deletedBy: number): Observable<any> {

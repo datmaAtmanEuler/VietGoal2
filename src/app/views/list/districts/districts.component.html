@@ -26,6 +26,7 @@
                                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
+                                        
                                         <ng-container *ngIf="!isLoading">
                                             <mat-option *ngFor="let province of provincesList" [value]="province">
                                                 <span *ngIf="!province.notfound">{{province.provinceName}}</span>

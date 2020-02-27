@@ -66,7 +66,7 @@ export class ClassEditComponent implements OnInit {
 	searchManagersCtrl = new FormControl();
 	searchMainCoachsCtrl = new FormControl();
 	searchViceCoachsCtrl = new FormControl();
-	aclass : Class = new Class (0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+	aclass : Class = new Class (0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,null);
 	isLoading = false;
 	errorMsg: string;
 
@@ -112,13 +112,13 @@ export class ClassEditComponent implements OnInit {
 
 
 	GetClassById(id: number) {
-		alert(id);
+		
 		this.classService.getClass((id) ? id : this.id).subscribe(
 			(aaclass) => {
-				this.aclass = aaclass || new Class(0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+				this.aclass = aaclass || new Class(0,'', '', 0,0,0,0,0,0,0,0,0,0,'',0,new Date(),null,null,null,null,null);
 			},
 			() => {
-				this.aclass = new Class(0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+				this.aclass = new Class(0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,null);
 			}
 		);
 	}

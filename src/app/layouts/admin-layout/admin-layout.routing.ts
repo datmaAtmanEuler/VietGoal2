@@ -48,6 +48,8 @@ import { StudentEditComponent } from 'app/views/manage/student/student-edit/stud
 import { StudentAtendanceOverRangeComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange.component';
 import { StudentAtendanceOverRangeAddComponent } from 'app/views/manage/studentatendanceoverrange/studentatendanceoverrange-add/studentatendanceoverrange-add.component';
 import { StudentAtendanceComponent } from 'app/views/manage/studentatendance/studentatendance.component';
+import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
+import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -338,6 +340,21 @@ export const AdminLayoutRoutes: Routes = [
         ,
         {
             path: 'edit', component: ClassEditComponent
+        }
+        ]
+    },
+    {
+        path: 'dangky-hocsinh',
+        children: [ {
+            path: '', component: StudentRegistrationComponent
+        }
+        ,
+        {
+            path: 'add', component: StudentRegistrationEditComponent
+        }
+        ,
+        {
+            path: 'edit', component: StudentRegistrationEditComponent
         }
         ]
     },

@@ -22,7 +22,7 @@ import { ProvinceService } from 'app/services/list/province.service';
 export class WardEditComponent implements OnInit, AfterViewInit {
 	@Input('popup') popup: boolean;
 	@Input('id') id: number;
-	@Input('Userid') Userid: null | number;
+	@Input('UserId') UserId: null | number;
 	ward: Ward = new Ward(0, '', '', 0,false, new Date(), null, 1, null, null, null);
 	listdistrict: any;
 	listprovince: any;

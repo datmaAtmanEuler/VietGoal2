@@ -16,7 +16,7 @@ import { YardFilter } from 'app/models/filter/yardfilter';
 import { RecruitStudent } from '../../../models/manage/recruit-student';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
-import { RecruitStudentEditComponent } from './recruit-student-edit/recruit-student-edit.component';
+import { StudentRegistrationEditComponent } from './student-registration-edit/student-registration-edit.component';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { AreaService } from 'app/services/list/area.service';
 import { RecruitStudentService } from 'app/services/manage/recruit-student.service';
@@ -29,14 +29,15 @@ import { ClassFilter } from 'app/models/filter/classfilter';
 import { ClassService } from 'app/services/manage/class.service';
 import { ClassField } from '@angular/compiler';
 import { RecruitStudentImportComponent } from '../recruit-student/recruit-student-import/recruit-student-import.component';
+import { StudentRegistrationImportComponent } from './student-registration-import/student-registration-import.component';
 
 
 @Component({
-  selector: 'app-recruit-student',
-  templateUrl: './recruit-student.component.html',
-  styleUrls: ['./recruit-student.component.scss']
+  selector: 'app-student-registration',
+  templateUrl: './student-registration.component.html',
+  styleUrls: ['./student-registration.component.scss']
 })
-export class RecruitStudentComponent implements OnInit {
+export class StudentRegistrationComponent implements OnInit {
   recruitstudentList: any[] = [];
   RecruitStudent: any;
   searchTerm:string = '';
@@ -78,13 +79,13 @@ export class RecruitStudentComponent implements OnInit {
     columnsName:  ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Result','Action'],
     columnsNameMapping:  ['id', 'parentsName', 'faceBook', 'email', 'phone', 'fullName','dayofBirth','address','result',''],
     columnsNameFilter: ['id', 'parentsName', 'faceBook', 'email', 'phone', 'fullName','dayofBirth','address','result',''],
-    sortAbles:  [false, true, true, true, false,false,true,false, false,false],
+    sortAbles:  [false, true, true, true, false,false,true,false,false, false],
     visibles: [true, true, true, true, true, true,true,true, true,true]
   }
   /**
    * END SORT SETTINGS
    */
-  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
+  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize,0,0, 0, 0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
   areafilter: AreaFilter = new AreaFilter('', this.pageIndex, this.pageSize, 0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection);
   yardfilter: YardFilter = new YardFilter('', this.pageIndex, this.pageSize, 0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection);
   classfilter: ClassFilter = new ClassFilter('', this.pageIndex, this.pageSize, 0,0,0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0);
@@ -120,8 +121,9 @@ export class RecruitStudentComponent implements OnInit {
       }
   }
   ngOnInit() {
-    this.reload();
+  
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.reload();
     this.filtersEventsBinding();
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
@@ -246,16 +248,17 @@ export class RecruitStudentComponent implements OnInit {
     });
   }
   pageEvent(variable: any) {
-    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
+    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize,0,0, 0, 0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
     this.reload();
   }
   reload() {
+    
     const _this = this;
-    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,null, 'id','ASC',0);
+    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize,0,0, 0, 0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
     this.loading = true;
-    this.recruitstudentList = [];
+    _this.recruitstudentList = [];
     this.service.getRecruitStudentList(filter).subscribe(
         (response: any) => {
           const list = response.results ? response.results : [];
@@ -272,15 +275,13 @@ export class RecruitStudentComponent implements OnInit {
         }
     );
   }
-
-
   add() {
     this.edit(null);
   }
 
   edit(RecruitStudentID: null | number) {
     const _this = this;
-    const modalRef = this.modalService.open(RecruitStudentEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(StudentRegistrationEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
     modalRef.componentInstance.RecruitStudentID = RecruitStudentID;
     modalRef.result.then(function (result) {
@@ -288,14 +289,14 @@ export class RecruitStudentComponent implements OnInit {
     });
   }
 
-  displayAreaFn(area): string {
-    return area && area.areaName && !area.notfound ? area.areaName : '';
+  displayAreaFn(user): string {
+    return user && user.AreaName && !user.notfound ? user.AreaName : '';
   }
-  displayYardFn(yard): string {
-    return yard && yard.yardName && !yard.notfound ? yard.yardName : '';
+  displayYardFn(user): string {
+    return user && user.YardName && !user.notfound ? user.YardName : '';
   }
-  displayTrainingGroundFn(train): string {
-    return train && train.traininggroundName && !train.notfound ? train.traininggroundName : '';
+  displayTrainingGroundFn(user): string {
+    return user && user.TraininggroundName && !user.notfound ? user.TraininggroundName : '';
   }
   changeArea(areaID: number) {
     this.yardfilter.AreaId = areaID;
@@ -327,7 +328,7 @@ export class RecruitStudentComponent implements OnInit {
 
   openImport() {
     const _this = this;
-    const modalRef = this.modalService.open(RecruitStudentImportComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(StudentRegistrationImportComponent, { size: 'lg' });
     modalRef.result.then(function(importModel: any){
         console.log(importModel);
     });

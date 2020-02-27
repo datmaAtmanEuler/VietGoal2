@@ -6,6 +6,8 @@ export class RecruitStudentFilter {
     SearchTerm: string = '';
     recruitDate: Date;
     trainingGroundId: null | number ;
+    studentId: number | null;
+    recruitId: number | null;
     areaId: null | number ;
     yardId: null | number ;
     classId: null | number ;
@@ -14,16 +16,18 @@ export class RecruitStudentFilter {
     SortDirection: string = SORD_DIRECTION.ASC;
 
     constructor(searchTerm: string, pageIndex: number, pageSize: number, 
-        trainingGroundId: null | number,areaId: null | number,yardId: null | number ,classId: null | number, recruitDate: Date, sN: string = 'id', sD: string = SORD_DIRECTION.ASC,
+        trainingGroundId: null | number, studentId: number | null ,recruitId: number | null ,areaId: null | number,yardId: null | number ,classId: null | number, recruitDate: Date, sN: string = 'id', sD: string = SORD_DIRECTION.ASC,
         approverId: null | number
         ) {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;
         this.PageSize = pageSize;
         this.trainingGroundId = trainingGroundId;
+        this.studentId = studentId;
         this.areaId = areaId;
         this.yardId = yardId;
         this.classId = classId;
+        this.recruitId = recruitId;
         this.recruitDate = recruitDate;
         this.approverId = approverId;
         this.SortName = sN;

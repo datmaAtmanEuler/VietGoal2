@@ -21,9 +21,8 @@ export class RecruitStudentService {
     }
 
     getRecruitStudentList(filter: any): Observable<any>  {
-       
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.serverUrl + 'StudentRecruits?' + queryString , this.httpOptions);
+        return this.http.get(environment.serverUrl + 'Students?' + queryString , this.httpOptions);
     }
     
     getRecruitStudent(id: any): Observable<any>  {

@@ -85,7 +85,7 @@ export class StudentRegistrationComponent implements OnInit {
   /**
    * END SORT SETTINGS
    */
-  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
+  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize,0,0, 0, 0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
   areafilter: AreaFilter = new AreaFilter('', this.pageIndex, this.pageSize, 0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection);
   yardfilter: YardFilter = new YardFilter('', this.pageIndex, this.pageSize, 0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection);
   classfilter: ClassFilter = new ClassFilter('', this.pageIndex, this.pageSize, 0,0,0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0);
@@ -248,7 +248,7 @@ export class StudentRegistrationComponent implements OnInit {
     });
   }
   pageEvent(variable: any) {
-    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
+    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize,0,0, 0, 0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
     this.reload();
@@ -256,7 +256,7 @@ export class StudentRegistrationComponent implements OnInit {
   reload() {
     
     const _this = this;
-    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize, 0, 0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
+    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize,0,0, 0, 0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
     this.loading = true;
     _this.recruitstudentList = [];
     this.service.getRecruitStudentList(filter).subscribe(

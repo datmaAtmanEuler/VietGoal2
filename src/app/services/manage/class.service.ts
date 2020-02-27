@@ -21,7 +21,6 @@ export class ClassService {
     }
 
     getClassList(filter: any): Observable<any>  {
-        
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
         return this.http.get(environment.serverUrl + 'Class?' + queryString , this.httpOptions);
     }

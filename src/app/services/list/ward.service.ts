@@ -22,6 +22,7 @@ export class WardService {
     getWardsList(filter: any): Observable<any> {
        let queryString = Object.keys(filter).map(key=>key + '=' + filter[key]).join('&');
        return this.http.get(environment.apiUrl + 'Wards?' + queryString , this.httpOptions);
+       
     }
     
     getWard(id: any): Observable<any> {

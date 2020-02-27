@@ -8,7 +8,7 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 import { ClassFilter } from 'app/models/filter/classfilter';
 import { FormControl } from '@angular/forms';
-import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { startWith, debounceTime, tap, switchMap, finalize, subscribeOn } from 'rxjs/operators';
 import { ProvinceService } from 'app/services/list/province.service';
 import { HttpClient } from '@angular/common/http';
 import { YardService } from 'app/services/list/yard.service';
@@ -128,7 +128,8 @@ export class ClassComponent implements OnInit {
           )
         )
       )
-      .subscribe(data => {
+      .subscribe((response: any) => {
+        const data = response.results;
         if (data == undefined) {
           this.areasList = [{ notfound: 'Not Found' }];
         } else {
@@ -151,7 +152,8 @@ export class ClassComponent implements OnInit {
         )
       )
     )
-      .subscribe(data => {
+      .subscribe((response: any) => {
+        const data = response.results;
         if (data == undefined) {
           this.yardsList = [{ notfound: 'Not Found' }];
         } else {
@@ -246,8 +248,8 @@ export class ClassComponent implements OnInit {
     return user && user.TraininggroundName && !user.notfound ? user.TraininggroundName : '';
   }
   changeArea(areaID: number) {
-    this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
-      this.yardsList = list;
+    this.yardService.getYardsList(new YardFilter('', 1, 100, areaID, 'Id', 'ASC')).subscribe((response:any) => {
+      this.yardsList = response.results;
       this.filter.AreaId = areaID;
       this.reload();
     });

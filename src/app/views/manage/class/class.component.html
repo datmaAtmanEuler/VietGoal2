@@ -79,7 +79,7 @@
                         </mat-option>
                         <ng-container *ngIf="!isLoading">
                             <mat-option *ngFor="let area of areasList" [value]="area">
-                                <span *ngIf="!area.notfound">{{area.AreaName}}</span>
+                                <span *ngIf="!area.notfound">{{area.areaName}}</span>
                                 <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
                             </mat-option>
                         </ng-container>
@@ -100,7 +100,7 @@
                         </mat-option>
                         <ng-container *ngIf="!isLoading">
                             <mat-option *ngFor="let yard of yardsList" [value]="yard">
-                                <span *ngIf="!yard.notfound">{{yard.AreaName}}</span>
+                                <span *ngIf="!yard.notfound">{{yard.yardName}}</span>
                                     <span *ngIf="yard.notfound" class="nofind">{{yard.notfound}}</span>
                             </mat-option>
                         </ng-container>

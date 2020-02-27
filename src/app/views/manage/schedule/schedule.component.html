@@ -99,18 +99,18 @@
                                         </mat-autocomplete>
                                       </div>
                                       <div class="col-3">
-                                        <label class="m-0">{{ "MESSAGE.NameList.DayOrderInWeek" | translate }}</label>
-                                        <input type="text" class="form-control" [matAutocomplete]="dayOrderInWeeksAC"
-                                          [formControl]="searchDayOrderInWeeksCtrl">
-                                        <mat-autocomplete #dayOrderInWeeksAC="matAutocomplete"
-                                          (optionSelected)="changeDayOrderInWeek(searchDayOrderInWeeksCtrl.value.value)" [displayWith]="displayDayOrderInWeekFn">
+                                        <label class="m-0">{{ "MESSAGE.NameList.Year" | translate }}</label>
+                                        <input type="text" class="form-control" [matAutocomplete]="yearsAC"
+                                          [formControl]="searchYearsCtrl">
+                                        <mat-autocomplete #yearsAC="matAutocomplete"
+                                          (optionSelected)="changeYear(searchYearsCtrl.value.value)" [displayWith]="displayYearFn">
                                           <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                             <mat-spinner></mat-spinner>
                                           </mat-option>
                                           <ng-container *ngIf="!isLoading">
-                                              <mat-option *ngFor="let dayOrderInWeek of dayOrderInWeeksList" [value]="dayOrderInWeek">
-                                                  <span *ngIf="!dayOrderInWeek.notfound">{{dayOrderInWeek.title | translate}}</span>
-                                                  <span *ngIf="dayOrderInWeek.notfound" class="nofind">{{dayOrderInWeek.notfound}}</span>
+                                              <mat-option *ngFor="let year of yearsList" [value]="year">
+                                                  <span *ngIf="!year.notfound">{{("MESSAGE.NameList.Year" | translate) + " " + year.title}}</span>
+                                                  <span *ngIf="year.notfound" class="nofind">{{year.notfound}}</span>
                                                 </mat-option>
                                             </ng-container>
                                         </mat-autocomplete>

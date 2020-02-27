@@ -50,8 +50,8 @@ export class ScheduleComponent implements OnInit {
         areaId: null,
         yardId: null,
         coachId: null,
-        dayOrderInWeek: null,
-        classTime: null,
+        shift: null,
+        year: null,
         month: null,
         week: null
     };
@@ -80,7 +80,7 @@ export class ScheduleComponent implements OnInit {
     classList: any[] = [];
     coachsList: any[] = [];
 
-    dayOrderInWeeksList: any[] = [];
+    yearsList: any[] = [];
     monthsList: any[] = [];
     weeksList: any[] = [];
 
@@ -89,7 +89,7 @@ export class ScheduleComponent implements OnInit {
     searchClassCtrl = new FormControl();
     searchCoachsCtrl = new FormControl();
 
-    searchDayOrderInWeeksCtrl = new FormControl();
+    searchYearsCtrl = new FormControl();
     searchMonthsCtrl = new FormControl();
     searchWeeksCtrl = new FormControl();
 
@@ -97,8 +97,6 @@ export class ScheduleComponent implements OnInit {
     totalYardPages: number = 0;
     totalClassPages: number = 0;
     totalCoachPages: number = 0;
-    
-
     
     constructor(public translate: TranslateService, private matCus: MatPaginatorIntl,config: NgbModalConfig,
         public utilsService: UtilsService,
@@ -118,7 +116,7 @@ export class ScheduleComponent implements OnInit {
         const now = new Date();
         this.scheduleFilter.classTime = now.getHours() + ':' + now.getMinutes();
         this.scheduleFilter.month = now.getMonth() + 1;
-        this.scheduleFilter.dayOrderInWeek = now.getDay() + 1;
+        this.scheduleFilter.year = now.getFullYear();
 
         this.isLoading = true;
         this.schedulesList = [];
@@ -232,14 +230,14 @@ export class ScheduleComponent implements OnInit {
             }
         });
 
-        this.searchDayOrderInWeeksCtrl.valueChanges.pipe(
+        this.searchYearsCtrl.valueChanges.pipe(
             startWith(''),
             debounceTime(500),
             tap(() => {
-              this.dayOrderInWeeksList = [];
+              this.yearsList = [];
               this.isLoading = true;
             }),
-            switchMap(value => this.utilsService.dayInWeekList((value && Object.keys(value).length > 1) ? value.value : value, (value && Object.keys(value).length > 1) ? 2 : 1)
+            switchMap(value => this.utilsService.yearsList((value && Object.keys(value).length > 1) ? value.value : value, (value && Object.keys(value).length > 1) ? 2 : 1)
               .pipe(
                 finalize(() => {
                   this.isLoading = false
@@ -248,9 +246,9 @@ export class ScheduleComponent implements OnInit {
             )
         ).subscribe((response: any) => {
             if (response == undefined || response.length < 1) {
-                this.yardsList = [{ notfound: 'Not Found' }];
+                this.yearsList = [{ notfound: 'Not Found' }];
             } else {
-                this.dayOrderInWeeksList = response && response.length ? response : [];
+                this.yearsList = response && response.length ? response : [];
             }
         });
 
@@ -307,9 +305,9 @@ export class ScheduleComponent implements OnInit {
                 });
             }
 
-            if(_this.searchDayOrderInWeeksCtrl && _this.searchDayOrderInWeeksCtrl.value && _this.searchDayOrderInWeeksCtrl.value.title) {
-                _this.utilsService.dayInWeekList(_this.searchDayOrderInWeeksCtrl.value.value, 2).subscribe((r2: any) => {
-                    _this.searchDayOrderInWeeksCtrl.setValue({ value: r2[0].value, title: _this.translate.instant(r2[0].title) });
+            if(_this.searchYearsCtrl && _this.searchYearsCtrl.value && _this.searchYearsCtrl.value.title) {
+                _this.utilsService.yearsList(_this.searchYearsCtrl.value.value, 2).subscribe((r2: any) => {
+                    _this.searchYearsCtrl.setValue({ value: r2[0].value, title: _this.translate.instant(r2[0].title) });
                 });
             }
 
@@ -413,13 +411,12 @@ export class ScheduleComponent implements OnInit {
       this.searchCoachsCtrl.enable({emitEvent: true});
   }
 
-  displayDayOrderInWeekFn(dayS: any): string {
-    return (dayS && dayS.title && !dayS.notfound) ? dayS.title : '';
+  displayYearFn(year: any): string {
+    return (year && year.title && !year.notfound) ? year.title : '';
   }
   
-  changeDayOrderInWeek(dayValue: number){
-    this.scheduleFilter.dayOrderInWeek = dayValue;
-    this.searchDayOrderInWeeksCtrl.setValue({ value: this.searchDayOrderInWeeksCtrl.value.value, title: this.translate.instant(this.searchDayOrderInWeeksCtrl.value.title) });
+  changeYear(yearValue: number){
+    this.scheduleFilter.year = yearValue;
   }
 
   displayWeekFn(week: any): string {

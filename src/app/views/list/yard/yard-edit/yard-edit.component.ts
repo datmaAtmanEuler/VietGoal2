@@ -19,18 +19,19 @@ import { from } from 'rxjs';
 
 export class YardEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('Id') Id: number;
+	@Input('id') id: number;
 	@Input('UserId') UserId: null | number;
 	centralList: any;
 	arealist: any;
 	searchCentralsCtrl = new FormControl();
 	searchAreasCtrl = new FormControl();
 	isLoading = false;
-	yard: Yard = new Yard (0,'', '', 0,0,null,'','','',true,null,null,null,0,0,0,0);
+	yard : any = {};
+	ayard : any = [];
 
-	constructor( config: NgbModalConfig, private modalService: NgbModal,public activeModal: NgbActiveModal, private centralService: CentralService, private santapService: YardService, private route: ActivatedRoute, private router: Router) {
-		this.Id = this.route.snapshot.queryParams['Id'];
-		this.Id = (this.Id) ? this.Id : 0;
+	constructor( config: NgbModalConfig, private modalService: NgbModal,public activeModal: NgbActiveModal, private centralService: CentralService, private yardService: YardService, private route: ActivatedRoute, private router: Router) {
+		this.id = this.route.snapshot.queryParams['id'];
+		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
@@ -43,26 +44,20 @@ export class YardEditComponent implements OnInit {
 		return user && user.AreaName && !user.notfound ? user.AreaName : '';
 	}
 	changeCentral(centralId){
-		this.centralService.getCentralsList(new CentralFilter('', 1, 100,null,null,null, '','ASC')).subscribe((list)=>{
+		this.centralService.getCentralsList(new CentralFilter('', 1, 100,centralId,null,null, '','ASC')).subscribe((list)=>{
 			this.arealist = list;
 		});
 	}
-	GeYardById(Id:number)  
-	{  
-		const _this = this;
-		this.centralService.getCentralsList(new CentralFilter('', 1, 100,null,null,null, '','ASC')).subscribe((ttList: Central[]) => {
-			_this.centralList = (ttList) ? ttList : [];
-			_this.santapService.getYard(Id).subscribe((yard: Yard) => {
-				_this.yard = yard;
-				if (_this.yard == null || _this.yard.Id==0) {
-					_this.yard =new Yard(0,'', '', 0,0,null,'','','',true,null,null,null,0,0,0,0);
-				}
+	GetYardById(id: number) {
+		alert(id);
+		this.yardService.getYard((id) ? id : this.id).subscribe(
+			(yard) => {
+				this.ayard = yard;
 			});	
-		  });
 	}
 	ngOnInit() {
 		
-		this.GeYardById(this.Id);  
+		this.GetYardById(this.id);  
 	}
 
 	ReturnList() {
@@ -71,22 +66,19 @@ export class YardEditComponent implements OnInit {
 	}
 
 	
-	UpdateYard() {
-		const _this = this;
-		this.santapService.addOrUpdateYard(_this.yard, _this.UserId).subscribe((result: any) => {
-			if (result) {
-				if(!_this.popup) {
-					_this.ReturnList();
+	Update() {
+		this.yardService.addOrUpdateYard(this.yard).subscribe(
+			() => {
+				if (!this.popup) {
+					this.ReturnList();
 				} else {
-					
-					_this.closeMe();
+					this.closeMe();
 				}
-			} else {
-				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
-			}
-		});
+			},
+			() => {
+				// this.modalService.open(ConfirmComponent, { size: 'lg' });
+			});
 	}
-
 	closeMe() {
 		this.activeModal.close();
 	}

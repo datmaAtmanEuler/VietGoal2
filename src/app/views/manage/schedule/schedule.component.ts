@@ -65,8 +65,8 @@ export class ScheduleComponent implements OnInit {
             SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
             null
         ],
-        columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'Coach1', 'Coach2', 'Coach3', 'RealCoach1', 'RealCoach2', 'RealCoach3', 'Action'],
-        columnsNameMapping: ['Id', 'Area', 'Yard', 'YardArea', 'Class', 'ClassDay', 'ClassTime', 'Coach1', 'Coach2', 'Coach3', 'RealCoach1', 'RealCoach2', 'RealCoach3', ''],
+        columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'MainCoach', 'ViceCoach', 'MainCoachReal', 'ViceCoachReal', 'Action'],
+        columnsNameMapping: ['Id', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'MainCoach', 'ViceCoach', 'MainCoachReal', 'ViceCoachReal', ''],
         sortAbles: [false, true, true, true, true, true, true, true, true, true, true, true, true, false],
         visibles: [true, true, true, true, true, true, true, true, true, true, true, true, true, true]
     }

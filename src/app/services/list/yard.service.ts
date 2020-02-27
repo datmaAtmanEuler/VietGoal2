@@ -27,14 +27,12 @@ export class YardService {
         return this.http.get(environment.apiUrl + `Yards/${id}` , this.httpOptions);
     }
 
-    addOrUpdateYard(yard: Yard, by: null | number): Observable<any> {
-        yard.DisplayOrder = parseInt(yard.DisplayOrder + '');
-        if (yard.Id != 0 && yard.Id) {
-            yard.UpdatedBy = by;
+    addOrUpdateYard(yard: Yard): Observable<any> {
+        if (yard.id == 0) {
+            return this.http.post(environment.serverUrl + 'Class', yard, this.httpOptions);
         } else {
-            yard.CreatedBy = by;
+            return this.http.put(environment.serverUrl + `Class/${yard.id}`, yard, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Yards`, yard, this.httpOptions);
     }
 
     deleteYard(id: number, deletedBy: number): Observable<any> {

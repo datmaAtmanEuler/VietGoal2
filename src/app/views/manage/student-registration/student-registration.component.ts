@@ -76,11 +76,10 @@ export class StudentRegistrationComponent implements OnInit {
       SORD_DIRECTION.ASC,SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
       null
     ],
-    columnsName:  ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Result','Action'],
-    columnsNameMapping:  ['id', 'parentsName', 'faceBook', 'email', 'phone', 'fullName','dayofBirth','address','result',''],
-    columnsNameFilter: ['id', 'parentsName', 'faceBook', 'email', 'phone', 'fullName','dayofBirth','address','result',''],
-    sortAbles:  [false, true, true, true, false,false,true,false,false, false],
-    visibles: [true, true, true, true, true, true,true,true, true,true]
+    columnsName:  ['Order', 'ParentsName', 'FaceBook', 'Email', 'Phone', 'FullName','DayofBirth','Address','Source','Recruit','Action'],
+    columnsNameMapping:  ['id', 'parentFullName', 'parentFacebook', 'parentEmail', 'parentPhone', 'studentFullName','dob','address','source','recruitName','result',''],
+    sortAbles:  [false, true, true, true, false,false,true,false, false,false],
+    visibles: [true, true, true, true, true, true,true,true, true,true,true]
   }
   /**
    * END SORT SETTINGS

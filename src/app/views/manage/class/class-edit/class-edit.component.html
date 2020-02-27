@@ -87,7 +87,7 @@
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.Manager' |translate}}:</label>
                     <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="Manager" [matAutocomplete]="managerAC"
+                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Manager' |translate}}" [matAutocomplete]="managerAC"
                         [formControl]="searchManagersCtrl">
                     </div>
                     <mat-autocomplete #managerAC="matAutocomplete" [displayWith]="displayManagerFn">
@@ -122,9 +122,9 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.viceCoach' |translate}}:</label>
+                    <label class="col-3 label-middling">{{'MESSAGE.NameList.ViceCoach' |translate}}:</label>
                     <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="{{'MESSAGE.NameList.viceCoach' |translate}}" [matAutocomplete]="viceCoachAC"
+                    <input class="form-control" placeholder="{{'MESSAGE.NameList.ViceCoach' |translate}}" [matAutocomplete]="viceCoachAC"
                         [formControl]="searchViceCoachsCtrl">
                         </div>
                     <mat-autocomplete #viceCoachAC="matAutocomplete" [displayWith]="displayViceCoachFn">

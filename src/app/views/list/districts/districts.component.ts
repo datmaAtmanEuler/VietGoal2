@@ -35,18 +35,25 @@ export class DistrictsComponent implements OnInit {
   loading: boolean = true;
   firstRowOnPage: any;
   searchProvincesCtrl = new FormControl();
-
+  searchAdvanced: boolean = false;
   provinceFilter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'id','ASC');
   filter: DistrictFilter = new DistrictFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'id','ASC');
 
   /**
    * BEGIN SORT SETTINGS
    */
-  sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
-  columnsName: string[] = ['Order', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
-  columnsNameMapping: string[] = ['id', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'];
-  sortAbles: boolean[] = [false, true, true, true, false];
+paginationSettings: any = {
+  sort: new ASCSort(),
+  sortToggles: [
+    null,
+    SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, 
+    null
+  ],
+  columnsName: ['Order', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'],
+  columnsNameMapping: ['id', 'districtCode', 'districtName', 'provinceId', 'Action'],
+  sortAbles: [false, true, true, true, false,false,true, false],
+  visibles:  [true, true, true, true, true, true,true, true]
+}
   /**
    * END SORT SETTINGS
    */
@@ -157,36 +164,7 @@ reload() {
     });
   }
   
-  toggleSort(columnIndex: number): void {
-    let toggleState =  this.sortToggles[columnIndex];
-    switch(toggleState) {
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.DESC;
-        break;
-      }
-      default:
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
-    }
-    this.sortToggles.forEach((s: string, index: number) => {
-      if(index == columnIndex) {
-        this.sortToggles[index] = this.sort.SortDirection = toggleState;
-      } else {
-        this.sortToggles[index] = SORD_DIRECTION.ASC;
-      }
-    });
-
-    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : this.columnsNameMapping[columnIndex];
-    this.reload();
-  }
+  
   
   doNothing(): void {}
   
@@ -212,10 +190,10 @@ reload() {
     return province && province.ProvinceName && !province.notfound ? province.ProvinceName : '';
   }
 
-  changeProvince(provinceid) {
-    this.service.getDistrictsList(new DistrictFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
-      this.districtsList = list;
-      this.filter.ProvinceId = provinceid;
+  changeProvince(provinceId) {
+    this.service.getDistrictsList(new DistrictFilter('', 1, 100, provinceId, 'id', 'ASC')).subscribe((response) => {
+      this.districtsList = response.result;
+      this.filter.ProvinceId = provinceId;
       this.reload();
     });
   }

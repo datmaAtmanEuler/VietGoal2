@@ -1,5 +1,5 @@
 export class Yard {
-	Id: null| number;
+	id: null| number;
 	YardCode: string;
     YardName: string;
     CentralId: null | number;
@@ -17,9 +17,9 @@ export class Yard {
 	DeletedBy: null | number;
 	DisplayOrder : null | number;
 	
-	constructor(Id: number, YardCode: string,  YardName: string,CentralId: null | number, AreaId: null | number,  StartYearContract: Date, Address: string, Areas:string, Description: string, Visible: boolean, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
+	constructor(id: number, YardCode: string,  YardName: string,CentralId: null | number, AreaId: null | number,  StartYearContract: Date, Address: string, Areas:string, Description: string, Visible: boolean, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
 		UpdatedBy: null | number, DeletedBy: null | number, DisplayOrder: null | number) {
-		this.Id = Id;
+		this.id = id;
 		this.YardCode = YardCode;
         this.CentralId = CentralId;
         this.AreaId = AreaId;

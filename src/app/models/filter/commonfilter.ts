@@ -8,4 +8,5 @@ export class CommonFilter {
     sortName: number;
     sortDirection: number;
     addedDate: string;
+    absentDate: string;
   }

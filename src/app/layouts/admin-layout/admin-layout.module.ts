@@ -14,6 +14,10 @@ import { CentralEditComponent  } from '../../views/manage/central/central-edit/c
 import { DecentralizeUserComponent } from '../../views/manage/decentralize-user/decentralize-user.component';
 import { DecentralizeDataComponent } from '../../views/manage/decentralize-data/decentralize-data.component';
 
+
+import { KpiConfigsComponent } from '../../views/manage/kpiconfigs/kpiconfigs.component';
+import { KpiConfigEditComponent } from '../../views/manage/kpiconfigs/kpiconfig-edit/kpiconfig-edit.component';
+
 import { WardsComponent } from '../../views/list/wards/wards.component';
 import { WardEditComponent } from '../../views/list/wards/wardedit/wardedit.component';
 import { UserGroupComponent } from '../../views/list/usergroups/usergroup.component';
@@ -137,6 +141,8 @@ import { StudentRegistrationImportComponent } from 'app/views/manage/student-reg
     MatIconModule
   ],
   declarations: [
+    KpiConfigsComponent,
+    KpiConfigEditComponent,
     StudentRegistrationComponent,
     StudentRegistrationEditComponent,
     ClassComponent,
@@ -238,7 +244,8 @@ import { StudentRegistrationImportComponent } from 'app/views/manage/student-reg
     PositionImportComponent,
     StudentStatusImportComponent,
     ScheduleComponent,
-    StudentEditComponent
+    StudentEditComponent,
+    KpiConfigEditComponent
   ],
   providers: [
     NgxMaterialTimepickerModule,

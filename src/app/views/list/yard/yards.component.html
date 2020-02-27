@@ -15,26 +15,7 @@
                             </div>
                             <div class="row" style="padding-left: 50px;">
 
-                                <div class="form-group row">
-                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
-                                    <div  class="col-6 label-middling" >
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
-                                        [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
-                                        </div>
-                                    <mat-autocomplete #AreasAC="matAutocomplete"
-                                        (optionSelected)="changeAreas(searchAreasCtrl.value.id)"
-                                        [displayWith]="displayAreasFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Central of listCentral" [value]="Central">
-                                                <span *ngIf="!Central.notfound">{{Central.CentralName}}</span>
-                                                <span *ngIf="Central.notfound" class="nofind">{{Central.notfound}}</span>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-                                </div>
+                               
                                 
                                 <div class="form-group row">
                                     <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Central' | translate}}:</strong></label>
@@ -49,15 +30,34 @@
                                             <mat-spinner></mat-spinner>
                                         </mat-option>
                                         <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let area of areasList" [value]="area">
-                                                <span *ngIf="!area.notfound">{{area.areaName}}</span>
-                                                <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
+                                            <mat-option *ngFor="let central of centralsList" [value]="central">
+                                                <span *ngIf="!central.notfound">{{central.centralName}}</span>
+                                                <span *ngIf="central.notfound" class="nofind">{{central.notfound}}</span>
                                             </mat-option>
                                         </ng-container>
                                     </mat-autocomplete>
                                 </div>
                                 
-                                
+                                 <div class="form-group row">
+                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
+                                    <div  class="col-6 label-middling" >
+                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
+                                        [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
+                                        </div>
+                                    <mat-autocomplete #AreasAC="matAutocomplete"
+                                        (optionSelected)="changeAreas(searchAreasCtrl.value.id)"
+                                        [displayWith]="displayAreasFn">
+                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                            <mat-spinner></mat-spinner>
+                                        </mat-option>
+                                        <ng-container *ngIf="!isLoading">
+                                            <mat-option *ngFor="let area of areasList" [value]="area">
+                                                <span *ngIf="!area.notfound">{{area.AreaName}}</span>
+                                                <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
+                                            </mat-option>
+                                        </ng-container>
+                                    </mat-autocomplete>
+                                </div>
                                 
                             </div>
                         </div>
@@ -105,9 +105,9 @@
                                                     <td>{{ i + 1}}</td>
                                                     <td>{{ yard.yardCode }}</td>
                                                     <td>{{ yard.yardName }}</td>
-                                                    <td>{{ yard.areaId }}</td>
+                                                    <td>{{ yard.centralId }}</td>
                                                     <td>{{ yard.address }}</td>
-                                                    <td>{{ yard.area }}</td>
+                                                    <td>{{ yard.central }}</td>
                                                     <td>{{ yard.description }}</td>
                                                     <td  class="my-action-item">
 

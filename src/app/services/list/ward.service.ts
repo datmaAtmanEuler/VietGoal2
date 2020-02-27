@@ -25,6 +25,7 @@ export class WardService {
     }
     
     getWard(id: any): Observable<any> {
+        console.log(id);
         return this.http.get(environment.apiUrl + `Wards/${id}`, this.httpOptions);
     }
 

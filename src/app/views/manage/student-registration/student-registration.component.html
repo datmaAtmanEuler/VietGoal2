@@ -80,10 +80,8 @@
                             </mat-option>
                             <ng-container *ngIf="!isLoading">
                                 <mat-option *ngFor="let area of areasList" [value]="area">
-                                  
-                                    <span *ngIf="area">{{area.areaName}}</span>
-                                    <span *ngIf="!area.notfound" class="nofind">{{area.notfound}}</span>
-                                
+                                    <span *ngIf="!area.notfound">{{area.AreaName}}</span>
+                                    <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
                                 </mat-option>
                             </ng-container>
                         </mat-autocomplete>
@@ -98,14 +96,14 @@
                         </div>
                         <mat-autocomplete #YardAC="matAutocomplete"
                             (optionSelected)="changeYard(searchYardsCtrl.value.id)"
-                            [displayWith]="displayYardFn">
+                            [displayWith]="displayAreaFn">
                             <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                                 <mat-spinner></mat-spinner>
                             </mat-option>
                             <ng-container *ngIf="!isLoading">
                                 <mat-option *ngFor="let yard of yardsList" [value]="yard">
-                                    <span *ngIf="yard">{{yard.yardName}}</span>
-                                    <span *ngIf="!yard.notfound" class="nofind">{{ 'Not found' }}</span>
+                                    <span *ngIf="!yard.notfound">{{yard.YardName}}</span>
+                                    <span *ngIf="yard.notfound" class="nofind">{{ 'Not found' }}</span>
                                 </mat-option>
                             </ng-container>
                         </mat-autocomplete>
@@ -130,8 +128,8 @@
                                 <mat-option *ngFor="let trainingground of traininggroundsList"
                                     [value]="trainingground">
                                     <span
-                                        *ngIf="trainingground">{{trainingground.trainingGroundName}}</span>
-                                    <span *ngIf="!trainingground.notfound"
+                                        *ngIf="!trainingground.notfound">{{trainingground.TrainingGroundName}}</span>
+                                    <span *ngIf="trainingground.notfound"
                                         class="nofind">{{trainingground.notfound}}</span>
                                 </mat-option>
                             </ng-container>

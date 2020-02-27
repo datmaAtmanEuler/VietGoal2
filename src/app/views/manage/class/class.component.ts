@@ -26,6 +26,7 @@ import { AreaFilter } from 'app/models/filter/areafilter';
 import { MatPaginatorIntl } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { ClassImportComponent } from './class-import/class-import.component';
+import { Yard } from 'app/models/list/yard';
 
 @Component({
   selector: 'app-class',
@@ -44,9 +45,9 @@ export class ClassComponent implements OnInit {
   Total: any;
   firstRowOnPage: any;
 
-  areasList: any;
-  yardsList: any;
-  traininggroundsList: any;
+  areasList: any[]= [];
+  yardsList: any[]= [];
+  traininggroundsList: any[]= [];
 
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
@@ -103,11 +104,12 @@ export class ClassComponent implements OnInit {
   }
   ngOnInit() {
   
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    
     this.reload();
     this.filtersEventsBinding();
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   filtersEventsBinding() {
@@ -236,14 +238,15 @@ export class ClassComponent implements OnInit {
     });
   }
 
-  displayAreaFn(user): string {
-    return user && user.AreaName && !user.notfound ? user.AreaName : '';
+  displayAreaFn(area): string {
+    return area && area.AreaName && !area.notfound ? area.AreaName : '';
   }
-  displayYardFn(user): string {
-    return user && user.YardName && !user.notfound ? user.YardName : '';
+ 
+  displayYardFn(yard): string {
+    return yard && yard.YardName && !yard.notfound ? yard.YardName : '';
   }
-  displayTraininggroundFn(user): string {
-    return user && user.TraininggroundName && !user.notfound ? user.TraininggroundName : '';
+  displayTrainingGroundFn(trainingground: any) {
+    return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
   }
   changeArea(areaID: number) {
     this.yardService.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
@@ -283,13 +286,7 @@ export class ClassComponent implements OnInit {
     a.remove();
   }
 
-  displayAresFn(area: any) {
-    return area && area.AreaName && !area.notfound ? area.AreaName : '';
-  }
-
-  displayTrainingGroundFn(trainingground: any) {
-    return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
-  }
+ 
 
   studentProfile(classId){
     if (classId) this.router.navigate(['quanly/hosohocsinhtheolop/'+classId]);

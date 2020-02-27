@@ -101,6 +101,9 @@ import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/re
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
 import { RecruitStudentImportComponent } from '../../views/manage/recruit-student/recruit-student-import/recruit-student-import.component';
+import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
+import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
+import { StudentRegistrationImportComponent } from 'app/views/manage/student-registration/student-registration-import/student-registration-import.component';
 
 
 @NgModule({
@@ -129,6 +132,8 @@ import { RecruitStudentImportComponent } from '../../views/manage/recruit-studen
     MatIconModule
   ],
   declarations: [
+    StudentRegistrationComponent,
+    StudentRegistrationEditComponent,
     ClassComponent,
     ClassEditComponent,
     CategoriesComponent,
@@ -197,11 +202,13 @@ import { RecruitStudentImportComponent } from '../../views/manage/recruit-studen
     RecruitStudentEditComponent,
     StudentComponent,
     StudentEditComponent,
-    RecruitStudentImportComponent
+    RecruitStudentImportComponent,
+    StudentRegistrationImportComponent
     
   ],
   entryComponents: [
     ProvinceImportComponent,
+    StudentRegistrationImportComponent,
     CentralImportComponent,
     DistrictImportComponent,
     WardImportComponent,

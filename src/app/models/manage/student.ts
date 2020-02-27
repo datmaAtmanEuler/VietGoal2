@@ -3,6 +3,7 @@ export class Student{
     studentCode: string;
     firstName: string;
     lastName: string;
+    fullName: string;
     displayOrder: number;
     gender: number;
     dob: string;

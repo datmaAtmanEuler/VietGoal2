@@ -45,6 +45,8 @@ import { RecruitStudentComponent } from 'app/views/manage/recruit-student/recrui
 import { RecruitStudentEditComponent } from 'app/views/manage/recruit-student/recruit-student-edit/recruit-student-edit.component';
 import { StudentComponent } from 'app/views/manage/student/student.component';
 import { StudentEditComponent } from 'app/views/manage/student/student-edit/student-edit.component';
+import { StudentRegistrationComponent } from 'app/views/manage/student-registration/student-registration.component';
+import { StudentRegistrationEditComponent } from 'app/views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -336,6 +338,21 @@ export const AdminLayoutRoutes: Routes = [
         ,
         {
             path: 'edit', component: ClassEditComponent
+        }
+        ]
+    },
+    {
+        path: 'dangky-hocsinh',
+        children: [ {
+            path: '', component: StudentRegistrationComponent
+        }
+        ,
+        {
+            path: 'add', component: StudentRegistrationEditComponent
+        }
+        ,
+        {
+            path: 'edit', component: StudentRegistrationEditComponent
         }
         ]
     },

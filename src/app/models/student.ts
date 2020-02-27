@@ -7,6 +7,7 @@ export class Student {
   password: string;
   email: string;
   address: string;
+  fullName: string;
   wardId: number;
   phone: string;
   dob: Date;

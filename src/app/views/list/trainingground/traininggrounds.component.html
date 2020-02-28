@@ -1,145 +1,145 @@
 <div class="main-content">
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="card">
-
-                    <div class="card-header card-header-warning" style="background: #023a54">
-                        <h4 class="card-title">{{ "MESSAGE.NameList.YardArea" | translate }}</h4>
-                    </div>
-
-                    <div class="row pt-3 pl-2 pr-3">
-                        <div class="col-sm-9 input-group form-sm form-1 pl-0">
-                            <div class="col-12 ta-r">
-                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="openImport()">Import</button>
-                                <button class="btn btn-vietgoal btn-sm mr-2" (click)="downloadTemplate()">Mẫu
-                                    Import</button>
-                            </div>
-                            <div class="row" style="padding-left: 50px;">
-                                <div class="form-group row">
-                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
-                                    <div  class="col-6 label-middling" >
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
-                                        [matAutocomplete]="AreasAC" [formControl]="searchAreasCtrl">
-                                    <mat-autocomplete #AreasAC="matAutocomplete"
-                                        (optionSelected)="changeArea(searchAreasCtrl.value.id)"
-                                        [displayWith]="displayAreaFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let area of areasList" [value]="area">
-                                                <span *ngIf="!Area.notfound">{{Areas.AreasName}}</span>
-                                                <span *ngIf="Area.notfound" class="nofind">{{Areas.notfound}}</span>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-                                </div>
-
-                                <div class="form-group row">
-                                    <label class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Yard' | translate}}:</strong></label>
-                                    <div  class="col-6 label-middling" >
-                                    <input class="form-control" placeholder="{{'MESSAGE.NameList.YardName' |translate}}"
-                                        [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
-                                    </div>
-                                    <mat-autocomplete #YardAC="matAutocomplete"
-                                        (optionSelected)="changeYard(searchYardsCtrl.value.id)"
-                                        [displayWith]="displayYardFn">
-                                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                                            <mat-spinner></mat-spinner>
-                                        </mat-option>
-                                        <ng-container *ngIf="!isLoading">
-                                            <mat-option *ngFor="let Yard of listYard" [value]="YardId">
-                                                <span *ngIf="!Yard.notfound">{{Yard.YardName}}</span>
-                                                <span *ngIf="Yard.notfound" class="nofind">{{Yard.notfound}}</span>
-                                            </mat-option>
-                                        </ng-container>
-                                    </mat-autocomplete>
-
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <div class="col-sm-3 input-group form-sm form-1 pl-0 search-form search-form">
-                            <button type="button" (click)="add()" title="{{ 'MESSAGE.NameList.Create' | translate}}"
-                                class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
-                                <i class="material-icons">add</i>
-                            </button>
-                            <input [(ngModel)]="searchTerm" class="form-control my-0 py-1" type="text"
-                                placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                            <div class="input-group-prepend">
-                                <button type="button" (click)="reload()"
-                                    title="{{ 'MESSAGE.NameList.Search' | translate}}"
-                                    class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
-                                    <i class="material-icons">search</i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card-body table-responsive">
-                                <div class="vietgoal-table-settings style-1">
-                                    <div class="vietgoal-table-settings vg-scroll">
-                                        <table class="table table-condensed table-striped table-bordered table-hover"
-                                            style="width: 120%">
-                                            <thead>
-                                                <ng-container
-                                                    *ngFor="let colName of columnsName; let colIndex = index;">
-                                                    <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')"
-                                                        (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
-                                                        <span
-                                                            style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
-                                                            <i class="material-icons asc-sort-icons"
-                                                                *ngIf="sortAbles[colIndex]">
-                                                                {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
-                                                            </i>
-                                                        </span>
-                                                    </th>
-                                                </ng-container>
-                                            </thead>
-                                            <tbody>
-                                                <ng-container
-                                                    *ngFor="let traininground of trainingroundsList; let i = index;">
-                                                    <tr>
-                                                        <td width="100px">{{ i + 1}}</td>
-                                                        <td>{{ traininground.trainingGroundCode }}</td>
-                                                        <td>{{ traininground.trainingGroundName }}</td>
-                                                        <!-- <td>{{ traininground.areaId }}</td> -->
-                                                        <td>{{ traininground.yardId }}</td>
-                                                        <td>{{ traininground.address }}</td>
-                                                        <td>{{ traininground.description }}</td>
-                                                        <td class="my-action-item">
-
-                                                            <button mat-raised-button type="button"
-                                                                (click)="edit(traininground.id)"
-                                                                title="{{ 'MESSAGE.NameList.Edit' | translate}}"
-                                                                class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
-                                                                <i class="material-icons">edit</i>
-                                                            </button>
-                                                            <button mat-raised-button type="button"
-                                                                (click)="remove(traininground)"
-                                                                title="{{ 'MESSAGE.NameList.Delete' | translate}}"
-                                                                class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
-                                                                <i class="material-icons">close</i>
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                </ng-container>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <mat-paginator 
-                                    [length]="(trainingroundsList && trainingroundsList.length > 0 && trainingroundsList[0] && trainingroundsList[0].Total) ? trainingroundsList[0].Total : 0"
-                                     [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
-                                    [showFirstLastButtons]="true" (page)="pageEvent($event)">
-                                </mat-paginator>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12">
+          <div class="card">
+            <div class="card-header card-header-warning" style="background: #023a54">
+              <h4 class="card-title">{{ "MESSAGE.NameList.CoachAbsent" | translate }}</h4>
+              <!-- chưa dịch cddayoff-->
             </div>
+            <div class="row ">
+              <div class="col-12">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-12 search-form">
+                      <div class="row">
+                        <div class="offset-4 col-8 input-group form-sm ">
+                          <button class="btn btn-vietgoal btn-sm mr-2" (click)="openImport()">Import</button>
+                          <button class="btn btn-primary btn-sm mr-2" (click)="downloadTemplate()">Mẫu Import</button>
+                          <button class="btn btn-success btn-sm mr-2" (click)="add()">
+                            {{ 'MESSAGE.NameList.Create' | translate}}
+                          </button>
+
+                          <button class="btn btn-vietgoal btn-sm mr-2" (click)="searchAdvanced = !searchAdvanced">
+                            {{ 'MESSAGE.NameList.SearchAdvanced' | translate}}
+                          </button>
+                          <button type="button" (click)="searchAdvanced = !searchAdvanced" title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                                          class="btn btn-primary search-button advanced-search-others btn-link btn-sm btn-just-icon">
+                                          <i class="material-icons advanced-search-btn">search</i>
+                                        </button>
+                          <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                            placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
+                          <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                            class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
+                            <i class="material-icons">search</i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="searchAdvanced">
+                    <div class="form-body col-sm-12">
+                      <div class="form-group row">
+                        <label
+                            class="col-1 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
+                        <div class="col-2 label-middling">
+                            <input class="form-control"
+                                placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
+                                [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
+                        </div>
+                        <mat-autocomplete #areaAC="matAutocomplete"
+                            (optionSelected)="changeArea(searchAreasCtrl.value.id)"
+                            [displayWith]="displayAreaFn">
+                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                <mat-spinner></mat-spinner>
+                            </mat-option>
+                            <ng-container *ngIf="!isLoading">
+                                <mat-option *ngFor="let area of areasList" [value]="area">
+                                  <span *ngIf="!area.notfound">{{area.areaName}}</span>
+                                  <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </div>
+
+                    <div class="form-group row">
+                      <label class="col-1 label-middling"><strong>{{'MESSAGE.NameList.Yard' | translate}}:</strong></label>
+                      <div class="col-2 label-middling">
+                          <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' | translate}}"
+                              [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
+                      </div>
+                      <mat-autocomplete #YardAC="matAutocomplete"
+                          (optionSelected)="changeYard(searchYardsCtrl.value.id)"
+                          [displayWith]="displayYardFn">
+                          <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                              <mat-spinner></mat-spinner>
+                          </mat-option>
+                          <ng-container *ngIf="!isLoading">
+                              <mat-option *ngFor="let yard of yardsList" [value]="yard">
+                                  <span *ngIf="yard">{{yard.yardName}}</span>
+                                      <span *ngIf="!yard.notfound" class="nofind">{{yard.notfound}}</span>
+                              </mat-option>
+                          </ng-container>
+                      </mat-autocomplete>
+                  </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <div class="card-body table-responsive">
+                  <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
+                  <div class="vietgoal-table-settings vg-scroll">
+                    <table class="table table-condensed table-striped table-bordered table-hover">
+                      <thead>
+                        <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
+                          <th *ngIf="paginationSettings.visibles[colIndex]"
+                            [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
+                            (click)="sortToggles(colIndex)">
+                            <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                              <i style="float: none;" class="material-icons asc-sort-icons"
+                                *ngIf="paginationSettings.sortAbles[colIndex]">
+                                {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                              </i>
+                            </span>
+                          </th>
+                        </ng-container>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let train of trainingroundsList; let i = index;">
+                          <tr>
+                            <td>{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
+                            <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
+                              <td
+                                *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
+                                {{ utilsService.getColumnValue(train, colIndex, paginationSettings.columnsNameMapping) }}
+                              </td>
+                            </ng-container>
+                            <td class="my-action-item"> 
+                              <button type="button" (click)="edit(train.id)"
+                                class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
+                                <i class="material-icons">edit</i>
+                              </button>
+                              <button type="button" (click)="remove(train.id)"
+                                class="btn btn-danger btn-link btn-sm delete-button btn-just-icon">
+                                <i class="material-icons">close</i>
+                              </button>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                  <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                    [showFirstLastButtons]="true" (page)="pageEvent($event)">
+                  </mat-paginator>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>

@@ -34,21 +34,29 @@ export class AreasComponent implements OnInit {ModalDirective;
   isLoading: boolean = true;
   Total: any;
   firstRowOnPage: any;
-
+  searchAdvanced : boolean = false;
 
   searchCentralsCtrl = new FormControl();
 
-  filter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'id','ASC');
-  centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,null, null, null, 'id','ASC');
+  filter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 'id','ASC');
+  centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 0, 0, 'id','ASC');
 
   /**
    * BEGIN SORT SETTINGS
    */
-  sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
-  columnsName: string[] = ['Order', 'AreaCode', 'AreaName', 'Central', 'Action'];
-  columnsNameMapping: string[] = ['id', 'AreaCode', 'AreaName', 'Central', 'Action'];
-  sortAbles: boolean[] = [false, true, true, true, false];
+ 
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, 
+      null
+    ],
+    columnsName: ['Order', 'AreaCode', 'AreaName', 'Central', 'Action'],
+    columnsNameMapping: ['id', 'areaCode', 'areaName', 'centralId', ''],
+    sortAbles: [false, true, true, true, false],
+    visibles:  [true, true, true, true, true]
+  }
   /**
    * END SORT SETTINGS
    */
@@ -160,41 +168,12 @@ export class AreasComponent implements OnInit {ModalDirective;
     this.pageSize = variable.pageSize;
     this.reload();
   }
-  toggleSort(columnIndex: number): void {
-    let toggleState =  this.sortToggles[columnIndex];
-    switch(toggleState) {
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.DESC;
-        break;
-      }
-      default:
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
-    }
-    this.sortToggles.forEach((s: string, index: number) => {
-      if(index == columnIndex) {
-        this.sortToggles[index] = this.sort.SortDirection = toggleState;
-      } else {
-        this.sortToggles[index] = SORD_DIRECTION.ASC;
-      }
-    });
-
-    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'id' : this.columnsNameMapping[columnIndex];
-    this.reload();
-  }
+  
   
   doNothing(): void {}
 
   displayCentralFn(central: any) {
-    return central && central.CentralName && !central.notfound ? central.CentralName : '';
+    return central && central.centralName && !central.notfound ? central.centralName : '';
   }
 
 changeCentral(centralId: number) {

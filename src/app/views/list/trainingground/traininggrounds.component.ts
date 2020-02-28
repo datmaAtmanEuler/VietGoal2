@@ -17,6 +17,7 @@ import { FormControl } from '@angular/forms';
 
 import { AreaFilter } from '../../../models/filter/areafilter';
 import { YardFilter } from '../../../models/filter/yardfilter';
+import { UtilsService } from '../../../services/utils.service';
 
 @Component({
   selector: 'app-training-grounds',
@@ -41,22 +42,30 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
 
-  areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,null,'Id','ASC');
-  yardFilter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,null,'Id','ASC');
-  filter: TrainingGroundFilter = new TrainingGroundFilter( this.searchTerm,this.pageIndex, this.pageSize,null,null, 'Id','ASC');
+  areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,0,'id','ASC');
+  yardFilter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,0,'id','ASC');
+  filter: TrainingGroundFilter = new TrainingGroundFilter( this.searchTerm,this.pageIndex, this.pageSize,0,0, 'id','ASC');
 
   /**
    * BEGIN SORT SETTINGS
    */
-  sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC, null];
-  columnsName: string[] = ['Order', 'TrainingGroundCode','TrainingGroundName', 'YardName','Address','Note','Action'];
-  columnsNameMapping: string[] = ['ID', 'TrainingGroundCode','TrainingGroundName', 'YardName','Address','Note','Action'];
-  sortAbles: boolean[] = [false, true, true, true,true,true, false];
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      SORD_DIRECTION.ASC,
+      null
+    ],
+    columnsName: ['Order', 'TrainingGroundCode','TrainingGroundName', 'YardName','Address','Note','Action'],
+    columnsNameMapping: ['id', 'trainingGroundCode','trainingGroundName', 'yardId','address','description',''],
+    sortAbles: [false, true, true, true, false,false, false],
+    visibles:  [true, true, true, true, true, true,true]
+  }
   /**
    * END SORT SETTINGS
    */
-  constructor(private matCus: MatPaginatorIntl,private translate: TranslateService,config: NgbModalConfig, 
+  constructor(public utilsService: UtilsService,private matCus: MatPaginatorIntl,private translate: TranslateService,config: NgbModalConfig, 
     private areaService: AreaService, private yardService: YardService, private service: TrainingGroundService, 
     private router: Router, private modalService: NgbModal) { 
     config.backdrop = 'static';
@@ -159,7 +168,7 @@ edit(ID: null | number) {
   const modalRef = this.modalService.open(TrainingGroundEditComponent, { size: 'lg' });
   modalRef.componentInstance.popup = true;
   if (ID) {
-    modalRef.componentInstance.ID = ID;
+    modalRef.componentInstance.id = ID;
     modalRef.componentInstance.UserId = _this.currentUser.UserId;
   }
   modalRef.result.then(function(){
@@ -172,37 +181,6 @@ deleteTraningGround() {
   this.service.deleteTrainingGround(this.traininground.ID, this.currentUser.UserId).subscribe((res: any) => {
     _this.reload();
   });
-}
-
-toggleSort(columnIndex: number): void {
-  let toggleState =  this.sortToggles[columnIndex];
-  switch(toggleState) {
-    case SORD_DIRECTION.ASC: 
-    {
-      toggleState = SORD_DIRECTION.ASC;
-      break;
-    }
-    case SORD_DIRECTION.ASC: 
-    {
-      toggleState = SORD_DIRECTION.DESC;
-      break;
-    }
-    default:
-    {
-      toggleState = SORD_DIRECTION.ASC;
-      break;
-    }
-  }
-  this.sortToggles.forEach((s: string, index: number) => {
-    if(index == columnIndex) {
-      this.sortToggles[index] = this.sort.SortDirection = toggleState;
-    } else {
-      this.sortToggles[index] = SORD_DIRECTION.ASC;
-    }
-  });
-
-  this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'ID' : this.columnsNameMapping[columnIndex];
-  this.reload();
 }
 
 doNothing(): void {}

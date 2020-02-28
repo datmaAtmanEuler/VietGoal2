@@ -50,9 +50,9 @@ paginationSettings: any = {
     null
   ],
   columnsName: ['Order', 'DistrictCode', 'DistrictName', 'ProvinceName', 'Action'],
-  columnsNameMapping: ['id', 'districtCode', 'districtName', 'provinceId', 'Action'],
-  sortAbles: [false, true, true, true, false,false,true, false],
-  visibles:  [true, true, true, true, true, true,true, true]
+  columnsNameMapping: ['id', 'districtCode', 'districtName', 'provinceId', ''],
+  sortAbles: [false, true, true, true, false],
+  visibles:  [true, true, true, true, true]
 }
   /**
    * END SORT SETTINGS
@@ -96,12 +96,13 @@ paginationSettings: any = {
   remove(district: District) {
     this.district = district;
     const _this = this;
-    const modalRef = _this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'District';
     modalRef.componentInstance.decide.subscribe(() => {
         _this.deleteDistrict();
     });
 }
+
 pageEvent(variable: any){
   this.pageIndex = variable.pageIndex+1;
   this.pageSize = variable.pageSize;
@@ -159,7 +160,7 @@ reload() {
 
   deleteDistrict() {
     const _this = this;
-    _this.service.deleteDistrict(_this.district.Id, _this.currentUser.UserId).subscribe((res: any) => {
+    _this.service.deleteDistrict(_this.district.id).subscribe((res: any) => {
       _this.reload();
     });
   }

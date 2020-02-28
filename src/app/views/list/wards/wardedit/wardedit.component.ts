@@ -170,7 +170,6 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 		const selectedDistricts = this.filteredDistricts.filter((district: District) => district.districtName == event.option.value);
 		if(selectedDistricts.length > 0) {
 			this.ward.districtId = selectedDistricts[0].id;
-			console.log(this.ward);
 		}
 	}
 

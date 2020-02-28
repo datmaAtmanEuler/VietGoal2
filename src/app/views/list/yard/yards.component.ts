@@ -61,9 +61,9 @@ export class YardComponent implements OnInit {
    * END SORT SETTINGS
    */
 
-  filter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'id','ASC');
-  areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,null, 'id','ASC');
-  centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,null, null, null, 'id','ASC');
+  filter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 'id','ASC');
+  areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 'id','ASC');
+  centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 0, 0, 'id','ASC');
 
   constructor(private translate: TranslateService,
     private matCus: MatPaginatorIntl, config: NgbModalConfig,public util: UtilsService, 

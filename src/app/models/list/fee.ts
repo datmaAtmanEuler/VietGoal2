@@ -1,13 +1,11 @@
 export class Fee{
-    Id: number;
-    FeeName: string;
-    FeeCode: string;
-    CreatedBy: number;
-    UpdatedBy: number;
+    id: number;
+    feeName: string;
+    feeCode: string;
+    displayOrder: number;
 
-    constructor(Id: number, FeeCode:string ,FeeName: string){
-        this.Id = Id;
-        this.FeeName = FeeName;
-        this.FeeCode = FeeCode;
+    constructor(){
+        this.id = 0;
+        this.displayOrder = 0;
     }
 }

@@ -2,11 +2,11 @@ export class ClassStatus{
     id: number;
     classStatusName: string;
     classStatusCode: string;
+    displayOrder: number;
 
-    constructor(id: number, classStatusCode:string ,classStatusName: string){
-        this.id = id;
-        this.classStatusName = classStatusName;
-        this.classStatusCode = classStatusCode;
+    constructor(){
+        this.id = 0;
+        this.displayOrder = 0;
     }
 }
 

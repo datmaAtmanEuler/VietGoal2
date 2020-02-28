@@ -10,18 +10,17 @@
             <div class="col-12">
               <div class="card-body">
                 <div class="row">
-                  <div class="offset-sm-8 col-sm-4 search-form">
+                  <div class="col-sm-12 search-form">
                     <div class="row">
-                      <div class="col-12 ta-r">
+                      <div class="offset-4 col-8 input-group form-sm ">
                         <button class="btn btn-vietgoal btn-sm mr-2" (click)="openImport()">Import</button>
-                        <button class="btn btn-vietgoal btn-sm mr-2" (click)="downloadTemplate()">Mẫu Import</button>
-                        <button mat-raised-button type="button" (click)="add()"
-                          title="{{ 'MESSAGE.NameList.Create' | translate}}"
-                          class="btn btn-primary add-button btn-link btn-sm btn-just-icon ml-2">
-                          <i class="material-icons">add</i>
+                        <button class="btn btn-primary btn-sm mr-2" (click)="downloadTemplate()">Mẫu Import</button>
+                        <button class="btn btn-success btn-sm mr-2" (click)="add()">
+                          {{ 'MESSAGE.NameList.Create' | translate}}
                         </button>
-                      </div>
-                      <div class="col-12 input-group form-sm ">
+                        <!-- <button class="btn btn-vietgoal btn-sm mr-2" (click)="searchAdvanced = !searchAdvanced">
+                          {{ 'MESSAGE.NameList.SearchAdvanced' | translate}}
+                        </button> -->
                         <input [(ngModel)]="searchTerm" class="form-control" type="text"
                           placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
                         <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}"

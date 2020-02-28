@@ -168,4 +168,8 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     a.click();
     a.remove();
   }
+
+  onDateUpdate(dateResult: string) {
+    console.log(dateResult);
+  }
 }

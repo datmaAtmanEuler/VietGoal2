@@ -31,6 +31,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 
 import { AcademyColorPickerModule } from '../../shared/academy-color-picker/academy-color-picker.module';
+import { AcademyDatePickerModule } from '../../shared/academy-date-picker/academy-date-picker.module';
 
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
@@ -119,6 +120,7 @@ import { StudentRegistrationImportComponent } from '../../views/manage/student-r
 
 @NgModule({
   imports: [
+  AcademyDatePickerModule,
     AcademyColorPickerModule,
     NgxMaterialTimepickerModule,
     FileUploadModule,

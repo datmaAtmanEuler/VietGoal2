@@ -54,6 +54,7 @@
     "ngx-pagination": "^5.0.0",
     "perfect-scrollbar": "1.1.0",
     "popper.js": "1.15.0",
+    "ramda": "^0.27.0",
     "rxjs": "6.5.2",
     "rxjs-compat": "6.5.2",
     "ts-md5": "^1.2.7",

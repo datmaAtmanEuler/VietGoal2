@@ -14,7 +14,6 @@
                                     <div class="row form-group">
                                       <div class="col-3">
                                         <label class="m-0">{{ "MESSAGE.NameList.Area" | translate }}</label>
-                                        <academy-color-picker [(value)]="color"></academy-color-picker>
                                         <input type="text" class="form-control" [matAutocomplete]="areasAC"
                                           [formControl]="searchAreasCtrl">
                                           <button *ngIf="areaPageIndex < totalAreaPages" type="button" (click)="updateAreaShowMore();" title="{{ 'MESSAGE.NameList.ShowMore' | translate }}"

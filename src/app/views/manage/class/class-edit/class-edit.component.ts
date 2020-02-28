@@ -54,6 +54,10 @@ export class ClassEditComponent implements OnInit {
 	mainCoachsList: any[] = [];
 	viceCoachsList: any[] = [];
 	class: any = {};
+	weeksList: Week[] = WeekToList();
+	weeksListName: string[] = WeekToListName();
+	shiftDaysList: ShiftDay[] = ShiftDayToList();
+	shiftDaysListName: string[] = ShiftDayToListName();
 	
 	searchAreasCtrl = new FormControl();
 	searchYardsCtrl = new FormControl();

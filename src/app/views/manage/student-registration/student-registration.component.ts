@@ -280,7 +280,7 @@ export class StudentRegistrationComponent implements OnInit {
 
   edit(RecruitStudentID: null | number) {
     const _this = this;
-    const modalRef = this.modalService.open(StudentRegistrationEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(StudentRegistrationEditComponent, { size: 'xl' });
     modalRef.componentInstance.popup = true;
     modalRef.componentInstance.RecruitStudentID = RecruitStudentID;
     modalRef.result.then(function (result) {

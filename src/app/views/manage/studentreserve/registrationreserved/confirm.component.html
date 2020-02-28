@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Đăng ký bảo lưu</h4>
+  </div>
+<div class="modal-body">
+    <div class="text-center border border-light">
+        <div class="form-group row">
+            <label class="col-5 label-middling"><strong>Học viên:</strong><span class="text-danger">(*)</span></label>
+            <div class="col-6 label-middling">
+              <input class="form-control" placeholder="Học viên"><i class="material-icons">people</i>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-5 label-middling"><strong>Ngày BĐ bảo lưu:</strong><span class="text-danger">(*)</span></label>
+            <div class="col-6 label-middling">
+              <input class="form-control" placeholder="Ngày BĐ bảo lưu"><i class="material-icons">date_range</i>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-5 label-middling"><strong>Trạng thái:</strong><span class="text-danger">(*)</span></label>
+            <div class="col-6 label-middling">
+              <input class="form-control" placeholder="Trạng thái">
+            </div>
+        </div>
+    </div>
+        <button class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{ "MESSAGE.NameList.Close" | translate}}</button>
+        <button class="btn btn-success" (click)="Update()" alt=''>{{ "MESSAGE.NameList.OK" | translate}}</button>
+    </div>
+</div>

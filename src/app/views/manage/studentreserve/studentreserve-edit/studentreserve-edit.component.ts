@@ -35,13 +35,13 @@ import { ShiftDay, ShiftDayToList, ShiftDayToListName } from 'app/models/enums/s
  * **/
 
 @Component({
-	selector: 'app-class-edit',
-	templateUrl: './class-edit.component.html',
-	styleUrls: ['./class-edit.component.scss'],
+	selector: 'app-studentreserve-edit',
+	templateUrl: './studentreserve-edit.component.html',
+	styleUrls: ['./studentreserve-edit.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 
-export class ClassEditComponent implements OnInit {
+export class StudentReserveEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('id') id: number;
 

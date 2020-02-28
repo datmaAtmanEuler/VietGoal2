@@ -106,12 +106,12 @@ export class RecruitStudentEditComponent implements OnInit {
 		return user && user.WardName && !user.notfound ? user.WardName : '';
 	}
 	changeProvince(provinceID) {
-		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null, 'id','ASC')).subscribe((list) => {
+		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, 0, 'id','ASC')).subscribe((list) => {
 			this.districtsList = list;
 		});
 	}
 	changeDistrict(districtID) {
-		this.wardService.getWardsList(new WardFilter('', 1, 100, null, null,'id','ASC')).subscribe((list) => {
+		this.wardService.getWardsList(new WardFilter('', 1, 100, 0, 0,'id','ASC')).subscribe((list) => {
 			this.wardfilter = list;
 		});
 	}

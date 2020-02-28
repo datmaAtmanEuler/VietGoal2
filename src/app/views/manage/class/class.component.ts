@@ -122,7 +122,7 @@ export class ClassComponent implements OnInit {
           this.areasList = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'id', 'ASC'))
+        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, 0, 'id', 'ASC'))
           .pipe(
             finalize(() => {
               this.isLoading = false

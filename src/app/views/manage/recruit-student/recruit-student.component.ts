@@ -141,7 +141,7 @@ export class RecruitStudentComponent implements OnInit {
           this.areasList = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
+        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, 0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -278,7 +278,7 @@ export class RecruitStudentComponent implements OnInit {
 
   edit(RecruitStudentID: null | number) {
     const _this = this;
-    const modalRef = this.modalService.open(RecruitStudentEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(RecruitStudentEditComponent, { size: 'xl' });
     modalRef.componentInstance.popup = true;
     modalRef.componentInstance.RecruitStudentID = RecruitStudentID;
     modalRef.result.then(function (result) {

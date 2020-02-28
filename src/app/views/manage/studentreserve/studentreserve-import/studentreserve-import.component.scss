@@ -1,5 +1,5 @@
 .modal-lg { 
-    max-width: 850px !important;
+    max-width: 500px !important;
 }
 .button-save {
     cursor: pointer;
@@ -34,44 +34,4 @@
  .fade {
   opacity: 1;
   transition: opacity .15s linear;
-}
-.cdk-overlay-container {
-  z-index: 2000;
-}
-.nofind{
-  color: #cccccc;
-}
-
-.bigger-spinner{
-  height: unset!important;
-}
-
-.title-head{
-  text-align: left;
-  border-bottom: 1px solid #ccc;
-  font-weight: bold;
-}
-.avatar{
-  position: relative;
-  border: 5px solid #023a54;
-  width: 200px;
-  height: 200px;
-  img{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-  }
-  button{
-      position: absolute;
-      top: 0;
-  }
-  .std-create{
-      right: 0;
-  }
-  .std-clear{
-      left: 0;
-  }
-}
-.student-radio-gender{
-  line-height: 37px;
 }

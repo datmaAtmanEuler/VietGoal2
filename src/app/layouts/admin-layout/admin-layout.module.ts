@@ -112,6 +112,8 @@ import { StudentAttendanceComponent } from '../../views/manage/studentattendance
 import { StudentRegistrationComponent } from '../../views/manage/student-registration/student-registration.component';
 import { StudentRegistrationEditComponent } from '../../views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 import { StudentRegistrationImportComponent } from '../../views/manage/student-registration/student-registration-import/student-registration-import.component';
+import { StudentReserveComponent } from '../../views/manage/studentreserve/studentreserve.component';
+import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
 
 
 @NgModule({
@@ -220,7 +222,9 @@ import { StudentRegistrationImportComponent } from '../../views/manage/student-r
     RecruitStudentImportComponent,
     RecruitStudentImportComponent,
     StudentRegistrationImportComponent,
-    CoachSchedulesComponent
+    CoachSchedulesComponent,
+    StudentReserveComponent,
+    StudentReserveEditComponent
   ],
   entryComponents: [
     ProvinceImportComponent,

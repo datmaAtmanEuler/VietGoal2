@@ -26,8 +26,8 @@
             <div class="form-group row">
                 <label class="control-label col-sm-3 label-middling" for="MaMau">Mã Màu:</label>
                 <div class="col-sm-9">
-                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaMau" [(ngModel)]="StudentStatus.studentStatusColor"
-                        class="form-control" placeholder="Mã Màu">
+                    <academy-color-picker [class]="'form-control'" [id]="'MaMau'" [placeholder]="'Mã Màu'" [result]="StudentStatus.studentStatusColor" [(value)]="StudentStatus.studentStatusColor">
+                    </academy-color-picker>
                 </div>
             </div>
         </form>
@@ -62,8 +62,7 @@
             <div class="form-group row">
                 <label class="control-label col-sm-3 label-middling" for="MaMau">Mã Màu:</label>
                 <div class="col-sm-9">
-                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaMau" [(ngModel)]="StudentStatus.studentStatusColor"
-                        class="form-control" placeholder="Mã Màu">
+                    <academy-color-picker [class]="'form-control'" [id]="'MaMau'" [placeholder]="'Mã Màu'" [result]="StudentStatus.studentStatusColor" [(value)]="StudentStatus.studentStatusColor"></academy-color-picker>
                 </div>
             </div>
         </form>

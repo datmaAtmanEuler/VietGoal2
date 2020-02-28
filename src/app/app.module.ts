@@ -36,7 +36,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 }
 @NgModule({
   imports: [
-  NgxMaterialTimepickerModule,
+    NgxMaterialTimepickerModule,
     ComponentsModule,
     RouterModule,
     AppRoutingModule,

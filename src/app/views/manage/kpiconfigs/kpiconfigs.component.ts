@@ -80,6 +80,7 @@ export class KpiConfigsComponent implements OnInit {
   pageEvent(variable: any) {
     this.reload();
   }
+  
   reload() {
     this.isLoading = true;
     this.kpiConfigsList = [];

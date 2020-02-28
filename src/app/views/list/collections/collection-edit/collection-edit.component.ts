@@ -16,7 +16,7 @@ export class CollectionEditComponent implements OnInit {
 	@Input() CollectionId: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
 
-	Collection: Collection = new Collection(0, '', '');
+	Collection: Collection = new Collection();
 	currentUser: any;
 
 	constructor(public activeModal: NgbActiveModal, private CollectionService: CollectionService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
@@ -30,10 +30,10 @@ export class CollectionEditComponent implements OnInit {
 	GetCollectionById(CollectionId: number) {
 		this.CollectionService.getCollection((CollectionId) ? CollectionId : this.CollectionId).subscribe(
 			(object) => {
-				this.Collection = object || new Collection(0, '', '');
+				this.Collection = object;
 			},
 			() => {
-				this.Collection = new Collection(0, '', '');
+				this.Collection = new Collection();
 			}
 		);
 	}
@@ -47,7 +47,7 @@ export class CollectionEditComponent implements OnInit {
 	}
 
 	UpdateCollection() {
-		this.CollectionService.addOrUpdateCollection(this.Collection, this.currentUser.UserId).subscribe(
+		this.CollectionService.addOrUpdateCollection(this.Collection).subscribe(
 			() => {
 				if (!this.popup) {
 					this.ReturnList();

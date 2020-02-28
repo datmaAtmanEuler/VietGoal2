@@ -1,13 +1,11 @@
 export class Collection{
-    Id: number;
-    CollectionName: string;
-    CollectionCode: string;
-    CreatedBy: number;
-    UpdatedBy: number;
+    id: number;
+    collectionName: string;
+    collectionCode: string;
+    displayOrder: number;
 
-    constructor(Id: number, CollectionCode:string ,CollectionName: string){
-        this.Id = Id;
-        this.CollectionName = CollectionName;
-        this.CollectionCode = CollectionCode;
+    constructor(){
+        this.id = 0;
+        this.displayOrder = 0;
     }
 }

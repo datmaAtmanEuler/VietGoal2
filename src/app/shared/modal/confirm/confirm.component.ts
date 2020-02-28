@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, ViewEncapsulation  } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ViewEncapsulation, HostListener  } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -14,7 +14,11 @@ export class ConfirmComponent {
 
 	constructor(public activeModal: NgbActiveModal) {
 	}
-
+	
+	@HostListener('document:keypress', ['$event'])
+	handleKeyboardEvent(event: KeyboardEvent) { 
+		if(event.keyCode == 13) this.Update();
+	}
 	Update() {
 		this.decide.emit(true);
 		this.closeMe();

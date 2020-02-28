@@ -8,6 +8,8 @@ import { CollectionService } from 'app/services/list/collection.service';
 import { Collection } from 'app/models/list/collection';
 import { CollectionEditComponent } from './collection-edit/collection-edit.component';
 import { CollectionImportComponent } from './collection-import/collection-import.component';
+import { CommonFilter } from 'app/models/filter/commonfilter';
+import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
 
 @Component({
   selector: 'app-collection',
@@ -21,28 +23,47 @@ export class CollectionComponent implements OnInit {
   Collection: Collection;
   loading: boolean;
   currentUser: any;
+  filter: CommonFilter = new CommonFilter();
+  pageSizesList: number[] = [5, 10, 20, 100];
   Total: any;
-  searchTerm: string = '';
-  pageIndex: number = 1;
-  pageSize: number = 20;
-  constructor(public util: UtilsService, config: NgbModalConfig, private service: CollectionService, private router: Router, private modalService: NgbModal) {
+  firstRowOnPage: any;
+  
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, 
+       null
+    ],
+    columnsName: ['Order', 'TermOfCollectionCode', 'TermOfCollectionName', 'Action'],
+    columnsNameMapping: [null, 'collectionCode', 'collectionName', null],
+    sortAbles: [false, true, true, false],
+    visibles: [false, true, true, false]
+  }
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: CollectionService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    utilsService.loadPaginatorLabels();
   }
 
   ngOnInit() {
+    this.filter.searchTerm = '';
+    this.filter.pageIndex = 1;
+    this.filter.pageSize = this.pageSizesList[1];
     this.reload();
   }
 
   reload() {
-    const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize);
-    // this.CollectionList = this.service.getCollectionList(filter);
+    this.filter.sortName = this.paginationSettings.sort.SortName;
+    this.filter.sortDirection = this.paginationSettings.sort.SortDirection; 
     this.loading = true;
     this.CollectionList = [];
-    this.service.getCollectionList(filter).subscribe((list: any) => {
-      this.Total = (list && list[0]) ? list[0].Total : 0;
+    this.service.getCollectionList(this.filter).subscribe((response: any) => {
+      const list = response.results ? response.results : [];
+      this.Total = (response && response.rowCount) ? response.rowCount : 0;
+      this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
       setTimeout(() => {
         this.loading = false;
         this.CollectionList = list || [];
@@ -53,13 +74,12 @@ export class CollectionComponent implements OnInit {
     this.edit(null);
   }
 
-  remove(Collection: Collection) {
-    this.Collection = Collection;
+  remove(id) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'TermOfCollection';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deleteCollection(Collection.Id, this.currentUser.UserId).subscribe(() => {
+      _this.service.deleteCollection(id).subscribe(() => {
         _this.reload();
       });
     });
@@ -90,6 +110,16 @@ export class CollectionComponent implements OnInit {
     document.body.append(a);
     a.click();
     a.remove();
+  }
+  sortToggles(colIndex: number) {
+    const _this = this;
+    if (this.paginationSettings.sortAbles[colIndex])
+      this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles, this.paginationSettings.sort, this.paginationSettings.columnsNameMapping)
+        .then(() => {
+          _this.reload();
+        });
+    else
+      this.utilsService.doNothing();
   }
 
 }

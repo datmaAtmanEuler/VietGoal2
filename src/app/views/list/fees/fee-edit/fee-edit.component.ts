@@ -16,7 +16,7 @@ export class FeeEditComponent implements OnInit {
 	@Input() FeeId: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
 
-	Fee: Fee = new Fee(0, '', '');
+	Fee: Fee = new Fee();
 	currentUser: any;
 
 	constructor(config: NgbModalConfig, private modalService: NgbModal, public activeModal: NgbActiveModal, private FeeService: FeeService, private route: ActivatedRoute, private router: Router) {
@@ -30,10 +30,10 @@ export class FeeEditComponent implements OnInit {
 	GetFeeById(FeeId: number) {
 		this.FeeService.getFee((FeeId) ? FeeId : this.FeeId).subscribe(
 			(object) => {
-				this.Fee = object || new Fee(0, '', '');
+				this.Fee = object || new Fee();
 			},
 			() => {
-				this.Fee = new Fee(0, '', '');
+				this.Fee = new Fee();
 			}
 		);
 	}
@@ -42,13 +42,12 @@ export class FeeEditComponent implements OnInit {
 	}
 
 	ReturnList() {
-		this.router.navigate(['danhmuc/Fee']);
-
+		this.router.navigate(['danhmuc/khoanthu']);
 	}
 
 	UpdateFee() {
-		this.FeeService.addOrUpdateFee(this.Fee, this.currentUser.UserId).subscribe(
-			() => {
+		this.FeeService.addOrUpdateFee(this.Fee).subscribe(
+			(resp) => {
 				if (!this.popup) {
 					this.ReturnList();
 				} else {

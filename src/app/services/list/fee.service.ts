@@ -31,17 +31,16 @@ import { environment } from 'environments/environment';
         return this.http.get(environment.serverUrl + `Fees/${id}` , this.httpOptions);
     }
 
-    addOrUpdateFee(Fee: Fee, by: null | number): Observable<any> {
-        if(Fee.Id == 0) {
-            Fee.CreatedBy = by;
+    addOrUpdateFee(Fee: Fee): Observable<any> {
+        if (Fee.id == 0) {
+            return this.http.post(environment.serverUrl + 'Fees', Fee, this.httpOptions);
         } else {
-            Fee.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `Fees/${Fee.id}`, Fee, this.httpOptions);
         }
-        return this.http.post(environment.serverUrl + `Fees`, Fee, this.httpOptions);
     }
 
-    deleteFee(FeeId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Fees/${FeeId}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteFee(FeeId: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `Fees/${FeeId}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

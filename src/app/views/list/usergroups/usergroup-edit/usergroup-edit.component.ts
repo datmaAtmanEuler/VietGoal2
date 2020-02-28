@@ -12,44 +12,42 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 })
 export class UserGroupEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('ID') ID: number;
+	@Input('id') id: number;
 	currentUser: any;
 	usergroup : UserGroup = new UserGroup(0, '', false, new Date(), null, 1, null, null);
 
 	constructor(public activeModal: NgbActiveModal,config: NgbModalConfig, private modalService: NgbModal,private usergroupService: UserGroupService, private route: ActivatedRoute, private router: Router) {
-		this.ID = this.route.snapshot.queryParams['ID'];
-		this.ID = (this.ID) ? this.ID : 0;
+		this.id = this.route.snapshot.queryParams['id'];
+		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}  
-	GetNhomById(ID : number)  
+	GetNhomById(id: number)  
 	{  
 		const _this = this;
-		if(ID){
-			this.usergroupService.getNhomList(ID).subscribe((usergroup: UserGroup) => {
-				_this.usergroup = usergroup;
-				if (_this.usergroup == null || _this.usergroup.Id == null) {
-					_this.usergroup = new UserGroup(0, '', false, new Date(), null, 1, null, null);
+		if(id){
+			this.usergroupService.getNhom(id).subscribe((group: UserGroup) => {
+				_this.usergroup = group;
+				if (_this.usergroup == null || _this.usergroup.id == null) {
+					_this.usergroup = new UserGroup(0, '', false,  new Date(),null, null, 1, null);
 				}
 			});
-		} else {
-			_this.usergroup = new UserGroup(0, '', false, new Date(), null, 1, null, null);
-		}
+		} 		else {
+					_this.usergroup = new UserGroup(0, '', false,  new Date(),null, null, 1, null);
+					}
 	}
 	ngOnInit() {
-		this.GetNhomById(this.ID);  
+		this.GetNhomById(this.id);  
 	}
 
 	ReturnList() {
-		this.router.navigate(['danhmuc/nhomnguoidung']); 
-
+		this.router.navigate(['danhmuc/nhomnguoidung']);
 	}
-
 	UpdateNhom() {
 		const _this = this;
-		this.usergroupService.addOrUpdateNhom(_this.usergroup, this.currentUser.UserId).subscribe((result: any) => {
+		this.usergroupService.addOrUpdateNhom(_this.usergroup).subscribe((result: any) => {
 			if (result) {
 				if(!_this.popup) {
 					_this.ReturnList();

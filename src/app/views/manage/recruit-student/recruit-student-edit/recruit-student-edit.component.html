@@ -7,14 +7,14 @@
           <div class="form-group col-6 row">
             <label class="control-label col-sm-4 label-middling" for="">Họ Tên:</label>
             <div class="col-sm-8">
-              <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="student.fullName">
+              <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="fullName">
             </div>
           </div>
           <div class="form-group col-6 row">
             <label class="control-label col-sm-4 label-middling" for="">Địa chỉ:</label>
             <div class="col-sm-8">
               <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="student.address">
+                [(ngModel)]="address">
             </div>
           </div>
           <div class="form-group col-6 row">
@@ -22,7 +22,7 @@
             <div class="ml-4">
               <mat-radio-group aria-labelledby="academy-radio-group-label"
                 class="academy-radio-group student-radio-gender" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="student.gender">
+                [(ngModel)]="gender">
                 <mat-radio-button class="academy-radio-button" [value]="1">
                   Nam
                 </mat-radio-button>
@@ -140,35 +140,35 @@
             <label class="control-label col-sm-4 label-middling" for="">Họ Tên:</label>
             <div class="col-sm-8">
               <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="student.parentFullName">
+                [(ngModel)]="parentFullName">
             </div>
           </div>
           <div class="form-group col-6 row">
             <label class="control-label col-sm-4 label-middling" for="">Điện thoại:</label>
             <div class="col-sm-8">
               <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="student.parentPhone">
+                [(ngModel)]="parentPhone">
             </div>
           </div>
           <div class="form-group col-6 row">
             <label class="control-label col-sm-4 label-middling" for="">Facebook:</label>
             <div class="col-sm-8">
               <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="student.parentFacebook">
+                [(ngModel)]="parentFacebook">
             </div>
           </div>
           <div class="form-group col-6 row">
             <label class="control-label col-sm-4 label-middling" for="">Email:</label>
             <div class="col-sm-8">
               <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="student.parentEmail">
+                [(ngModel)]="parentEmail">
             </div>
           </div>
           <div class="form-group col-12 row">
             <label class="control-label col-sm-2 label-middling" for="">Ghi chú:</label>
             <div class="col-sm-10">
               <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="student.parentNotes">
+                [(ngModel)]="parentNotes">
             </div>
           </div>
         </div>
@@ -179,20 +179,20 @@
             <label class="control-label col-sm-4 label-middling" for="">Nguồn:</label>
             <div class="col-sm-8">
               <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="student.source">
+                [(ngModel)]="source">
             </div>
           </div>
           <div class="form-group col-6 row">
             <label class="control-label col-sm-4 label-middling" for="">Người chốt:</label>
             <div class="col-sm-8">
               <input type="number" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-                [(ngModel)]="student.approver">
+                [(ngModel)]="approver">
             </div>
           </div>
-          <div class="form-group col-6 row">
+          <!-- <div class="form-group col-6 row">
             <label class="control-label col-sm-4 label-middling" for="">Trạng thái:</label>
             <div class="col-sm-8">
-              <!-- <input type="text" id="" class="form-control"> -->
+              <input type="text" id="" class="form-control">
               <input type="text" class=" form-control" [formControl]="statusControl"
                 [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayStatusFn"
@@ -201,7 +201,7 @@
                 <mat-option  [value]="[1, 'Trạng thái 2']">Trạng thái 2</mat-option>
               </mat-autocomplete>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="col-3"></div>
   
@@ -225,7 +225,7 @@
           <label class="control-label col-sm-4 label-middling" for="">Địa chỉ:</label>
           <div class="col-sm-8">
             <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="student.address">
+              [(ngModel)]="address">
           </div>
         </div>
         <div class="form-group col-6 row">
@@ -233,7 +233,7 @@
           <div class="ml-4">
             <mat-radio-group aria-labelledby="academy-radio-group-label"
               class="academy-radio-group student-radio-gender" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="student.gender">
+              [(ngModel)]="gender">
               <mat-radio-button class="academy-radio-button" [value]="'Male'">
                 Nam
               </mat-radio-button>
@@ -351,35 +351,35 @@
           <label class="control-label col-sm-4 label-middling" for="">Họ Tên:</label>
           <div class="col-sm-8">
             <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="student.parentFullName">
+              [(ngModel)]="parentFullName">
           </div>
         </div>
         <div class="form-group col-6 row">
           <label class="control-label col-sm-4 label-middling" for="">Điện thoại:</label>
           <div class="col-sm-8">
             <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="student.parentPhone">
+              [(ngModel)]="parentPhone">
           </div>
         </div>
         <div class="form-group col-6 row">
           <label class="control-label col-sm-4 label-middling" for="">Facebook:</label>
           <div class="col-sm-8">
             <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="student.parentFacebook">
+              [(ngModel)]="parentFacebook">
           </div>
         </div>
         <div class="form-group col-6 row">
           <label class="control-label col-sm-4 label-middling" for="">Email:</label>
           <div class="col-sm-8">
             <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="student.parentEmail">
+              [(ngModel)]="parentEmail">
           </div>
         </div>
         <div class="form-group col-12 row">
           <label class="control-label col-sm-2 label-middling" for="">Ghi chú:</label>
           <div class="col-sm-10">
             <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="student.parentNotes">
+              [(ngModel)]="parentNotes">
           </div>
         </div>
       </div>
@@ -390,14 +390,14 @@
           <label class="control-label col-sm-4 label-middling" for="">Nguồn:</label>
           <div class="col-sm-8">
             <input type="text" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="student.source">
+              [(ngModel)]="source">
           </div>
         </div>
         <div class="form-group col-6 row">
           <label class="control-label col-sm-4 label-middling" for="">Người chốt:</label>
           <div class="col-sm-8">
             <input type="number" id="" class="form-control" [ngModelOptions]="{standalone: true}"
-              [(ngModel)]="student.approver">
+              [(ngModel)]="approver">
           </div>
         </div>
         <div class="form-group col-6 row">

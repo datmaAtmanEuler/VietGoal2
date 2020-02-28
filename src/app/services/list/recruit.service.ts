@@ -27,14 +27,12 @@ import { ImportViewModel } from 'app/models/importviewmodel';
         return this.http.get(environment.apiUrl + `Recruits/${id}` , this.httpOptions);
     }
 
-    addOrUpdateRecruit(recruit: Recruit, by: null | number): Observable<any> {
-        recruit.DisplayOrder = parseInt(recruit.DisplayOrder + '');
-        if (recruit.Id != 0 && recruit.Id) {
-            recruit.UpdatedBy = by;
+    addOrUpdateRecruit(recruit: Recruit): Observable<any> {
+        if (recruit.id == 0) {
+            return this.http.post(environment.serverUrl + 'Recruits', recruit, this.httpOptions);
         } else {
-            recruit.CreatedBy = by;
+            return this.http.put(environment.serverUrl + `Recruits/${recruit.id}`, recruit, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Recruits/save`, recruit, this.httpOptions);
     }
 
     deleteRecruit(id: number, deletedBy: number): Observable<any> {

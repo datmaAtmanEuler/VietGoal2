@@ -65,8 +65,8 @@ export class StudentReserveComponent implements OnInit {
   ],
   columnsName: ['Order', 'LastName', 'FirstName', 'Gender', 'DayofBirth', 'ReserveDay','RemainDays','Class','Action'],
   columnsNameMapping: ['id', 'lastName', 'firstName', 'gender', 'dayofBirth', 'reserveDay','remainDays','class',''],
-  sortAbles: [false, true, true, true, false,false,true, false],
-  visibles:  [true, true, true, true, true, true,true, true]
+  sortAbles: [false, true, true, true, false,false,true,false, false],
+  visibles:  [true, true, true, true, true, true,true, true,true]
 }
 
 
@@ -100,21 +100,17 @@ export class StudentReserveComponent implements OnInit {
       }
   }
   ngOnInit() {
-  
-    
     this.reload();
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
-  
-
   remove(aclass: any) {
     this.StudentReserve = aclass;
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-    modalRef.componentInstance.confirmObject = 'class';
+    modalRef.componentInstance.confirmObject = 'Class';
     modalRef.componentInstance.decide.subscribe(() => {
       _this.service.deleteStudentReserve(aclass.id, this.currentUser.UserId).subscribe(() => {
         _this.reload();

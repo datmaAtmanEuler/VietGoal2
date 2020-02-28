@@ -141,8 +141,6 @@ export class CoachAbsentComponent implements OnInit {
         this.reload();
       });
     });
-
-
   }
   pageEvent(pageE: any) {
     this.pageIndex = pageE.pageIndex + 1;

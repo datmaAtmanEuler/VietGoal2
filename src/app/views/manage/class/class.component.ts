@@ -71,8 +71,6 @@ export class ClassComponent implements OnInit {
   sortAbles: [false, true, true, true, false,false,true, false],
   visibles:  [true, true, true, true, true, true,true, true]
 }
-
-
   /**
    * END SORT SETTINGS
    */

@@ -22,16 +22,15 @@ import { DistrictService } from '../../../../services/list/district.service';
 import { WardService } from '../../../../services/list/ward.service';
 import { UserService } from '../../../../services/acl/user.service';
 import { AgeService } from '../../../../services/list/age.service';
-import { Class } from '../../../../models/manage/class';
-import { ClassFilter } from 'app/models/filter/classfilter';
-import { Filter } from 'app/models/filter/filter';
+import { Filter } from '../../../../models/filter/filter';
 
-import { DistrictFilter } from 'app/models/filter/districtfilter';
-import { WardFilter } from 'app/models/filter/wardfilter';
-import { Week, WeekToList, WeekToListName } from 'app/models/enums/week.enums';
-import { ShiftDay, ShiftDayToList, ShiftDayToListName } from 'app/models/enums/shiftday.enums';
-import { RecruitStudentService } from 'app/services/manage/recruit-student.service';
-import { StudentService } from 'app/services/manage/student.service';
+import { DistrictFilter } from '../../../../models/filter/districtfilter';
+import { WardFilter } from '../../../../models/filter/wardfilter';
+import { Week, WeekToList, WeekToListName } from '../../../../models/enums/week.enums';
+import { ShiftDay, ShiftDayToList, ShiftDayToListName } from '../../../../models/enums/shiftday.enums';
+import { RecruitStudentService } from '../../../../services/manage/recruit-student.service';
+import { StudentService } from '../../../../services/manage/student.service';
+import { RecruitStudent } from '../../../../models/manage/recruit-student';
 /**
  * End import services
  * **/
@@ -47,7 +46,6 @@ export class RecruitStudentEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('id') id: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
-
 	currentUser: any = {};
 	provincesList: any[] = [];
 	districtsList: any[] = [];
@@ -57,20 +55,14 @@ export class RecruitStudentEditComponent implements OnInit {
 	mainCoachsList: any[] = [];
 	viceCoachsList: any[] = [];
 	student: any;
-	weeksList: Week[] = WeekToList();
-	weeksListName: string[] = WeekToListName();
-	shiftDaysList: ShiftDay[] = ShiftDayToList();
-	shiftDaysListName: string[] = ShiftDayToListName();
-
 	searchProvincesCtrl = new FormControl();
 	searchDistrictsCtrl = new FormControl();
 	searchWardsCtrl = new FormControl();
-
 	searchAgesCtrl = new FormControl();
 	searchManagersCtrl = new FormControl();
 	searchMainCoachsCtrl = new FormControl();
 	searchViceCoachsCtrl = new FormControl();
-	yard: Class = new Class (0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+	recruitstudent : any[] ;
 	isLoading = false;
 	errorMsg: string;
 
@@ -209,12 +201,10 @@ export class RecruitStudentEditComponent implements OnInit {
 		});
 		this.GetStudentById(this.id);
 	}
-
 	ReturnList() {
 		this.router.navigate(['quanly/recruit-student']);
 
 	}
-
 	UpdateStudent() {
 		const _this = this;
 		 this.studentService.addOrUpdate(_this.student).subscribe((result : any)=>{
@@ -231,11 +221,7 @@ export class RecruitStudentEditComponent implements OnInit {
 			}
 		 });
 	}
-	
-	
-
 	closeMe() {
 		this.activeModal.close();
 	}
-
 }

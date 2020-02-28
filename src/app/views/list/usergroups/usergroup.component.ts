@@ -11,6 +11,7 @@ import { MatPaginatorIntl } from '@angular/material/paginator';
 import {TranslateService} from '@ngx-translate/core';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { UserGroupImportComponent } from './usergroup-import/usergroup-import.component';
+import { UtilsService } from '../../../services/utils.service';
 @Component({
   selector: 'app-usergroup',
   templateUrl: './usergroup.component.html',
@@ -31,15 +32,23 @@ export class UserGroupComponent implements OnInit {
     /**
    * BEGIN SORT SETTINGS
    */
-  sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, null];
-  columnsName: string[] = ['Order', 'GroupCode', 'GroupName', 'Action'];
-  columnsNameMapping: string[] = ['ID', 'GroupCode', 'GroupName', 'Action'];
-  sortAbles: boolean[] = [false, true, true, false];
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, 
+      null
+    ],
+    columnsName:['Order', 'GroupCode', 'GroupName', 'Action'],
+    columnsNameMapping: ['id', 'groupCode', 'groupName', ''],
+    sortAbles: [false, true,true, false],
+    visibles:  [true, true, true, true, ]
+  }
+
   /**
    * END SORT SETTINGS
    */
-  constructor(private translate: TranslateService,
+  constructor(public utilsService: UtilsService, private translate: TranslateService,
     private matCus: MatPaginatorIntl, config: NgbModalConfig, private service: UserGroupService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -79,7 +88,7 @@ export class UserGroupComponent implements OnInit {
     this.usergroup = usergroup;
   const _this = this;
   const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-  modalRef.componentInstance.confirmObject = 'Usergroup';
+  modalRef.componentInstance.confirmObject = 'Groups';
   modalRef.componentInstance.decide.subscribe(() => {
       _this.deleteNhom();
   });
@@ -87,7 +96,7 @@ export class UserGroupComponent implements OnInit {
 
 reload() {
   const _this = this;
-  const filter: Filter = new Filter(this.searchTerm, this.pageIndex, this.pageSize, 'Id', 'ASC');
+  const filter: Filter = new Filter('', this.pageIndex, this.pageSize, 'id', 'ASC');
   _this.usergroupList = [];
   this.service.getNhomList(filter).subscribe(
       (response: any) => {
@@ -115,52 +124,21 @@ reload() {
     const modalRef = this.modalService.open(UserGroupEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
     if (Id) {
-      modalRef.componentInstance.Idnhom = Id;
+      modalRef.componentInstance.id = Id;
     }
     modalRef.result.then(function(){
         _this.reload();
     });
   }
-
-
   deleteNhom() {
     const _this = this;
-    this.service.deleteNhom(this.usergroup.Id, this.currentUser.UserId).subscribe((rs: any) => {
+    this.service.deleteNhom(this.usergroup.id).subscribe((rs: any) => {
       _this.reload();
     });
   }
-  toggleSort(columnIndex: number): void {
-    let toggleState =  this.sortToggles[columnIndex];
-    switch(toggleState) {
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
-      case SORD_DIRECTION.ASC: 
-      {
-        toggleState = SORD_DIRECTION.DESC;
-        break;
-      }
-      default:
-      {
-        toggleState = SORD_DIRECTION.ASC;
-        break;
-      }
-    }
-    this.sortToggles.forEach((s: string, index: number) => {
-      if(index == columnIndex) {
-        this.sortToggles[index] = this.sort.SortDirection = toggleState;
-      } else {
-        this.sortToggles[index] = SORD_DIRECTION.ASC;
-      }
-    });
-
-    this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'ID' : this.columnsNameMapping[columnIndex];
-    this.reload();
-  }
   
   doNothing(): void {}
+
   openImport() {
     const _this = this;
     const modalRef = this.modalService.open(UserGroupImportComponent, { size: 'lg' });

@@ -38,8 +38,8 @@ export class RecruitStudentService {
         }
     }
 
-    deleteRecruitStudent(RecruitStudentId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `Students/${RecruitStudentId}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteRecruitStudent(RecruitStudentId: number): Observable<any> {
+        return this.http.delete(environment.apiUrl + `Students/${RecruitStudentId}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

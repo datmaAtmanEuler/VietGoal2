@@ -38,7 +38,7 @@ import { RecruitStudentImportComponent } from '../recruit-student/recruit-studen
 })
 export class RecruitStudentComponent implements OnInit {
   recruitstudentList: any[] = [];
-  RecruitStudent: any;
+  recruitstudent: any;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
@@ -165,7 +165,7 @@ export class RecruitStudentComponent implements OnInit {
         this.yardsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
+      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, 0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -189,7 +189,7 @@ export class RecruitStudentComponent implements OnInit {
         this.traininggroundsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
+      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter(value, 1, 100, 0,0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -213,7 +213,7 @@ export class RecruitStudentComponent implements OnInit {
           this.classList = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.classService.getClassList(new ClassFilter('', this.pageIndex, this.pageSize, 0,0,0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0))
+        switchMap(value => this.classService.getClassList(new ClassFilter(value, this.pageIndex, this.pageSize, 0,0,0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -231,14 +231,13 @@ export class RecruitStudentComponent implements OnInit {
   
         });
   }
-
-  remove(aclass: any) {
-    this.RecruitStudent = aclass;
+  remove(registration: any) {
+    this.recruitstudent = registration;
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-    modalRef.componentInstance.confirmObject = 'class';
+    modalRef.componentInstance.confirmObject = 'StudentRecruit';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deleteRecruitStudent(aclass.ID, this.currentUser.UserId).subscribe(() => {
+      _this.service.deleteRecruitStudent(registration.id).subscribe(() => {
         _this.reload();
       });
     });
@@ -270,22 +269,18 @@ export class RecruitStudentComponent implements OnInit {
         }
     );
   }
-
-
   add() {
     this.edit(null);
   }
-
   edit(RecruitStudentID: null | number) {
     const _this = this;
     const modalRef = this.modalService.open(RecruitStudentEditComponent, { size: 'xl' });
     modalRef.componentInstance.popup = true;
-    modalRef.componentInstance.RecruitStudentID = RecruitStudentID;
+    modalRef.componentInstance.id = RecruitStudentID;
     modalRef.result.then(function (result) {
       _this.reload();
     });
   }
-
   displayAreaFn(area): string {
     return area && area.areaName && !area.notfound ? area.areaName : '';
   }
@@ -303,7 +298,6 @@ export class RecruitStudentComponent implements OnInit {
      
     });
   }
- 
   changeYard(yardID : number) {
     this.traininggroundfilter.YardId = yardID;
     this.traininggroundservice.getTrainingGroundsList(this.traininggroundfilter).subscribe((response: any) => {
@@ -312,7 +306,6 @@ export class RecruitStudentComponent implements OnInit {
      
     });
   }
-
   changeTrainingGround(traininggroundID : number) {
     this.classfilter.TrainingGroundId = traininggroundID;
     this.classService.getClassList(this.classfilter).subscribe((response: any)=>{
@@ -324,7 +317,6 @@ export class RecruitStudentComponent implements OnInit {
       this.filter.classId = aclassId;
       this.reload();
   }
- 
   doNothing(): void {}
 
   openImport() {
@@ -343,7 +335,5 @@ export class RecruitStudentComponent implements OnInit {
     a.click();
     a.remove();
   }
-  
-
 }
 

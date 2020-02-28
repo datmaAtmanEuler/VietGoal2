@@ -29,17 +29,16 @@ export class CollectionService {
         return this.http.get(environment.serverUrl + `Collections/${id}` , this.httpOptions);
     }
 
-    addOrUpdateCollection(Collection: Collection, by: null | number): Observable<any> {
-        if(Collection.Id == 0) {
-            Collection.CreatedBy = by;
+    addOrUpdateCollection(Collection: Collection): Observable<any> {
+        if (Collection.id == 0) {
+            return this.http.post(environment.serverUrl + 'Collections', Collection, this.httpOptions);
         } else {
-            Collection.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `Collections/${Collection.id}`, Collection, this.httpOptions);
         }
-        return this.http.post(environment.serverUrl + `Collections`, Collection, this.httpOptions);
     }
 
-    deleteCollection(CollectionId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Collections/${CollectionId}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteCollection(CollectionId: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `Collections/${CollectionId}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

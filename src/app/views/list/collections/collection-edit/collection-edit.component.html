@@ -3,43 +3,43 @@
         <p class="h4 mb-4">Collections List Information</p>
         <form>
             <div class="form-group row">
-                <label class="control-label col-sm-2 label-middling" for="MaDotThu">Mã đợt thu:</label>
+                <label class="control-label col-sm-2 label-middling" for="MaDotThu">{{ "MESSAGE.NameList.TermOfCollectionCode" | translate }}:</label>
                 <div class="col-sm-10">
-                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaDotThu" [(ngModel)]="DotThu.CollectionCode"
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaDotThu" [(ngModel)]="Collection.collectionCode"
                         class="form-control" placeholder="Mã đợt thu">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="control-label col-sm-2 label-middling" for="TenDotThu">Tên đợt thu:</label>
+                <label class="control-label col-sm-2 label-middling" for="TenDotThu">{{ "MESSAGE.NameList.TermOfCollectionName" | translate }}:</label>
                 <div class="col-sm-10">
-                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenDotThu" [(ngModel)]="DotThu.CollectionName"
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenDotThu" [(ngModel)]="Collection.collectionName"
                         class="form-control" placeholder="Tên đợt thu">
                 </div>
             </div>
 
         </form>
         <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>Close</button>
-        <button class="btn btn btn-info" (click)="UpdateDotThu()" alt=''>Update</button>
+        <button class="btn btn btn-info" (click)="UpdateCollection()" alt=''>Update</button>
     </div>
 </div>
 <div class="text-center border border-light p-5" *ngIf="!popup">
         <p class="h4 mb-4">Collections List Information</p>
         <form>
             <div class="form-group row">
-                <label class="control-label col-sm-2 label-middling" for="MaDotThu">Mã đợt thu:</label>
+                <label class="control-label col-sm-2 label-middling" for="MaDotThu">{{ "MESSAGE.NameList.TermOfCollectionCode" | translate }}:</label>
                 <div class="col-sm-10">
-                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaDotThu" [(ngModel)]="DotThu.CollectionCode"
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="MaDotThu" [(ngModel)]="Collection.collectionCode"
                         class="form-control" placeholder="Mã đợt thu">
                 </div>
             </div>
             <div class="form-group row">
-                <label class="control-label col-sm-2 label-middling" for="TenDotThu">Tên đợt thu:</label>
+                <label class="control-label col-sm-2 label-middling" for="TenDotThu">{{ "MESSAGE.NameList.TermOfCollectionName" | translate }}:</label>
                 <div class="col-sm-10">
-                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenDotThu" [(ngModel)]="DotThu.CollectionName"
+                    <input [ngModelOptions]="{standalone: true}" type="text" id="TenDotThu" [(ngModel)]="Collection.collectionName"
                         class="form-control" placeholder="Tên đợt thu">
                 </div>
             </div>
         </form>
         <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>Back</button>
-        <button class="btn btn btn-info" (click)="UpdateDotThu()" alt=''>Update</button>
+        <button class="btn btn btn-info" (click)="UpdateCollection()" alt=''>Update</button>
     </div>

@@ -29,6 +29,9 @@ import { FileUploadModule } from '../../shared/file-upload/file-upload.module';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
+
+import { AcademyColorPickerModule } from '../../shared/academy-color-picker/academy-color-picker.module';
+
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import {
@@ -118,6 +121,7 @@ import { StudentReserveEditComponent } from '../../views/manage/studentreserve/s
 
 @NgModule({
   imports: [
+    AcademyColorPickerModule,
     NgxMaterialTimepickerModule,
     FileUploadModule,
     NgbModalModule,

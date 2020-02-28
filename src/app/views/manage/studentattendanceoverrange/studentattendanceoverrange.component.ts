@@ -36,8 +36,8 @@ export class StudentAttendanceOverRangeComponent implements OnInit {
       SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
       null
     ],
-    columnsName: ['Order', 'Họ tên', 'Ngày sinh', 'Từ lớp', 'Sang lớp', 'Action'],
-    // columnsName: ['Order', 'FullName', 'DateOfBirth', 'FromClass', 'ToClass', 'Action'],
+    // columnsName: ['Order', 'Họ tên', 'Ngày sinh', 'Từ lớp', 'Sang lớp', 'Action'],
+    columnsName: ['Order', 'FullName', 'DateOfBirth', 'FromClass', 'ToClass', 'Action'],
     columnsNameMapping: [null, 'field1', 'field2', 'field3', 'field4', null],
     sortAbles: [false, true, true, true, true, false],
     visibles: [true, true, true, true, true, true]

@@ -72,4 +72,9 @@ export class AcademyDatepickerComponent implements OnInit {
     if (this.value) this.selectDay(this.date.getDate());
     this.updateMonth();
   }
+
+  prevent(e: Event) {
+    e.returnValue = false;
+    e.preventDefault();
+  }
 }

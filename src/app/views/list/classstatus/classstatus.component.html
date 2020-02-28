@@ -38,23 +38,34 @@
                         <div class="col-12">
                             <div class="card-body table-responsive">
                                 <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
-                                <div class="vietgoal-table-settings style-1">
+                                <div class="vietgoal-table-settings vg-scroll">
                                     <table class="table table-condensed table-striped table-bordered table-hover"
                                         style="width: 100%">
                                         <thead>
-                                            <tr>
-                                                <th>{{ "MESSAGE.NameList.Order" | translate}}</th>
-                                                <th>{{ "MESSAGE.NameList.ClassStatusName" | translate}}</th>
-                                                <th>{{ "MESSAGE.NameList.ClassStatusCode" | translate}}</th>
-                                                <th>{{ "MESSAGE.NameList.Action" | translate}}</th>
-                                            </tr>
+                                            <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
+                                              <th
+                                                [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
+                                                (click)="sortToggles(colIndex)">
+                                                <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                                                  <i style="float: none;" class="material-icons asc-sort-icons"
+                                                    *ngIf="paginationSettings.sortAbles[colIndex]">
+                                                    {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                                                  </i>
+                                                </span>
+                                              </th>
+                                            </ng-container>
                                         </thead>
                                         <tbody>
                                             <ng-container *ngFor="let dt of ClassStatusList; let i = index;">
                                                 <tr>
                                                     <td>{{firstRowOnPage + i }}</td>
-                                                    <td>{{ dt.classStatusName }}</td>
-                                                    <td>{{ dt.classStatusCode }}</td>
+                                                    <ng-container
+                                                        *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
+                                                        <td
+                                                            *ngIf="paginationSettings.visibles[colIndex]">
+                                                            {{ utilsService.getColumnValue(dt, colIndex, paginationSettings.columnsNameMapping) }}
+                                                        </td>
+                                                    </ng-container>
                                                     <td class="my-action-item">
                                                         <button type="button" (click)="edit(dt.id)"
                                                             title="{{ 'MESSAGE.NameList.Edit' | translate}}"

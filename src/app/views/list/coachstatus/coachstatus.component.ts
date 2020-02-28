@@ -116,4 +116,14 @@ export class CoachStatusComponent implements OnInit {
     a.click();
     a.remove();
   }
+  sortToggles(colIndex: number) {
+    const _this = this;
+    if (this.paginationSettings.sortAbles[colIndex])
+      this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles, this.paginationSettings.sort, this.paginationSettings.columnsNameMapping)
+        .then(() => {
+          _this.reload();
+        });
+    else
+      this.utilsService.doNothing();
+  }
 }

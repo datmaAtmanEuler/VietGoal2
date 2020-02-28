@@ -1,0 +1,39 @@
+::host {
+  display: block;
+  width: 316px;
+  padding: 16px;
+}
+.color-wrapper {
+  height: 250px;
+
+  z-index: 10000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12),
+              0 1px 2px rgba(0, 0, 0, 0.24);
+  position: absolute;
+  display: none;
+  top: calc(100% + 10px);
+  left: 0;
+}
+.isActive {
+  display: block;
+}
+.input-wrapper {
+  margin-top: 16px;
+  display: flex;
+  border-radius: 1px;
+  border: 1px solid rgb(220, 220, 220);
+  padding: 8px;
+  height: 32px;
+  justify-content: center;
+}
+.color-div {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid rgb(220, 220, 220);
+}
+.text {
+  flex: 1;
+  font-family: 'Helvetica';
+  line-height: 32px;
+}

@@ -1,0 +1,10 @@
+<div>
+	<input type="text" class="Input-field" [value]="result"
+	    [ngClass]="{ 'ng-not-empty': result }"
+	    (click)="onShowColorPicker($event)" class="{{ class }}" id="{{ id }}" 
+	    (focus)="onShowColorPicker($event)" placeholder="{{ placeholder }}" />
+	<div class="color-wrapper" [ngClass]="{ 'isActive': show }">
+	  <academy-color-palette [hue]="hue" (color)="color = $event"></academy-color-palette>
+	  <academy-color-slider  (color)="hue=$event" style="margin-left:16px"></academy-color-slider>
+	</div>
+</div>

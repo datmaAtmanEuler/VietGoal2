@@ -1,7 +1,7 @@
 <div class="Input">
   <input type="text" class="Input-field" [(ngModel)]="result"
     [ngClass]="{ 'ng-not-empty': result }"
-    (click)="onShowCalendar($event)"
+    (click)="onShowCalendar($event)" (keydown)="prevent($event)"
     (focus)="onShowCalendar($event)" />
   <label class="Input-label">{{ label }}</label>
   <div class="date" [ngClass]="{ 'isActive': showCalendar }">

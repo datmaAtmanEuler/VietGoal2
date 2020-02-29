@@ -9,7 +9,7 @@ import { Component, Input, Output, AfterViewInit, EventEmitter } from '@angular/
   }
 })
 export class AcademyColorPickerComponent implements AfterViewInit {
-  public hue: string;
+  public hue: string = '#ff00ff';
   public color: string;
   @Input() label:  string;
   @Input() value:  string;

@@ -103,7 +103,7 @@ export class CollectionComponent implements OnInit {
   }
 
   downloadTemplate() {
-    var fileName = 'Yards_Import.xlsx';
+    var fileName = 'Collections_Import.xlsx';
     var a = document.createElement('a');
     a.href = this.service.getTemplate(fileName);
     a.download = fileName;

@@ -1,5 +1,5 @@
 export class TrainingGround {
-	Id: null| number;
+	id: null| number;
 	TrainingGroundCode: string;
     TrainingGroundName: string;
     YardId: null | number;
@@ -14,10 +14,10 @@ export class TrainingGround {
 	DeletedDate: null | Date;
 	DisplayOrder : null | number;
 	
-	constructor(Id: number, TrainingGroundCode: string,  TrainingGroundName: string, YardId: null | number, Address: string, Visible: boolean,
+	constructor(id: number, TrainingGroundCode: string,  TrainingGroundName: string, YardId: null | number, Address: string, Visible: boolean,
 		CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
 		UpdatedBy: null | number, DeletedBy: null | number, DeletedDate: null | Date, DisplayOrder: null | number) {
-		this.Id = Id;
+		this.id = id;
         this.YardId = YardId;
 		this.TrainingGroundCode = TrainingGroundCode;
         this.TrainingGroundName = TrainingGroundName;

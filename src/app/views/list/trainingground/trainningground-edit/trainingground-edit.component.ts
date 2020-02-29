@@ -22,7 +22,7 @@ import { AreaService } from 'app/services/list/area.service';
 
 export class TrainingGroundEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
-	@Input('Id') Id: number;
+	@Input('id') id: number;
 	@Input('UserId') UserId: null | number;
 	currentUser: any;
 	searchAreasCtrl = new FormControl();
@@ -34,8 +34,8 @@ export class TrainingGroundEditComponent implements OnInit {
 	trainingground: TrainingGround = new TrainingGround(0,'', '', 0,'',null,new Date(),null,1,0,0,null,0);
 
 	constructor(private areaService: AreaService, private yardservice: YardService, public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private service: TrainingGroundService, private route: ActivatedRoute, private router: Router) {
-		this.Id = this.route.snapshot.queryParams['Id'];
-		this.Id = (this.Id) ? this.Id : 0;
+		this.id = this.route.snapshot.queryParams['id'];
+		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
@@ -47,7 +47,7 @@ export class TrainingGroundEditComponent implements OnInit {
 		if(ID){
 			this.service.getTrainingGround(ID).subscribe((trainingground: TrainingGround) => {
 				_this.trainingground = trainingground;
-				if (_this.trainingground == null || _this.trainingground.Id == null) {
+				if (_this.trainingground == null || _this.trainingground.id == null) {
 					_this.trainingground = new TrainingGround(0,'', '', 0,'',null,new Date(),null,1,0,0,null,0);
 				}
 			});
@@ -63,7 +63,7 @@ export class TrainingGroundEditComponent implements OnInit {
 		return user && user.YardName && !user.notfound ? user.YardName : '';
 	}
 	changeArea() {
-		this.yardservice.getYardsList(new YardFilter('', 1, 100, null, 'Id', 'ASC')).subscribe((list) => {
+		this.yardservice.getYardsList(new YardFilter('', 1, 100, 0, 'id', 'ASC')).subscribe((list) => {
 			this.yardsList = list;
 		});
 	}
@@ -77,7 +77,7 @@ export class TrainingGroundEditComponent implements OnInit {
 					this.areasList = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'Id', 'ASC'))
+				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, 0, 'id', 'ASC'))
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -120,7 +120,7 @@ export class TrainingGroundEditComponent implements OnInit {
 				this.yardsList = data.length ? data : [{ notfound: 'Not Found' }];
 			}
 		});
-		this.GetTrainingGroundById(this.Id);  
+		this.GetTrainingGroundById(this.id);  
 	}
 
 	ReturnList() {
@@ -129,7 +129,7 @@ export class TrainingGroundEditComponent implements OnInit {
 
 	UpdateTrainingGround() {
 		const _this = this;
-		this.service.addOrUpdateTrainingGround(_this.trainingground, this.UserId).subscribe((result: any) => {
+		this.service.addOrUpdateTrainingGround(_this.trainingground).subscribe((result: any) => {
 			if (result) {
 				if(!_this.popup) {
 					_this.ReturnList();

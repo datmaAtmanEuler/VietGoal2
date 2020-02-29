@@ -182,7 +182,7 @@ export class RecruitStudentEditComponent implements OnInit {
 				this.wardsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.wardService.getWardsList(new WardFilter(value, 1, 100, null, null, 'id', 'ASC'))
+			switchMap(value => this.wardService.getWardsList(new WardFilter(value, 1, 100, 0, 0, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false

@@ -27,18 +27,16 @@ export class TrainingGroundService {
         return this.http.get(environment.apiUrl + `TrainingGrounds/${id}` , this.httpOptions);
     }
 
-    addOrUpdateTrainingGround(train: TrainingGround, by: null | number): Observable<any> {
-        train.DisplayOrder = parseInt(train.DisplayOrder + '');
-        if (train.Id != 0 && train.Id) {
-            train.UpdatedBy = by;
+    addOrUpdateTrainingGround(train: TrainingGround): Observable<any> {
+        if (train.id == 0) {
+            return this.http.post(environment.serverUrl + 'TrainingGrounds', train, this.httpOptions);
         } else {
-            train.CreatedBy = by;
+            return this.http.put(environment.serverUrl + `TrainingGrounds/${train.id}`, train, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `TrainingGrounds`, train, this.httpOptions);
     }
 
-    deleteTrainingGround(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `TrainingGrounds/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteTrainingGround(id: number): Observable<any> {
+        return this.http.delete(environment.apiUrl + `TrainingGrounds/${id}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

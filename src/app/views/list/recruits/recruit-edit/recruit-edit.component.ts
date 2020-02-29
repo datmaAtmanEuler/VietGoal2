@@ -14,13 +14,13 @@ import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.compo
 export class RecruitEditComponent implements OnInit {
 
 	@Input('popup') popup: boolean;
-	@Input('Id') Id: null | number;
+	@Input('id') id: null | number;
 	currentUser: any;
 	recruit: Recruit = new Recruit(0, '', '', '',0, new Date(), null, 1, null, null, null);
 
 	constructor(  private modalService: NgbModal, config: NgbModalConfig, public activeModal: NgbActiveModal, private service: RecruitService, private route: ActivatedRoute, private router: Router) {
-		this.Id = this.route.snapshot.queryParams['Id'];
-		this.Id = (this.Id) ? this.Id : 0;
+		this.id = this.route.snapshot.queryParams['id'];
+		this.id = (this.id) ? this.id : 0;
 	}  
 	GetRecruitById(ID: number)  
 	{  
@@ -28,7 +28,7 @@ export class RecruitEditComponent implements OnInit {
 		if(ID){
 			this.service.getRecruit(ID).subscribe((recruit: Recruit) => {
 				_this.recruit = recruit;
-				if (_this.recruit == null || _this.recruit.Id == null) {
+				if (_this.recruit == null || _this.recruit.id == null) {
 					_this.recruit = new Recruit(0, '', '', '',0, new Date(), null, 1, null, null, null);
 				}
 			});
@@ -37,16 +37,15 @@ export class RecruitEditComponent implements OnInit {
 		}
 	}
 	ngOnInit() {
-		this.GetRecruitById(this.Id);  
+		this.GetRecruitById(this.id);  
 	}
 
 	ReturnList() {
-		this.router.navigate(['danhmuc/recruit']); 
-
+		this.router.navigate(['danhmuc/kqchieusinh']);
 	}
 	UpdateRecruit() {
 		const _this = this;
-		this.service.addOrUpdateRecruit(_this.recruit, this.currentUser.UserId).subscribe((result: any) => {
+		this.service.addOrUpdateRecruit(_this.recruit).subscribe((result: any) => {
 			if (result) {
 				if(!_this.popup) {
 					_this.ReturnList();
@@ -58,7 +57,6 @@ export class RecruitEditComponent implements OnInit {
 			}
 		});
 	}
-
 	closeMe() {
 		this.activeModal.close();
 	}

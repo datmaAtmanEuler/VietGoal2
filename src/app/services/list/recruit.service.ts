@@ -24,7 +24,7 @@ import { ImportViewModel } from 'app/models/importviewmodel';
     }
     
     getRecruit(id: any): Observable<any> {
-        return this.http.get(environment.apiUrl + `Recruits/${id}` , this.httpOptions);
+        return this.http.get(environment.serverUrl + `Recruits/${id}` , this.httpOptions);
     }
 
     addOrUpdateRecruit(recruit: Recruit): Observable<any> {
@@ -35,8 +35,8 @@ import { ImportViewModel } from 'app/models/importviewmodel';
         }
     }
 
-    deleteRecruit(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `Recruits/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteRecruit(id: number): Observable<any> {
+        return this.http.delete(environment.apiUrl + `Recruits/${id}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

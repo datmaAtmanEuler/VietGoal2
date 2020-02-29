@@ -62,13 +62,12 @@ export class ScheduleComponent implements OnInit {
             null,
             SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
             SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
-            SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
-            null
+            SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC
         ],
-        columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'MainCoach', 'ViceCoach', 'MainCoachReal', 'ViceCoachReal', 'Action'],
-        columnsNameMapping: ['Id', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'MainCoach', 'ViceCoach', 'MainCoachReal', 'ViceCoachReal', ''],
-        sortAbles: [false, true, true, true, true, true, true, true, true, true, true, true, true, false],
-        visibles: [true, true, true, true, true, true, true, true, true, true, true, true, true, true]
+        columnsName: ['Order', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'MainCoach', 'ViceCoach', 'MainCoachReal', 'ViceCoachReal'],
+        columnsNameMapping: ['Id', 'Area', 'Yard', 'YardArea', 'Class', 'DayOrderInWeek', 'ClassTime', 'MainCoach', 'ViceCoach', 'MainCoachReal', 'ViceCoachReal'],
+        sortAbles: [false, true, true, true, true, true, true, true, true, true, true, true, true],
+        visibles: [true, true, true, true, true, true, true, true, true, true, true, true, true]
     }
     currentUser: any;
 

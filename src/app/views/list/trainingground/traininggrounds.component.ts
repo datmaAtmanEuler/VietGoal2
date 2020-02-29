@@ -178,7 +178,7 @@ edit(ID: null | number) {
 
 deleteTraningGround() {
   const _this = this;
-  this.service.deleteTrainingGround(this.traininground.ID, this.currentUser.UserId).subscribe((res: any) => {
+  this.service.deleteTrainingGround(this.traininground.id).subscribe((res: any) => {
     _this.reload();
   });
 }

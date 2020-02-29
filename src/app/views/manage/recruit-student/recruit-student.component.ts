@@ -44,10 +44,9 @@ export class RecruitStudentComponent implements OnInit {
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
-  loading: boolean = true;
+  isLoading: boolean = true;
   Total: any;
   firstRowOnPage: any;
-
   areasList: any;
   yardsList: any;
   traininggroundsList: any;
@@ -60,7 +59,7 @@ export class RecruitStudentComponent implements OnInit {
   searchYardsCtrl = new FormControl();
   searchTrainingGroundsCtrl = new FormControl();
   searchClassCtrl = new FormControl();
-  isLoading = false;
+  loading : boolean;
   searchAdvanced: boolean = false;
   /**
   * BEGIN SORT SETTINGS
@@ -132,7 +131,6 @@ export class RecruitStudentComponent implements OnInit {
     }
   }
   filtersEventsBinding() {
-
     this.searchAreasCtrl.valueChanges
       .pipe(
         startWith(''),
@@ -251,7 +249,7 @@ export class RecruitStudentComponent implements OnInit {
   reload() {
     const _this = this;
     const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,null, 'id','ASC',0);
-    this.loading = true;
+    this.isLoading = true;
     this.recruitstudentList = [];
     this.service.getRecruitStudentList(filter).subscribe(
         (response: any) => {
@@ -260,12 +258,12 @@ export class RecruitStudentComponent implements OnInit {
           this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
           setTimeout(() => {
             _this.recruitstudentList = (list) ? list : [];
-            _this.loading = false;
+            _this.isLoading = false;
           }, 500);
         },
         (err: any) => {
           _this.recruitstudentList = [];
-          _this.loading = false;
+          _this.isLoading = false;
         }
     );
   }

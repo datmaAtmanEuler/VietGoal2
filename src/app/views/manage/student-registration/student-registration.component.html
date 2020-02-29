@@ -162,7 +162,7 @@
                     <thead>
                       <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
                         <th *ngIf="paginationSettings.visibles[colIndex]"
-                          [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '100px' : 'auto')"
+                          [style.width]="(colIndex == 0) ? '70px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '100px' : 'auto')"
                           (click)="paginationSettings.sortAbles[colIndex] ? utilsService.toggleSort(colIndex,paginationSettings.sortToggles ,paginationSettings.sort ,paginationSettings.columnsNameFilter ,reload()) : utilsService.doNothing()">
                           <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
                             <i style="float: none;" class="material-icons asc-sort-icons"

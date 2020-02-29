@@ -93,9 +93,8 @@ export class UploadService {
 
   private createRequest(queuedUploadFile: FileUpload) {
     const formData = new FormData();
-    formData.append('by', this.By.toString());
     formData.append('files', queuedUploadFile.file, queuedUploadFile.file.name);
-    const request = new HttpRequest('POST', this.getUrl(), formData, {
+    const request = new HttpRequest('POST', this.getUrl() + '?by=' + this.By, formData, {
       reportProgress: true
     });
     return request;

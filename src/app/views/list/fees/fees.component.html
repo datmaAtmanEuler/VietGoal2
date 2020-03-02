@@ -77,7 +77,7 @@
                                         </ng-container>
                                     </tbody>
                                 </table></div>
-                                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                <mat-paginator [length]="Total" [pageSize]="filter.pageSize" [pageSizeOptions]="pageSizesList"
                                     [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                 </mat-paginator>
                             </div>

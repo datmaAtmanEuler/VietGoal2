@@ -95,6 +95,20 @@ export class UtilsService {
   getColumnValue(obj: any, colIndex: number, columnsNameVi: any[]): any {
     return obj[columnsNameVi[colIndex]];
   }
+
+  isAValidDate(_date: any): boolean {
+    _date = _date.toString();
+    const _regExp  = new RegExp('^(-?(?:[1-9][0-9]*)?[0-9]{4})-(1[0-2]|0[1-9])-(3[01]|0[1-9]|[12][0-9])T(2[0-3]|[01][0-9]):([0-5][0-9]):([0-5][0-9])(.[0-9]+)?(Z)?$');
+    return _regExp.test(_date);
+  }
+
+  getColumnValueWithDateTimeAble(obj: any, colIndex: number, columnsNameVi: any[]): any {
+    if(this.isAValidDate(obj[columnsNameVi[colIndex]])) {
+      return { value: obj[columnsNameVi[colIndex]], isDateType: true};  
+    }
+    return { value: obj[columnsNameVi[colIndex]], isDateType: false };
+  }
+
   loadPaginatorLabels(){
     this.updateMatTableLabel();
     this.translate.onLangChange.subscribe((a: any) => {

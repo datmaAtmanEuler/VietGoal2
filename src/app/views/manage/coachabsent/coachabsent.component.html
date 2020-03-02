@@ -125,7 +125,9 @@
                           <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
                             <td
                               *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
-                              {{ utilsService.getColumnValue(coachabsent, colIndex, paginationSettings.columnsNameMapping) }}
+                              {{ (utilsService.getColumnValueWithDateTimeAble(coachabsent, colIndex, paginationSettings.columnsNameMapping).isDateType) ?
+                                   (utilsService.getColumnValueWithDateTimeAble(coachabsent, colIndex, paginationSettings.columnsNameMapping).value | date: 'dd/MM/yyyy') :
+                                    utilsService.getColumnValueWithDateTimeAble(coachabsent, colIndex, paginationSettings.columnsNameMapping).value }}
                             </td>
                           </ng-container>
                           <td class="my-action-item">

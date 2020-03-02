@@ -30,6 +30,8 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateModule } from '@ngx-translate/core';
 
 
+import { ContactModule } from '../../shared/contact/contact.module';
+import { AcademyCoachModule } from '../../shared/academy-coach/academy-coach.module';
 import { AcademyColorPickerModule } from '../../shared/academy-color-picker/academy-color-picker.module';
 import { AcademyDatePickerModule } from '../../shared/academy-date-picker/academy-date-picker.module';
 
@@ -128,6 +130,8 @@ import { ConfirmComponent } from '../../views/manage/studentreserve/registration
 @NgModule({
   imports: [
     CKEditorModule,
+    ContactModule,
+    AcademyCoachModule,
     AcademyDatePickerModule,
     AcademyColorPickerModule,
     NgxMaterialTimepickerModule,

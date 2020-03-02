@@ -28,6 +28,11 @@ export class CoachService {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
         return this.http.get(environment.serverUrl_employee + 'CoachSchedules?' + queryString , this.httpOptions);
     }
+
+     getCoachSelectWithExcludesList(filter: any, excludesList: any[]): Observable<any>  {
+        let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
+        return this.http.post(environment.serverUrl_employee + 'Coachs/GetCoachSelectWithExcludesList?' + queryString, excludesList , this.httpOptions);
+    }
     
     getCoach(id: any): Observable<any>  {
         return this.http.get(environment.serverUrl_employee + `Coach/${id}` , this.httpOptions);

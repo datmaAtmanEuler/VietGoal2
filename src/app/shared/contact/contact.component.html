@@ -1,0 +1,20 @@
+<div class="academy-contact-wrapper">
+	<input type="text" class="Input-field" 
+		[ngClass]="{ 'ng-not-empty': selectedContact }"
+	    [matAutocomplete]="ContactsAC" [formControl]="searchContactsCtrl">
+		<label class="Input-label">{{ label }}</label>
+	<mat-autocomplete #ContactsAC="matAutocomplete"
+        (optionSelected)="changeContact(searchContactsCtrl.value.id)"
+        [displayWith]="displayContactFn">
+        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+            <mat-spinner></mat-spinner>
+        </mat-option>
+        <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let contact of contactsList" [value]="contact">
+                <span *ngIf="!contact.notfound">{{ displayContactFn(contact) }}</span>
+                <span *ngIf="contact.notfound"
+                    class="nofind">{{contact.notfound}}</span>
+            </mat-option>
+        </ng-container>
+    </mat-autocomplete>
+</div>

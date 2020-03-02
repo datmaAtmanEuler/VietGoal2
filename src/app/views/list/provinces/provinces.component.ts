@@ -31,8 +31,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   loading: boolean = true;
   Total: number = 0;
   firstRowOnPage: any;
-  color = '#ff00ff';
-  date = '2017-10-19';
+
   /**
    * BEGIN SORT SETTINGS
    */
@@ -75,6 +74,10 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     new PerfectScrollbar(vgscroll);
   }
   
+  selectContact($event) {
+    console.log($event);
+  }
+
   pageEvent(variable: any){
     this.pageIndex = variable.pageIndex+1;
     this.pageSize = variable.pageSize;

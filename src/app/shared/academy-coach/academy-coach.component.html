@@ -1,0 +1,20 @@
+<div class="academy-coach-wrapper">
+	<input type="text" class="Input-field" 
+		[ngClass]="{ 'ng-not-empty': selectedCoach }"
+	    [matAutocomplete]="CoachsAC" [formControl]="searchCoachsCtrl">
+		<label class="Input-label">{{ label }}</label>
+	<mat-autocomplete #CoachsAC="matAutocomplete"
+        (optionSelected)="changeCoach(searchCoachsCtrl.value.id)"
+        [displayWith]="displayCoachFn">
+        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+            <mat-spinner></mat-spinner>
+        </mat-option>
+        <ng-container *ngIf="!isLoading">
+            <mat-option *ngFor="let coach of coachsList" [value]="coach">
+                <span *ngIf="!coach.notfound">{{ displayCoachFn(coach) }}</span>
+                <span *ngIf="coach.notfound"
+                    class="nofind">{{coach.notfound}}</span>
+            </mat-option>
+        </ng-container>
+    </mat-autocomplete>
+</div>

@@ -15,21 +15,16 @@ export class RecruitStudentService {
             'Content-Type': 'application/json; charset=utf-8'  
           })  
     }; 
-
-
     constructor(private http: HttpClient) {
     }
-
     getRecruitStudentList(filter: any): Observable<any>  {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
         return this.http.get(environment.serverUrl + `StudentRecruits?` + queryString , this.httpOptions);
     }
-    
     getRecruitStudent(id: any): Observable<any>  {
        
         return this.http.get(environment.serverUrl + `Students/${id}` , this.httpOptions);
     }
-
     addOrUpdateRecruitStudent(student: RecruitStudent): Observable<any> {
         if (student.id == 0) {
             return this.http.post(environment.serverUrl + 'StudentRecruits', student, this.httpOptions);
@@ -37,7 +32,6 @@ export class RecruitStudentService {
             return this.http.put(environment.serverUrl + `StudentRecruits/${student.id}`, student, this.httpOptions);
         }
     }
-
     deleteRecruitStudent(RecruitStudentId: number): Observable<any> {
         return this.http.delete(environment.apiUrl + `Students/${RecruitStudentId}` , this.httpOptions);
     }

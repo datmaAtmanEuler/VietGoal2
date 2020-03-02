@@ -29,6 +29,7 @@ export class UserGroupComponent implements OnInit {
   loading: boolean = true;
   Total: any;
   firstRowOnPage: any;
+  searchAdvanced: boolean = false;
     /**
    * BEGIN SORT SETTINGS
    */

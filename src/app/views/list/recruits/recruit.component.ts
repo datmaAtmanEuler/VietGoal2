@@ -29,7 +29,7 @@ export class RecruitComponent implements OnInit {
   loading: boolean = true;
   Total: any;
   firstRowOnPage: any;
-  
+  isLoading: boolean;
   /**
    * BEGIN SORT SETTINGS
    */

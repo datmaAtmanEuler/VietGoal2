@@ -23,7 +23,7 @@ import { RecruitStudentService } from 'app/services/manage/recruit-student.servi
 import { TrainingGroundService } from 'app/services/list/training-ground.service';
 import { TrainingGroundFilter } from 'app/models/filter/trainingroundfilter';
 import { AreaFilter } from 'app/models/filter/areafilter';
-import { MatPaginatorIntl, MatDatepickerInputEvent } from '@angular/material';
+import { MatPaginatorIntl, MatDatepickerInputEvent, DateAdapter } from '@angular/material';
 import { TranslateService } from '@ngx-translate/core';
 import { ClassFilter } from 'app/models/filter/classfilter';
 import { ClassService } from 'app/services/manage/class.service';
@@ -63,9 +63,7 @@ export class RecruitStudentComponent implements OnInit {
   searchAdvanced: boolean = false;
   /**
   * BEGIN SORT SETTINGS
-  */
-
- 
+  */ 
   paginationSettings: any = {
     sort: new ASCSort(),
     sortToggles: [
@@ -82,7 +80,7 @@ export class RecruitStudentComponent implements OnInit {
   /**
    * END SORT SETTINGS
    */
-  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
+  filter: RecruitStudentFilter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,new Date, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
   areafilter: AreaFilter = new AreaFilter('', this.pageIndex, this.pageSize, 0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection);
   yardfilter: YardFilter = new YardFilter('', this.pageIndex, this.pageSize, 0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection);
   classfilter: ClassFilter = new ClassFilter('', this.pageIndex, this.pageSize, 0,0,0,  this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0,0,0);
@@ -97,8 +95,7 @@ export class RecruitStudentComponent implements OnInit {
     translate.onLangChange.subscribe((a: any) => {
       this.updateMatTableLabel();
       matCus.changes.next();
-    });
-   
+    }); 
   }
   updateMatTableLabel() {
     this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
@@ -241,14 +238,14 @@ export class RecruitStudentComponent implements OnInit {
     });
   }
   pageEvent(variable: any) {
-    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
+    this.filter = new RecruitStudentFilter('', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,new Date, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection,0);
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
     this.reload();
   }
   reload() {
     const _this = this;
-    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,null, 'id','ASC',0);
+    const filter: RecruitStudentFilter = new RecruitStudentFilter( '', this.pageIndex, this.pageSize, 0, 0,0,0,0,0,new Date, 'id','ASC',0);
     this.isLoading = true;
     this.recruitstudentList = [];
     this.service.getRecruitStudentList(filter).subscribe(

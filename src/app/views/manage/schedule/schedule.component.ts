@@ -138,7 +138,7 @@ export class ScheduleComponent implements OnInit {
               this.areasList = this.areasList.concat([]);
               this.isLoading = true;
             }),
-            switchMap(value => this.areaService.getAreasList({centralId: null, searchTerm: (value && Object.keys(value).length > 0) ? value.areaName : value, pageIndex: this.areaPageIndex, pageSize: 10})
+            switchMap(value => this.areaService.getAreasList({centralId: 0, searchTerm: (value && Object.keys(value).length > 0) ? value.areaName : value, pageIndex: this.areaPageIndex, pageSize: 10})
               .pipe(
                 finalize(() => {
                   this.isLoading = false
@@ -211,7 +211,7 @@ export class ScheduleComponent implements OnInit {
               this.coachsList = this.coachsList.concat([]);
               this.isLoading = true;
             }),
-            switchMap(value => this.coachService.getCoachsList({centralId: null, searchTerm: (value && Object.keys(value).length > 0) ? value.firstName + ' ' + value.lastName : value, pageIndex: this.coachPageIndex, pageSize: 10})
+            switchMap(value => this.coachService.getCoachsList({centralId: 0, searchTerm: (value && Object.keys(value).length > 0) ? value.firstName + ' ' + value.lastName : value, pageIndex: this.coachPageIndex, pageSize: 10})
               .pipe(
                 finalize(() => {
                   this.isLoading = false
@@ -294,16 +294,13 @@ export class ScheduleComponent implements OnInit {
                 this.weeksList = response && response.length ? response : [];
             }
         });
-
-        const _this = this;
-
+        const _this = this; 
         this.translate.onLangChange.subscribe((a: any) => {
             if(_this.searchMonthsCtrl && _this.searchMonthsCtrl.value && _this.searchMonthsCtrl.value.title) {
                 _this.utilsService.monthList(_this.searchMonthsCtrl.value.value, 2).subscribe((r1: any) => {
                     _this.searchMonthsCtrl.setValue({ value: r1[0].value, title: _this.translate.instant(r1[0].title) });
                 });
             }
-
             if(_this.searchYearsCtrl && _this.searchYearsCtrl.value && _this.searchYearsCtrl.value.title) {
                 _this.utilsService.yearsList(_this.searchYearsCtrl.value.value, 2).subscribe((r2: any) => {
                     _this.searchYearsCtrl.setValue({ value: r2[0].value, title: _this.translate.instant('MESSAGE.NameList.Year') + ' ' + r2[0].title });
@@ -317,8 +314,6 @@ export class ScheduleComponent implements OnInit {
             }
           });
     } 
-
-
     sortToggles(colIndex: number) {
         const _this= this;
         if(this.paginationSettings.sortAbles[colIndex]) 

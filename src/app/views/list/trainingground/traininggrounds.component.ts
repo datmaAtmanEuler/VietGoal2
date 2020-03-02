@@ -41,7 +41,7 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
   firstRowOnPage: any;
   searchAreasCtrl = new FormControl();
   searchYardsCtrl = new FormControl();
-
+  searchAdvanced: boolean = false;
   areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,0,'id','ASC');
   yardFilter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,0,'id','ASC');
   filter: TrainingGroundFilter = new TrainingGroundFilter( this.searchTerm,this.pageIndex, this.pageSize,0,0, 'id','ASC');

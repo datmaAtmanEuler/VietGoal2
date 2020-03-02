@@ -34,10 +34,6 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card-body table-responsive ">
-                                <div class="row">
-                                    <academy-contact label="Select contact" (valueChanges)="selectContact($event)"></academy-contact>
-                                    <academy-coach label="Select coachs" [excludesList]="[1, 2]" (valueChanges)="selectCoachs($event)"></academy-coach>
-                                </div>
                                 <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
                                 <div class="vietgoal-table-settings vg-scroll">
 

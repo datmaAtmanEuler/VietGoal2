@@ -56,6 +56,8 @@ import { StudentAttendanceComponent } from '../../views/manage/studentattendance
 import { StudentRegistrationComponent } from '../../views/manage/student-registration/student-registration.component';
 import { StudentRegistrationEditComponent } from '../../views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 
+import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.component';
+
 
 export const AdminLayoutRoutes: Routes = [
  {
@@ -322,8 +324,16 @@ export const AdminLayoutRoutes: Routes = [
             path: 'edit', component: CentralEditComponent
         }
         ]
-    }
-    ,
+    },
+    {
+        path:'texteditor',
+        children: [
+            {
+                path: '', component: TextEditorComponent
+            }
+        ]
+
+    },
     {
         path: 'thoikhoabieu',
         children: [ 

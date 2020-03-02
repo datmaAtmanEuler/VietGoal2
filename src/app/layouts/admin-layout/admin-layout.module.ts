@@ -35,6 +35,8 @@ import { AcademyDatePickerModule } from '../../shared/academy-date-picker/academ
 
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
+import { CKEditorModule } from 'ng2-ckeditor';
+
 import {
   MatButtonModule,
   MatInputModule,
@@ -116,11 +118,13 @@ import { StudentAttendanceComponent } from '../../views/manage/studentattendance
 import { StudentRegistrationComponent } from '../../views/manage/student-registration/student-registration.component';
 import { StudentRegistrationEditComponent } from '../../views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 import { StudentRegistrationImportComponent } from '../../views/manage/student-registration/student-registration-import/student-registration-import.component';
+import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.component';
 
 
 @NgModule({
   imports: [
-  AcademyDatePickerModule,
+    CKEditorModule,
+    AcademyDatePickerModule,
     AcademyColorPickerModule,
     NgxMaterialTimepickerModule,
     FileUploadModule,
@@ -226,7 +230,8 @@ import { StudentRegistrationImportComponent } from '../../views/manage/student-r
     RecruitStudentImportComponent,
     RecruitStudentImportComponent,
     StudentRegistrationImportComponent,
-    CoachSchedulesComponent
+    CoachSchedulesComponent,
+    TextEditorComponent
   ],
   entryComponents: [
     ProvinceImportComponent,

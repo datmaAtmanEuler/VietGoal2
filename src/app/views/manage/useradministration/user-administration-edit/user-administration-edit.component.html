@@ -1,6 +1,6 @@
 <div class="modal-body" *ngIf="popup">
     <div class="text-center border border-light p-5">
-      <p class="h4 mb-4">student Information</p>
+      <p class="h4 mb-4">User Information</p>
       <form class="row">
         <p class="col-12 title-head">Thông tin học viên</p>
         <div class="col-9 row">
@@ -207,7 +207,7 @@
   
       </form>
       <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>Close</button>
-      <button class="btn btn btn-info" (click)="UpdateRecruitStudent()" alt=''>Update</button>
+      <button class="btn btn btn-info" (click)="Update()" alt=''>Update</button>
     </div>
   </div>
   <div class="text-center border border-light p-5" *ngIf="!popup">

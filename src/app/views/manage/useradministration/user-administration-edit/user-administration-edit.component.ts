@@ -31,49 +31,42 @@ import { ShiftDay, ShiftDayToList, ShiftDayToListName } from '../../../../models
 import { RecruitStudentService } from '../../../../services/manage/recruit-student.service';
 import { StudentService } from '../../../../services/manage/student.service';
 import { RecruitStudent } from '../../../../models/manage/recruit-student';
+import { PositionService } from 'app/services/list/position.service';
+import { UserFilter } from 'app/models/filter/userfilter';
+import { UserGroupService } from 'app/services/acl/usergroup.service';
 /**
  * End import services
  * **/
 
 @Component({
-	selector: 'app-recruit-student-edit',
-	templateUrl: './recruit-student-edit.component.html',
-	styleUrls: ['./recruit-student-edit.component.scss'],
+	selector: 'app-user-administration-edit',
+	templateUrl: './user-administration-edit.component.html',
+	styleUrls: ['./user-administration-edit.component.scss'],
 	encapsulation: ViewEncapsulation.None
 })
 
-export class RecruitStudentEditComponent implements OnInit {
+export class UserAdministrationEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('id') id: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
 	currentUser: any = {};
-	provincesList: any[] = [];
-	districtsList: any[] = [];
-	wardsList: any[] = [];
-	agesList: any[] = [];
-	managersList: any[] = [];
-	mainCoachsList: any[] = [];
-	viceCoachsList: any[] = [];
-	student: any;
-	searchProvincesCtrl = new FormControl();
-	searchDistrictsCtrl = new FormControl();
-	searchWardsCtrl = new FormControl();
-	searchAgesCtrl = new FormControl();
-	searchManagersCtrl = new FormControl();
-	searchMainCoachsCtrl = new FormControl();
-	searchViceCoachsCtrl = new FormControl();
-	recruitstudent : any[] ;
+	usergroupsList: any[] = [];
+	positionsList: any[] = [];
+
+	searchGroupsCtrl = new FormControl();
+	searchPositionsCtrl = new FormControl();
+
+	user : any[] ;
+	users:any={};
 	isLoading = false;
 	errorMsg: string;
 
 	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal,
-		private studentService: StudentService,
 		private studentrecruitService: RecruitStudentService,
-		private provinceService: ProvinceService,
-		private districtService: DistrictService,
+		private usergroupService: UserGroupService,
+		private positionService: PositionService,
 		private wardService: WardService,
 		private userService: UserService,
-		private ageService: AgeService,
 		private route: ActivatedRoute, private router: Router, private http: HttpClient) {
 		this.id = this.route.snapshot.queryParams['id'];
 		this.id = (this.id) ? this.id : 0;
@@ -84,53 +77,43 @@ export class RecruitStudentEditComponent implements OnInit {
 
 		// this.getProvince();
 	}
-	filter:	Filter = new Filter ('', 1, 100, 'id', 'ASC');
-	districtfilter:	DistrictFilter = new DistrictFilter ('', 1, 100,null, 'id', 'ASC');
-	wardfilter: WardFilter = new WardFilter ('', 1, 100,null,null, 'id', 'ASC');
-
-	displayProvinceFn(user): string {
-		return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
+	filter:	UserFilter = new UserFilter ('', 1, 100,0,0, 'id', 'ASC');
+	displayUserGroupFn(user): string {
+		return user && user.UserGroupName && !user.notfound ? user.UserGroupName : '';
 	}
-	displayDistrictFn(user): string {
-		return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
+	displayPositionFn(user): string {
+		return user && user.PositionName && !user.notfound ? user.PositionName : '';
 	}
-	displayWardFn(user): string {
-		return user && user.WardName && !user.notfound ? user.WardName : '';
+	
+	changeUserGroup(usergroupID) {
+		this.filter.userGroupId = usergroupID;
+		
 	}
-	changeProvince(provinceID) {
-		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, 0, 'id','ASC')).subscribe((list) => {
-			this.districtsList = list;
-		});
+	changePosition(positionID) {
+		this.filter.positionId =  positionID;
 	}
-	changeDistrict(districtID) {
-		this.wardService.getWardsList(new WardFilter('', 1, 100, 0, 0,'id','ASC')).subscribe((list) => {
-			this.wardfilter = list;
-		});
-	}
-	changeWard(wardID) {
-		this.student.wardId = wardID;
-	}
-	GetStudentById(Id: number) {
-		this.studentService.get((Id) ? Id : this.id).subscribe(
+	
+	GetUserById(Id: number) {
+		this.userService.getNhom((Id) ? Id : this.id).subscribe(
 			(stu: any) => {
-				this.student = stu || {};
+				this.user = stu || {};
 			},
 			() => {
-				this.student = {};
+				this.users = {};
 			}
 		);
 	}
 	ngOnInit() {
-		this.searchProvincesCtrl.valueChanges
+		this.searchGroupsCtrl.valueChanges
 			.pipe(
 				startWith(''),
 				debounceTime(500),
 				tap(() => {
 					this.errorMsg = "";
-					this.provincesList = [];
+					this.usergroupsList = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.provinceService.getProvincesList(new Filter(value, 1, 100, 'id', 'ASC'))
+				switchMap(value => this.usergroupService.getNhomList(new Filter(value, 1, 100, 'id', 'ASC'))
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -141,23 +124,23 @@ export class RecruitStudentEditComponent implements OnInit {
 			.subscribe(data => {
 				if (data == undefined) {
 					this.errorMsg = 'error';
-					this.provincesList = [{ notfound: 'Not Found' }];
+					this.usergroupsList = [{ notfound: 'Not Found' }];
 				} else {
 					this.errorMsg = "";
-					this.provincesList = data.length ? data : [{ notfound: 'Not Found' }];
+					this.usergroupsList = data.length ? data : [{ notfound: 'Not Found' }];
 				}
 
 			});
 
-		this.searchDistrictsCtrl.valueChanges.pipe(
+		this.searchPositionsCtrl.valueChanges.pipe(
 			startWith(''),
 			debounceTime(500),
 			tap(() => {
 				this.errorMsg = "";
-				this.districtsList = [];
+				this.positionsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.districtService.getDistrictsList(new DistrictFilter(value, 1, 100, null, 'id', 'ASC'))
+			switchMap(value => this.positionService.getPositionList(new Filter(value, 1, 100, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -167,47 +150,22 @@ export class RecruitStudentEditComponent implements OnInit {
 		).subscribe(data => {
 			if (data == undefined) {
 				this.errorMsg = 'error';
-				this.districtsList = [{ notfound: 'Not Found' }];
+				this.positionsList = [{ notfound: 'Not Found' }];
 			} else {
 				this.errorMsg = "";
-				this.districtsList = data.length ? data : [{ notfound: 'Not Found' }];
+				this.positionsList = data.length ? data : [{ notfound: 'Not Found' }];
 			}
 		});
 
-		this.searchWardsCtrl.valueChanges.pipe(
-			startWith(''),
-			debounceTime(500),
-			tap(() => {
-				this.errorMsg = "";
-				this.wardsList = [];
-				this.isLoading = true;
-			}),
-			switchMap(value => this.wardService.getWardsList(new WardFilter(value, 1, 100, 0, 0, 'id', 'ASC'))
-				.pipe(
-					finalize(() => {
-						this.isLoading = false
-					}),
-				)
-			)
-		).subscribe(data => {
-			if (data == undefined) {
-				this.errorMsg = 'error';
-				this.wardsList = [{ notfound: 'Not Found' }];
-			} else {
-				this.errorMsg = "";
-				this.wardsList = data.length ? data : [{ notfound: 'Not Found' }];
-			}
-
-		});
-		this.GetStudentById(this.id);
+		this.GetUserById(this.id);
 	}
 	ReturnList() {
-		this.router.navigate(['quanly/recruit-student']);
+		this.router.navigate(['quanly/usergroup']);
 
 	}
-	UpdateRecruitStudent() {
+	UpdateStudent() {
 		const _this = this;
-		 this.studentService.addOrUpdate(_this.student).subscribe((result : any)=>{
+		 this.usergroupService.addOrUpdateNhom(_this.users).subscribe((result : any)=>{
 			if (result) {
 				if(!_this.popup) {
 					

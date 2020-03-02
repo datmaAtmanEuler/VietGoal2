@@ -59,7 +59,7 @@ export class ProvinceEditComponent implements OnInit {
 					_this.closeMe();
 				}
 			} else {
-				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
+				//const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			}
 		});
 	}

@@ -17,7 +17,7 @@
                     </mat-option>
                     <ng-container *ngIf="!isLoading">
                         <mat-option *ngFor="let province of listprovince" [value]="province">
-                            <span *ngIf="!province.notfound">{{province.ProvinceName}}</span>
+                            <span *ngIf="!province.notfound">{{province.provinceName}}</span>
                             <span *ngIf="province.notfound" class="nofind">{{province.notfound}}</span>
                         </mat-option>
                     </ng-container>
@@ -27,9 +27,9 @@
 
         <div class="form-group row">
             <label class="col-sm-3 label-middling"
-                for="DistrictAC">{{'MESSAGE.NameList.DistrictName' |translate}}:</label>
+                for="districtAC">{{'MESSAGE.NameList.DistrictName' |translate}}:</label>
             <div class="col-sm-6">
-                <input class="form-control" id="DistrictAC" [value]="ward.districtId"
+                <input class="form-control" id="districtAC"
                     [matAutocomplete]="districtAC" [formControl]="searchDistrictsCtrl">
                 <mat-autocomplete #districtAC="matAutocomplete"
                     (optionSelected)="changeDistrict(searchDistrictsCtrl.value.id)"
@@ -39,7 +39,7 @@
                     </mat-option>
                     <ng-container *ngIf="!isLoading">
                         <mat-option *ngFor="let district of listdistrict" [value]="district">
-                            <span *ngIf="!district.notfound">{{district.DistrictName}}</span>
+                            <span *ngIf="!district.notfound">{{district.districtName}}</span>
                             <span *ngIf="district.notfound" class="nofind">{{district.notfound}}</span>
                         </mat-option>
                     </ng-container>
@@ -67,10 +67,11 @@
             <div class="form-group row">
                 <label class="col-3 label-middling">{{'MESSAGE.NameList.DisplayOrder' |translate}}:</label>
                 <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="ward.displayOrder"
+                    <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="ward.displayOrder"
                         class="form-control" placeholder='{{"MESSAGE.NameList.DisplayOrder" |translate}}'>
                 </div>
             </div>
+
         </form>
         <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
         <button class="btn btn-info" (click)="UpdateWard()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>

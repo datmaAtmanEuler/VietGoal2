@@ -19,14 +19,14 @@ import { UtilsService } from '../../../services/utils.service';
 })
 export class UserGroupComponent implements OnInit {
 
-  usergroupList:UserGroup[] = [];
+  usergroupList:any[] = [];
   usergroup: UserGroup;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
   pageSize:number = this.pageSizesList[1];
   currentUser: any;
-  loading: boolean = true;
+  isLoading: boolean = true;
   Total: any;
   firstRowOnPage: any;
   searchAdvanced: boolean = false;
@@ -40,10 +40,10 @@ export class UserGroupComponent implements OnInit {
       SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, 
       null
     ],
-    columnsName:['Order', 'GroupCode', 'GroupName', 'Action'],
-    columnsNameMapping: ['id', 'groupCode', 'groupName', ''],
+    columnsName:['Order','GroupCode', 'GroupName', 'Action'],
+    columnsNameMapping: ['id','groupCode', 'groupName', ''],
     sortAbles: [false, true,true, false],
-    visibles:  [true, true, true, true, ]
+    visibles:  [true, true, true,true ]
   }
 
   /**
@@ -85,13 +85,14 @@ export class UserGroupComponent implements OnInit {
     new PerfectScrollbar(vgscroll);
   }
 
-  remove(usergroup: UserGroup) {
-    this.usergroup = usergroup;
+  remove(id: any) {
   const _this = this;
   const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-  modalRef.componentInstance.confirmObject = 'Groups';
+  modalRef.componentInstance.confirmObject = 'Group';
   modalRef.componentInstance.decide.subscribe(() => {
-      _this.deleteNhom();
+      _this.service.deleteNhom(id).subscribe(()=>{
+        _this.reload();
+      })
   });
 }
 
@@ -106,12 +107,12 @@ reload() {
         this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
         setTimeout(() => {
           _this.usergroupList = (list) ? list : [];
-          _this.loading = false;
+          _this.isLoading = false;
         }, 500);
       },
       (err: any) => {
         _this.usergroupList = [];
-        _this.loading = false;
+        _this.isLoading = false;
       }
   );
 }
@@ -131,12 +132,8 @@ reload() {
         _this.reload();
     });
   }
-  deleteNhom() {
-    const _this = this;
-    this.service.deleteNhom(this.usergroup.id).subscribe((rs: any) => {
-      _this.reload();
-    });
-  }
+ 
+
   
   doNothing(): void {}
 

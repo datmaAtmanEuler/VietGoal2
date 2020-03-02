@@ -1,40 +1,17 @@
 export class Yard {
-	id: null| number;
-	YardCode: string;
-    YardName: string;
-    CentralId: null | number;
-    AreaId: null | number;
-    StartYearContract: null | Date;
-    Address: string;
-    Areas: string;
-    Description: string;
-    Visible: boolean = true;
-	Deleted: boolean;
-    CreatedDate: null | Date;
-    UpdatedDate: null | Date;
-    CreatedBy: null | number;
-    UpdatedBy: null | number;
-	DeletedBy: null | number;
-	DisplayOrder : null | number;
 	
-	constructor(id: number, YardCode: string,  YardName: string,CentralId: null | number, AreaId: null | number,  StartYearContract: Date, Address: string, Areas:string, Description: string, Visible: boolean, Deleted: boolean, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
-		UpdatedBy: null | number, DeletedBy: null | number, DisplayOrder: null | number) {
-		this.id = id;
-		this.YardCode = YardCode;
-        this.CentralId = CentralId;
-        this.AreaId = AreaId;
-        this.YardName = YardName;
-        this.StartYearContract = StartYearContract;
-        this.Address = Address;
-        this.Areas = Areas;
-        this.Description = Description;
-        this.Visible = Visible;	
-		this.Deleted = Deleted;
-		this.CreatedDate = CreatedDate;
-		this.UpdatedDate = UpdatedDate;
-		this.CreatedBy = CreatedBy;
-		this.UpdatedBy = UpdatedBy;
-		this.DeletedBy = DeletedBy;
-		this.DisplayOrder = DisplayOrder;
+    id: number;
+    areaId: number;
+    centralId: number;
+    yardCode: string;
+    yardName: string;
+    address: string;
+    area: number;
+    visible: boolean;
+    description: string;
+    trainingGroundList: string;
+    displayOrder: number;
+	constructor() {
+		this.id = 0;
 	}
 }

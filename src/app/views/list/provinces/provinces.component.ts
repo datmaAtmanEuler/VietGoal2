@@ -90,8 +90,6 @@ export class ProvincesComponent implements OnInit {ModalDirective;
         	_this.deleteProvince();
     	});
     }
-
-
     reload() {
       const _this = this;
       const filter = {

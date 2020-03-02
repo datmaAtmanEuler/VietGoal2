@@ -17,7 +17,7 @@
                         </mat-option>
                         <ng-container *ngIf="!isLoading">
                             <mat-option *ngFor="let province of listprovince" [value]="province">
-                                <span *ngIf="!province.notfound">{{province.ProvinceName}}</span>
+                                <span *ngIf="!province.notfound">{{province.provinceName}}</span>
                                 <span *ngIf="province.notfound" class="nofind">{{province.notfound}}</span>
                             </mat-option>
                         </ng-container>
@@ -42,7 +42,7 @@
             <div class="form-group row">
                 <label class="col-3 label-middling">{{'MESSAGE.NameList.DisplayOrder' | translate}}</label>
                 <div class="col-6 label-middling">
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.displayOrder"
+                    <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="district.displayOrder"
                         class="form-control" placeholder='{{"MESSAGE.NameList.DisplayOrder" | translate}}'>
                 </div>
             </div>
@@ -73,7 +73,7 @@
             </div>
 
             <div class="col-6 alert" role="alert">
-                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="district.displayOrder"
+                <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="district.displayOrder"
                     class="form-control" placeholder="Số thứ tự">
             </div>
         </div>

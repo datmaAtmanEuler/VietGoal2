@@ -120,6 +120,8 @@ import { StudentReserveComponent } from '../../views/manage/studentreserve/stude
 import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
 import { StudentReserveImportComponent } from '../../views/manage/studentreserve/studentreserve-import/studentreserve-import.component';
 import { ConfirmComponent } from '../../views/manage/studentreserve/registrationreserved/confirm.component';
+import { UserAdministrationComponent } from '../../views/manage/useradministration/user-administration.component';
+import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 
 
 @NgModule({
@@ -234,7 +236,9 @@ import { ConfirmComponent } from '../../views/manage/studentreserve/registration
     StudentReserveComponent,
     StudentReserveEditComponent,
     StudentReserveImportComponent,
-    ConfirmComponent
+    ConfirmComponent,
+    UserAdministrationComponent,
+    UserAdministrationEditComponent
   ],
   entryComponents: [
     StudentReserveImportComponent,

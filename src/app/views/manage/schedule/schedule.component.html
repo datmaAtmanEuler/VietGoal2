@@ -199,12 +199,12 @@
                             <div class="card-body table-responsive">
                                 <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
                                 <div class="vietgoal-table-settings vg-scroll">
-                                    <table class="table table-condensed table-striped table-bordered table-hover">
+                                    <table class="table table-condensed table-striped table-bordered table-hover" >
                                         <thead>
                                             <ng-container
                                                 *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
                                                 <th *ngIf="paginationSettings.visibles[colIndex]"
-                                                    [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
+                                                    [style.width]="(colIndex == 0) ? '70px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '100px' : 'auto')"
                                                     (click)="sortToggles(colIndex)">
                                                     <span
                                                         style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}

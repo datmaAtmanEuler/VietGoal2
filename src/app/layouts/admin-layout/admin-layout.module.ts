@@ -119,6 +119,10 @@ import { StudentRegistrationComponent } from '../../views/manage/student-registr
 import { StudentRegistrationEditComponent } from '../../views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 import { StudentRegistrationImportComponent } from '../../views/manage/student-registration/student-registration-import/student-registration-import.component';
 import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.component';
+import { StudentReserveComponent } from '../../views/manage/studentreserve/studentreserve.component';
+import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
+import { StudentReserveImportComponent } from '../../views/manage/studentreserve/studentreserve-import/studentreserve-import.component';
+import { ConfirmComponent } from '../../views/manage/studentreserve/registrationreserved/confirm.component';
 
 
 @NgModule({
@@ -231,9 +235,14 @@ import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.co
     RecruitStudentImportComponent,
     StudentRegistrationImportComponent,
     CoachSchedulesComponent,
-    TextEditorComponent
+    TextEditorComponent,
+    StudentReserveComponent,
+    StudentReserveEditComponent,
+    StudentReserveImportComponent,
+    ConfirmComponent
   ],
   entryComponents: [
+    StudentReserveImportComponent,
     ProvinceImportComponent,
     StudentRegistrationImportComponent,
     CentralImportComponent,

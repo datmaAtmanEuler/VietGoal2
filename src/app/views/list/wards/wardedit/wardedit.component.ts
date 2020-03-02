@@ -143,7 +143,6 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 		 this.wardService.addOrUpdateWard(_this.ward).subscribe((result : any)=>{
 			if (result) {
 				if(!_this.popup) {
-					
 					_this.ReturnList();
 				} else {
 				
@@ -154,26 +153,21 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 			}
 		 });
 	}
-
 	closeMe() {
 		this.activeModal.close();
 	}
-
 	displayFn(district: District) {
 		if (district) {
 			return district;
 		}
 		return null;
 	}
-
 	updateSelectedDistrict(event: any) {
 		const selectedDistricts = this.filteredDistricts.filter((district: District) => district.districtName == event.option.value);
 		if(selectedDistricts.length > 0) {
 			this.ward.districtId = selectedDistricts[0].id;
-			console.log(this.ward);
 		}
 	}
-
 	checkDistricts() {
 		if(this.filteredDistricts.length < 1) {
 			this.searchDistrictsCtrl.setValue('');

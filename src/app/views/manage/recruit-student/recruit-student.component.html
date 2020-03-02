@@ -35,176 +35,158 @@
                 <div class="row" *ngIf="searchAdvanced">
                   <div class="form-group row">
                     <label
-                        class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
+                      class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
                     <div class="col-6 label-middling">
-                        <input class="form-control"
-                            placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
-                            [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
+                      <input class="form-control" placeholder="{{'MESSAGE.NameList.AreaName' |translate}}"
+                        [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
                     </div>
-                    <mat-autocomplete #areaAC="matAutocomplete"
-                        (optionSelected)="changeArea(searchAreasCtrl.value.id)"
-                        [displayWith]="displayAreaFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let area of areasList" [value]="area">
-                              
-                                <span *ngIf="area">{{area.areaName}}</span>
-                                <span *ngIf="!area.notfound" class="nofind">{{area.notfound}}</span>
-                            
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
-                <div class="form-group row">
-                    <label
-                        class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Yard' | translate}}:</strong></label>
-                    <div class="col-6 label-middling">
-                        <input class="form-control"
-                            placeholder="{{'MESSAGE.NameList.YardName' |translate}}"
-                            [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
-                    </div>
-                    <mat-autocomplete #YardAC="matAutocomplete"
-                        (optionSelected)="changeYard(searchYardsCtrl.value.id)"
-                        [displayWith]="displayYardFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let yard of yardsList" [value]="yard">
-                                <span *ngIf="yard">{{yard.yardName}}</span>
-                                <span *ngIf="!yard.notfound" class="nofind">{{ 'Not found' }}</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
+                    <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.id)"
+                      [displayWith]="displayAreaFn">
+                      <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                        <mat-spinner></mat-spinner>
+                      </mat-option>
+                      <ng-container *ngIf="!isLoading">
+                        <mat-option *ngFor="let area of areasList" [value]="area">
 
-                <div class="form-group row">
+                          <span *ngIf="area">{{area.areaName}}</span>
+                          <span *ngIf="!area.notfound" class="nofind">{{area.notfound}}</span>
+
+                        </mat-option>
+                      </ng-container>
+                    </mat-autocomplete>
+                  </div>
+                  <div class="form-group row">
                     <label
-                        class="col-5 label-middling"><strong>{{'MESSAGE.NameList.YardArea' | translate}}:</strong></label>
+                      class="col-5 label-middling"><strong>{{'MESSAGE.NameList.Yard' | translate}}:</strong></label>
                     <div class="col-6 label-middling">
-                        <input class="form-control"
-                            placeholder="{{'MESSAGE.NameList.YardArea' |translate}}"
-                            [matAutocomplete]="traininggroundAC"
-                            [formControl]="searchTrainingGroundsCtrl">
+                      <input class="form-control" placeholder="{{'MESSAGE.NameList.YardName' |translate}}"
+                        [matAutocomplete]="YardAC" [formControl]="searchYardsCtrl">
+                    </div>
+                    <mat-autocomplete #YardAC="matAutocomplete" (optionSelected)="changeYard(searchYardsCtrl.value.id)"
+                      [displayWith]="displayYardFn">
+                      <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                        <mat-spinner></mat-spinner>
+                      </mat-option>
+                      <ng-container *ngIf="!isLoading">
+                        <mat-option *ngFor="let yard of yardsList" [value]="yard">
+                          <span *ngIf="yard">{{yard.yardName}}</span>
+                          <span *ngIf="!yard.notfound" class="nofind">{{ 'Not found' }}</span>
+                        </mat-option>
+                      </ng-container>
+                    </mat-autocomplete>
+                  </div>
+
+                  <div class="form-group row">
+                    <label
+                      class="col-5 label-middling"><strong>{{'MESSAGE.NameList.YardArea' | translate}}:</strong></label>
+                    <div class="col-6 label-middling">
+                      <input class="form-control" placeholder="{{'MESSAGE.NameList.YardArea' |translate}}"
+                        [matAutocomplete]="traininggroundAC" [formControl]="searchTrainingGroundsCtrl">
                     </div>
                     <mat-autocomplete #traininggroundAC="matAutocomplete"
-                        (optionSelected)="changeTrainingGround(searchTrainingGroundsCtrl.value.id)"
-                        [displayWith]="displayTrainingGroundFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
+                      (optionSelected)="changeTrainingGround(searchTrainingGroundsCtrl.value.id)"
+                      [displayWith]="displayTrainingGroundFn">
+                      <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                        <mat-spinner></mat-spinner>
+                      </mat-option>
+                      <ng-container *ngIf="!isLoading">
+                        <mat-option *ngFor="let trainingground of traininggroundsList" [value]="trainingground">
+                          <span *ngIf="trainingground">{{trainingground.trainingGroundName}}</span>
+                          <span *ngIf="!trainingground.notfound" class="nofind">{{trainingground.notfound}}</span>
                         </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let trainingground of traininggroundsList"
-                                [value]="trainingground">
-                                <span
-                                    *ngIf="trainingground">{{trainingground.trainingGroundName}}</span>
-                                <span *ngIf="!trainingground.notfound"
-                                    class="nofind">{{trainingground.notfound}}</span>
-                            </mat-option>
-                        </ng-container>
+                      </ng-container>
                     </mat-autocomplete>
-                </div>
-
-
-
-                <div class="form-group row">
+                  </div>
+                  
+                  <div class="form-group row">
                     <label class="col-5 label-middling"><strong>Lớp Học:</strong></label>
                     <div class="col-6 label-middling">
-                        <input class="form-control" placeholder="Lớp học" 
-                        [matAutocomplete]="classAC"
+                      <input class="form-control" placeholder="Lớp học" [matAutocomplete]="classAC"
                         [formControl]="searchClassCtrl">
                     </div>
                     <mat-autocomplete #classAC="matAutocomplete">
-                    <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                      <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                         <mat-spinner></mat-spinner>
-                    </mat-option>
-                    <ng-container *ngIf="!isLoading">
-                        <mat-option *ngFor="let class of classList"
-                            [value]="class">
-                            <span
-                                *ngIf="!class.notfound">{{class.Class}}</span>
-                            <span *ngIf="class.notfound"
-                                class="nofind">{{class.notfound}}</span>
+                      </mat-option>
+                      <ng-container *ngIf="!isLoading">
+                        <mat-option *ngFor="let class of classList" [value]="class">
+                          <span *ngIf="!class.notfound">{{class.Class}}</span>
+                          <span *ngIf="class.notfound" class="nofind">{{class.notfound}}</span>
                         </mat-option>
-                    </ng-container>
-                </mat-autocomplete>
-                </div>
+                      </ng-container>
+                    </mat-autocomplete>
+                  </div>
 
-                <div class="form-group row">
+                  <div class="form-group row">
                     <label class="col-5 label-middling"><strong>Người Chốt:</strong></label>
                     <div class="col-6 label-middling">
-                        <input class="form-control" placeholder="Người chốt">
+                      <input class="form-control" placeholder="Người chốt">
                     </div>
-                </div>
+                  </div>
 
-                <div class="form-group row">
+                  <div class="form-group row">
                     <label class="col-5 label-middling"><strong>Kết quả:</strong></label>
                     <div class="col-6 label-middling">
-                        <input class="form-control" placeholder="Kết quả">
+                      <input class="form-control" placeholder="Kết quả">
                     </div>
+                  </div>
                 </div>
-                    </div>
-                    
-
-               
-            </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-12">
-              <div class="card-body table-responsive">
-                <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
-                <div class="vietgoal-table-settings vg-scroll">
-                  <table class="table table-condensed table-striped table-bordered table-hover">
-                    <thead>
-                      <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
-                        <th *ngIf="paginationSettings.visibles[colIndex]"
-                          [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
-                          (click)="paginationSettings.sortAbles[colIndex] ? utilsService.toggleSort(colIndex,paginationSettings.sortToggles ,paginationSettings.sort ,paginationSettings.columnsNameFilter ,reload()) : utilsService.doNothing()">
-                          <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
-                            <i style="float: none;" class="material-icons asc-sort-icons"
-                              *ngIf="paginationSettings.sortAbles[colIndex]">
-                              {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
-                            </i>
-                          </span>
-                        </th>
-                      </ng-container>
-                    </thead>
-                    <tbody>
-                      <ng-container *ngFor="let recruitstudent of recruitstudentList; let i = index;">
-                        <tr>
-                          <td>{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
-                          <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
-                            <td
-                              *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
-                              {{ utilsService.getColumnValue(recruitstudent, colIndex, paginationSettings.columnsNameMapping) }}
-                            </td>
-                          </ng-container>
-                          <td class="my-action-item">
-                            <button type="button" (click)="edit(recruitstudent.id)"
-                              class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
-                              <i class="material-icons">edit</i>
-                            </button>
-                            <button type="button" (click)="remove(recruitstudent.id)"
-                              class="btn btn-danger btn-link btn-sm delete-button btn-just-icon">
-                              <i class="material-icons">close</i>
-                            </button>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="card-body table-responsive">
+              <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
+              <div class="vietgoal-table-settings vg-scroll">
+                <table class="table table-condensed table-striped table-bordered table-hover">
+                  <thead>
+                    <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
+                      <th *ngIf="paginationSettings.visibles[colIndex]"
+                        [style.width]="(colIndex == 0) ? '70px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '100px' : 'auto')"
+                        (click)="paginationSettings.sortAbles[colIndex] ? utilsService.toggleSort(colIndex,paginationSettings.sortToggles ,paginationSettings.sort ,paginationSettings.columnsNameFilter ,reload()) : utilsService.doNothing()">
+                        <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                          <i style="float: none;" class="material-icons asc-sort-icons"
+                            *ngIf="paginationSettings.sortAbles[colIndex]">
+                            {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                          </i>
+                        </span>
+                      </th>
+                    </ng-container>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let recruitstudent of recruitstudentList; let i = index;">
+                      <tr>
+                        <td>{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
+                        <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
+                          <td
+                            *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
+                            {{ utilsService.getColumnValue(recruitstudent, colIndex, paginationSettings.columnsNameMapping) }}
                           </td>
-                        </tr>
-                      </ng-container>
-                    </tbody>
-                  </table>
-                </div>
-                <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
-                  [showFirstLastButtons]="true" (page)="pageEvent($event)">
-                </mat-paginator>
+                        </ng-container>
+                        <td class="my-action-item">
+                          <button type="button" (click)="edit(recruitstudent.id)"
+                            class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
+                            <i class="material-icons">edit</i>
+                          </button>
+                          <button type="button" (click)="remove(recruitstudent.id)"
+                            class="btn btn-danger btn-link btn-sm delete-button btn-just-icon">
+                            <i class="material-icons">close</i>
+                          </button>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
               </div>
+              <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                [showFirstLastButtons]="true" (page)="pageEvent($event)">
+              </mat-paginator>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>

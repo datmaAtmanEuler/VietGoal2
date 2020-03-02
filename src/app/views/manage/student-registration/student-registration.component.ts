@@ -66,8 +66,6 @@ export class StudentRegistrationComponent implements OnInit {
   /**
   * BEGIN SORT SETTINGS
   */
-
- 
   paginationSettings: any = {
     sort: new ASCSort(),
     sortToggles: [
@@ -148,7 +146,7 @@ export class StudentRegistrationComponent implements OnInit {
           this.areasList = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
+        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, 0, this.paginationSettings.sort.SortName,this.paginationSettings.sort.SortDirection))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -235,13 +233,13 @@ export class StudentRegistrationComponent implements OnInit {
         });
   }
 
-  remove(aclass: any) {
-    this.RecruitStudent = aclass;
+  remove(registrations: any) {
+    this.RecruitStudent = registrations;
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { size: 'lg' });
-    modalRef.componentInstance.confirmObject = 'class';
+    modalRef.componentInstance.confirmObject = 'StudentRegistration';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deleteRecruitStudent(aclass.ID, this.currentUser.UserId).subscribe(() => {
+      _this.service.deleteRecruitStudent(registrations.id).subscribe(() => {
         _this.reload();
       });
     });
@@ -280,9 +278,9 @@ export class StudentRegistrationComponent implements OnInit {
 
   edit(RecruitStudentID: null | number) {
     const _this = this;
-    const modalRef = this.modalService.open(StudentRegistrationEditComponent, { size: 'lg' });
+    const modalRef = this.modalService.open(StudentRegistrationEditComponent, { size: 'xl' });
     modalRef.componentInstance.popup = true;
-    modalRef.componentInstance.RecruitStudentID = RecruitStudentID;
+    modalRef.componentInstance.id = RecruitStudentID;
     modalRef.result.then(function (result) {
       _this.reload();
     });

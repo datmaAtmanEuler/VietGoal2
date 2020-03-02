@@ -92,18 +92,22 @@ export class DistrictEditComponent implements OnInit {
 	}
 	
 	UpdateDistrict() {
-		this.districtService.addOrUpdateDistrict(this.district).subscribe(
-			() => {
-				if (!this.popup) {
-					this.ReturnList();
+		const _this = this;
+		this.districtService.addOrUpdateDistrict(_this.district).subscribe(
+			(result: any) => {
+				if (result) {
+					if(!_this.popup) {
+						_this.ReturnList();
+					} else {
+						_this.closeMe();
+					}
 				} else {
-					this.closeMe();
+					const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
 				}
-			},
-			() => {
-				this.modalService.open(ConfirmComponent, { size: 'lg' });
 			});
 	}
+
+	
 
 	closeMe() {
 		this.activeModal.close();

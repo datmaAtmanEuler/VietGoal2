@@ -71,8 +71,6 @@ export class ClassComponent implements OnInit {
   sortAbles: [false, true, true, true, false,false,true, false],
   visibles:  [true, true, true, true, true, true,true, true]
 }
-
-
   /**
    * END SORT SETTINGS
    */
@@ -122,7 +120,7 @@ export class ClassComponent implements OnInit {
           this.areasList = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'id', 'ASC'))
+        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, 0, 'id', 'ASC'))
           .pipe(
             finalize(() => {
               this.isLoading = false

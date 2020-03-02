@@ -17,6 +17,7 @@ import { StudentAttendanceOverRangeService } from 'app/services/manage/studentat
   templateUrl: './studentattendanceoverrange.component.html',
   styleUrls: ['./studentattendanceoverrange.component.scss']
 })
+
 export class StudentAttendanceOverRangeComponent implements OnInit {
   StudentAttendanceOverRangeList: any[] = [];
   filter: CommonFilter = new CommonFilter();
@@ -59,12 +60,13 @@ export class StudentAttendanceOverRangeComponent implements OnInit {
   
   ngOnInit() {
     
+    
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
     
     this.filter.pageIndex = 1;
     this.filter.pageSize = this.pageSizesList[1];
-    this.filtersEventsBinding();
+  this.filtersEventsBinding();
   }
 
   remove(id: any) {
@@ -100,7 +102,6 @@ export class StudentAttendanceOverRangeComponent implements OnInit {
           setTimeout(() => {
             this.loading = false;
             this.StudentAttendanceOverRangeList = list || [];
-            this.filter.classId = undefined;
           }, 500);
         });
         
@@ -275,6 +276,7 @@ export class StudentAttendanceOverRangeComponent implements OnInit {
 
       });
   }
+  
   
 }
 

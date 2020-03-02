@@ -12,6 +12,7 @@ import {TranslateService} from '@ngx-translate/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { RecruitImportComponent } from './recruit-import/recruit-import.component';
+import { UtilsService } from '../../../services/utils.service';
 @Component({
   selector: 'app-recruit',
   templateUrl: './recruit.component.html',
@@ -28,19 +29,27 @@ export class RecruitComponent implements OnInit {
   loading: boolean = true;
   Total: any;
   firstRowOnPage: any;
-  
+  isLoading: boolean;
   /**
    * BEGIN SORT SETTINGS
    */
-  sort: ASCSort = new ASCSort();
-  sortToggles: SORD_DIRECTION[] = [null, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC, null];
-  columnsName: string[] = ['Order', 'RecruitsCode', 'RecruitsName','RecruitsColor', 'Action'];
-  columnsNameMapping: string[] = ['ID', 'RecruitsCode', 'RecruitsName','RecruitsColor', 'Action'];
-  sortAbles: boolean[] = [false, true, true,true, false];
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, 
+      null
+    ],
+    columnsName: ['Order', 'RecruitsCode', 'RecruitsName','RecruitsColor', 'Action'],
+    columnsNameMapping: ['id', 'recruitCode', 'recruitName','recruitColor', ''],
+    sortAbles: [false, true, true, true, false],
+    visibles:  [true, true, true, true, true]
+  }
+ 
   /**
    * END SORT SETTINGS
    */
-  constructor(private translate: TranslateService, config: NgbModalConfig,  private matCus: MatPaginatorIntl, private service: RecruitService, 
+  constructor(public utilsService: UtilsService,private translate: TranslateService, config: NgbModalConfig,  private matCus: MatPaginatorIntl, private service: RecruitService, 
     private router: Router,  private cdRef: ChangeDetectorRef,
     private modalService: NgbModal) { 
       config.backdrop = 'static';
@@ -52,7 +61,6 @@ export class RecruitComponent implements OnInit {
         matCus.changes.next();
       });
      }
-
       updateMatTableLabel() {
         this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
         this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
@@ -65,21 +73,17 @@ export class RecruitComponent implements OnInit {
             return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
           }
       }
-
   ngOnInit() {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.reload();
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
   }
-
-  
   pageEvent(variable: any){
     this.pageIndex = variable.pageIndex+1;
     this.pageSize = variable.pageSize;
     this.reload();
   }
-
     remove(recruit: Recruit) {
         this.recruit = recruit;
     	const _this = this;
@@ -91,7 +95,7 @@ export class RecruitComponent implements OnInit {
     }
     reload() {
       const _this = this;
-      const filter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'Id','ASC');
+      const filter: Filter = new Filter( this.searchTerm,this.pageIndex, this.pageSize, 'id','ASC');
       this.loading = true;
       _this.recruitsList = [];
       this.service.getRecruitsList(filter).subscribe(
@@ -115,55 +119,24 @@ export class RecruitComponent implements OnInit {
     }
   
     edit(ID: number) {
+      alert(ID);
       const _this = this;
       const modalRef = this.modalService.open(RecruitEditComponent, { size: 'lg' });
       modalRef.componentInstance.popup = true;
       if (ID) {
-        modalRef.componentInstance.ID = ID;
+        modalRef.componentInstance.id = ID;
       }
       modalRef.result.then(function(){
           _this.reload();
       });
     }
-  
     deleteRecruit() {
       const _this = this;
-      this.service.deleteRecruit(this.recruit.Id, this.currentUser.UserId).subscribe((rs: any) => {
+      this.service.deleteRecruit(this.recruit.id).subscribe((rs: any) => {
         _this.reload();
       });
     }
   
-    toggleSort(columnIndex: number): void {
-      let toggleState =  this.sortToggles[columnIndex];
-      switch(toggleState) {
-        case SORD_DIRECTION.ASC: 
-        {
-          toggleState = SORD_DIRECTION.ASC;
-          break;
-        }
-        case SORD_DIRECTION.ASC: 
-        {
-          toggleState = SORD_DIRECTION.DESC;
-          break;
-        }
-        default:
-        {
-          toggleState = SORD_DIRECTION.ASC;
-          break;
-        }
-      }
-      this.sortToggles.forEach((s: string, index: number) => {
-        if(index == columnIndex) {
-          this.sortToggles[index] = this.sort.SortDirection = toggleState;
-        } else {
-          this.sortToggles[index] = SORD_DIRECTION.ASC;
-        }
-      });
-  
-      this.sort.SortName = (toggleState == SORD_DIRECTION.ASC) ? 'Id' : this.columnsNameMapping[columnIndex];
-      this.reload();
-    }
-    
     doNothing(): void {}
     openImport() {
       const _this = this;

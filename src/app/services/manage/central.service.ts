@@ -38,8 +38,8 @@ export class CentralService {
         }
     }
 
-    deleteCentral(CentralId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Centrals/${CentralId}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteCentral(CentralId: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `Centrals/${CentralId}` , this.httpOptions);
     }
 
     getTemplate(fileName: string) {

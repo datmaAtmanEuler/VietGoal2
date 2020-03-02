@@ -10,4 +10,11 @@ export class CommonFilter {
     sortDirection: number;
     addedDate: string;
     absentDate: string;
+
+    WardId: number;
+    SearchTerm: string;
+    PageIndex: number;
+    PageSize: number;
+    SortName: string;
+    SortDirection: string;
   }

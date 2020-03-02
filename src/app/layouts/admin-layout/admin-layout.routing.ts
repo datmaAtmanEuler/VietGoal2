@@ -55,6 +55,8 @@ import { StudentAttendanceOverRangeAddComponent } from '../../views/manage/stude
 import { StudentAttendanceComponent } from '../../views/manage/studentattendance/studentattendance.component';
 import { StudentRegistrationComponent } from '../../views/manage/student-registration/student-registration.component';
 import { StudentRegistrationEditComponent } from '../../views/manage/student-registration/student-registration-edit/student-registration-edit.component';
+import { StudentReserveComponent } from '../../views/manage/studentreserve/studentreserve.component';
+import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
 
 import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.component';
 
@@ -406,6 +408,22 @@ export const AdminLayoutRoutes: Routes = [
         ,
         {
             path: 'edit', component: RecruitStudentEditComponent
+        }
+        ]
+    }
+    ,
+    {
+        path: 'student-reserve',
+        children: [ {
+            path: '', component: StudentReserveComponent
+        }
+        ,
+        {
+            path: 'add', component: StudentReserveEditComponent
+        }
+        ,
+        {
+            path: 'edit', component: StudentReserveEditComponent
         }
         ]
     }

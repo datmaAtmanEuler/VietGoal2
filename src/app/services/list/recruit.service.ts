@@ -24,21 +24,19 @@ import { ImportViewModel } from 'app/models/importviewmodel';
     }
     
     getRecruit(id: any): Observable<any> {
-        return this.http.get(environment.apiUrl + `Recruits/${id}` , this.httpOptions);
+        return this.http.get(environment.serverUrl + `Recruits/${id}` , this.httpOptions);
     }
 
-    addOrUpdateRecruit(recruit: Recruit, by: null | number): Observable<any> {
-        recruit.DisplayOrder = parseInt(recruit.DisplayOrder + '');
-        if (recruit.Id != 0 && recruit.Id) {
-            recruit.UpdatedBy = by;
+    addOrUpdateRecruit(recruit: Recruit): Observable<any> {
+        if (recruit.id == 0) {
+            return this.http.post(environment.serverUrl + 'Recruits', recruit, this.httpOptions);
         } else {
-            recruit.CreatedBy = by;
+            return this.http.put(environment.serverUrl + `Recruits/${recruit.id}`, recruit, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Recruits/save`, recruit, this.httpOptions);
     }
 
-    deleteRecruit(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `Recruits/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteRecruit(id: number): Observable<any> {
+        return this.http.delete(environment.apiUrl + `Recruits/${id}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

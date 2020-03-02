@@ -20,6 +20,7 @@ import { environment } from 'environments/environment';
 import { CentralEditComponent } from './central-edit/central-edit.component';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { CentralImportComponent } from './central-import/central-import.component';
+import { CommonFilter } from 'app/models/filter/commonfilter';
 
 @Component({
   selector: 'app-Central',
@@ -31,8 +32,9 @@ export class CentralComponent implements OnInit {
   Central: Central;
   searchTerm: string = '';
   pageSizesList: number[] = [5, 10, 20, 100];
-  pageSize: number = this.pageSizesList[3];
+  filter: CommonFilter = new CommonFilter();
   pageSizeFilter: number = 20;
+  searchAdvanced = false;
   currentUser: any;
   Total: number;
   listprovince: any;
@@ -55,14 +57,14 @@ export class CentralComponent implements OnInit {
       null
     ],
     columnsName: ['Order', 'CentralName', 'Address', 'CampusArea', 'Note', 'Action'],
-    columnsNameMapping: ['Id', 'CentralName', 'Address', 'CampusArea', 'Discription', 'Action'],
+    columnsNameMapping: ['id', 'centralName', 'address', 'area', 'description', 'Action'],
     sortAbles: [false, true, true, true, true, false],
     visibles: [true, true, true, true, true, true]
   }
   /**
    * END SORT SETTINGS
    */
-  filter: CentralFilter = new CentralFilter(this.searchTerm, 1, this.pageSize, null, null, null, this.paginationSettings.sort.SortName, this.paginationSettings.sort.SortDirection);
+  firstRowOnPage: any;
 
   constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: CentralService, private router: Router, private modalService: NgbModal,
     private provinceService: ProvinceService, private districtService: DistrictService, private http: HttpClient) {
@@ -73,6 +75,10 @@ export class CentralComponent implements OnInit {
     utilsService.loadPaginatorLabels();
   }
   ngOnInit() {
+    
+    this.filter.SearchTerm = '';
+    this.filter.PageIndex = 1;
+    this.filter.PageSize = this.pageSizesList[1];
     this.reload();
     this.filtersEventsBinding();
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
@@ -89,7 +95,7 @@ export class CentralComponent implements OnInit {
           this.listprovince = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.provinceService.getProvincesList({ 'SearchTerm': value, 'PageIndex': 1, 'PageSize': 10, 'SortName': 'ID', 'SortDirection': 'ASC' })
+        switchMap(value => this.provinceService.getProvincesList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -97,7 +103,8 @@ export class CentralComponent implements OnInit {
           )
         )
       )
-      .subscribe(data => {
+      .subscribe((response: any) => {
+				const data = response.results;
         if (data == undefined) {
           this.listprovince = [{ notfound: 'Not Found' }];
         } else {
@@ -112,7 +119,7 @@ export class CentralComponent implements OnInit {
         this.listdistrict = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.districtService.getDistrictsList(new DistrictFilter(value, 1, 100,null, this.provinceIDfilted()))
+      switchMap(value => this.districtService.getDistrictsList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -120,7 +127,8 @@ export class CentralComponent implements OnInit {
         )
       )
     )
-      .subscribe(data => {
+      .subscribe((response: any) => {
+				const data = response.results;
         if (data == undefined) {
           this.listdistrict = [{ notfound: 'Not Found' }];
         } else {
@@ -135,7 +143,7 @@ export class CentralComponent implements OnInit {
         this.listward = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.wardObservableFilter(value)
+      switchMap(value => this.http.get(`${environment.serverUrl}Wards?pageIndex=1&pageSize=20&sortName=id&sortDirection=ASC`)
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -143,7 +151,8 @@ export class CentralComponent implements OnInit {
         )
       )
     )
-      .subscribe(data => {
+      .subscribe((response: any) => {
+				const data = response.results;
         if (data == undefined) {
           this.listward = [{ notfound: 'Not Found' }];
         } else {
@@ -153,29 +162,32 @@ export class CentralComponent implements OnInit {
       });
   }
 
-  remove(Central: Central) {
-    this.Central = Central;
+  remove(id) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'Central';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deleteCentral(Central.id, this.currentUser.UserId).subscribe(() => {
+      _this.service.deleteCentral(id).subscribe(() => {
         _this.reload();
       });
     });
   }
   pageEvent(variable: any) {
-    this.filter = new CentralFilter(this.searchTerm, 1, this.pageSize, null, null, null, this.paginationSettings.sort.SortName, this.paginationSettings.sort.SortDirection);
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
     this.reload();
   }
   reload() {
     this.filter.SearchTerm = this.searchTerm;
+    this.filter.sortName = this.paginationSettings.sort.SortName;
+    this.filter.sortDirection = this.paginationSettings.sort.SortDirection; 
+
     this.loading = true;
     this.CentralList = [];
-    this.service.getCentralsList(this.filter).subscribe((list: any) => {
-      this.Total = (list && list[0]) ? list[0].Total : 0;
+    this.service.getCentralsList(this.filter).subscribe((response: any) => {
+      const list = response.results ? response.results : [];
+      this.Total = (response && response.rowCount) ? response.rowCount : 0;
+      this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
       setTimeout(() => {
         this.loading = false;
         this.CentralList = list || [];
@@ -197,25 +209,25 @@ export class CentralComponent implements OnInit {
   }
 
   displayProvinceFn(user): string {
-    return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
+    return user && user.provinceName && !user.notfound ? user.provinceName : '';
   }
   displayDistrictFn(user): string {
-    return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
+    return user && user.districtName && !user.notfound ? user.districtName : '';
   }
   displayWardFn(user): string {
-    return user && user.WardName && !user.notfound ? user.WardName : '';
+    return user && user.wardName && !user.notfound ? user.wardName : '';
   }
   changeProvince(provinceID) {
     this.districtService.getDistrictsList(new DistrictFilter('', 1, 100,null, provinceID)).subscribe((list) => {
       this.listdistrict = list;
-      this.filter.ProvinceId = provinceID;
+      // this.filter.ProvinceId = provinceID;
       this.reload();
     });
   }
   changeDistrict(districtID) {
     this.http.get(`${environment.serverUrl}Wards/?SearchTerm=&DistrictID=${districtID}&SortName=&SortDirection=&PageIndex=1&PageSize=20`).subscribe((list) => {
       this.listward = list;
-      this.filter.DistrictId = districtID;
+      // this.filter.DistrictId = districtID;
       this.reload();
     });
   }
@@ -255,6 +267,16 @@ export class CentralComponent implements OnInit {
     document.body.append(a);
     a.click();
     a.remove();
+  }
+  sortToggles(colIndex: number) {
+    const _this = this;
+    if (this.paginationSettings.sortAbles[colIndex])
+      this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles, this.paginationSettings.sort, this.paginationSettings.columnsNameMapping)
+        .then(() => {
+          _this.reload();
+        });
+    else
+      this.utilsService.doNothing();
   }
 
 }

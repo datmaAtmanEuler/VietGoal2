@@ -1,5 +1,5 @@
 export class Recruit{
-    Id: number;
+    id: number;
     RecruitsCode: string;
     RecruitsName:string;
     RecruitsColor: string;
@@ -10,9 +10,9 @@ export class Recruit{
     DeletedBy: null | number;
     DeletedDate: null | Date;
 	DisplayOrder:number;
-    constructor(Id: number,  RecruitsCode: string, RecruitsName: string, RecruitsColor: string,DisplayOrder:number, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
+    constructor(id: number,  RecruitsCode: string, RecruitsName: string, RecruitsColor: string,DisplayOrder:number, CreatedDate: null | Date, UpdatedDate: null | Date, CreatedBy: null | number,
 		UpdatedBy: null | number, DeletedBy: null | number , DeletedDate: null | Date) {
-        this.Id = Id;
+        this.id = id;
         this. RecruitsCode =  RecruitsCode;
         this.RecruitsName = RecruitsName;
         this.RecruitsColor = RecruitsColor;

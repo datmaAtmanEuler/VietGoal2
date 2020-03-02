@@ -55,6 +55,11 @@ export class CollectionComponent implements OnInit {
     this.reload();
   }
 
+  pageEvent(pageE: any) {
+    this.filter.pageIndex = pageE.pageIndex + 1;
+    this.filter.pageSize = pageE.pageSize;
+    this.reload();
+  }
   reload() {
     this.filter.sortName = this.paginationSettings.sort.SortName;
     this.filter.sortDirection = this.paginationSettings.sort.SortDirection; 

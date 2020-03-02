@@ -21,6 +21,7 @@ export class AreaEditComponent implements OnInit {
 	@Input('UserId') UserId: null | number;
 	area: Area = new Area(0, '', '',0, false, new Date(), null, 1, null, null, 0);
 	trungtamList: any[] = [];
+	centralName: string;
 
 	constructor(private trungtamService: CentralService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private areaService: AreaService, private route: ActivatedRoute, private router: Router) {
 		this.id = this.route.snapshot.queryParams['IdArea'];
@@ -30,17 +31,22 @@ export class AreaEditComponent implements OnInit {
 		config.scrollable = false;
 	}  
 	GetAreaById(id:number)  
-	{  
-		alert(id);
+	{ 
 		const _this = this;
-		this.trungtamService.getCentral(new CentralFilter('',0,0,0,0,0,'','')).subscribe((ceList: Central[]) => {
-			_this.trungtamList = (ceList) ? ceList : [];
-			_this.areaService.getArea(id).subscribe((area: Area) => {
-				_this.area = area;
-				if (_this.area == null || _this.area.id==0) {
-					_this.area =new Area(0, '', '',0, false, new Date(), null, 1, null, null, 0);
+		this.trungtamService.getCentralsList({PageIndex:1 ,PageSize: 20}).subscribe((ceList: Central[]) => {
+			_this.areaService.getArea((id) ? id : this.id).subscribe(
+				(Area) => {
+					this.area = Area || new Area(0, '', '',0, false, new Date(), null, 1, null, null, 0);
+					this.trungtamService.getCentral(this.area.centralId).subscribe(
+						(response: any)=>{
+							this.centralName = response.centralName;
+						}
+					)
+				},
+				() => {
+					this.area = new  Area(0, '', '',0, false, new Date(), null, 1, null, null, 0);
 				}
-			});	
+			);
 		  });
 	}
 	ngOnInit() {
@@ -53,6 +59,7 @@ export class AreaEditComponent implements OnInit {
 
 	UpdateArea() {
 		const _this = this;
+		_this.area.centralId =  _this.area.centralId * 1;
 		this.areaService.addOrUpdateArea(_this.area).subscribe((result: any) => {
 			if (result) {
 				if(!_this.popup) {

@@ -25,17 +25,16 @@ export class UserGroupService {
         return this.http.get(environment.apiUrl + `Groups/${id}`,this.httpOptions);
     }
 
-    addOrUpdateNhom(usergroup: UserGroup , by: null | number): Observable<any> {
-        if(usergroup.Id != 0 && usergroup.Id){
-            usergroup.UpdatedBy = by;
-        }else{
-            usergroup.CreatedBy = by;
+    addOrUpdateNhom(usergroup: UserGroup ): Observable<any> {
+        if (usergroup.id == 0) {
+            return this.http.post(environment.serverUrl + 'Groups', usergroup, this.httpOptions);
+        } else {
+            return this.http.put(environment.serverUrl + `Groups/${usergroup.id}`, usergroup, this.httpOptions);
         }
-        return this.http.post(environment.apiUrl + `Groups`,usergroup,this.httpOptions);
     }
 
-    deleteNhom(id: number , deleteBy : number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `Groups/${id}?deleteBy/${deleteBy}`,this.httpOptions)
+    deleteNhom(id: number): Observable<any> {
+        return this.http.delete(environment.apiUrl + `Groups/${id}`,this.httpOptions)
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

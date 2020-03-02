@@ -66,7 +66,7 @@ export class ClassEditComponent implements OnInit {
 	searchManagersCtrl = new FormControl();
 	searchMainCoachsCtrl = new FormControl();
 	searchViceCoachsCtrl = new FormControl();
-	aclass : any;
+	aclass : any = {}
 	isLoading = false;
 	errorMsg: string;
 
@@ -97,6 +97,7 @@ export class ClassEditComponent implements OnInit {
 	displayTrainingGroundFn(user): string {
 		return user && user.trainingGroundName && !user.notfound ? user.trainingGroundName : '';
 	}
+
 	changeArea(areaId) {
 		this.yardService.getYardsList(new YardFilter('', 1, 100, areaId, 'id', 'ASC')).subscribe((list) => {
 			this.yardsList = list;
@@ -125,7 +126,7 @@ export class ClassEditComponent implements OnInit {
 					this.areasList = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, null, 'id', 'ASC'))
+				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, 0, 'id', 'ASC'))
 					.pipe(
 						finalize(() => {
 							this.isLoading = false

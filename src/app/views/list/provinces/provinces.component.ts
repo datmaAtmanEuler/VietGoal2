@@ -136,7 +136,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
 
   deleteProvince() {
     const _this = this;
-    this.service.deleteProvince(this.province.Id, this.currentUser.UserId).subscribe((rs: any) => {
+    this.service.deleteProvince(this.province.id).subscribe((rs: any) => {
       _this.reload();
     });
   }

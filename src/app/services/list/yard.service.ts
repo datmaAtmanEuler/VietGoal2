@@ -29,9 +29,9 @@ export class YardService {
 
     addOrUpdateYard(yard: Yard): Observable<any> {
         if (yard.id == 0) {
-            return this.http.post(environment.serverUrl + 'Class', yard, this.httpOptions);
+            return this.http.post(environment.serverUrl + 'Yards', yard, this.httpOptions);
         } else {
-            return this.http.put(environment.serverUrl + `Class/${yard.id}`, yard, this.httpOptions);
+            return this.http.put(environment.serverUrl + `Yards/${yard.id}`, yard, this.httpOptions);
         }
     }
 

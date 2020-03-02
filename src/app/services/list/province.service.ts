@@ -38,7 +38,7 @@ export class ProvinceService {
         }
     }
 
-    deleteProvince(id: number, deletedBy: number): Observable<any> {
+    deleteProvince(id: number): Observable<any> {
         return this.http.delete(environment.apiUrl + `Provinces/${id}` , this.httpOptions);
     }
     

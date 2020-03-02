@@ -35,8 +35,8 @@ export class DistrictService {
         }
     }
 
-    deleteDistrict(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Districts/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteDistrict(id: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `Districts/${id}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

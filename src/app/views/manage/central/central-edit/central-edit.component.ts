@@ -16,6 +16,7 @@ import { HttpClient } from '@angular/common/http';
 import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { environment } from 'environments/environment';
 
 @Component({
 	selector: 'app-central-edit',
@@ -32,7 +33,7 @@ export class CentralEditComponent implements OnInit {
 	listprovince: any;
 	listdistrict: any;
 	listward: any;
-	central: Central = new Central(0, '', '', '', null, 0, '', '', '', true);
+	central: Central = new Central();
 
 	searchProvincesCtrl = new FormControl();
 	searchDistrictsCtrl = new FormControl();
@@ -62,22 +63,22 @@ export class CentralEditComponent implements OnInit {
 		return user && user.WardName && !user.notfound ? user.WardName : '';
 	}
 	changeProvince(provinceID) {
-		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,'Id','ASC')).subscribe((list) => {
-			this.listdistrict = list;
-		});
+		// this.districtService.getDistrictsList({ 'searchTerm', 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' }).subscribe((list) => {
+		// 	this.listdistrict = list;
+		// });
 	}
 	changeDistrict(districtID) {
-		this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=&DistrictID=${districtID}&SortName=&SortDirection=&PageIndex=1&PageSize=20`).subscribe((list) => {
-			this.listward = list;
-		});
+		// this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=&DistrictID=${districtID}&SortName=&SortDirection=&PageIndex=1&PageSize=20`).subscribe((list) => {
+		// 	this.listward = list;
+		// });
 	}
 	GetCentralById(Id: number) {
 		this.CentralService.getCentral((Id) ? Id : this.CentralId).subscribe(
 			(aCentral) => {
-				this.central = aCentral || new Central(0, '', '', '', null, 0, '', '', '', true);
+				this.central = aCentral || new Central();
 			},
 			() => {
-				this.central = new Central(0, '', '', '', null, 0, '', '', '', true);
+				this.central = new Central();
 			}
 		);
 	}
@@ -91,7 +92,7 @@ export class CentralEditComponent implements OnInit {
 					this.listprovince = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.provinceService.getProvincesList({ 'SearchTerm': value, 'PageIndex': 1, 'PageSize': 10, 'SortName': 'ID', 'SortDirection': 'ASC' })
+				switchMap(value => this.provinceService.getProvincesList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -99,7 +100,8 @@ export class CentralEditComponent implements OnInit {
 					)
 				)
 			)
-			.subscribe(data => {
+			.subscribe((response: any) => {
+				const data = response.results;
 				if (data == undefined) {
 					this.errorMsg = 'error';
 					this.listprovince = [{ notfound: 'Not Found' }];
@@ -117,7 +119,7 @@ export class CentralEditComponent implements OnInit {
 				this.listdistrict = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.districtService.getDistrictsList(new DistrictFilter(value, 1, 100,null, this.provinceIDfilted()))
+			switchMap(value => this.districtService.getDistrictsList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -125,7 +127,8 @@ export class CentralEditComponent implements OnInit {
 				)
 			)
 		)
-			.subscribe(data => {
+			.subscribe((response: any) => {
+				const data = response.results;
 				if (data == undefined) {
 					this.errorMsg = 'error';
 					this.listdistrict = [{ notfound: 'Not Found' }];
@@ -143,7 +146,7 @@ export class CentralEditComponent implements OnInit {
 				this.listward = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.wardObservableFilter(value)
+			switchMap(value => this.http.get(`${environment.serverUrl}Wards?pageIndex=1&pageSize=20&sortName=id&sortDirection=ASC`)
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -151,7 +154,8 @@ export class CentralEditComponent implements OnInit {
 				)
 			)
 		)
-			.subscribe(data => {
+			.subscribe((response: any) => {
+				const data = response.results;
 				if (data == undefined) {
 					this.errorMsg = 'error';
 					this.listward = [{ notfound: 'Not Found' }];
@@ -186,6 +190,7 @@ export class CentralEditComponent implements OnInit {
 		console.log(this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined ? this.searchProvincesCtrl.value.ID : 'a');
 		console.log(this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined ? this.searchDistrictsCtrl.value.ID : 'b');
 		console.log(this.searchWardsCtrl.value && this.searchWardsCtrl.value.ID != undefined ? this.searchWardsCtrl.value.ID : 'c');
+		this.central.area = this.central.area * 1;
 		this.CentralService.addOrUpdateCentral(this.central, this.currentUser.UserId).subscribe(
 			() => {
 				if (!this.popup) {

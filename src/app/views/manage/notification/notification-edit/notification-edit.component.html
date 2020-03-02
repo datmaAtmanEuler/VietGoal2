@@ -1,0 +1,57 @@
+<div class="modal-body" *ngIf="popup">
+  <div class="border border-light p-5">
+      <p class="h4 mb-4">Cập nhật thông báo</p>
+      <div class="row">
+        <div class="col-4">
+          <div class="form-group">
+            <label for="">Ngày đăng</label>
+            <mat-form-field>
+              <input id="createdDateDP" matInput [disabled]="true" (dateChange)="createdDateEvent($event)" [matDatepicker]="createdDateFilter" class="col-sm-3 form-control">
+              <span mat-raised-button (click)="createdDateFilter.open()"
+                class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
+                <i class="material-icons">date_range</i>
+              </span>
+              <!-- <mat-datepicker-toggle matSuffix [for]="createdDateFilter"></mat-datepicker-toggle> -->
+              <mat-datepicker #createdDateFilter disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <label for="">Ngày hết hạn</label>
+            <mat-form-field>
+              <input id="expirationDate" matInput [disabled]="true" (dateChange)="expirationDateEvent($event)" [matDatepicker]="expirationDateFilter" class="col-sm-3 form-control">
+              <span mat-raised-button (click)="expirationDateFilter.open()"
+                class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
+                <i class="material-icons">date_range</i>
+              </span>
+              <!-- <mat-datepicker-toggle matSuffix [for]="expirationDateFilter"></mat-datepicker-toggle> -->
+              <mat-datepicker #expirationDateFilter disabled="false"></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="form-group" id="file-attachment-input">
+            <app-upload [By]="1" (success)="finishUpload($event)"></app-upload>
+          </div>
+        </div>
+        <div class="col-8">
+          <div class="form-group">
+            <label for="">Tiêu đề</label>
+            <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="notification.title">
+          </div>
+          <div class="form-group">
+            <label for="">Nội dung</label>
+            <ckeditor [(ngModel)]="content" #myckeditor="ngModel" name="myckeditor" [config]="ckeConfig"
+            debounce="500" (paste)="onPaste($event)" (change)="onChange($event)">
+          </ckeditor>
+          </div>
+        </div>
+      </div>
+      <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()"
+          alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
+      <button class="btn btn-info" (click)="Update()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
+  </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+  <p class="h4 mb-4">Cập nhật thông báo</p>
+  <form></form>
+  <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"}}</button>
+  <button class="btn btn btn-info" (click)="Update()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
+</div>

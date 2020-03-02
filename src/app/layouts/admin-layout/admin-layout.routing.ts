@@ -59,6 +59,9 @@ import { StudentReserveComponent } from '../../views/manage/studentreserve/stude
 import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
 
 import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.component';
+import { NotificationComponent } from 'app/views/manage/notification/notification.component';
+import { NotificationSeenComponent } from 'app/views/manage/notification/notification-seen/notification-seen.component';
+import { NotificationEditComponent } from 'app/views/manage/notification/notification-edit/notification-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -454,8 +457,15 @@ export const AdminLayoutRoutes: Routes = [
         children: [ {
             path: ':classID', component: StudentComponent
         }]
-    }
-    ,
+    },
+    {
+        path: 'thongbao',
+        children: [ 
+            {path: '', component: NotificationComponent},
+            {path: 'edit', component: NotificationEditComponent},
+            {path: 'seen', component: NotificationSeenComponent}
+        ]
+    },
     {
         path: 'diemdanhhocvienngoai',
         children: [ {

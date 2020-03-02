@@ -49,8 +49,6 @@ export class CoachSchedulesComponent implements OnInit {
   	week: 0
   };
 
-  color: string = '#ffffff';
-
   constructor(  public translate: TranslateService,
 		public utilsService: UtilsService, 
 		private service: CoachService,

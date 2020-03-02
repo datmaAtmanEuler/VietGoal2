@@ -244,5 +244,12 @@ export class UtilsService {
           '<a href="{3}" target="{4}" data-notify="url"></a>' +
         '</div>'
     });
-}
+  }
+  
+  FormatString(str: string, ...val: string[]) {
+    for (let index = 0; index < val.length; index++) {
+      str = str.replace(`{${index}}`, val[index]);
+    }
+    return str;
+  }
 }  

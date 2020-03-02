@@ -31,6 +31,8 @@ export class ProvincesComponent implements OnInit {ModalDirective;
   loading: boolean = true;
   Total: number = 0;
   firstRowOnPage: any;
+  color = '#ff00ff';
+  date = '2017-10-19';
   /**
    * BEGIN SORT SETTINGS
    */
@@ -167,5 +169,9 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     document.body.append(a);
     a.click();
     a.remove();
+  }
+
+  onDateUpdate(dateResult: string) {
+    console.log(dateResult);
   }
 }

@@ -16,7 +16,7 @@ export class ClassStatusEditComponent implements OnInit {
 	@Input() ClassStatusId: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
 
-	ClassStatus: ClassStatus = new ClassStatus();
+	ClassStatus: any = {id: 0};
 	currentUser: any;
 
 	constructor(public activeModal: NgbActiveModal, private ClassStatusService: ClassStatusService, config: NgbModalConfig , private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
@@ -31,10 +31,10 @@ export class ClassStatusEditComponent implements OnInit {
 	{  
 		this.ClassStatusService.getClassStatus((ClassStatusId) ? ClassStatusId : this.ClassStatusId).subscribe(
 			(object) => {
-				this.ClassStatus = object || new ClassStatus();
+				this.ClassStatus = object || {id: 0};
 			},
 			() => {
-				this.ClassStatus = new ClassStatus();
+				this.ClassStatus = {id: 0};
 			}
 		);
 	}

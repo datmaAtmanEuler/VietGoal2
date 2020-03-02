@@ -1,0 +1,34 @@
+<div class="Input">
+  <input type="text" class="Input-field" [(ngModel)]="result"
+    [ngClass]="{ 'ng-not-empty': result }"
+    (click)="onShowCalendar($event)" (keydown)="prevent($event)"
+    (focus)="onShowCalendar($event)" />
+  <label class="Input-label">{{ label }}</label>
+  <div class="date" [ngClass]="{ 'isActive': showCalendar }">
+    <div class="month-container Grid Grid--spaceBetween Grid--alignCenter u-paddingVertical-xs">
+      <mat-icon class="text--14px u-marginLeft-xs blue--dark myar lar Btn--pointer"
+        (click)="updateMonth($event, 'dec')">keyboard_arrow_left</mat-icon>
+      <div class="Grid" style="padding-bottom: 4px !important;">
+        <span class="month">{{ "DATEFORMAT." + months[month] | translate }}</span>
+        <span class="u-marginLeft-xs blue--dark bold">{{ year }}</span>
+      </div>
+      <mat-icon class="text--14px u-marginLeft-xs blue--dark myar rar Btn--pointer"
+        (click)="updateMonth($event, 'inc')">keyboard_arrow_right</mat-icon>
+    </div>
+    <div class="week-container Grid">
+      <span class="week">{{"DATEFORMAT.DAYORDERINWEEK2.Sunday2" | translate }}</span>
+      <span class="week">{{"DATEFORMAT.DAYORDERINWEEK2.Monday2" | translate }}</span>
+      <span class="week">{{"DATEFORMAT.DAYORDERINWEEK2.Tuesday2" | translate }}</span>
+      <span class="week">{{"DATEFORMAT.DAYORDERINWEEK2.Wednesday2" | translate }}</span>
+      <span class="week">{{"DATEFORMAT.DAYORDERINWEEK2.Thursday2" | translate }}</span>
+      <span class="week">{{"DATEFORMAT.DAYORDERINWEEK2.Friday2" | translate }}</span>
+      <span class="week">{{"DATEFORMAT.DAYORDERINWEEK2.Saturday2" | translate }}</span>
+    </div>
+    <div class="Grid Grid--wrap day-container">
+      <span class="day Btn--pointer" *ngFor="let day of days" [ngClass]="{ 'isSelected': day === date.getDate() }"
+        (click)="selectDay(day)">
+        {{ day }}
+      </span>
+    </div>
+  </div>
+</div>

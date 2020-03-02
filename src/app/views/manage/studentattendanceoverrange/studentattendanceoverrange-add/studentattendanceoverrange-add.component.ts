@@ -118,7 +118,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
       // alert(`chọn học viên id:${one.id} qua lớp id:${this.intoClassId}`)
       this.service.put(listtoput, this.intoClassId, this.absentDate).subscribe((response) => {
         if(response.message) {
-          this.utilsService.showNotification('top', 'center', response.message, 4);
+          this.utilsService.showNotification('top', 'center', this.utilsService.FormatString(response.message,this.absentDate), 4);
           // this.router.navigate(['quanly/diemdanhhocvienngoai']);
         }
       });

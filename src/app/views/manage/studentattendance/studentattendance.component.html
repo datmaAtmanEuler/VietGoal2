@@ -104,8 +104,7 @@
                         <th *ngIf="paginationSettings.visibles[colIndex]"
                           [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
                           (click)="sortToggles(colIndex)">
-                          <!-- <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }} -->
-                          <span style="vertical-align: middle;">{{colName}}
+                          <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
                             <i style="float: none;" class="material-icons asc-sort-icons"
                               *ngIf="paginationSettings.sortAbles[colIndex]">
                               {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}

@@ -8,6 +8,8 @@ import { ClassStatus } from 'app/models/list/classstatus';
 import { ClassStatusService } from 'app/services/list/classstatus.service';
 import { ClassStatusEditComponent } from './classstatus-edit/classstatus-edit.component';
 import { ClassStatusImportComponent } from './classstatus-import/classstatus-import.component';
+import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import PerfectScrollbar from 'perfect-scrollbar';
 
 @Component({
   selector: 'app-classstatus',
@@ -26,14 +28,32 @@ export class ClassStatusComponent implements OnInit {
   loading: boolean;
   Total: any;
   firstRowOnPage: any;
-  constructor(public util: UtilsService, config: NgbModalConfig, private service: ClassStatusService, private router: Router, private modalService: NgbModal) {
+  
+  paginationSettings: any = {
+    sort: new ASCSort(),
+    sortToggles: [
+      null,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      null
+    ],
+    columnsName: ['Order', 'ClassStatusName', 'ClassStatusCode', 'Action'],
+    columnsNameMapping: ['', 'classStatusName', 'classStatusCode', ''],
+    sortAbles: [false, true, true, false],
+    visibles: [false, true, true, false]
+  }
+
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: ClassStatusService, private router: Router, private modalService: NgbModal) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    utilsService.loadPaginatorLabels();
   }
 
   ngOnInit() {
+    
+    const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+    new PerfectScrollbar(vgscroll);
     this.reload();
   }
 
@@ -102,5 +122,15 @@ export class ClassStatusComponent implements OnInit {
     document.body.append(a);
     a.click();
     a.remove();
+  }
+  sortToggles(colIndex: number) {
+    const _this = this;
+    if (this.paginationSettings.sortAbles[colIndex])
+      this.utilsService.toggleSort(colIndex, this.paginationSettings.sortToggles, this.paginationSettings.sort, this.paginationSettings.columnsNameMapping)
+        .then(() => {
+          _this.reload();
+        });
+    else
+      this.utilsService.doNothing();
   }
 }

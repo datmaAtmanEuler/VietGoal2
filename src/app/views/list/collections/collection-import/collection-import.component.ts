@@ -34,8 +34,8 @@ export class CollectionImportComponent implements OnInit {
 	ImportCollections() {
 		const _this = this;
 		this.collectionService.import(this.importViewModel).subscribe((result: any) => {
-			_this.errorsList = result.Error.filter((r: any) => r.isError == true);
-			_this.successList = result.Error.filter((r: any) => r.isError == false);
+			_this.errorsList = result.error.filter((r: any) => r.isError == true);
+			_this.successList = result.error.filter((r: any) => r.isError == false);
 			if(_this.errorsList.length < 1) {
 				//_this.closeMe({'success': _this.successList.length + ' record' + ((_this.successList.length > 1) ? 's' : '') + ' had been updated'});
 			}
@@ -46,12 +46,13 @@ export class CollectionImportComponent implements OnInit {
 
 
 	finishUpload(fileUploadResult: any) {
+		console.log(fileUploadResult);
 		this.disabled = false;
 		const _this = this;
 		if(fileUploadResult && fileUploadResult.length > 0) {
 			this.importViewModel.FileDinhKem = [];
 			fileUploadResult.forEach(function(file: any) {
-				_this.importViewModel.FileDinhKem.push(file.ID);
+				_this.importViewModel.FileDinhKem.push(file.id);
 			});
 		}
 	}

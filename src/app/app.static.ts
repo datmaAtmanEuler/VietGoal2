@@ -13,11 +13,5 @@ export const LANGUAGES = [
     code: 'vi',
     description: 'Vietnamese',
     flag: './assets/icons/flags/vietnam-32.png'
-  },
-  {
-    code: 'zh',
-    lang: 2,
-    description: 'Chinese',
-    flag: './assets/icons/flags/china-32.png'
   }
 ];

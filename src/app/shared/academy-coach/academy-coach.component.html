@@ -1,6 +1,6 @@
 <div class="academy-coach-wrapper">
 	<input type="text" class="Input-field" 
-		[ngClass]="{ 'ng-not-empty': selectedCoach }"
+		[ngClass]="{ 'ng-not-empty': selectedCoachs }"
 	    [matAutocomplete]="CoachsAC" [formControl]="searchCoachsCtrl">
 		<label class="Input-label">{{ label }}</label>
 	<mat-autocomplete #CoachsAC="matAutocomplete"

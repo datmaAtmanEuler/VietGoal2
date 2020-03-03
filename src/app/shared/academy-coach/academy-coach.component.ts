@@ -119,7 +119,9 @@ export class AcademyCoachComponent implements OnInit {
     }
     return this.selectedCoachs.join(', ');
   }
-
+  displayCoachFn(){
+    
+  }
   changeCoach(coachId: number) {
     if(this.selectedCoachs.indexOf(coachId) == -1) {
     	this.selectedCoachs.push(coachId);

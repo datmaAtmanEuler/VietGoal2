@@ -1,0 +1,27 @@
+ th, td{
+    white-space: nowrap;
+}
+.redBg {
+	cursor: pointer;
+	background-color: red !important;
+	&:hover{
+		background-color: #e84f4f !important;
+	}
+}
+.greenBg {
+	background-color: green !important;
+	&:hover{
+		background-color: rgb(0,232,0) !important;
+	}
+}
+.normalBg{
+	background-color: white !important;
+}
+tr{
+	height: 41px !important;
+}
+.blockModule{
+	&:hover {
+		color: yellow !important;
+	}
+}

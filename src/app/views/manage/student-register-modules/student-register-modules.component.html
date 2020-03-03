@@ -1,0 +1,198 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-warning" style="background: #023a54">
+                        <h4 class="card-title">{{ "MESSAGE.NameList.StudentRegisterModules" | translate }}</h4>
+                        <!-- chưa dịch cddayoff-->
+                    </div>
+                    <div class="row ">
+                        <div class="col-12">
+                            <div class="card-body">
+                                <div class="form-group row">
+                                    <div class="col-4">
+                                        <label class="m-0">{{ "MESSAGE.NameList.Area" | translate }}</label>
+                                        <input type="text" class="form-control" [matAutocomplete]="areasAC"
+                                               [formControl]="searchAreasCtrl">
+                                        <button *ngIf="areaPageIndex < totalAreaPages" type="button" (click)="updateAreaShowMore();" title="{{ 'MESSAGE.NameList.ShowMore' | translate }}"
+                                                class="btn btn-primary search-button btn-link btn-sm btn-just-icon"
+                                                [ngClass]="{'show_more': showMoreArea == false, 'show_more_show': showMoreArea == true}">
+                                            <i class="material-icons advanced-search-btn">more_horiz</i>
+                                        </button>
+                                        <mat-autocomplete #areasAC="matAutocomplete"
+                                                          (optionSelected)="changeArea(searchAreasCtrl.value.id)" [displayWith]="displayAreaFn">
+                                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                <mat-spinner></mat-spinner>
+                                            </mat-option>
+                                            <ng-container *ngIf="!isLoading">
+                                                <mat-option *ngFor="let area of areasList" [value]="area" (mouseover)="showMoreArea = true">
+                                                    <span *ngIf="!area.notfound">{{area.areaName}}</span>
+                                                    <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-autocomplete>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="m-0">{{ "MESSAGE.NameList.Yard" | translate }}</label>
+                                        <input type="text" class="form-control" [matAutocomplete]="yardsAC"
+                                               [formControl]="searchYardsCtrl">
+                                        <button *ngIf="yardPageIndex < totalYardPages" type="button" (click)="updateYardShowMore();" title="{{ 'MESSAGE.NameList.ShowMore' | translate }}"
+                                                class="btn btn-primary search-button btn-link btn-sm btn-just-icon"
+                                                [ngClass]="{'show_more': showMoreYard == false, 'show_more_show': showMoreYard == true}">
+                                            <i class="material-icons advanced-search-btn">more_horiz</i>
+                                        </button>
+                                        <mat-autocomplete #yardsAC="matAutocomplete"
+                                                          (optionSelected)="changeYard(searchYardsCtrl.value.id)" [displayWith]="displayYardFn">
+                                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                <mat-spinner></mat-spinner>
+                                            </mat-option>
+                                            <ng-container *ngIf="!isLoading">
+                                                <mat-option *ngFor="let yard of yardsList" [value]="yard" (mouseover)="showMoreYard = true">
+                                                    <span *ngIf="!yard.notfound">{{yard.yardName}}</span>
+                                                    <span *ngIf="yard.notfound" class="nofind">{{yard.notfound}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-autocomplete>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="m-0">{{ "MESSAGE.NameList.TrainingGround" | translate }}</label>
+                                        <input type="text" class="form-control" [matAutocomplete]="trainingGroundsAC"
+                                               [formControl]="searchTrainingGroundsCtrl">
+                                        <button *ngIf="trainingGroundPageIndex < totalTrainingGroundPages" type="button" (click)="updateTrainingGroundShowMore();" title="{{ 'MESSAGE.NameList.ShowMore' | translate }}"
+                                                class="btn btn-primary search-button btn-link btn-sm btn-just-icon"
+                                                [ngClass]="{'show_more': showMoreTrainingGround == false, 'show_more_show': showMoreTrainingGround == true}">
+                                            <i class="material-icons advanced-search-btn">more_horiz</i>
+                                        </button>
+                                        <mat-autocomplete #trainingGroundsAC="matAutocomplete"
+                                                          (optionSelected)="changeTrainingGround(searchTrainingGroundsCtrl.value.id)" [displayWith]="displayTrainingGroundFn">
+                                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                <mat-spinner></mat-spinner>
+                                            </mat-option>
+                                            <ng-container *ngIf="!isLoading">
+                                                <mat-option *ngFor="let trainingGround of trainingGroundsList" [value]="trainingGround" (mouseover)="showMoreTrainingGround = true">
+                                                    <span *ngIf="!trainingGround.notfound">{{trainingGround.trainingGroundName}}</span>
+                                                    <span *ngIf="trainingGround.notfound" class="nofind">{{trainingGround.notfound}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-autocomplete>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-4">
+                                        <label class="m-0">{{ "MESSAGE.NameList.Class" | translate }}</label>
+                                        <input type="text" class="form-control" [matAutocomplete]="classAC"
+                                               [formControl]="searchClassCtrl">
+                                        <button *ngIf="classPageIndex < totalClassPages" type="button" (click)="updateClassShowMore();" title="{{ 'MESSAGE.NameList.ShowMore' | translate }}"
+                                                class="btn btn-primary search-button btn-link btn-sm btn-just-icon"
+                                                [ngClass]="{'show_more': showMoreClass == false, 'show_more_show': showMoreClass == true}">
+                                            <i class="material-icons advanced-search-btn">more_horiz</i>
+                                        </button>
+                                        <mat-autocomplete #classAC="matAutocomplete"
+                                                          (optionSelected)="changeClass(searchClassCtrl.value.id)" [displayWith]="displayClassFn">
+                                            <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                                <mat-spinner></mat-spinner>
+                                            </mat-option>
+                                            <ng-container *ngIf="!isLoading">
+                                                <mat-option *ngFor="let aclass of classList" [value]="aclass" (mouseover)="showMoreClass = true">
+                                                    <span *ngIf="!aclass.notfound">{{aclass.className}}</span>
+                                                    <span *ngIf="aclass.notfound" class="nofind">{{aclass.notfound}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-autocomplete>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="m-0">{{ "MESSAGE.NameList.Year" | translate }}</label>
+                                        <input type="text" class="form-control" [matAutocomplete]="yearsAC"
+                                          [formControl]="searchYearsCtrl">
+                                        <mat-autocomplete #yearsAC="matAutocomplete"
+                                          (optionSelected)="changeYear(searchYearsCtrl.value.value)" [displayWith]="displayYearFn">
+                                          <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                            <mat-spinner></mat-spinner>
+                                          </mat-option>
+                                          <ng-container *ngIf="!isLoading">
+                                              <mat-option *ngFor="let year of yearsList" [value]="year">
+                                                  <span *ngIf="!year.notfound">{{("MESSAGE.NameList.Year" | translate) + " " + year.title}}</span>
+                                                  <span *ngIf="year.notfound" class="nofind">{{year.notfound}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-autocomplete>
+                                      </div>
+                                      <div class="col-4">
+                                        <label class="m-0">{{ "MESSAGE.NameList.Month" | translate }}</label>
+                                        <input type="text" class="form-control" [matAutocomplete]="monthsAC"
+                                          [formControl]="searchMonthsCtrl">
+                                        <mat-autocomplete #monthsAC="matAutocomplete"
+                                          (optionSelected)="changeMonth(searchMonthsCtrl.value.value)" [displayWith]="displayMonthFn">
+                                          <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                                            <mat-spinner></mat-spinner>
+                                          </mat-option>
+                                          <ng-container *ngIf="!isLoading">
+                                              <mat-option *ngFor="let month of monthsList" [value]="month">
+                                                  <span *ngIf="!month.notfound">{{month.title | translate}}</span>
+                                                  <span *ngIf="month.notfound" class="nofind">{{month.notfound}}</span>
+                                                </mat-option>
+                                            </ng-container>
+                                        </mat-autocomplete>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card-body table-responsive">
+                                    <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
+                                    <div class="vietgoal-table-settings vg-scroll">
+                                        <table class="table table-condensed table-striped table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th rowspan="2" [style.width]="'70px'">STT</th>
+                                                    <th rowspan="2" [style.width]="'120px'">Họ tên</th>
+                                                    <ng-container *ngFor="let day of daysColumn">
+                                                      <th [style.width]="'70px'">
+                                                        {{day.day}}
+                                                      </th>
+                                                    </ng-container>
+                                                    <th colspan="2">Tổng số</th>
+                                                </tr>
+                                                <tr>
+                                                    <ng-container *ngFor="let day of daysColumn">
+                                                      <th [style.width]="'70px'">
+                                                        {{day.thu | translate }}
+                                                      </th>
+                                                    </ng-container>
+                                                    <th>TS</th>
+                                                    <th>V</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ng-container *ngFor="let info of data; let i = index;">
+                                                  <tr>
+                                                    <td class="text-center">{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
+                                                    <td>{{info.studentFullName}}</td>
+                                                    <ng-container *ngFor="let day of daysColumn">
+                                                      <td class="text-center"
+                                                        *ngIf="getModuleDaysInfo(info).days.indexOf(day.day) != -1"
+                                                        [ngClass]="{'redBg': getModuleDaysInfo(info).red[getModuleDaysInfo(info).days.indexOf(day.day)],
+                                                                    'greenBg': getModuleDaysInfo(info).green[getModuleDaysInfo(info).days.indexOf(day.day)]}">
+                                                        {{ getModuleDaysInfo(info).status[getModuleDaysInfo(info).days.indexOf(day.day)] }}
+                                                      </td>
+                                                      <td class="text-center"
+                                                        *ngIf="getModuleDaysInfo(info).days.indexOf(day.day) == -1"
+                                                        [class]="'normalBg'">
+                                                      </td>
+                                                    </ng-container>
+                                                    <td>{{getTotalInfo(info).total}}</td>
+                                                    <td>{{getTotalInfo(info).v}}</td>
+                                                  </tr>
+                                                </ng-container>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

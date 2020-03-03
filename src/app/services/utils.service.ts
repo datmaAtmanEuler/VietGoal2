@@ -132,31 +132,43 @@ export class UtilsService {
   }
 
   weekNumber(inputDate: Date): number {
-    return 0 | inputDate.getDate() / 7;
+    return inputDate.getDay(); 
   }
 
   dayInWeekList(value?: any, type: number | null = 1): Observable<any[]> {
     if(type == 1) {
        return of([
+          {value: 0, title: "DATEFORMAT.DAYORDERINWEEK.Sunday"},
           {value: 1, title: "DATEFORMAT.DAYORDERINWEEK.Monday"},
           {value: 2, title: "DATEFORMAT.DAYORDERINWEEK.Tuesday"},
           {value: 3, title: "DATEFORMAT.DAYORDERINWEEK.Wednesday"},
           {value: 4, title: "DATEFORMAT.DAYORDERINWEEK.Thursday"},
           {value: 5, title: "DATEFORMAT.DAYORDERINWEEK.Friday"},
-          {value: 6, title: "DATEFORMAT.DAYORDERINWEEK.Saturday"},
-          {value: 0, title: "DATEFORMAT.DAYORDERINWEEK.Sunday"}
+          {value: 6, title: "DATEFORMAT.DAYORDERINWEEK.Saturday"}
         ].filter((day: any) => value == '' || value == undefined || day.title.toLowerCase().indexOf(value.toString()) != -1)); 
      } else {
         return of([
+          {value: 0, title: "DATEFORMAT.DAYORDERINWEEK.Sunday"},
           {value: 1, title: "DATEFORMAT.DAYORDERINWEEK.Monday"},
           {value: 2, title: "DATEFORMAT.DAYORDERINWEEK.Tuesday"},
           {value: 3, title: "DATEFORMAT.DAYORDERINWEEK.Wednesday"},
           {value: 4, title: "DATEFORMAT.DAYORDERINWEEK.Thursday"},
           {value: 5, title: "DATEFORMAT.DAYORDERINWEEK.Friday"},
-          {value: 6, title: "DATEFORMAT.DAYORDERINWEEK.Saturday"},
-          {value: 0, title: "DATEFORMAT.DAYORDERINWEEK.Sunday"}
+          {value: 6, title: "DATEFORMAT.DAYORDERINWEEK.Saturday"}
         ].filter((day: any) => value == '' || value == undefined || day.value.toString().toLowerCase() == value.toString())); 
      }
+  }
+
+  dayInWeekListStatic(): any[] {
+    return [
+          {value: 0, title: "DATEFORMAT.DAYORDERINWEEK2.Sunday2"},
+          {value: 1, title: "DATEFORMAT.DAYORDERINWEEK2.Monday2"},
+          {value: 2, title: "DATEFORMAT.DAYORDERINWEEK2.Tuesday2"},
+          {value: 3, title: "DATEFORMAT.DAYORDERINWEEK2.Wednesday2"},
+          {value: 4, title: "DATEFORMAT.DAYORDERINWEEK2.Thursday2"},
+          {value: 5, title: "DATEFORMAT.DAYORDERINWEEK2.Friday2"},
+          {value: 6, title: "DATEFORMAT.DAYORDERINWEEK2.Saturday2"}
+        ];
   }
 
   weekNumberList(value: any,type: number | null = 1): Observable<any[]> {
@@ -266,4 +278,8 @@ export class UtilsService {
     }
     return str;
   }
+
+  daysInMonth(month, year) { 
+    return new Date(year, month, 0).getDate(); 
+  } 
 }  

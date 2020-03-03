@@ -57,6 +57,8 @@ import { StudentRegistrationComponent } from '../../views/manage/student-registr
 import { StudentRegistrationEditComponent } from '../../views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 import { StudentReserveComponent } from '../../views/manage/studentreserve/studentreserve.component';
 import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
+import { StudentRegisterModulesComponent } from '../../views/manage/student-register-modules/student-register-modules.component';
+
 
 import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.component';
 
@@ -326,6 +328,9 @@ export const AdminLayoutRoutes: Routes = [
             path: 'edit', component: CentralEditComponent
         }
         ]
+    },
+    {
+        path:'studentregistermodules', component: StudentRegisterModulesComponent
     },
     {
         path:'texteditor',

@@ -125,6 +125,7 @@ import { StudentReserveComponent } from '../../views/manage/studentreserve/stude
 import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
 import { StudentReserveImportComponent } from '../../views/manage/studentreserve/studentreserve-import/studentreserve-import.component';
 import { ConfirmComponent } from '../../views/manage/studentreserve/registrationreserved/confirm.component';
+import { StudentRegisterModulesComponent } from '../../views/manage/student-register-modules/student-register-modules.component';
 
 
 @NgModule({
@@ -159,6 +160,7 @@ import { ConfirmComponent } from '../../views/manage/studentreserve/registration
     MatIconModule
   ],
   declarations: [
+    StudentRegisterModulesComponent,
     KpiConfigsComponent,
     KpiConfigEditComponent,
     StudentRegistrationComponent,

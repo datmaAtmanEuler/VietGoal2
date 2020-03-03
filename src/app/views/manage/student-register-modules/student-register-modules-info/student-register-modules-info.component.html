@@ -1,0 +1,9 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light p-5">
+      <p class="h4 mb-4">Student register modules Information</p>
+      <div class="row">
+        {{ studentModule | json }}
+      </div>
+      <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()" alt=''>Close</button>
+    </div>
+  </div>

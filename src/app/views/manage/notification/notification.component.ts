@@ -73,10 +73,8 @@ export class NotificationComponent implements OnInit {
     this.reload();
   }
   search(){
-    if((<HTMLInputElement>event.target).value.length){
       this.reload();
       this.filter.searchTerm = '';
-    }
   }
   reload() {
 

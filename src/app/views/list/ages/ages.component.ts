@@ -56,8 +56,13 @@ export class AgesComponent implements OnInit {
     this.pageSize = pageE.pageSize;
     this.reload();
   }
+  search(){
+      this.reload();
+      this.searchTerm = '';
+  }
   reload() {
     const filter = {
+      searchTerm: this.searchTerm,
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
       sortName: this.paginationSettings.sort.SortName,

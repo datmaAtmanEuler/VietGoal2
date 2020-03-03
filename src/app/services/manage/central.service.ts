@@ -30,7 +30,7 @@ export class CentralService {
         return this.http.get(environment.serverUrl + `Centrals/${id}` , this.httpOptions);
     }
 
-    addOrUpdateCentral(Central: Central, by: null | number): Observable<any> {
+    addOrUpdateCentral(Central: Central): Observable<any> {
         if (Central.id == 0) {
             return this.http.post(environment.serverUrl + 'Centrals', Central, this.httpOptions);
         } else {

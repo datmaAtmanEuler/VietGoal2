@@ -2,13 +2,15 @@ import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { NgbActiveModal, NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoachAbsent, CoachAbsentMapping } from 'app/models/manage/coachabsent';
-import { CoachAbsentService } from 'app/services/manage/coachabsent.service';
-import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
+import { CoachAbsentService } from '../../../../services/manage/coachabsent.service';
+import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { startWith, map, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { MatDatepickerInputEvent } from '@angular/material';
+import { UtilsService } from 'app/services/utils.service';
 
 @Component({
 	selector: 'app-coachabsent-edit',
@@ -42,7 +44,14 @@ export class CoachAbsentEditComponent implements OnInit {
 	];
 	filteredShiftTypes: Observable<any>;
 	isLoading: boolean;
-	constructor(private service: CoachAbsentService, public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router, private http: HttpClient) {
+	constructor(private service: CoachAbsentService,
+		public activeModal: NgbActiveModal,
+		config: NgbModalConfig,
+		private modalService: NgbModal,
+		private route: ActivatedRoute,
+		private router: Router,
+		public utilService: UtilsService,
+		private http: HttpClient) {
 		this.coachabsentId = this.route.snapshot.queryParams['Id'];
 		this.coachabsentId = (this.coachabsentId) ? this.coachabsentId : 0;
 		config.backdrop = 'static';
@@ -56,7 +65,10 @@ export class CoachAbsentEditComponent implements OnInit {
 				this.CoachAbsent = object || new CoachAbsentMapping(0);
 				this.http.get(environment.serverUrl+"Coachs/"+this.CoachAbsent.coachId).subscribe((response: any)=>{
 					const ipcoachAC = <HTMLInputElement>document.getElementById('ipcoachAC');
+					const ipAbsentDateDP = <HTMLInputElement>document.getElementById('ipAbsentDateDP');
 					ipcoachAC.value = response.firstName +' '+ response.lastName;
+					ipAbsentDateDP.value = this.utilService.stringDate(object.coachAbsentDate, true);
+
 				});
 			},
 			() => {
@@ -140,6 +152,10 @@ export class CoachAbsentEditComponent implements OnInit {
 
 	closeMe() {
 		this.activeModal.close();
+	}
+	// Date events
+	absentDateEvent(event: MatDatepickerInputEvent<Date>) {
+		this.CoachAbsent.coachAbsentDate = this.utilService.stringDate(event.value);
 	}
 
 }

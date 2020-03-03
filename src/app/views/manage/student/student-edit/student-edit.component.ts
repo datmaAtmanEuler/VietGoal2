@@ -97,7 +97,8 @@ export class StudentEditComponent implements OnInit {
 		console.log("update");
 		console.log(this.Student);
 		this.StudentService.addOrUpdate(this.Student, this.classID).subscribe(
-			() => {
+			(response) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -265,6 +266,12 @@ export class StudentEditComponent implements OnInit {
 			return this.http.get(`${environment.serverUrl}Wards/?SearchTerm=${value}&DistrictID=${this.searchDistrictsCtrl.value.ID}&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
 		} else {
 			return this.http.get(`${environment.serverUrl}Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
+		}
+	}
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilsService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
 		}
 	}
 }

@@ -118,7 +118,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
       // alert(`chọn học viên id:${one.id} qua lớp id:${this.intoClassId}`)
       this.service.put(listtoput, this.intoClassId, this.absentDate).subscribe((response) => {
         if(response.message) {
-          this.utilsService.showNotification('top', 'center', this.utilsService.FormatString(response.message,this.absentDate), 4);
+          this.notifyResponseWithDate(response,this.absentDate);
           // this.router.navigate(['quanly/diemdanhhocvienngoai']);
         }
       });
@@ -246,6 +246,14 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
         }
 
       });
+  }
+  // Additional function
+  notifyResponseWithDate(response: any, absentDate: string): any {
+    if(response && response.status == 0){
+      this.utilsService.showNotification('top', 'center', response.message, 2);
+    } else{
+      this.utilsService.showNotification('top', 'center', this.utilsService.FormatString(response.message, absentDate), 4);
+    }
   }
 }
 

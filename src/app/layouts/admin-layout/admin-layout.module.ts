@@ -119,7 +119,6 @@ import { StudentRegistrationImportComponent } from '../../views/manage/student-r
 import { StudentReserveComponent } from '../../views/manage/studentreserve/studentreserve.component';
 import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
 import { StudentReserveImportComponent } from '../../views/manage/studentreserve/studentreserve-import/studentreserve-import.component';
-import { ConfirmComponent } from '../../views/manage/studentreserve/registrationreserved/confirm.component';
 import { UserAdministrationComponent } from '../../views/manage/useradministration/user-administration.component';
 import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 import { UserAdministrationImportComponent } from '../../views/manage/useradministration/user-administration-import/user-administration-import.component';
@@ -237,7 +236,6 @@ import { UserAdministrationImportComponent } from '../../views/manage/useradmini
     StudentReserveComponent,
     StudentReserveEditComponent,
     StudentReserveImportComponent,
-    ConfirmComponent,
     UserAdministrationComponent,
     UserAdministrationEditComponent,
     UserAdministrationImportComponent

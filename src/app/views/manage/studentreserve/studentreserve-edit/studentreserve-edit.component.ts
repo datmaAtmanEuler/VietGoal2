@@ -203,10 +203,8 @@ export class StudentReserveEditComponent implements OnInit {
 
 	}
 
-	UpdateClass() {
+	Update() {
 		const _this= this
-		this.class.Week = Number.parseInt(_this.class.Week + "", 10);
-		this.class.ShiftDay = Number.parseInt(_this.class.ShiftDay + "", 10);
 		this.classService.addOrUpdateClass(_this.class).subscribe(
 			() => {
 				if (!_this.popup) {
@@ -216,7 +214,7 @@ export class StudentReserveEditComponent implements OnInit {
 				}
 			},
 			() => {
-				_this.modalService.open(ConfirmComponent, { size: 'lg' });
+				// _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			});
 	}
 	

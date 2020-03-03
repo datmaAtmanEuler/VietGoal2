@@ -112,22 +112,22 @@
                                                     </ng-container>
                                                 </thead>
                                                 <tbody>
-                                                    <ng-container *ngFor="let ward of wardsList; let i = index;">
+                                                    <ng-container *ngFor="let wards of wardsList; let i = index;">
                                                         <tr>
                                                             <td width="100px">{{ i + 1}}</td>
-                                                            <td>{{ ward.wardCode }}</td>
-                                                            <td>{{ ward.wardName }}</td>
-                                                            <td>{{ ward.districtId }}</td>
+                                                            <td>{{ wards.wardCode }}</td>
+                                                            <td>{{ wards.wardName }}</td>
+                                                            <td>{{ wards.districtId }}</td>
                                                             <td class="my-action-item">
 
                                                                 <button mat-raised-button type="button"
-                                                                    (click)="edit(ward.id)"
+                                                                    (click)="edit(wards.id)"
                                                                     title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                                                                     class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                                                                     <i class="material-icons">edit</i>
                                                                 </button>
                                                                 <button mat-raised-button type="button"
-                                                                    (click)="remove(ward.id)"
+                                                                    (click)="remove(wards.id)"
                                                                     title="{{ 'MESSAGE.NameList.Delete' | translate}}"
                                                                     class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                                                                     <i class="material-icons">close</i>

@@ -31,7 +31,7 @@ export class TrainingGroundEditComponent implements OnInit {
 	errorMsg: string;
 	areasList: any;
 	yardsList: any;
-	trainingground: TrainingGround = new TrainingGround(0,'', '', 0,'',null,new Date(),null,1,0,0,null,0);
+	trainingground: TrainingGround ;
 
 	constructor(private areaService: AreaService, private yardservice: YardService, public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private service: TrainingGroundService, private route: ActivatedRoute, private router: Router) {
 		this.id = this.route.snapshot.queryParams['id'];
@@ -41,31 +41,34 @@ export class TrainingGroundEditComponent implements OnInit {
 		config.scrollable = false;
 		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 	}  
-	GetTrainingGroundById(ID: number)  
+	GetTrainingGroundById(id: number)  
 	{  
-		const _this = this;
-		if(ID){
-			this.service.getTrainingGround(ID).subscribe((trainingground: TrainingGround) => {
-				_this.trainingground = trainingground;
-				if (_this.trainingground == null || _this.trainingground.id == null) {
-					_this.trainingground = new TrainingGround(0,'', '', 0,'',null,new Date(),null,1,0,0,null,0);
-				}
+			this.trainingground = new TrainingGround();
+			this.service.getTrainingGround((id) ? id : this.id).subscribe((traininggrounds) => {
+				this.trainingground = traininggrounds;
+				var yardAC = <HTMLInputElement>document.getElementById('yardAC');
+				var areaAC = <HTMLInputElement>document.getElementById('areaAC');
+				this.yardservice.getYard(traininggrounds.yardId).subscribe((response : any)=>
+				{
+					yardAC.value = response.YardName;
+					this.areaService.getArea(response.areaId).subscribe((res : any)=>{
+					areaAC.value = res.AreaName;
+					});
+				})
 			});
-		} else {
-			_this.trainingground = new TrainingGround(0,'', '', 0,'',null,new Date(),null,1,0,0,null,0);
-		}
 	}
 	
-	displayAreaFn(user): string {
-		return user && user.AreaName && !user.notfound ? user.AreaName : '';
+	displayAreaFn(area): string {
+		return area && area.areaName && !area.notfound ? area.areaName : '';
 	}
-	displayYardFn(user): string {
-		return user && user.YardName && !user.notfound ? user.YardName : '';
+	displayYardFn(yard): string {
+		return yard && yard.yardName && !yard.notfound ? yard.yardName : '';
 	}
-	changeArea() {
-		this.yardservice.getYardsList(new YardFilter('', 1, 100, 0, 'id', 'ASC')).subscribe((list) => {
-			this.yardsList = list;
-		});
+	changeYard(yardID : number){
+		this.trainingground.yardId = yardID;
+	}
+	changeArea(areaID) {
+		this.trainingground.areaId = areaID;
 	}
 	ngOnInit() {
 		this.searchAreasCtrl.valueChanges
@@ -85,7 +88,8 @@ export class TrainingGroundEditComponent implements OnInit {
 					)
 				)
 			)
-			.subscribe(data => {
+			.subscribe((response : any) => {
+				const data = response.results;
 				if (data == undefined) {
 					this.errorMsg = 'error';
 					this.areasList = [{ notfound: 'Not Found' }];
@@ -104,14 +108,15 @@ export class TrainingGroundEditComponent implements OnInit {
 				this.yardsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.yardservice.getYardsList(new YardFilter(value, 1, 100, null, 'YardCode', 'ASC'))
+			switchMap(value => this.yardservice.getYardsList(new YardFilter(value, 1, 100, 0, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
 					}),
 				)
 			)
-		).subscribe(data => {
+		).subscribe((response : any) => {
+			const data = response.results;
 			if (data == undefined) {
 				this.errorMsg = 'error';
 				this.yardsList = [{ notfound: 'Not Found' }];
@@ -137,7 +142,7 @@ export class TrainingGroundEditComponent implements OnInit {
 					_this.closeMe();
 				}
 			} else {
-				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
+				//const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			}
 		});
 	}

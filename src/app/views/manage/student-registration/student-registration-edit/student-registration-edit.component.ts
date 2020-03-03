@@ -70,7 +70,7 @@ export class StudentRegistrationEditComponent implements OnInit {
 	searchManagersCtrl = new FormControl();
 	searchMainCoachsCtrl = new FormControl();
 	searchViceCoachsCtrl = new FormControl();
-	yard: Class = new Class (0,'', '', 0,0,0,0,0,0,0,0,null,0,'',0,new Date(),null,null,null,null,0);
+	class: Class;
 	isLoading = false;
 	errorMsg: string;
 

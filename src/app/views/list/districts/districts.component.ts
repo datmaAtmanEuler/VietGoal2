@@ -188,12 +188,12 @@ reload() {
   }
 
   displayProvinceFn(province: any) {
-    return province && province.ProvinceName && !province.notfound ? province.ProvinceName : '';
+    return province && province.provinceName && !province.notfound ? province.provinceName : '';
   }
 
   changeProvince(provinceId) {
     this.service.getDistrictsList(new DistrictFilter('', 1, 100, provinceId, 'id', 'ASC')).subscribe((response) => {
-      this.districtsList = response.result;
+      this.districtsList = response.results;
       this.filter.ProvinceId = provinceId;
       this.reload();
     });

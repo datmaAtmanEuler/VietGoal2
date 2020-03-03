@@ -91,7 +91,7 @@
             <div class="row">
               <div class="col-12">
                 <div class="card-body table-responsive">
-                  <mat-spinner *ngIf="loading" class="myspinner" [diameter]="32"></mat-spinner>
+                  <mat-spinner *ngIf="isLoading" class="myspinner" [diameter]="32"></mat-spinner>
                   <div class="vietgoal-table-settings vg-scroll">
                     <table class="table table-condensed table-striped table-bordered table-hover">
                       <thead>
@@ -109,24 +109,24 @@
                         </ng-container>
                       </thead>
                       <tbody>
-                        <ng-container *ngFor="let aclass of classList; let i = index;">
+                        <ng-container *ngFor="let class of classList; let i = index;">
                           <tr>
                             <td>{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
                             <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
                               <td
                                 *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
-                                {{ utilsService.getColumnValue(aclass, colIndex, paginationSettings.columnsNameMapping) }}
+                                {{ utilsService.getColumnValue(class, colIndex, paginationSettings.columnsNameMapping) }}
                               </td>
                             </ng-container>
                             <td class="my-action-item">
-                              <button (click)="studentProfile(aclass.id)" title="Hồ sơ học sinh" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
+                              <button (click)="studentProfile(class.id)" title="Hồ sơ học sinh" class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
                                   <i class="material-icons">account_box</i>
                               </button>
-                              <button type="button" (click)="edit(aclass.id)"
+                              <button type="button" (click)="edit(class.id)"
                                 class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
                                 <i class="material-icons">edit</i>
                               </button>
-                              <button type="button" (click)="remove(aclass.id)"
+                              <button type="button" (click)="remove(class.id)"
                                 class="btn btn-danger btn-link btn-sm delete-button btn-just-icon">
                                 <i class="material-icons">close</i>
                               </button>

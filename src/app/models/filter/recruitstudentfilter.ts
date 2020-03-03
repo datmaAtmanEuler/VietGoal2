@@ -4,7 +4,7 @@ export class RecruitStudentFilter {
     PageIndex: number = 0;
     PageSize: number = 0;
     SearchTerm: string = '';
-    recruitDate: Date;
+    recruitDate: string;
     trainingGroundId: null | number ;
     studentId: number | null;
     recruitId: number | null;
@@ -16,7 +16,7 @@ export class RecruitStudentFilter {
     SortDirection: string = SORD_DIRECTION.ASC;
 
     constructor(searchTerm: string, pageIndex: number, pageSize: number, 
-        trainingGroundId: null | number, studentId: number | null ,recruitId: number | null ,areaId: null | number,yardId: null | number ,classId: null | number, recruitDate: Date, sN: string = 'id', sD: string = SORD_DIRECTION.ASC,
+        trainingGroundId: null | number, studentId: number | null ,recruitId: number | null ,areaId: null | number,yardId: null | number ,classId: null | number, recruitDate: string, sN: string = 'id', sD: string = SORD_DIRECTION.ASC,
         approverId: null | number
         ) {
         this.SearchTerm = searchTerm;

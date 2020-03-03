@@ -128,6 +128,8 @@ import { ConfirmComponent } from '../../views/manage/studentreserve/registration
 import { NotificationComponent } from '../../views/manage/notification/notification.component';
 import { NotificationEditComponent } from '../../views/manage/notification/notification-edit/notification-edit.component';
 import { NotificationSeenComponent } from '../../views/manage/notification/notification-seen/notification-seen.component';
+import { UserAdministrationComponent } from '../../views/manage/useradministration/user-administration.component';
+import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 
 
 @NgModule({
@@ -249,7 +251,9 @@ import { NotificationSeenComponent } from '../../views/manage/notification/notif
     ConfirmComponent,
     NotificationComponent,
     NotificationEditComponent,
-    NotificationSeenComponent
+    NotificationSeenComponent,
+    UserAdministrationComponent,
+    UserAdministrationEditComponent
   ],
   entryComponents: [
     StudentReserveImportComponent,

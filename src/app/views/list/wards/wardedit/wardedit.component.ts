@@ -23,9 +23,14 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	@Input('popup') popup: boolean;
 	@Input('id') id: number;
 	@Input('UserId') UserId: null | number;
-	ward: Ward = new Ward(0, '', '', 0,false, new Date(), null, 1, null, null, null);
-	listdistrict: any;
-	listprovince: any;
+	ward : Ward;
+	filter: WardFilter = new WardFilter ('',1,100,null,null,'id','ASC');
+	listdistrict: any[] = [];
+	listprovince: any[] = [];
+	wardFilter: any = {
+        provinceId: null,
+        districtId: null
+    };
 	/**
 	*  Search with autocomplete
 	* ---------------------------
@@ -36,7 +41,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	*/
 	searchDistrictsCtrl = new FormControl();
 	searchProvincesCtrl = new FormControl();
-  	filteredDistricts: any;
+  
 
 	/**
 	* ---------------------------
@@ -53,25 +58,40 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 		config.scrollable = false;
 	}  
 
-	displayProvinceFn(user): string {
-		return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
+	displayProvinceFn(pro): string {
+		return pro && pro.provinceName && !pro.notfound ? pro.provinceName : '';
 	}
-	displayDistrictFn(user): string {
-		return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
+	displayDistrictFn(dis): string {
+		return dis && dis.districtName && !dis.notfound ? dis.districtName : '';
 	}
-	changeProvince(provinceid) {
-		this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null,'id','ASC')).subscribe((list) => {
-			this.listdistrict = list;
-		});
+	changeProvince(provinceId) {
+		// this.wardFilter.provinceId = provinceId;
 	}
+	
+	changeDistrict(districtId) {
+		this.ward.districtId = districtId;
+	}
+
 	GetWardById(id: number) {
-		
+		this.ward = new Ward();
 		this.wardService.getWard((id) ? id : this.id).subscribe(
 			(aWard) => {
-				this.ward = aWard || new Ward(0, '', '', 0, true, new Date(),null, null, null, null,0);
-			},
-			() => {
-				this.ward = new  Ward(0, '', '', 0, true, new Date(),null, null, null, null,0);
+				this.ward = aWard ;
+				var ProvinceAC = <HTMLInputElement>document.getElementById('ProvinceAC');
+				var districtAC = <HTMLInputElement>document.getElementById('districtAC');
+				this.districtService.getDistrict(aWard.districtId).subscribe(
+					(response: any) => {
+						districtAC.value = response.districtName;
+						this.provinceService.getProvince(response.provinceId).subscribe(
+							(resp) => {
+								ProvinceAC.value = resp.provinceName;
+							}
+						);
+						
+					}
+				)
+
+
 			}
 		);
 	}
@@ -82,7 +102,6 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 
 	ngOnInit() {
 		const _this = this;
-
 		this.searchProvincesCtrl.valueChanges
 			.pipe(
 				startWith(''),
@@ -100,7 +119,8 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 					)
 				)
 			)
-			.subscribe(data => {
+			.subscribe((response: any) => {
+				const data= response.results;
 				if (data == undefined) {
 					this.errorMsg = 'error';
 					this.listprovince = [{ notfound: 'Not Found' }];
@@ -113,21 +133,23 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 
 		this.searchDistrictsCtrl.valueChanges
 		  .pipe(
+			startWith(''),
 	        debounceTime(300),
 	        tap(() => this.isLoading = true),
-	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, null, 'id', 'ASC'))
+	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, 0, 'id', 'ASC'))
 	        .pipe(
 	          finalize(() => this.isLoading = false),
 	          )
 	        )
 	      )
-	      .subscribe(data => {
+	      .subscribe((response : any) => {
+			  const data= response.results;
 	      	if (data == undefined || data == null) {
-	          _this.filteredDistricts = [];
+	          _this.listdistrict = [];
 	        } else {
-	          _this.filteredDistricts = data;
+	          _this.listdistrict = data;
 	        }
-	        _this.checkDistricts();
+	        // _this.checkDistricts();
 		  });
 		  
 		this.GetWardById(this.id);  
@@ -163,13 +185,13 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 		return null;
 	}
 	updateSelectedDistrict(event: any) {
-		const selectedDistricts = this.filteredDistricts.filter((district: District) => district.districtName == event.option.value);
+		const selectedDistricts = this.listdistrict.filter((district: District) => district.districtName == event.option.value);
 		if(selectedDistricts.length > 0) {
 			this.ward.districtId = selectedDistricts[0].id;
 		}
 	}
 	checkDistricts() {
-		if(this.filteredDistricts.length < 1) {
+		if(this.listdistrict.length < 1) {
 			this.searchDistrictsCtrl.setValue('');
 		}
 	}

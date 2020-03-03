@@ -38,10 +38,10 @@ export class WardService {
         }
     }
     
-    deleteWard(id: number , deleteBy : number): Observable<any> {
-       
-        return this.http.delete(environment.apiUrl + `Wards/${id}?deleteBy=${deleteBy}`, this.httpOptions);
+    deleteWard(id: number): Observable<any> {
+        return this.http.delete(environment.apiUrl + `Wards/${id}`, this.httpOptions);
     }
+    
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;
     }

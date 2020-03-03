@@ -57,6 +57,8 @@ import { StudentRegistrationComponent } from '../../views/manage/student-registr
 import { StudentRegistrationEditComponent } from '../../views/manage/student-registration/student-registration-edit/student-registration-edit.component';
 import { StudentReserveComponent } from '../../views/manage/studentreserve/studentreserve.component';
 import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
+import { UserAdministrationComponent } from '../../views/manage/useradministration/user-administration.component';
+import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 
 import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.component';
 import { NotificationComponent } from 'app/views/manage/notification/notification.component';
@@ -432,6 +434,22 @@ export const AdminLayoutRoutes: Routes = [
     }
     ,
     {
+        path: 'useradministration',
+        children: [ {
+            path: '', component:  UserAdministrationComponent
+        }
+        ,
+        {
+            path: 'add', component: UserAdministrationEditComponent
+        }
+        ,
+        {
+            path: 'edit', component: UserAdministrationEditComponent
+        }
+        ]
+    }
+    ,
+    {
         path: 'decentralize-user', component: DecentralizeUserComponent
     },
     {
@@ -501,6 +519,7 @@ export const AdminLayoutRoutes: Routes = [
         ]
     }
     ]
-}
+},
+
 
 ];

@@ -28,7 +28,7 @@ export class YardComponent implements OnInit {
   yardsList:any[] = [];
   areasList:any[] = [];
   centralsList:any[] = [];
-  yard: any;
+  yard: Yard;
   Total: number = 0;
   searchTerm:string = '';
   pageIndex:number = 1;
@@ -97,13 +97,14 @@ export class YardComponent implements OnInit {
         return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
       }
   }
-  remove(yard: any) {
-    this.yard = yard;
+  remove(id : any) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'Yard';
     modalRef.componentInstance.decide.subscribe(() => {
-        _this.deleteYard();
+        _this.service.deleteYard(id).subscribe(()=>{
+          _this.reload()
+        });
     });
 }
 pageEvent(variable: any){
@@ -177,16 +178,6 @@ edit(Id: null | number) {
     _this.reload();
   });
 }
-
-deleteYard() {
-  const _this = this;
-  this.service.deleteYard(this.yard.Id, this.currentUser.UserId).subscribe((res: any) => {
-    _this.reload();
-  });
-}
-
-
-
 doNothing(): void {}
 openImport() {
   const _this = this;
@@ -206,28 +197,20 @@ downloadTemplate() {
 }
 
 displayCentralFn(central: any) {
-  return central && central.CentralName && !central.notfound ? central.CentralName : '';
+  return central && central.centralName && !central.notfound ? central.centralName : '';
 }
 
 displayAreasFn(area: any) {
-  return area && area.AreaName && !area.notfound ? area.AreaName : '';
+  return area && area.areaName && !area.notfound ? area.areaName : '';
 }
 
 
 changeCentral(centralID: number) {
-    this.areaFilter.CentralId = centralID;
-    this.areaService.getAreasList(this.areaFilter).subscribe((list) => {
-      this.areasList = list;
-      this.reload();
-    });
+   this.yard.centralId = centralID;
   }
 
   changeAreas(areaID: number) {
-    this.filter.AreaId = areaID;
-    this.service.getYardsList(this.filter).subscribe((list) => {
-      this.yardsList = list;
-      this.reload();
-    });
+    this.yard.areaId = areaID;
   }
 
 }

@@ -6,7 +6,7 @@
         <div class="form-group row">
             <label class="col-3 label-middling">{{'MESSAGE.NameList.YardCode' |translate}}:<span class="text-danger">(*)</span></label>
             <div class="col-6 label-middling" >
-                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.YardCode"
+                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.yardCode"
                     class="form-control" placeholder="{{'MESSAGE.NameList.YardCode' |translate}}">
             </div>
         </div>
@@ -15,7 +15,7 @@
         <div class="form-group row">
             <label class="col-3 label-middling">{{'MESSAGE.NameList.YardName' |translate}}:<span class="text-danger">(*)</span></label>
             <div class="col-6 label-middling" >
-                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.YardName"
+                <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.yardName"
                     class="form-control" placeholder="{{'MESSAGE.NameList.YardName' |translate}}">
             </div>
         </div>
@@ -25,13 +25,13 @@
                 <div  class="col-6 label-middling" >
                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' |translate}}"  [matAutocomplete]="centralAC" [formControl]="searchCentralsCtrl">
                 </div>
-            <mat-autocomplete #centralAC="matAutocomplete" (optionSelected)="changeCentral(searchCentralsCtrl.value.ID)" [displayWith]="displayCentralFn">
+            <mat-autocomplete #centralAC="matAutocomplete" (optionSelected)="changeCentral(searchCentralsCtrl.value.id)" [displayWith]="displayCentralFn">
                 <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                     <mat-spinner></mat-spinner>
                 </mat-option>
                 <ng-container *ngIf="!isLoading">
                 <mat-option *ngFor="let central of listcentral" [value]="central">
-                    <span *ngIf="!central.notfound">{{central.CentralName}}</span>
+                    <span *ngIf="!central.notfound">{{central.centralName}}</span>
                     <span *ngIf="central.notfound" class="nofind">{{central.notfound}}</span>
                 </mat-option>
                 </ng-container>
@@ -43,33 +43,31 @@
                 <div  class="col-6 label-middling" >
                     <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"  [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
                 </div>
-            <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.ID)" [displayWith]="displayAreaFn">
+            <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.id)" [displayWith]="displayAreaFn">
                 <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                     <mat-spinner></mat-spinner>
                 </mat-option>
                 <ng-container *ngIf="!isLoading">
                 <mat-option *ngFor="let area of arealist" [value]="area">
-                    <span *ngIf="!area.notfound">{{area.AreaName}}</span>
+                    <span *ngIf="!area.notfound">{{area.areaName}}</span>
                     <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
                 </mat-option>
                 </ng-container>
             </mat-autocomplete>
         </div>
-
-
-
+<!-- 
             <div class="form-group row">
                 <label class="col-3 label-middling">Năm Bắt Đầu HĐ</label>
                 <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.StartYearContract"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.area"
                         class="form-control" placeholder="Năm Bắt Đầu HĐ">
                 </div>
-            </div>
+            </div> -->
 
             <div class="form-group row">
                 <label class="col-3 label-middling">{{'MESSAGE.NameList.Address' |translate}}:</label>
                 <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.Address"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.address"
                         class="form-control" placeholder="{{'MESSAGE.NameList.Address' |translate}}">
                 </div>
             </div>
@@ -77,7 +75,7 @@
             <div class="form-group row">
                 <label class="col-3 label-middling">{{'MESSAGE.NameList.CampusArea' |translate}}:<span class="text-danger">(*)</span></label>
                 <div class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="yard.Areas"
+                    <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="yard.area"
                         class="form-control" placeholder="{{'MESSAGE.NameList.CampusArea' |translate}}">
                 </div>
             </div>
@@ -86,7 +84,7 @@
                 <div class="form-check custom-checkbox">
                     <label class="form-check-label">
                         <input class="form-check-input" type="checkbox" [ngModelOptions]="{standalone: true}"
-                            [(ngModel)]="yard.Showed" value="" checked>
+                            [(ngModel)]="yard.visible" value="" checked>
                         <span class="form-check-sign">
                             <span class="check"></span>
                         </span>
@@ -98,7 +96,7 @@
             <div class="form-group row">
                 <label class="col-3 label-middling">{{'MESSAGE.NameList.Note' |translate}}</label>
                 <div class=" col-6 label-middling">
-                <textarea  [ngModelOptions]="{standalone: true}" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="yard.Description"
+                <textarea  [ngModelOptions]="{standalone: true}" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="yard.description"
                     class="form-control" placeholder='{{"MESSAGE.NameList.Note" |translate}}'></textarea>
                 </div>
             </div>

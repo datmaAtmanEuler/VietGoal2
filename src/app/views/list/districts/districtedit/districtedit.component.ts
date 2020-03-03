@@ -40,7 +40,7 @@ export class DistrictEditComponent implements OnInit {
 	GetDistrictById(id:number)  
 	{  
 		const _this = this;
-		this.provinceService.getProvincesList(new Filter(null,1,100, 'id','ASC')).subscribe((proList: any[]) => {
+		this.provinceService.getProvincesList(new Filter('',1,100, 'id','ASC')).subscribe((proList: any[]) => {
 			_this.provincesList = (proList) ? proList : [];
 			_this.districtService.getDistrict(id).subscribe((district: District) => {
 				_this.district = district;
@@ -61,7 +61,7 @@ export class DistrictEditComponent implements OnInit {
 					this.listprovince = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.provinceService.getProvincesList({ 'SearchTerm': value, 'PageIndex': 1, 'PageSize': 10, 'SortName': 'Id', 'SortDirection': 'ASC' })
+				switchMap(value => this.provinceService.getProvincesList({ 'SearchTerm': value, 'PageIndex': 1, 'PageSize': 10, 'SortName': 'id', 'SortDirection': 'ASC' })
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -69,7 +69,8 @@ export class DistrictEditComponent implements OnInit {
 					)
 				)
 			)
-			.subscribe(data => {
+			.subscribe((response: any) => {
+        const data = response.results;
 				if (data == undefined) {
 					this.errorMsg = 'error';
 					this.listprovince = [{ notfound: 'Not Found' }];

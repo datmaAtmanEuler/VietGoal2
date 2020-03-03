@@ -74,7 +74,7 @@ export class ClassComponent implements OnInit {
   /**
    * END SORT SETTINGS
    */
-  filter: ClassFilter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, 'id', 'ASC',null,null,null);
+  filter: ClassFilter = new ClassFilter(this.searchTerm, 1, this.pageSize, 0, 0, 0, 'id', 'ASC',0,0,0);
 
   constructor(private matCus: MatPaginatorIntl, private translate: TranslateService,public utilsService: UtilsService, config: NgbModalConfig, private service: ClassService,private traininggroundservice: TrainingGroundService, private router: Router, private modalService: NgbModal,
     private areaService: AreaService, private yardService: YardService, private http: HttpClient) {
@@ -144,7 +144,7 @@ export class ClassComponent implements OnInit {
         this.yardsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'id', 'ASC'))
+      switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, 0, 'id', 'ASC'))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -168,7 +168,7 @@ export class ClassComponent implements OnInit {
         this.traininggroundsList = [];
         this.isLoading = true;
       }),
-      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null,null, 'id', 'ASC'))
+      switchMap(value => this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, 0,0, 'id', 'ASC'))
         .pipe(
           finalize(() => {
             this.isLoading = false
@@ -199,7 +199,7 @@ export class ClassComponent implements OnInit {
     });
   }
   pageEvent(variable: any) {
-    this.filter = new ClassFilter(this.searchTerm, 1, this.pageSize, null, null, null, 'id','ASC',null,null,null);
+    this.filter = new ClassFilter(this.searchTerm, 1, this.pageSize, 0, 0, 0, 'id','ASC',0,0,0);
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
     this.reload();
@@ -257,7 +257,7 @@ export class ClassComponent implements OnInit {
     });
   }
   changeYard(yardID) {
-    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, yardID,null, 'id', 'ASC')).subscribe((response : any) => {
+    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, yardID,0, 'id', 'ASC')).subscribe((response : any) => {
       this.traininggroundsList = response.result;
       this.filter.YardId = yardID;
       this.reload();

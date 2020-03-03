@@ -35,8 +35,8 @@ export class YardService {
         }
     }
 
-    deleteYard(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.apiUrl + `Yards/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteYard(id: number ): Observable<any> {
+        return this.http.delete(environment.apiUrl + `Yards/${id}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

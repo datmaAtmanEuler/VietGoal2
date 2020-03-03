@@ -130,22 +130,19 @@
                       </ng-container>
                     </thead>
                     <tbody>
-                      <ng-container *ngFor="let studentattendanceoverrange of StudentAttendanceOverRangeList; let i = index;">
+                      <ng-container *ngFor="let saor of StudentAttendanceOverRangeList; let i = index;">
                         <tr>
                           <td>{{ firstRowOnPage + i }}</td>
-                          <ng-container
-                              *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
-                              <td
-                                  *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
-                                  {{ utilsService.getColumnValue(studentattendanceoverrange, colIndex, paginationSettings.columnsNameMapping) }}
-                              </td>
-                          </ng-container>
+                          <td>{{saor.firstName + ' ' + saor.lastName}}</td>
+                          <td>{{saor.dob | date: 'dd/MM/yyyy'}}</td>
+                          <td></td>
+                          <td></td>
                           <td class="my-action-item">
-                            <button type="button" (click)="edit(studentattendanceoverrange.id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}"
+                            <button type="button" (click)="edit(saor.id)" title="{{ 'MESSAGE.NameList.Edit' | translate}}"
                               class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
                               <i class="material-icons">edit</i>
                             </button>
-                            <button type="button" (click)="remove(studentattendanceoverrange.id)"
+                            <button type="button" (click)="remove(saor.id)"
                               title="{{ 'MESSAGE.NameList.Delete' | translate}}"
                               class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
                               <i class="material-icons">close</i>

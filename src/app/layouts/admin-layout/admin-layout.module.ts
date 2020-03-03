@@ -130,6 +130,7 @@ import { NotificationEditComponent } from '../../views/manage/notification/notif
 import { NotificationSeenComponent } from '../../views/manage/notification/notification-seen/notification-seen.component';
 import { UserAdministrationComponent } from '../../views/manage/useradministration/user-administration.component';
 import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
+import { UserAdministrationImportComponent } from '../../views/manage/useradministration/user-administration-import/user-administration-import.component';
 
 
 @NgModule({
@@ -253,7 +254,8 @@ import { UserAdministrationEditComponent } from '../../views/manage/useradminist
     NotificationEditComponent,
     NotificationSeenComponent,
     UserAdministrationComponent,
-    UserAdministrationEditComponent
+    UserAdministrationEditComponent,
+    UserAdministrationImportComponent
   ],
   entryComponents: [
     StudentReserveImportComponent,
@@ -279,7 +281,8 @@ import { UserAdministrationEditComponent } from '../../views/manage/useradminist
     StudentStatusImportComponent,
     ScheduleComponent,
     StudentEditComponent,
-    KpiConfigEditComponent
+    KpiConfigEditComponent,
+    UserAdministrationImportComponent
   ],
   providers: [
     NgxMaterialTimepickerModule,

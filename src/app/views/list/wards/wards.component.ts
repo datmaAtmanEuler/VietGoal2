@@ -41,7 +41,7 @@ export class WardsComponent implements OnInit {
   districtId: null | number = null;
   searchProvincesCtrl = new FormControl();
   searchDistrictsCtrl = new FormControl();
-
+  searchAdvanced: boolean = false;
   /**
    * BEGIN SORT SETTINGS
    */

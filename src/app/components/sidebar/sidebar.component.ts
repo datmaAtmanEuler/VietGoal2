@@ -51,7 +51,7 @@ export const ROUTES: RouteInfo[] = [
       { path: '/quanly/diemdanhhocvien', title: 'MESSAGE.NameList.StudentAttendance', icon: '', class: '' },
       { path: '/quanly/texteditor', title: 'texteditor', icon: '', class: '' },
       { path: '/quanly/student-reserve', title: 'Bảo lưu học viên', icon: '', class: '' },
-      { path: '/quanly/studentregistermodules', title: 'Quản lý học phần', icon: '', class: '' }
+      { path: '/quanly/studentregistermodules', title: 'Quản lý học phần', icon: '', class: '' },
       { path: '/quanly/hosohocsinh', title: 'MESSAGE.NameList.StudentProfile', icon: '', class: '' },
       { path: '/quanly/dangky-hocsinh', title: 'MESSAGE.NameList.StudentRegistration', icon: '', class: '' },
       { path: '/quanly/diemdanhhocvienngoai', title: 'MESSAGE.NameList.StudentAttendanceOverRange', icon: '', class: '' },

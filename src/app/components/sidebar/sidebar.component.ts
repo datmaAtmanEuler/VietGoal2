@@ -37,6 +37,7 @@ export const ROUTES: RouteInfo[] = [
   {
     path: '/quanly/trungtam', title: 'MESSAGE.NameList.Manage', icon: 'assignment_ind', class: '', childrens: [
       { path: '/quanly/trungtam', title: 'MESSAGE.NameList.CentralManagement', icon: '', class: '' },
+      { path: '/quanly/thongbao', title: 'MESSAGE.NameList.Notification', icon: '', class: '' },
       { path: '/quanly/thoikhoabieu', title: 'MESSAGE.NameList.Schedule', icon: '', class: '' },
       { path: '/quanly/class', title: 'MESSAGE.NameList.ClassManagement', icon: '', class: '' },
       { path: '/quanly/decentralize-user', title: 'MESSAGE.NameList.DecentralizeUser', icon: '', class: '' },
@@ -51,6 +52,12 @@ export const ROUTES: RouteInfo[] = [
       { path: '/quanly/texteditor', title: 'texteditor', icon: '', class: '' },
       { path: '/quanly/student-reserve', title: 'Bảo lưu học viên', icon: '', class: '' },
       { path: '/quanly/studentregistermodules', title: 'Quản lý học phần', icon: '', class: '' }
+      { path: '/quanly/hosohocsinh', title: 'MESSAGE.NameList.StudentProfile', icon: '', class: '' },
+      { path: '/quanly/dangky-hocsinh', title: 'MESSAGE.NameList.StudentRegistration', icon: '', class: '' },
+      { path: '/quanly/diemdanhhocvienngoai', title: 'MESSAGE.NameList.StudentAttendanceOverRange', icon: '', class: '' },
+      { path: '/quanly/diemdanhhocvien', title: 'MESSAGE.NameList.StudentAttendance', icon: '', class: '' },
+      { path: '/quanly/student-reserve', title: 'Bảo lưu học viên', icon: '', class: '' },
+      { path: '/quanly/useradministration', title: 'Quản trị người dùng', icon: '', class: '' }
     ]
   },
 ];

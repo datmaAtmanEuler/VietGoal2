@@ -6,10 +6,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
-import { ProvinceService } from 'app/services/list/province.service';
-import { Filter } from 'app/models/filter/filter';
-import { DistrictFilter } from 'app/models/filter/districtfilter';
-import { DistrictService } from 'app/services/list/district.service';
+import { ProvinceService } from '../../../../services/list/province.service';
+import { DistrictService } from '../../../../services/list/district.service';
 import { HttpClient } from '@angular/common/http';
 
 
@@ -17,6 +15,9 @@ import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operator
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { environment } from 'environments/environment';
+import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
+import { UtilsService } from '../../../../services/utils.service';
+import { WardService } from '../../../../services/list/ward.service';
 
 @Component({
 	selector: 'app-central-edit',
@@ -29,7 +30,6 @@ export class CentralEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('CentralId') CentralId: number;
 	@Output() capNhatThanhCong: EventEmitter<any> = new EventEmitter();
-	currentUser: any;
 	listprovince: any;
 	listdistrict: any;
 	listward: any;
@@ -41,48 +41,126 @@ export class CentralEditComponent implements OnInit {
 
 	isLoading = false;
 	errorMsg: string;
+	provinceId: number;
+	districtId: number;
 
-	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private CentralService: CentralService, private route: ActivatedRoute, private router: Router,
-		private provinceService: ProvinceService, private districtService: DistrictService, private http: HttpClient) {
+	constructor(public activeModal: NgbActiveModal,
+		config: NgbModalConfig,
+		private modalService: NgbModal,
+		private CentralService: CentralService,
+		private utilService: UtilsService,
+		private route: ActivatedRoute,
+		private router: Router,
+		private provinceService: ProvinceService,
+		private districtService: DistrictService,
+		private wardService: WardService,
+		private http: HttpClient) {
 		this.CentralId = this.route.snapshot.queryParams['Id'];
 		this.CentralId = (this.CentralId) ? this.CentralId : 0;
 		config.backdrop = 'static';
 		config.keyboard = false;
 		config.scrollable = false;
-		this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
 		// this.getProvince();
 	}
-	displayProvinceFn(user): string {
-		return user && user.ProvinceName && !user.notfound ? user.ProvinceName : '';
-	}
-	displayDistrictFn(user): string {
-		return user && user.DistrictName && !user.notfound ? user.DistrictName : '';
-	}
-	displayWardFn(user): string {
-		return user && user.WardName && !user.notfound ? user.WardName : '';
-	}
-	changeProvince(provinceID) {
-		// this.districtService.getDistrictsList({ 'searchTerm', 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' }).subscribe((list) => {
-		// 	this.listdistrict = list;
-		// });
-	}
-	changeDistrict(districtID) {
-		// this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=&DistrictID=${districtID}&SortName=&SortDirection=&PageIndex=1&PageSize=20`).subscribe((list) => {
-		// 	this.listward = list;
-		// });
+	ngOnInit() {
+		this.searchDistrictsCtrl.disabled;
+		this.searchWardsCtrl.disabled;
+		this.loadAutocompletes();
+		this.GetCentralById(this.CentralId);
 	}
 	GetCentralById(Id: number) {
 		this.CentralService.getCentral((Id) ? Id : this.CentralId).subscribe(
-			(aCentral) => {
-				this.central = aCentral || new Central();
+			(object) => {
+				this.central = object || new Central();
+
+				const ipEstablishedDate = <HTMLInputElement>document.getElementById('ipEstablishedDate');
+				const ipProvinceAC = <HTMLInputElement>document.getElementById('ipProvinceAC');
+				const ipDistrictAC = <HTMLInputElement>document.getElementById('ipDistrictAC');
+				const ipWardAC = <HTMLInputElement>document.getElementById('ipWardAC');
+				ipEstablishedDate.value = this.utilService.stringDate(object.establishedDate, true);
+				this.wardService.getWard(object.wardId).subscribe((wardResp)=>{
+					ipWardAC.value = wardResp.wardName;
+					this.districtService.getDistrict(wardResp.districtId).subscribe((districtResp)=>{
+						ipDistrictAC.value = districtResp.districtName;
+						this.provinceService.getProvince(districtResp.provinceId).subscribe((provinceResp)=>{
+							ipProvinceAC.value = provinceResp.provinceName;
+						});
+					});
+				});
 			},
 			() => {
 				this.central = new Central();
 			}
 		);
 	}
-	ngOnInit() {
+	ReturnList() {
+		this.router.navigate(['manage/central']);
+
+	}
+
+	UpdateCentral() {
+		console.log(this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined ? this.searchProvincesCtrl.value.ID : 'a');
+		console.log(this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined ? this.searchDistrictsCtrl.value.ID : 'b');
+		console.log(this.searchWardsCtrl.value && this.searchWardsCtrl.value.ID != undefined ? this.searchWardsCtrl.value.ID : 'c');
+		this.central.area = this.central.area * 1;
+		this.CentralService.addOrUpdateCentral(this.central).subscribe(
+			() => {
+				if (!this.popup) {
+					this.ReturnList();
+				} else {
+					this.closeMe();
+				}
+			},
+			() => {
+				this.modalService.open(ConfirmComponent, { size: 'lg' });
+			});
+	}
+
+	closeMe() {
+		this.activeModal.close();
+	}
+	// Date events
+	establishedDateEvent(event: MatDatepickerInputEvent<Date>) {
+		this.central.establishedDate = this.utilService.stringDate(event.value);
+	}
+	// Autocomplete 
+
+	provinceIDfilted() {
+		if (this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined) {
+			return this.searchProvincesCtrl.value.ID
+		} else {
+			return 0;
+		}
+	}
+	wardObservableFilter(value: any): Observable<any> {
+		if (this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined) {
+			return this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=${value}&DistrictID=${this.searchDistrictsCtrl.value.ID}&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
+		} else {
+			return this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
+		}
+	}
+	displayProvinceFn(user): string {
+		return user && user.provinceName && !user.notfound ? user.provinceName : '';
+	}
+	displayDistrictFn(user): string {
+		return user && user.districtName && !user.notfound ? user.districtName : '';
+	}
+	displayWardFn(user): string {
+		return user && user.wardName && !user.notfound ? user.wardName : '';
+	}
+	changeProvince(provinceID) {
+		this.provinceId = provinceID;
+		this.searchDistrictsCtrl.enable;
+	}
+	changeDistrict(districtID) {
+		this.districtId = districtID;
+		this.searchWardsCtrl.enable;
+	}
+	changeWard(wardId){
+		this.central.wardId = wardId;
+	}
+	loadAutocompletes() {
 		this.searchProvincesCtrl.valueChanges
 			.pipe(
 				startWith(''),
@@ -91,6 +169,8 @@ export class CentralEditComponent implements OnInit {
 					this.errorMsg = "";
 					this.listprovince = [];
 					this.isLoading = true;
+					this.searchDistrictsCtrl.disabled;
+					this.searchWardsCtrl.disabled;
 				}),
 				switchMap(value => this.provinceService.getProvincesList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
 					.pipe(
@@ -118,6 +198,7 @@ export class CentralEditComponent implements OnInit {
 				this.errorMsg = "";
 				this.listdistrict = [];
 				this.isLoading = true;
+				this.searchWardsCtrl.disabled;
 			}),
 			switchMap(value => this.districtService.getDistrictsList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
 				.pipe(
@@ -135,6 +216,7 @@ export class CentralEditComponent implements OnInit {
 				} else {
 					this.errorMsg = "";
 					this.listdistrict = data.length ? data : [{ notfound: 'Not Found' }];
+					console.log(this.listdistrict);
 				}
 
 			});
@@ -165,47 +247,6 @@ export class CentralEditComponent implements OnInit {
 				}
 
 			});
-		this.GetCentralById(this.CentralId);
-	}
-	provinceIDfilted() {
-		if (this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined) {
-			return this.searchProvincesCtrl.value.ID
-		} else {
-			return 0;
-		}
-	}
-	wardObservableFilter(value: any): Observable<any> {
-		if (this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined) {
-			return this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=${value}&DistrictID=${this.searchDistrictsCtrl.value.ID}&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-		} else {
-			return this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-		}
-	}
-	ReturnList() {
-		this.router.navigate(['manage/central']);
-
-	}
-
-	UpdateCentral() {
-		console.log(this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined ? this.searchProvincesCtrl.value.ID : 'a');
-		console.log(this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined ? this.searchDistrictsCtrl.value.ID : 'b');
-		console.log(this.searchWardsCtrl.value && this.searchWardsCtrl.value.ID != undefined ? this.searchWardsCtrl.value.ID : 'c');
-		this.central.area = this.central.area * 1;
-		this.CentralService.addOrUpdateCentral(this.central, this.currentUser.UserId).subscribe(
-			() => {
-				if (!this.popup) {
-					this.ReturnList();
-				} else {
-					this.closeMe();
-				}
-			},
-			() => {
-				this.modalService.open(ConfirmComponent, { size: 'lg' });
-			});
-	}
-
-	closeMe() {
-		this.activeModal.close();
 	}
 
 }

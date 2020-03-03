@@ -17,4 +17,7 @@ export class CommonFilter {
     PageSize: number;
     SortName: string;
     SortDirection: string;
+
+    createdDate: string;
+    expirationDate: string;
   }

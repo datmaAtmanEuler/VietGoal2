@@ -58,9 +58,13 @@ import { StudentRegistrationEditComponent } from '../../views/manage/student-reg
 import { StudentReserveComponent } from '../../views/manage/studentreserve/studentreserve.component';
 import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
 import { StudentRegisterModulesComponent } from '../../views/manage/student-register-modules/student-register-modules.component';
-
+import { UserAdministrationComponent } from '../../views/manage/useradministration/user-administration.component';
+import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 
 import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.component';
+import { NotificationComponent } from 'app/views/manage/notification/notification.component';
+import { NotificationSeenComponent } from 'app/views/manage/notification/notification-seen/notification-seen.component';
+import { NotificationEditComponent } from 'app/views/manage/notification/notification-edit/notification-edit.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -434,6 +438,22 @@ export const AdminLayoutRoutes: Routes = [
     }
     ,
     {
+        path: 'useradministration',
+        children: [ {
+            path: '', component:  UserAdministrationComponent
+        }
+        ,
+        {
+            path: 'add', component: UserAdministrationEditComponent
+        }
+        ,
+        {
+            path: 'edit', component: UserAdministrationEditComponent
+        }
+        ]
+    }
+    ,
+    {
         path: 'decentralize-user', component: DecentralizeUserComponent
     },
     {
@@ -459,8 +479,15 @@ export const AdminLayoutRoutes: Routes = [
         children: [ {
             path: ':classID', component: StudentComponent
         }]
-    }
-    ,
+    },
+    {
+        path: 'thongbao',
+        children: [ 
+            {path: '', component: NotificationComponent},
+            {path: 'edit', component: NotificationEditComponent},
+            {path: 'seen', component: NotificationSeenComponent}
+        ]
+    },
     {
         path: 'diemdanhhocvienngoai',
         children: [ {
@@ -496,6 +523,7 @@ export const AdminLayoutRoutes: Routes = [
         ]
     }
     ]
-}
+},
+
 
 ];

@@ -4,6 +4,7 @@ import { UserGroup } from '../../../../models/acl/usergroup';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
+import { User } from 'app/models/acl/user';
 @Component({
 	selector: 'app-usergroup-edit',
 	templateUrl: './usergroup-edit.component.html',
@@ -14,7 +15,8 @@ export class UserGroupEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('id') id: number;
 	currentUser: any;
-	usergroup : UserGroup = new UserGroup(0, '', false, new Date(), null, 1, null, null);
+	usergroup : UserGroup;
+	
 
 	constructor(public activeModal: NgbActiveModal,config: NgbModalConfig, private modalService: NgbModal,private usergroupService: UserGroupService, private route: ActivatedRoute, private router: Router) {
 		this.id = this.route.snapshot.queryParams['id'];
@@ -26,17 +28,11 @@ export class UserGroupEditComponent implements OnInit {
 	}  
 	GetNhomById(id: number)  
 	{  
-		const _this = this;
-		if(id){
-			this.usergroupService.getNhom(id).subscribe((group: UserGroup) => {
-				_this.usergroup = group;
-				if (_this.usergroup == null || _this.usergroup.id == null) {
-					_this.usergroup = new UserGroup(0, '', false,  new Date(),null, null, 1, null);
-				}
-			});
-		} 		else {
-					_this.usergroup = new UserGroup(0, '', false,  new Date(),null, null, 1, null);
-					}
+			this.usergroup = new UserGroup();
+			this.usergroupService.getNhom((id) ? id : this.id).subscribe(
+				(usergroups)=>{
+					this.usergroup = usergroups;
+				});			
 	}
 	ngOnInit() {
 		this.GetNhomById(this.id);  
@@ -55,7 +51,7 @@ export class UserGroupEditComponent implements OnInit {
 					_this.closeMe();
 				}
 			} else {
-				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
+				//const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			}
 		});
 	}

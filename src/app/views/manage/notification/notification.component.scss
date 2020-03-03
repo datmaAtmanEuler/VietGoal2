@@ -1,0 +1,18 @@
+.float-search-button{
+    position: absolute;
+    top: -13px;
+    right: 100px;
+}
+th, td{
+    white-space: nowrap;
+}
+.openlist-column{
+
+    .openlist-link{
+        cursor: pointer;
+        &:hover{
+            text-decoration: underline;
+            font-weight: bold;
+        }
+    }
+}

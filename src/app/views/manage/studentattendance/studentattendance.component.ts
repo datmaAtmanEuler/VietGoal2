@@ -85,8 +85,7 @@ export class StudentAttendanceComponent implements OnInit {
   }
   reload() {
 
-    // if(this.filter.absentDate && this.filter.classId){
-    if (this.filter.classId) {
+    if(this.filter.absentDate && this.filter.classId){
       this.filter.sortName = this.paginationSettings.sort.SortName;
       this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
       console.log('filter');
@@ -102,8 +101,8 @@ export class StudentAttendanceComponent implements OnInit {
           this.StudentAttendanceList = list || [];
         }, 500);
       });
-      // }else if(!this.filter.absentDate){
-      //   this.utilsService.showNotification('top','center','Vui lòng nhập <strong>ngày</strong>!',3);
+    } else if (!this.filter.absentDate) {
+      this.utilsService.showNotification('top', 'center', 'Vui lòng nhập <strong>ngày điểm danh</strong>!', 3);
     } else if (!this.filter.classId) {
       this.utilsService.showNotification('top', 'center', 'Vui lòng nhập <strong>lớp học</strong>!', 3);
     }
@@ -115,7 +114,7 @@ export class StudentAttendanceComponent implements OnInit {
         return {
           id: object.id,
           studentId: object.studentId,
-          classId: object.classId,
+          classId: this.filter.classId,
           date: this.filter.absentDate,
           isAbsent: object.isAbsent,
           reason: object.reason,
@@ -125,9 +124,7 @@ export class StudentAttendanceComponent implements OnInit {
       console.log(listtoput);
       this.service.put(listtoput,this.filter.classId,this.filter.absentDate).subscribe((response) => {
         if(response.message) {
-          this.utilsService.showNotification('top', 'center', response.message, 4);
-        }else{
-          this.utilsService.showNotification('top', 'center', JSON.stringify(response), 1);
+          this.notifyResponseWithDate(response, this.filter.absentDate);
         }
       });
     } else{
@@ -149,6 +146,7 @@ export class StudentAttendanceComponent implements OnInit {
 
   addedDateEvent(event: MatDatepickerInputEvent<Date>) {
     this.filter.absentDate = this.utilsService.stringDate(event.value);
+    this.reload();
   }
   //load Autocomplete
 
@@ -258,6 +256,16 @@ export class StudentAttendanceComponent implements OnInit {
         }
 
       });
+  }
+
+
+  // Additional function
+  notifyResponseWithDate(response: any, absentDate: string): any {
+    if(response && response.status == 0){
+      this.utilsService.showNotification('top', 'center', response.message, 2);
+    } else{
+      this.utilsService.showNotification('top', 'center', this.utilsService.FormatString(response.message, absentDate), 4);
+    }
   }
 
 }

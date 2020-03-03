@@ -62,13 +62,17 @@ export class ClassStatusComponent implements OnInit {
     this.pageSize = pageE.pageSize;
     this.reload();
   }
+  search(){
+      this.reload();
+      this.searchTerm = '';
+  }
   reload() {
-    
     const filter = {
+      searchTerm: this.searchTerm,
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
-      sortName: 'classStatusName',
-      sortDirection: 0
+      sortName: this.paginationSettings.sort.SortName,
+      sortDirection: this.paginationSettings.sort.SortDirection
     };
     this.loading = true;
     this.ClassStatusList = [];

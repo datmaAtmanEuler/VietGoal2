@@ -29,7 +29,7 @@ export class WardsComponent implements OnInit {
   wardsList:any[] = [];
   provincesList:any[] = [];
   districtsList:any[] = [];
-  ward: any;
+  ward: Ward;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
@@ -39,11 +39,9 @@ export class WardsComponent implements OnInit {
   firstRowOnPage: any;
   provinceId: null | number = null;
   districtId: null | number = null;
-
-
   searchProvincesCtrl = new FormControl();
   searchDistrictsCtrl = new FormControl();
-
+  searchAdvanced: boolean = false;
   /**
    * BEGIN SORT SETTINGS
    */
@@ -92,19 +90,18 @@ export class WardsComponent implements OnInit {
         return this.translate.instant('MESSAGE.NameList.PageFromToOf', { startIndex: startIndex + 1, endIndex, length });
       }
   }
-
-  remove(ward: Ward) {
-    this.ward = ward;
+  remove(id: any) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'Wards';
     modalRef.componentInstance.decide.subscribe(() => {
-        _this.deleteWard();
+        _this.service.deleteWard(id).subscribe(()=>{
+          _this.reload()
+        });
     });
 }
-
 pageEvent(variable: any){
-  this.pageIndex = variable.pageIndex+1;
+  this.pageIndex = variable.pageIndex + 1;
   this.pageSize = variable.pageSize;
   this.reload();
 }
@@ -168,19 +165,13 @@ reload() {
     modalRef.componentInstance.popup = true;
     if (id) {
       modalRef.componentInstance.id = id;
-      modalRef.componentInstance.UserId = _this.currentUser.UserId;
     }
     modalRef.result.then(function(){
       _this.reload();
   });
   }
 
-  deleteWard() {
-    const _this = this;
-    this.service.deleteWard(this.ward.id, this.currentUser.Userid).subscribe((rs:any)=>{
-      this.reload();
-    }); 
-  }
+ 
   
   toggleSort(columnIndex: number): void {
     let toggleState =  this.sortToggles[columnIndex];
@@ -234,26 +225,23 @@ reload() {
   }
 
 displayProvinceFn(province: any) {
-    return province && province.ProvinceName && !province.notfound ? province.ProvinceName : '';
+    return province && province.provinceName && !province.notfound ? province.provinceName : '';
   }
 
 changeProvince(provinceId: number) {
     this.districtFilter.ProvinceId = provinceId;
-    this.districtService.getDistrictsList(this.districtFilter).subscribe((list) => {
-      this.districtsList = list;
+    this.districtService.getDistrictsList(this.districtFilter).subscribe((response: any) => {
+      this.districtsList = response.results;
       this.reload();
     });
   }
 
   displayDistrictFn(district: any) {
-    return district && district.DistrictName && !district.notfound ? district.DistrictName : '';
+    return district && district.districtName && !district.notfound ? district.districtName : '';
   }
 
 changeDistrict(districtId: number) {
-    this.filter.DistrictId = districtId;
-    this.service.getWardsList(this.filter).subscribe((list) => {
-      this.wardsList = list;
-      this.reload();
-    });
+    this.ward.districtId = districtId;
+    
   }
 }

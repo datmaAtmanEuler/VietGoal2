@@ -104,7 +104,7 @@ export class ClassEditComponent implements OnInit {
 		});
 	}
 	changeYard() {
-		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, null, null, 'id', 'ASC')).subscribe((list) => {
+		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, 0, 0, 'id', 'ASC')).subscribe((list) => {
 			this.trainingGroundsList = list;
 		});
 	}
@@ -153,7 +153,7 @@ export class ClassEditComponent implements OnInit {
 				this.yardsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, null, 'id', 'ASC'))
+			switchMap(value => this.yardService.getYardsList(new YardFilter(value, 1, 100, 0, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -178,7 +178,7 @@ export class ClassEditComponent implements OnInit {
 				this.yardsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter(value, 1, 100, null, null, 'id', 'ASC'))
+			switchMap(value => this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter(value, 1, 100, 0, 0, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -216,7 +216,7 @@ export class ClassEditComponent implements OnInit {
 				}
 			},
 			() => {
-				_this.modalService.open(ConfirmComponent, { size: 'lg' });
+				//_this.modalService.open(ConfirmComponent, { size: 'lg' });
 			});
 	}
 	

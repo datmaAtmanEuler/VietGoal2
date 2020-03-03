@@ -16,25 +16,28 @@ export class NotificationService {
     constructor(private http: HttpClient) {
     }
 
-    getNotificationsList(filter: any): Observable<any> {
+    getList(filter: any): Observable<any> {
         let queryString = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.serverUrl + 'Notifications?' + queryString, this.httpOptions);
+        return this.http.get(environment.serverUrl + 'Notification?' + queryString, this.httpOptions);
+    }
+    getViewedList(filter: any): Observable<any> {
+        let queryString = Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
+        return this.http.get(environment.serverUrl + 'Notification/ViewedList?' + queryString, this.httpOptions);
     }
 
-    getNotification(id: any): Observable<any> {
-        return this.http.get(environment.serverUrl + `Notifications/${id}`, this.httpOptions);
+    get(id: any): Observable<any> {
+        return this.http.get(environment.serverUrl + `Notification/${id}`, this.httpOptions);
     }
 
-    addOrUpdateNotification(notification: Notification, by: null | number): Observable<any> {
-        if (notification.Id == 0) {
-            notification.CreatedBy = by;
+    addOrUpdate(notification: Notification): Observable<any> {
+        if (notification.id == 0) {
+            return this.http.post(environment.serverUrl + 'Notification', notification, this.httpOptions);
         } else {
-            notification.UpdatedBy = by;
+            return this.http.put(environment.serverUrl + `Notification/${notification.id}`, notification, this.httpOptions);
         }
-        return this.http.post(environment.serverUrl + `Notifications`, notification, this.httpOptions);
     }
 
-    deleteNotification(notificationId: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Notifications/${notificationId}?deletedBy=${deletedBy}`, this.httpOptions);
+    delete(notificationId: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `Notification/${notificationId}`, this.httpOptions);
     }
 }

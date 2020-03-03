@@ -205,7 +205,7 @@ export class RecruitStudentEditComponent implements OnInit {
 		this.router.navigate(['quanly/recruit-student']);
 
 	}
-	UpdateStudent() {
+	UpdateRecruitStudent() {
 		const _this = this;
 		 this.studentService.addOrUpdate(_this.student).subscribe((result : any)=>{
 			if (result) {

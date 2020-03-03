@@ -1,0 +1,39 @@
+<div class="modal-body" *ngIf="popup">
+    <div class="text-center border border-light p-5">
+        <p class="h4 mb-4">Danh sách đã xem {{id}}</p>
+        <div class="vietgoal-table-settings vg-scroll">
+            <table class="table table-condensed table-striped table-bordered table-hover">
+                <thead>
+                    <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
+                      <th
+                        (click)="sortToggles(colIndex)">
+                        <!-- <span style="vertical-align: middle;">{{colName}} -->
+                          <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                          <i style="float: none;" class="material-icons asc-sort-icons"
+                            *ngIf="paginationSettings.sortAbles[colIndex]">
+                            {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                          </i>
+                        </span>
+                      </th>
+                    </ng-container>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let viewer of ViewedList; let colIndex = index;">
+                        <td>{{colIndex}}</td>
+                        <td>Vip{{colIndex}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <mat-paginator [length]="Total" [pageSize]="filter.pageSize" [pageSizeOptions]="pageSizesList"
+            [showFirstLastButtons]="true" (page)="pageEvent($event)">
+        </mat-paginator>
+        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()"
+            alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
+    </div>
+</div>
+<div class="text-center border border-light p-5" *ngIf="!popup">
+    <p class="h4 mb-4">Danh sách đã xem</p>
+    <form></form>
+    <button class="btn btn-warning mr-3" (click)="ReturnList()" alt=''>{{"MESSAGE.NameList.Back"}}</button>
+</div>

@@ -48,7 +48,7 @@
                                 [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
                         </div>
                         <mat-autocomplete #areaAC="matAutocomplete"
-                            (optionSelected)="changeArea(searchAreasCtrl.value.id)"
+                            (optionSelected)="changeAreas(searchAreasCtrl.value.id)"
                             [displayWith]="displayAreaFn">
                             <mat-option *ngIf="isisLoading" class="is-loading bigger-spinner">
                                 <mat-spinner></mat-spinner>

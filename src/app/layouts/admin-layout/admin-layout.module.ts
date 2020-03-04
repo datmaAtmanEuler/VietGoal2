@@ -122,6 +122,7 @@ import { StudentReserveImportComponent } from '../../views/manage/studentreserve
 import { UserAdministrationComponent } from '../../views/manage/useradministration/user-administration.component';
 import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 import { UserAdministrationImportComponent } from '../../views/manage/useradministration/user-administration-import/user-administration-import.component';
+import { StudentListComponent } from '../../views/manage/studentreserve/studentlist/studentlist.component';
 
 
 @NgModule({
@@ -153,6 +154,7 @@ import { UserAdministrationImportComponent } from '../../views/manage/useradmini
     MatIconModule
   ],
   declarations: [
+    StudentListComponent,
     KpiConfigsComponent,
     KpiConfigEditComponent,
     StudentRegistrationComponent,
@@ -265,7 +267,8 @@ import { UserAdministrationImportComponent } from '../../views/manage/useradmini
     ScheduleComponent,
     StudentEditComponent,
     KpiConfigEditComponent,
-    UserAdministrationImportComponent
+    UserAdministrationImportComponent,
+    StudentListComponent
   ],
   providers: [
     NgxMaterialTimepickerModule,

@@ -7,7 +7,7 @@
         <label class="col-3 label-middling"><strong>Học viên:</strong><span class="text-danger">(*)</span></label>
         <div class="col-4 label-middling">
            
-          <input class="form-control" placeholder="Học viên" ><a  routerLink="/quanly/hosohocsinhtheolop/0" routerLinkActive="active"><span class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon"><i class="material-icons" style="font-size:20px">people</i></span></a>
+          <input #hoTenHocHien class="form-control" placeholder="Học viên" ><span (click)="showContactList()" class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon"><i class="material-icons" style="font-size:20px">people</i></span>
            
         </div>
       </div>

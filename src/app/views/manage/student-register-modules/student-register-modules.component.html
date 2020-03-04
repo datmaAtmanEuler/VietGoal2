@@ -175,7 +175,8 @@
                                                         *ngIf="getModuleDaysInfo(info).days.indexOf(day.day) != -1"
                                                         [ngClass]="{'redBg': getModuleDaysInfo(info).red[getModuleDaysInfo(info).days.indexOf(day.day)],
                                                                     'greenBg': getModuleDaysInfo(info).green[getModuleDaysInfo(info).days.indexOf(day.day)]}">
-                                                        {{ getModuleDaysInfo(info).status[getModuleDaysInfo(info).days.indexOf(day.day)] }}
+                                                        <span *ngIf="getModuleDaysInfo(info).isStarts[getModuleDaysInfo(info).days.indexOf(day.day)]" title="{{info | json}}">{{ getModuleDaysInfo(info).status[getModuleDaysInfo(info).days.indexOf(day.day)] }}</span>
+                                                        <span *ngIf="!getModuleDaysInfo(info).isStarts[getModuleDaysInfo(info).days.indexOf(day.day)]">{{ getModuleDaysInfo(info).status[getModuleDaysInfo(info).days.indexOf(day.day)] }}</span>
                                                       </td>
                                                       <td class="text-center"
                                                         *ngIf="getModuleDaysInfo(info).days.indexOf(day.day) == -1"

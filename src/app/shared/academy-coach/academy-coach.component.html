@@ -1,20 +1,6 @@
-<div class="academy-coach-wrapper">
-	<input type="text" class="Input-field" 
-		[ngClass]="{ 'ng-not-empty': selectedCoachs }"
-	    [matAutocomplete]="CoachsAC" [formControl]="searchCoachsCtrl">
-		<label class="Input-label">{{ label }}</label>
-	<mat-autocomplete #CoachsAC="matAutocomplete"
-        (optionSelected)="changeCoach(searchCoachsCtrl.value.id)"
-        [displayWith]="displayCoachFn">
-        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-            <mat-spinner></mat-spinner>
-        </mat-option>
-        <ng-container *ngIf="!isLoading">
-            <mat-option *ngFor="let coach of coachsList" [value]="coach">
-                <span *ngIf="!coach.notfound">{{ displayCoachFn(coach) }}</span>
-                <span *ngIf="coach.notfound"
-                    class="nofind">{{coach.notfound}}</span>
-            </mat-option>
-        </ng-container>
-    </mat-autocomplete>
-</div>
+<mat-form-field [style.width]="width || 'auto'" [style.height]="'46px'" class="form-control">
+   <mat-label  [style.height]="'46px'">{{ label }}</mat-label>
+  <mat-select [multiple]="multiple" (selectionChange)="updateChange($event)" [style.height]="'46px'">
+    <mat-option *ngFor="let coach of coachsList" [value]="coach">{{getCoachFullName(coach)}}</mat-option>
+  </mat-select>
+</mat-form-field>

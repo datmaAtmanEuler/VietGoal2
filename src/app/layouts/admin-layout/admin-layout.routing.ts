@@ -62,9 +62,10 @@ import { UserAdministrationComponent } from '../../views/manage/useradministrati
 import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 
 import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.component';
-import { NotificationComponent } from 'app/views/manage/notification/notification.component';
-import { NotificationSeenComponent } from 'app/views/manage/notification/notification-seen/notification-seen.component';
-import { NotificationEditComponent } from 'app/views/manage/notification/notification-edit/notification-edit.component';
+import { NotificationComponent } from '../../views/manage/notification/notification.component';
+import { NotificationSeenComponent } from '../../views/manage/notification/notification-seen/notification-seen.component';
+import { NotificationEditComponent } from '../../views/manage/notification/notification-edit/notification-edit.component';
+import { YardTransferComponent } from '../../views/manage/yard-transfer/yard-transfer.component';
 
 
 export const AdminLayoutRoutes: Routes = [
@@ -335,6 +336,9 @@ export const AdminLayoutRoutes: Routes = [
     },
     {
         path:'studentregistermodules', component: StudentRegisterModulesComponent
+    },
+    {
+        path:'yardtransfer', component: YardTransferComponent
     },
     {
         path:'texteditor',

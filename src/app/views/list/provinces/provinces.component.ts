@@ -74,7 +74,7 @@ export class ProvincesComponent implements OnInit {ModalDirective;
     new PerfectScrollbar(vgscroll);
   }
   
-  selectContact($event) {
+  selectCoachs($event) {
     console.log($event);
   }
 

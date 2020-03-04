@@ -131,6 +131,7 @@ import { NotificationSeenComponent } from '../../views/manage/notification/notif
 import { UserAdministrationComponent } from '../../views/manage/useradministration/user-administration.component';
 import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 import { UserAdministrationImportComponent } from '../../views/manage/useradministration/user-administration-import/user-administration-import.component';
+import { YardTransferComponent } from '../../views/manage/yard-transfer/yard-transfer.component';
 import { StudentListComponent } from '../../views/manage/studentreserve/studentlist/studentlist.component';
 
 
@@ -166,6 +167,7 @@ import { StudentListComponent } from '../../views/manage/studentreserve/studentl
     MatIconModule
   ],
   declarations: [
+    YardTransferComponent,
     StudentRegisterModulesComponent,
     StudentListComponent,
     KpiConfigsComponent,

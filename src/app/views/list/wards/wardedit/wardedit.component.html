@@ -7,7 +7,7 @@
             <label class="col-sm-3 label-middling"
                 for="ProvinceAC">{{'MESSAGE.NameList.ProvinceName' |translate}}:</label>
             <div class="col-sm-6">
-                <input class="form-control" id="ProvinceAC" [value]="ward.provinceId"
+                <input class="form-control" id="ProvinceAC" 
                     [matAutocomplete]="provinceAC" [formControl]="searchProvincesCtrl">
                 <mat-autocomplete #provinceAC="matAutocomplete"
                     (optionSelected)="changeProvince(searchProvincesCtrl.value.id)"
@@ -53,8 +53,6 @@
                         class="form-control" placeholder='{{"MESSAGE.NameList.WardCode" |translate}}'>
                 </div>
             </div>
-
-       
 
             <div class="form-group row">
                 <label class="col-3 label-middling">{{'MESSAGE.NameList.WardName' |translate}}:<span class="text-danger">(*)</span></label>

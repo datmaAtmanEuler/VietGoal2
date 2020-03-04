@@ -27,9 +27,9 @@
                                           class="btn btn-primary search-button advanced-search-others btn-link btn-sm btn-just-icon">
                                           <i class="material-icons advanced-search-btn">search</i>
                                         </button>
-                          <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                          <input (keyup.enter)="search()" [(ngModel)]="districtFilter.SearchTerm" class="form-control" type="text"
                             placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                          <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                          <button type="button" (click)="search()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
                             class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
                             <i class="material-icons">search</i>
                           </button>
@@ -89,37 +89,36 @@
                                             </ng-container>
                                           </thead>
                                     <tbody>
-                                        <ng-container *ngFor="let district of districtsList; let i = index;">
-                                            <tr>
-                                                <td width="100px">{{ i + 1}}</td>
-                                                <td>{{ district.districtCode }}</td>
-                                                <td>{{ district.districtName }}</td>
-                                                <td>{{ district.provinceId }}</td>
-                                                <td class="my-action-item">
-    
-                                                    <button mat-raised-button type="button"
-                                                     (click)="edit(district.id)"
-                                                    title="{{ 'MESSAGE.NameList.Edit' | translate}}"
-                                                    class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
-                                                    <i class="material-icons">edit</i>
-                                                </button>
-                                                <button mat-raised-button 
-                                                    type="button" (click)="remove(district)"
-                                                    title="{{ 'MESSAGE.NameList.Delete' | translate}}"
-                                                    class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
-                                                    <i class="material-icons">close</i>
-                                                </button>
-                                                </td>
-                                            </tr>
-                                        </ng-container>
+                                      <ng-container *ngFor="let district of districtsList; let i = index;">
+                                        <tr>
+                                          <td>{{firstRowOnPage + i }}</td>
+                                          <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
+                                            <td
+                                              *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
+                                              {{ utilsService.getColumnValue(district, colIndex, paginationSettings.columnsNameMapping) }}
+                                            </td>
+                                          </ng-container>
+                                          <td class="my-action-item">
+                                           
+                                            <button type="button" (click)="edit(district.id)"
+                                              class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
+                                              <i class="material-icons">edit</i>
+                                            </button>
+                                            <button type="button" (click)="remove(district.id)"
+                                              class="btn btn-danger btn-link btn-sm delete-button btn-just-icon">
+                                              <i class="material-icons">close</i>
+                                            </button>
+                                          </td>
+                                        </tr>
+                                      </ng-container>
                                     </tbody>
                                 </table>
                             </div>
                                
                             </div>
                             <mat-paginator 
-                            [length]="(districtsList && districtsList.length > 0 && districtsList[0] && districtsList[0].Total) ? districtsList[0].Total : 0"
-                             [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                            [length]="Total"
+                             [pageSize]="districtFilter.PageSize" [pageSizeOptions]="pageSizesList"
                             [showFirstLastButtons]="true" (page)="pageEvent($event)">
                           </mat-paginator>
                         </div>

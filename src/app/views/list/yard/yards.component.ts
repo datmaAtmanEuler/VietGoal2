@@ -18,6 +18,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { Area } from 'app/models/list/area';
 import { YardImportComponent } from './yard-import/yard-import.component';
 import { FormControl } from '@angular/forms';
+import { CommonFilter } from 'app/models/filter/commonfilter';
 
 @Component({
   selector: 'app-yards',
@@ -25,10 +26,9 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./yards.component.scss']
 })
 export class YardComponent implements OnInit {
-  yardsList:any[] = [];
+  yardsList:any[];
   areasList:any[] = [];
   centralsList:any[] = [];
-  yard: Yard;
   Total: number = 0;
   searchTerm:string = '';
   pageIndex:number = 1;
@@ -61,7 +61,7 @@ export class YardComponent implements OnInit {
    * END SORT SETTINGS
    */
 
-  filter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 'id','ASC');
+  mainfilter = new CommonFilter();
   areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 'id','ASC');
   centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 0, 0, 'id','ASC');
 
@@ -80,11 +80,19 @@ export class YardComponent implements OnInit {
 
   ngOnInit() {
   this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  this.mainfilter.PageIndex = 1;
+  this.mainfilter.PageSize = this.pageSizesList[1];
+
+  this.centralService.getCentralsList(this.centralFilter).subscribe((response: any) => {
+       this.centralsList = response.results; 
+      });
+  this.areaService.getAreasList(this.areaFilter).subscribe((response : any)=>{
+    this.areasList = response.results;
+  });
   this.reload();
   const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
   new PerfectScrollbar(vgscroll);
   }
-
   updateMatTableLabel() {
     this.matCus.itemsPerPageLabel = this.translate.instant('MESSAGE.NameList.ItemsPerPage');
     this.matCus.getRangeLabel =  (page: number, pageSize: number, length: number): string => {
@@ -108,63 +116,35 @@ export class YardComponent implements OnInit {
     });
 }
 pageEvent(variable: any){
-  this.pageIndex = variable.pageIndex+1;
-  this.pageSize = variable.pageSize;
+  this.mainfilter.PageIndex = variable.pageIndex + 1;
+  this.mainfilter.PageSize = variable.pageSize;
   this.reload();
+}
+search() {
+  this.reload();
+  this.mainfilter.SearchTerm = '';
 }
 reload() {
   const _this = this;
   this.isLoading = true;
-  this.centralsList = [];
-  this.centralService.getCentralsList(this.centralFilter).subscribe(
-      (response: any) => {
-        const list = response.results ? response.results : [];
-        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-        setTimeout(() => {
-          _this.centralsList = (list) ? list : [];
-          _this.areasList = [];
-          _this.areaService.getAreasList(_this.areaFilter).subscribe(
-              (response: any) => {
-                const list = response.results ? response.results : [];
-                _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-                setTimeout(() => {
-                  _this.areasList = (list) ? list : [];
-                  _this.Total = 0;
-                  _this.yardsList = [];
-                  _this.service.getYardsList(_this.filter).subscribe(
-                      (response: any) => {
-                        const list = response.results ? response.results : [];
-                        _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-                        setTimeout(() => {
-                          _this.yardsList = (list) ? list : [];
-                          _this.isLoading = false;
-                          _this.Total = response.rowCount || 0;
-                        }, 500);
-                      },
-                      (err: any) => {
-                        _this.yardsList = [];
-                        _this.Total = 0;
-                        _this.isLoading = false;
-                      }
-                  );
-
-                }, 500);
-              },
-              (err: any) => {
-                _this.areasList = [];
-                _this.isLoading = false;
-              }
-          );
-
-        }, 500);
-      },
-      (err: any) => {
-        _this.centralsList = [];
+  this.mainfilter.SortName = this.paginationSettings.sort.SortName;
+  this.mainfilter.SortDirection = this.paginationSettings.sort.SortDirection;
+  this.service.getYardsList(this.mainfilter).subscribe(
+    (response: any) => {
+      const list = response.results ? response.results : [];
+  this.Total = (response && response.rowCount) ? response.rowCount : 0;
+  this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
+      setTimeout(() => {
+        _this.yardsList = (list) ? list : [];
         _this.isLoading = false;
-      }
-  );
+      }, 500);
+    },
+    (err: any) => {
+      _this.yardsList = [];
+      _this.isLoading = false;
+    }
+);
 }
-
 add() {
   this.edit(null);
 }
@@ -204,14 +184,15 @@ displayAreasFn(area: any) {
   return area && area.areaName && !area.notfound ? area.areaName : '';
 }
 
-
 changeCentral(centralID: number) {
-   this.yard.centralId = centralID;
+  this.areaFilter.CentralId = centralID;
+    this.areaService.getAreasList(this.areaFilter).subscribe((response: any) => {
+      this.areaFilter = response.results;
+    });
   }
-
-  changeAreas(areaID: number) {
-    this.yard.areaId = areaID;
+changeAreas(areaID: number) {
+    this.mainfilter.AreaId = areaID;
+    this.reload();
   }
-
 }
 

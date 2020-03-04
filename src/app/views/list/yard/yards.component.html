@@ -27,9 +27,9 @@
                                           class="btn btn-primary search-button advanced-search-others btn-link btn-sm btn-just-icon">
                                           <i class="material-icons advanced-search-btn">search</i>
                                         </button>
-                          <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                          <input [(ngModel)]="mainfilter.SearchTerm" class="form-control" type="text"
                             placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                          <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                          <button type="button" (click)="search()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
                             class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
                             <i class="material-icons">search</i>
                           </button>
@@ -39,6 +39,28 @@
                   </div>
                   <div class="row" *ngIf="searchAdvanced">
                     <div class="form-body col-sm-12">
+
+                      <div class="form-group row">
+                        <label class="col-1 label-middling"><strong>{{'MESSAGE.NameList.Central' | translate}}:</strong></label>
+                        <div class="col-2 label-middling">
+                            <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' | translate}}"
+                                [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
+                        </div>
+                        <mat-autocomplete #CentralAC="matAutocomplete"
+                            (optionSelected)="changeCentral(searchCentralsCtrl.value.id)"
+                            [displayWith]="displayCentralFn">
+                            <mat-option *ngIf="isisLoading" class="is-loading bigger-spinner">
+                                <mat-spinner></mat-spinner>
+                            </mat-option>
+                            <ng-container *ngIf="!isisLoading">
+                                <mat-option *ngFor="let central of centralsList" [value]="central">
+                                    <span *ngIf="central">{{central.centralName}}</span>
+                                        <span *ngIf="!central.notfound" class="nofind">{{central.notfound}}</span>
+                                </mat-option>
+                            </ng-container>
+                        </mat-autocomplete>
+                    </div>
+
                       <div class="form-group row">
                         <label
                             class="col-1 label-middling"><strong>{{'MESSAGE.NameList.Area' | translate}}:</strong></label>
@@ -61,28 +83,6 @@
                             </ng-container>
                         </mat-autocomplete>
                     </div>
-
-                    <div class="form-group row">
-                      <label class="col-1 label-middling"><strong>{{'MESSAGE.NameList.Central' | translate}}:</strong></label>
-                      <div class="col-2 label-middling">
-                          <input class="form-control" placeholder="{{'MESSAGE.NameList.Central' | translate}}"
-                              [matAutocomplete]="CentralAC" [formControl]="searchCentralsCtrl">
-                      </div>
-                      <mat-autocomplete #CentralAC="matAutocomplete"
-                          (optionSelected)="changeCentral(searchCentralsCtrl.value.id)"
-                          [displayWith]="displayCentralFn">
-                          <mat-option *ngIf="isisLoading" class="is-loading bigger-spinner">
-                              <mat-spinner></mat-spinner>
-                          </mat-option>
-                          <ng-container *ngIf="!isisLoading">
-                              <mat-option *ngFor="let central of centralsList" [value]="central">
-                                  <span *ngIf="central">{{central.centralName}}</span>
-                                      <span *ngIf="!central.notfound" class="nofind">{{central.notfound}}</span>
-                              </mat-option>
-                          </ng-container>
-                      </mat-autocomplete>
-                  </div>
-
                     </div>
                   </div>
                 </div>
@@ -111,7 +111,7 @@
                         <tbody>
                           <ng-container *ngFor="let yard of yardsList; let i = index;">
                             <tr>
-                              <td>{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
+                              <td>{{firstRowOnPage + i }}</td>
                               <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
                                 <td
                                   *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">

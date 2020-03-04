@@ -27,9 +27,9 @@
                                                     class="btn btn-primary search-button advanced-search-others btn-link btn-sm btn-just-icon">
                                                     <i class="material-icons advanced-search-btn">search</i>
                                                   </button>
-                                    <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                                    <input (keyup.enter)="search()" [(ngModel)]="mainFilter.SearchTerm" class="form-control" type="text"
                                       placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                                    <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                                    <button type="button" (click)="search()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
                                       class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
                                       <i class="material-icons">search</i>
                                     </button>
@@ -93,55 +93,53 @@
                                 <div class="card-body table-responsive">
                                     <div class="vietgoal-table-settings style-1">
                                         <div class="vietgoal-table-settings vg-scroll">
-                                            <table
-                                                class="table table-condensed table-striped table-bordered table-hover"
-                                                style="width: 100%">
-                                                <thead>
-                                                    <ng-container
-                                                        *ngFor="let colName of columnsName; let colIndex = index;">
-                                                        <th [style.width]="(colIndex == 0) ? '100px' : ((colIndex == columnsName.length - 1) ? '150px' : 'auto')"
-                                                            (click)="sortAbles[colIndex] ? toggleSort(colIndex) : doNothing()">
-                                                            <span
-                                                                style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
-                                                                <i class="material-icons asc-sort-icons"
-                                                                    *ngIf="sortAbles[colIndex]">
-                                                                    {{ (sortToggles[colIndex] == '') ? 'unfold_more' : ((sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
-                                                                </i>
-                                                            </span>
-                                                        </th>
-                                                    </ng-container>
-                                                </thead>
-                                                <tbody>
-                                                    <ng-container *ngFor="let wards of wardsList; let i = index;">
-                                                        <tr>
-                                                            <td width="100px">{{ i + 1}}</td>
-                                                            <td>{{ wards.wardCode }}</td>
-                                                            <td>{{ wards.wardName }}</td>
-                                                            <td>{{ wards.districtId }}</td>
-                                                            <td class="my-action-item">
-
-                                                                <button mat-raised-button type="button"
-                                                                    (click)="edit(wards.id)"
-                                                                    title="{{ 'MESSAGE.NameList.Edit' | translate}}"
-                                                                    class="btn btn-primary edit-button btn-link btn-sm btn-just-icon mr-2">
-                                                                    <i class="material-icons">edit</i>
-                                                                </button>
-                                                                <button mat-raised-button type="button"
-                                                                    (click)="remove(wards.id)"
-                                                                    title="{{ 'MESSAGE.NameList.Delete' | translate}}"
-                                                                    class="btn btn-primary btn-link delete-button btn-sm btn-just-icon">
-                                                                    <i class="material-icons">close</i>
-                                                                </button>
-                                                            </td>
-                                                        </tr>
-                                                    </ng-container>
-                                                </tbody>
-                                            </table>
+                                            
+                                    <table class="table table-condensed table-striped table-bordered table-hover"
+                                    style="width: 100%">
+                                    <thead>
+                                        <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
+                                          <th *ngIf="paginationSettings.visibles[colIndex]"
+                                            [style.width]="(colIndex == 0) ? '100px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
+                                            (click)="sortToggles(colIndex)">
+                                            <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
+                                              <i style="float: none;" class="material-icons asc-sort-icons"
+                                                *ngIf="paginationSettings.sortAbles[colIndex]">
+                                                {{ (paginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((paginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                                              </i>
+                                            </span>
+                                          </th>
+                                        </ng-container>
+                                      </thead>
+                                <tbody>
+                                  <ng-container *ngFor="let ward of wardsList; let i = index;">
+                                    <tr>
+                                      <td>{{firstRowOnPage + i }}</td>
+                                      <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
+                                        <td
+                                          *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
+                                          {{ utilsService.getColumnValue(ward, colIndex, paginationSettings.columnsNameMapping) }}
+                                        </td>
+                                      </ng-container>
+                                      <td class="my-action-item">
+                                       
+                                        <button type="button" (click)="edit(ward.id)"
+                                          class="btn btn-primary edit-button btn-link btn-sm btn-just-icon">
+                                          <i class="material-icons">edit</i>
+                                        </button>
+                                        <button type="button" (click)="remove(ward.id)"
+                                          class="btn btn-danger btn-link btn-sm delete-button btn-just-icon">
+                                          <i class="material-icons">close</i>
+                                        </button>
+                                      </td>
+                                    </tr>
+                                  </ng-container>
+                                </tbody>
+                            </table>
                                         </div>
                                     </div>
                                     <mat-paginator
-                                        [length]="(wardsList && wardsList.length > 0 && wardsList[0] && wardsList[0].Total) ? wardsList[0].Total : 0"
-                                        [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                                        [length]="Total"
+                                        [pageSize]="mainFilter.PageSize" [pageSizeOptions]="pageSizesList"
                                         [showFirstLastButtons]="true" (page)="pageEvent($event)">
                                     </mat-paginator>
                                 </div>

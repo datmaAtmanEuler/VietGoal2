@@ -20,11 +20,11 @@ export class YardService {
     }
     getYardsList(filter: any): Observable<any> {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'Yards?' + queryString , this.httpOptions);
+        return this.http.get(environment.serverUrl + 'Yards?' + queryString , this.httpOptions);
     }
     
     getYard(id: any): Observable<any> {
-        return this.http.get(environment.apiUrl + `Yards/${id}` , this.httpOptions);
+        return this.http.get(environment.serverUrl + `Yards/${id}` , this.httpOptions);
     }
 
     addOrUpdateYard(yard: Yard): Observable<any> {

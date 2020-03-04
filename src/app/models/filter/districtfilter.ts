@@ -4,8 +4,7 @@ export class DistrictFilter {
     PageIndex: number = 0;
     PageSize: number = 0;
     SearchTerm: string = '';
-    
-    ProvinceId: null | number = null;
+    provinceId: null | number = null;
     SortName: string = 'Id';
     SortDirection: string = SORD_DIRECTION.ASC;
 
@@ -13,7 +12,7 @@ export class DistrictFilter {
         this.SearchTerm = searchTerm;
         this.PageIndex = pageIndex;
         this.PageSize = pageSize;
-        this.ProvinceId = ProvinceId;
+        this.provinceId = ProvinceId;
         
         this.SortName = sN;
         this.SortDirection = sD;

@@ -58,18 +58,15 @@ export class YardEditComponent implements OnInit {
 		this.yardService.getYard((id) ? id : this.id).subscribe(
 			(ayard) => {
 				this.yard = ayard;
-				var centralAC = <HTMLInputElement>document.getElementById('centralAC');
-				this.centralService.getCentralsList(ayard.centralId).subscribe(
-					(response : any)=>{
-						centralAC.value = response.centralName;
-					}
-				)
 				var areaAC =  <HTMLInputElement>document.getElementById('areaAC');
+				var centralAC = <HTMLInputElement>document.getElementById('centralAC');
 				this.areaService.getAreasList(ayard.areaId).subscribe(
 					(response : any) =>{
 						areaAC.value = response.areaName;
-					}
-				)
+						this.centralService.getCentralsList(response.centralId).subscribe((res)=>{
+							centralAC.value = res.centralName;
+						})
+					});
 			});	
 	}
 	ngOnInit() {

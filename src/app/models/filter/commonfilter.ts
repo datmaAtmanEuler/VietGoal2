@@ -6,11 +6,14 @@ export class CommonFilter {
     yardId: number;
     classId: number;
     idClass: number;
-    sortName: number;
-    sortDirection: number;
+    sortName: string;
+    sortDirection: string;
     addedDate: string;
     absentDate: string;
+    DistrictId: number;
 
+    CentralId: number;
+    AreaId: number;
     WardId: number;
     SearchTerm: string;
     PageIndex: number;
@@ -20,4 +23,6 @@ export class CommonFilter {
 
     createdDate: string;
     expirationDate: string;
+
+    ProvinceId: number;
   }

@@ -57,8 +57,13 @@ export class StudentStatusComponent implements OnInit {
     this.pageSize = pageE.pageSize;
     this.reload();
   }
+  search(){
+    this.reload();
+    this.searchTerm = '';
+  }
   public reload() {
     const filter = {
+      searchTerm: this.searchTerm,
       pageIndex: this.pageIndex,
       pageSize: this.pageSize,
       sortName: this.paginationSettings.sort.SortName,

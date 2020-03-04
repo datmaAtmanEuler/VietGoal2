@@ -64,7 +64,7 @@ export class NotificationComponent implements OnInit {
     this.filter.pageIndex = 1;
     this.filter.pageSize = this.pageSizesList[1];
     this.filter.searchTerm = '';
-    // this.reload();
+    this.reload();
   }
 
   pageEvent(pageE: any) { 

@@ -21,6 +21,7 @@ import { CentralEditComponent } from './central-edit/central-edit.component';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { CentralImportComponent } from './central-import/central-import.component';
 import { CommonFilter } from 'app/models/filter/commonfilter';
+import { WardService } from 'app/services/list/ward.service';
 
 @Component({
   selector: 'app-Central',
@@ -44,6 +45,8 @@ export class CentralComponent implements OnInit {
   searchProvincesCtrl = new FormControl();
   searchDistrictsCtrl = new FormControl();
   searchWardsCtrl = new FormControl();
+  provinceId: any = '';
+  districtId: any = '';
 
   isLoading = false;
   /**
@@ -67,7 +70,7 @@ export class CentralComponent implements OnInit {
   firstRowOnPage: any;
 
   constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: CentralService, private router: Router, private modalService: NgbModal,
-    private provinceService: ProvinceService, private districtService: DistrictService, private http: HttpClient) {
+    private provinceService: ProvinceService, private districtService: DistrictService, private wardService: WardService) {
     config.backdrop = 'static';
     config.keyboard = false;
     config.scrollable = false;
@@ -75,7 +78,7 @@ export class CentralComponent implements OnInit {
     utilsService.loadPaginatorLabels();
   }
   ngOnInit() {
-    
+
     this.filter.SearchTerm = '';
     this.filter.PageIndex = 1;
     this.filter.PageSize = this.pageSizesList[1];
@@ -85,93 +88,6 @@ export class CentralComponent implements OnInit {
     new PerfectScrollbar(vgscroll);
   }
 
-  filtersEventsBinding() {
-
-    this.searchProvincesCtrl.valueChanges
-      .pipe(
-        startWith(''),
-        debounceTime(500),
-        tap(() => {
-          this.listprovince = [];
-          this.isLoading = true;
-        }),
-        switchMap(value => this.provinceService.getProvincesList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
-          .pipe(
-            finalize(() => {
-              this.isLoading = false
-            }),
-          )
-        )
-      )
-      .subscribe((response: any) => {
-				const data = response.results;
-        if (data == undefined) {
-          this.listprovince = [{ notfound: 'Not Found' }];
-        } else {
-          this.listprovince = data.length ? data : [{ notfound: 'Not Found' }];
-        }
-
-      });
-    this.searchDistrictsCtrl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(500),
-      tap(() => {
-        this.listdistrict = [];
-        this.isLoading = true;
-      }),
-      switchMap(value => this.districtService.getDistrictsList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
-        .pipe(
-          finalize(() => {
-            this.isLoading = false
-          }),
-        )
-      )
-    )
-      .subscribe((response: any) => {
-				const data = response.results;
-        if (data == undefined) {
-          this.listdistrict = [{ notfound: 'Not Found' }];
-        } else {
-          this.listdistrict = data.length ? data : [{ notfound: 'Not Found' }];
-        }
-
-      });
-    this.searchWardsCtrl.valueChanges.pipe(
-      startWith(''),
-      debounceTime(500),
-      tap(() => {
-        this.listward = [];
-        this.isLoading = true;
-      }),
-      switchMap(value => this.http.get(`${environment.serverUrl}Wards?pageIndex=1&pageSize=20&sortName=id&sortDirection=ASC`)
-        .pipe(
-          finalize(() => {
-            this.isLoading = false
-          }),
-        )
-      )
-    )
-      .subscribe((response: any) => {
-				const data = response.results;
-        if (data == undefined) {
-          this.listward = [{ notfound: 'Not Found' }];
-        } else {
-          this.listward = data.length ? data : [{ notfound: 'Not Found' }];
-        }
-
-      });
-  }
-
-  remove(id) {
-    const _this = this;
-    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-    modalRef.componentInstance.confirmObject = 'Central';
-    modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deleteCentral(id).subscribe(() => {
-        _this.reload();
-      });
-    });
-  }
   pageEvent(variable: any) {
     this.filter.PageIndex = variable.pageIndex + 1;
     this.filter.PageSize = variable.pageSize;
@@ -180,7 +96,7 @@ export class CentralComponent implements OnInit {
   reload() {
     this.filter.SearchTerm = this.searchTerm;
     this.filter.sortName = this.paginationSettings.sort.SortName;
-    this.filter.sortDirection = this.paginationSettings.sort.SortDirection; 
+    this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
 
     this.loading = true;
     this.CentralList = [];
@@ -207,55 +123,23 @@ export class CentralComponent implements OnInit {
       _this.reload();
     });
   }
-
-  displayProvinceFn(user): string {
-    return user && user.provinceName && !user.notfound ? user.provinceName : '';
-  }
-  displayDistrictFn(user): string {
-    return user && user.districtName && !user.notfound ? user.districtName : '';
-  }
-  displayWardFn(user): string {
-    return user && user.wardName && !user.notfound ? user.wardName : '';
-  }
-  changeProvince(provinceID) {
-    this.districtService.getDistrictsList(new DistrictFilter('', 1, 100,null, provinceID)).subscribe((list) => {
-      this.listdistrict = list;
-      // this.filter.ProvinceId = provinceID;
-      this.reload();
+  remove(id) {
+    const _this = this;
+    const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
+    modalRef.componentInstance.confirmObject = 'Central';
+    modalRef.componentInstance.decide.subscribe(() => {
+      _this.service.deleteCentral(id).subscribe(() => {
+        _this.reload();
+      });
     });
   }
-  changeDistrict(districtID) {
-    this.http.get(`${environment.serverUrl}Wards/?SearchTerm=&DistrictID=${districtID}&SortName=&SortDirection=&PageIndex=1&PageSize=20`).subscribe((list) => {
-      this.listward = list;
-      // this.filter.DistrictId = districtID;
-      this.reload();
-    });
-  }
-  changeWard(wardID) {
-    this.filter.WardId = wardID;
-    this.reload();
-  }
 
-  provinceIDfilted() {
-    if (this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined) {
-      return this.searchProvincesCtrl.value.ID
-    } else {
-      return 0;
-    }
-  }
-  wardObservableFilter(value: any): Observable<any> {
-    if (this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined) {
-      return this.http.get(`${environment.serverUrl}Wards/?SearchTerm=${value}&DistrictID=${this.searchDistrictsCtrl.value.ID}&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-    } else {
-      return this.http.get(`${environment.serverUrl}Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-    }
-  }
-  
+
   openImport() {
     const _this = this;
     const modalRef = this.modalService.open(CentralImportComponent, { size: 'lg' });
-    modalRef.result.then(function(importModel: any){
-        console.log(importModel);
+    modalRef.result.then(function (importModel: any) {
+      console.log(importModel);
     });
   }
 
@@ -278,5 +162,106 @@ export class CentralComponent implements OnInit {
     else
       this.utilsService.doNothing();
   }
+  // Autocomplete part
+  displayProvinceFn(user): string {
+    return user && user.provinceName && !user.notfound ? user.provinceName : '';
+  }
+  displayDistrictFn(user): string {
+    return user && user.districtName && !user.notfound ? user.districtName : '';
+  }
+  displayWardFn(user): string {
+    return user && user.wardName && !user.notfound ? user.wardName : '';
+  }
+  changeProvince(provinceID) {
+    this.provinceId = provinceID;
+    this.searchDistrictsCtrl.setValue('');
+    this.districtId = 0;
+    this.searchWardsCtrl.setValue('');
+  }
+  changeDistrict(districtID) {
+    this.districtId = districtID;
+    this.searchWardsCtrl.setValue('');
+  }
+  changeWard(wardID) {
+    this.filter.WardId = wardID;
+    this.reload();
+  }
 
+
+  filtersEventsBinding() {
+
+    this.searchProvincesCtrl.valueChanges
+      .pipe(
+        startWith(''),
+        debounceTime(500),
+        tap(() => {
+          this.listprovince = [];
+          this.isLoading = true;
+        }),
+        switchMap(value => this.provinceService.getProvincesList({ 'searchTerm': this.utilsService.objectToString(value), 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            }),
+          )
+        )
+      )
+      .subscribe((response: any) => {
+        const data = response.results;
+        if (data == undefined) {
+          this.listprovince = [{ notfound: 'Not Found' }];
+        } else {
+          this.listprovince = data.length ? data : [{ notfound: 'Not Found' }];
+        }
+
+      });
+    this.searchDistrictsCtrl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(500),
+      tap(() => {
+        this.listdistrict = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.districtService.getDistrictsList({ 'SearchTerm': this.utilsService.objectToString(value), 'ProvinceId': this.provinceId, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+      .subscribe((response: any) => {
+        const data = response.results;
+        if (data == undefined) {
+          this.listdistrict = [{ notfound: 'Not Found' }];
+        } else {
+          this.listdistrict = data.length ? data : [{ notfound: 'Not Found' }];
+        }
+
+      });
+    this.searchWardsCtrl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(500),
+      tap(() => {
+        this.listward = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.wardService.getWardsList({ SearchTerm: this.utilsService.objectToString(value), DistrictId: this.districtId, PageIndex: 1, PageSize: 20 })
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+      .subscribe((response: any) => {
+        const data = response.results;
+        if (data == undefined) {
+          this.listward = [{ notfound: 'Not Found' }];
+        } else {
+          this.listward = data.length ? data : [{ notfound: 'Not Found' }];
+        }
+
+      });
+  }
 }

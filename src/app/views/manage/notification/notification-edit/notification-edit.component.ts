@@ -52,6 +52,7 @@ export class NotificationEditComponent implements OnInit {
         this.content = object.content;
         const createdDateDP = <HTMLInputElement>document.getElementById('createdDateDP');
         const expirationDate = <HTMLInputElement>document.getElementById('expirationDate');
+        alert(this.notification.createdDate);
         createdDateDP.value = this.utilsService.stringDate(this.notification.createdDate, true);
         expirationDate.value = this.utilsService.stringDate(this.notification.expirationDate, true);
 			},

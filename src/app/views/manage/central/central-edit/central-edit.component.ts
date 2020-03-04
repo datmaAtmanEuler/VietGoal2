@@ -41,8 +41,8 @@ export class CentralEditComponent implements OnInit {
 
 	isLoading = false;
 	errorMsg: string;
-	provinceId: number;
-	districtId: number;
+	provinceId: any = '';
+	districtId: any = '';
 
 	constructor(public activeModal: NgbActiveModal,
 		config: NgbModalConfig,
@@ -64,8 +64,6 @@ export class CentralEditComponent implements OnInit {
 		// this.getProvince();
 	}
 	ngOnInit() {
-		this.searchDistrictsCtrl.disabled;
-		this.searchWardsCtrl.disabled;
 		this.loadAutocompletes();
 		this.GetCentralById(this.CentralId);
 	}
@@ -151,11 +149,13 @@ export class CentralEditComponent implements OnInit {
 	}
 	changeProvince(provinceID) {
 		this.provinceId = provinceID;
-		this.searchDistrictsCtrl.enable;
+		this.searchDistrictsCtrl.setValue('');
+		this.districtId = 0;
+		this.searchWardsCtrl.setValue('');
 	}
 	changeDistrict(districtID) {
 		this.districtId = districtID;
-		this.searchWardsCtrl.enable;
+		this.searchWardsCtrl.setValue('');
 	}
 	changeWard(wardId){
 		this.central.wardId = wardId;
@@ -169,10 +169,8 @@ export class CentralEditComponent implements OnInit {
 					this.errorMsg = "";
 					this.listprovince = [];
 					this.isLoading = true;
-					this.searchDistrictsCtrl.disabled;
-					this.searchWardsCtrl.disabled;
 				}),
-				switchMap(value => this.provinceService.getProvincesList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
+				switchMap(value => this.provinceService.getProvincesList({ 'searchTerm': this.utilService.objectToString(value), 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -198,12 +196,11 @@ export class CentralEditComponent implements OnInit {
 				this.errorMsg = "";
 				this.listdistrict = [];
 				this.isLoading = true;
-				this.searchWardsCtrl.disabled;
 			}),
-			switchMap(value => this.districtService.getDistrictsList({ 'searchTerm': value, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
+			switchMap(value => this.districtService.getDistrictsList({ 'SearchTerm': this.utilService.objectToString(value), 'ProvinceId': this.provinceId, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
 				.pipe(
 					finalize(() => {
-						this.isLoading = false
+						this.isLoading = false;
 					}),
 				)
 			)
@@ -228,7 +225,7 @@ export class CentralEditComponent implements OnInit {
 				this.listward = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.http.get(`${environment.serverUrl}Wards?pageIndex=1&pageSize=20&sortName=id&sortDirection=ASC`)
+			switchMap(value => this.wardService.getWardsList({SearchTerm: this.utilService.objectToString(value), DistrictId: this.districtId, PageIndex: 1, PageSize: 20})
 				.pipe(
 					finalize(() => {
 						this.isLoading = false

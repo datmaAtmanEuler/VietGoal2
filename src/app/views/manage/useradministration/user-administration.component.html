@@ -56,6 +56,9 @@
                       <mat-radio-group aria-labelledby="academy-radio-group-label"
                         class="academy-radio-group student-radio-gender" [ngModelOptions]="{standalone: true}"
                         [(ngModel)]="gender">
+                        <mat-radio-button class="academy-radio-button" [value]="'All'">
+                          Tất cả
+                        </mat-radio-button>
                         <mat-radio-button class="academy-radio-button" [value]="'Male'">
                           Nam
                         </mat-radio-button>
@@ -102,7 +105,7 @@
                   <thead>
                     <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index;">
                       <th *ngIf="paginationSettings.visibles[colIndex]"
-                        [style.width]="(colIndex == 0) ? '70px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '100px' : 'auto')"
+                        [style.width]="(colIndex == 0) ? '70px' : ((colIndex == paginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
                         (click)="paginationSettings.sortAbles[colIndex] ? utilsService.toggleSort(colIndex,paginationSettings.sortToggles ,paginationSettings.sort ,paginationSettings.columnsNameFilter ,reload()) : utilsService.doNothing()">
                         <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }}
                           <i style="float: none;" class="material-icons asc-sort-icons"

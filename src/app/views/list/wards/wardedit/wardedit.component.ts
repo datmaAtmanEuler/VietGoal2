@@ -24,13 +24,9 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	@Input('id') id: number;
 	@Input('UserId') UserId: null | number;
 	ward : Ward;
-	filter: WardFilter = new WardFilter ('',1,100,null,null,'id','ASC');
+	filter: WardFilter = new WardFilter ('',1,100,0,0,'id','ASC');
 	listdistrict: any[] = [];
 	listprovince: any[] = [];
-	wardFilter: any = {
-        provinceId: null,
-        districtId: null
-    };
 	/**
 	*  Search with autocomplete
 	* ---------------------------
@@ -85,15 +81,9 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 						this.provinceService.getProvince(response.provinceId).subscribe(
 							(resp) => {
 								ProvinceAC.value = resp.provinceName;
-							}
-						);
-						
-					}
-				)
-
-
-			}
-		);
+							});
+					})
+			});
 	}
 
 	ngAfterViewInit() {

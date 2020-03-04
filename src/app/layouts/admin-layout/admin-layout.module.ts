@@ -124,7 +124,6 @@ import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.co
 import { StudentReserveComponent } from '../../views/manage/studentreserve/studentreserve.component';
 import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
 import { StudentReserveImportComponent } from '../../views/manage/studentreserve/studentreserve-import/studentreserve-import.component';
-import { ConfirmComponent } from '../../views/manage/studentreserve/registrationreserved/confirm.component';
 import { StudentRegisterModulesComponent } from '../../views/manage/student-register-modules/student-register-modules.component';
 import { NotificationComponent } from '../../views/manage/notification/notification.component';
 import { NotificationEditComponent } from '../../views/manage/notification/notification-edit/notification-edit.component';
@@ -132,6 +131,7 @@ import { NotificationSeenComponent } from '../../views/manage/notification/notif
 import { UserAdministrationComponent } from '../../views/manage/useradministration/user-administration.component';
 import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 import { UserAdministrationImportComponent } from '../../views/manage/useradministration/user-administration-import/user-administration-import.component';
+import { StudentListComponent } from '../../views/manage/studentreserve/studentlist/studentlist.component';
 
 
 @NgModule({
@@ -167,6 +167,7 @@ import { UserAdministrationImportComponent } from '../../views/manage/useradmini
   ],
   declarations: [
     StudentRegisterModulesComponent,
+    StudentListComponent,
     KpiConfigsComponent,
     KpiConfigEditComponent,
     StudentRegistrationComponent,
@@ -251,7 +252,6 @@ import { UserAdministrationImportComponent } from '../../views/manage/useradmini
     StudentReserveComponent,
     StudentReserveEditComponent,
     StudentReserveImportComponent,
-    ConfirmComponent,
     NotificationComponent,
     NotificationEditComponent,
     NotificationSeenComponent,
@@ -284,7 +284,8 @@ import { UserAdministrationImportComponent } from '../../views/manage/useradmini
     ScheduleComponent,
     StudentEditComponent,
     KpiConfigEditComponent,
-    UserAdministrationImportComponent
+    UserAdministrationImportComponent,
+    StudentListComponent
   ],
   providers: [
     NgxMaterialTimepickerModule,

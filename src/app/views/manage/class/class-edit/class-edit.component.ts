@@ -48,12 +48,12 @@ export class ClassEditComponent implements OnInit {
 	currentUser: any = {};
 	areasList: any[] = [];
 	yardsList: any[] = [];
-	trainingGroundsList: any[] = [];
+	traininggroundsList: any[] = [];
 	agesList: any[] = [];
 	managersList: any[] = [];
 	mainCoachsList: any[] = [];
 	viceCoachsList: any[] = [];
-	class: any = {};
+	class: Class;
 	weeksList: Week[] = WeekToList();
 	weeksListName: string[] = WeekToListName();
 	shiftDaysList: ShiftDay[] = ShiftDayToList();
@@ -88,32 +88,43 @@ export class ClassEditComponent implements OnInit {
 		// this.getProvince();
 	}
 
-	displayAreaFn(user): string {
-		return user && user.areaName && !user.notfound ? user.areaName : '';
+	displayAreaFn(area): string {
+		return area && area.areaName && !area.notfound ? area.areaName : '';
 	}
-	displayYardFn(user): string {
-		return user && user.yardName && !user.notfound ? user.yardName : '';
+	displayYardFn(yard): string {
+		return yard && yard.yardName && !yard.notfound ? yard.yardName : '';
 	}
-	displayTrainingGroundFn(user): string {
-		return user && user.trainingGroundName && !user.notfound ? user.trainingGroundName : '';
+	displayTrainingGroundFn(trainingground): string {
+		return trainingground && trainingground.trainingGroundName && !trainingground.notfound ? trainingground.trainingGroundName : '';
 	}
-
 	changeArea(areaId) {
-		this.yardService.getYardsList(new YardFilter('', 1, 100, areaId, 'id', 'ASC')).subscribe((list) => {
-			this.yardsList = list;
-		});
+		this.class.areaId = areaId;
 	}
-	changeYard() {
-		this.trainingGroundService.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, 0, 0, 'id', 'ASC')).subscribe((list) => {
-			this.trainingGroundsList = list;
-		});
+	changeYard(yardID) {
+		this.class.yardId = yardID;
+	}
+	changeTrainingGround(trainingGroundID){
+		this.class.trainingGroundId = trainingGroundID;
 	}
 	GetClassById(id: number) {
+		this.class = new Class();
 		this.classService.getClass((id) ? id : this.id).subscribe(
 			(aaclass) => {
-				this.aclass = aaclass ;
-			},
-		);
+				this.class = aaclass ;
+				var areaAC = <HTMLInputElement>document.getElementById('areaAC');
+				var yardAC = <HTMLInputElement>document.getElementById('yardAC');
+				var traininggroundAC = <HTMLInputElement>document.getElementById('traininggroundAC');
+
+				this.trainingGroundService.getTrainingGround(aaclass.trainingGroundId).subscribe((response : any)=>{
+					traininggroundAC.value = response.trainingGroundName;
+					this.yardService.getYard(response.yardId).subscribe((res : any)=>{
+						yardAC.value = res.yardName;
+						this.areaService.getArea(res.areaId).subscribe((re : any)=>{
+							areaAC.value = re.areaName;
+						})
+					})
+				});
+			});	
 	}
 	ngOnInit() {
 		
@@ -134,7 +145,8 @@ export class ClassEditComponent implements OnInit {
 					)
 				)
 			)
-			.subscribe((data) => {
+			.subscribe((response : any) => {
+				const data = response.results;
 				if (data == undefined) {
 					this.errorMsg = 'error';
 					this.areasList = [{ notfound: 'Not Found' }];
@@ -144,7 +156,6 @@ export class ClassEditComponent implements OnInit {
 				}
 
 			});
-
 		this.searchYardsCtrl.valueChanges.pipe(
 			startWith(''),
 			debounceTime(500),
@@ -160,7 +171,9 @@ export class ClassEditComponent implements OnInit {
 					}),
 				)
 			)
-		).subscribe(data => {
+		)
+		.subscribe((response : any) => {
+			const data = response.results;
 			if (data == undefined) {
 				this.errorMsg = 'error';
 				this.yardsList = [{ notfound: 'Not Found' }];
@@ -185,28 +198,26 @@ export class ClassEditComponent implements OnInit {
 					}),
 				)
 			)
-		).subscribe(data => {
+		).subscribe((response : any) => {
+			const data= response.results;
 			if (data == undefined) {
 				this.errorMsg = 'error';
-				this.trainingGroundsList = [{ notfound: 'Not Found' }];
+				this.traininggroundsList = [{ notfound: 'Not Found' }];
 			} else {
 				this.errorMsg = "";
-				this.trainingGroundsList = data.length ? data : [{ notfound: 'Not Found' }];
+				this.traininggroundsList = data.length ? data : [{ notfound: 'Not Found' }];
 			}
 
 		});
 		this.GetClassById(this.id);
 	}
-
 	ReturnList() {
 		this.router.navigate(['quanly/class']);
-
 	}
-
 	UpdateClass() {
-		const _this= this
-		this.class.Week = Number.parseInt(_this.class.Week + "", 10);
-		this.class.ShiftDay = Number.parseInt(_this.class.ShiftDay + "", 10);
+		const _this = this
+		this.aclass.Week = Number.parseInt(_this.aclass.Week + "", 10);
+		this.aclass.ShiftDay = Number.parseInt(_this.aclass.ShiftDay + "", 10);
 		this.classService.addOrUpdateClass(_this.class).subscribe(
 			() => {
 				if (!_this.popup) {
@@ -216,13 +227,10 @@ export class ClassEditComponent implements OnInit {
 				}
 			},
 			() => {
-				//_this.modalService.open(ConfirmComponent, { size: 'lg' });
+				// _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			});
 	}
-	
-
 	closeMe() {
 		this.activeModal.close();
 	}
-
 }

@@ -44,7 +44,7 @@ export class RecruitComponent implements OnInit {
     columnsNameMapping: ['id', 'recruitCode', 'recruitName','recruitColor', ''],
     sortAbles: [false, true, true, true, false],
     visibles:  [true, true, true, true, true]
-  }
+  } 
  
   /**
    * END SORT SETTINGS
@@ -119,7 +119,6 @@ export class RecruitComponent implements OnInit {
     }
   
     edit(ID: number) {
-      alert(ID);
       const _this = this;
       const modalRef = this.modalService.open(RecruitEditComponent, { size: 'lg' });
       modalRef.componentInstance.popup = true;

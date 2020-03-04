@@ -35,7 +35,7 @@ import { Yard } from 'app/models/list/yard';
 })
 export class ClassComponent implements OnInit {
   classList: any[] = [];
-  Class: any;
+  Class: Class;
   searchTerm:string = '';
   pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
@@ -66,8 +66,7 @@ export class ClassComponent implements OnInit {
     null
   ],
   columnsName: ['Order', 'ClassCode', 'ClassName', 'DisplayOrder', 'StudentCounts', 'CoachsList','YardName','Action'],
-  columnsNameMapping: ['id', 'classCode', 'className', 'displayOrder', 'studentCounts', 'coachsList','yardName',''],
-  columnsNameFilter: ['id', 'classCode', 'className', 'displayOrder', 'studentCounts', 'coachsList','yardName',''],
+  columnsNameMapping: ['id', 'classCode', 'className', 'displayOrder', 'studentCounts', 'viceCoachList','yardName',''],
   sortAbles: [false, true, true, true, false,false,true, false],
   visibles:  [true, true, true, true, true, true,true, true]
 }
@@ -187,13 +186,12 @@ export class ClassComponent implements OnInit {
       });
   }
 
-  remove(aclass: any) {
-    this.Class = aclass;
+  remove(id: any) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-    modalRef.componentInstance.confirmObject = 'class';
+    modalRef.componentInstance.confirmObject = 'Class';
     modalRef.componentInstance.decide.subscribe(() => {
-      _this.service.deleteClass(aclass.id, this.currentUser.UserId).subscribe(() => {
+      _this.service.deleteClass(id).subscribe(() => {
         _this.reload();
       });
     });
@@ -228,7 +226,6 @@ export class ClassComponent implements OnInit {
   add() {
     this.edit(null);
   }
-
   edit(ClassID: null | number) {
     const _this = this;
     const modalRef = this.modalService.open(ClassEditComponent, { size: 'lg' });
@@ -238,13 +235,11 @@ export class ClassComponent implements OnInit {
       _this.reload();
     });
   }
-
   displayAreaFn(area): string {
     return area && area.areaName && !area.notfound ? area.areaName : '';
   }
- 
   displayYardFn(yard): string {
-    return yard && yard.YardName && !yard.notfound ? yard.YardName : '';
+    return yard && yard.yardName && !yard.notfound ? yard.yardName : '';
   }
   displayTrainingGroundFn(trainingground: any) {
     return trainingground && trainingground.TrainingGroundName && !trainingground.notfound ? trainingground.TrainingGroundName : '';
@@ -257,16 +252,12 @@ export class ClassComponent implements OnInit {
     });
   }
   changeYard(yardID) {
-    this.traininggroundservice.getTrainingGroundsList(new TrainingGroundFilter('', 1, 100, yardID,0, 'id', 'ASC')).subscribe((response : any) => {
-      this.traininggroundsList = response.result;
-      this.filter.YardId = yardID;
-      this.reload();
-    });
+  this.Class.yardId = yardID;
   }
-  changeTrainingGround(traininggroundID) {
-    this.filter.TrainingGroundId = traininggroundID;
-    this.reload();
-  }
+  // changeTrainingGround(traininggroundID) {
+  //   this.filter.TrainingGroundId = traininggroundID;
+  //   this.reload();
+  // }
 
   doNothing(): void {}
   openImport() {
@@ -276,7 +267,6 @@ export class ClassComponent implements OnInit {
        
     });
   }
-
   downloadTemplate() {
     var fileName = 'Districts_Import.xlsx';
     var a = document.createElement('a');
@@ -286,9 +276,6 @@ export class ClassComponent implements OnInit {
     a.click();
     a.remove();
   }
-
- 
-
   studentProfile(classId){
     if (classId) this.router.navigate(['quanly/hosohocsinhtheolop/'+classId]);
   }

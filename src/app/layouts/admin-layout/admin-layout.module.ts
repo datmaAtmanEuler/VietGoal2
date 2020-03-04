@@ -38,7 +38,7 @@ import { AcademyDatePickerModule } from '../../shared/academy-date-picker/academ
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 
 import { CKEditorModule } from 'ng2-ckeditor';
-
+import {MatCardModule} from '@angular/material/card';
 import {
   MatButtonModule,
   MatInputModule,
@@ -138,6 +138,7 @@ import { StudentListComponent } from '../../views/manage/studentreserve/studentl
 @NgModule({
   imports: [
     CKEditorModule,
+    MatCardModule,
     ContactModule,
     AcademyCoachModule,
     AcademyDatePickerModule,

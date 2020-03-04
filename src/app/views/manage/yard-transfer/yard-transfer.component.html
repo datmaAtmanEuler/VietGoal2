@@ -6,97 +6,187 @@
           <div class="card-header card-header-warning" style="background: #023a54">
             <h4 class="card-title">{{ "MESSAGE.NameList.YardTransferTitle" | translate }}</h4>
           </div>
-          <div class="row ">
+          <div class="row">
             <div class="col-12">
               <div class="card-body">
-                <div class="row">
-                  khu vuc search chung
+                <div class="row" style="padding-left: 18px !important;">
+                <div class="col-6">
+                  <div class="row form-group">
+                    <div class="col-6">
+                      <label class="m-0">{{ "MESSAGE.NameList.Area" | translate }}</label>
+                      <input type="text" class="form-control" [matAutocomplete]="areasAC"
+                        [formControl]="searchAreasCtrl">
+                        <button *ngIf="areaPageIndex < totalAreaPages" type="button" (click)="updateAreaShowMore();" title="{{ 'MESSAGE.NameList.ShowMore' | translate }}"
+                    class="btn btn-primary search-button btn-link btn-sm btn-just-icon" [ngClass]="{'show_more': showMoreArea == false, 'show_more_show': showMoreArea == true}">
+                          <i class="material-icons advanced-search-btn">more_horiz</i>
+                        </button>
+                      <mat-autocomplete #areasAC="matAutocomplete"
+                        (optionSelected)="changeArea(searchAreasCtrl.value.id)" [displayWith]="displayAreaFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                          <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                          <mat-option *ngFor="let area of areasList" [value]="area" (mouseover)="showMoreArea = true">
+                            <span *ngIf="!area.notfound">{{area.areaName}}</span>
+                            <span *ngIf="area.notfound" class="nofind">{{area.notfound}}</span>
+                          </mat-option>
+                        </ng-container>
+                      </mat-autocomplete>
+                    </div>
+                    <div class="col-6">
+                      <label class="m-0">{{ "MESSAGE.NameList.Yard" | translate }}</label>
+                      <input type="text" class="form-control" [matAutocomplete]="yardsAC"
+                        [formControl]="searchYardsCtrl">
+                        <button *ngIf="yardPageIndex < totalYardPages" type="button" (click)="updateYardShowMore();" title="{{ 'MESSAGE.NameList.ShowMore' | translate }}"
+                    class="btn btn-primary search-button btn-link btn-sm btn-just-icon" [ngClass]="{'show_more': showMoreYard == false, 'show_more_show': showMoreYard == true}">
+                          <i class="material-icons advanced-search-btn">more_horiz</i>
+                        </button>
+                      <mat-autocomplete #yardsAC="matAutocomplete"
+                        (optionSelected)="changeYard(searchYardsCtrl.value.id)" [displayWith]="displayYardFn">
+                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                          <mat-spinner></mat-spinner>
+                        </mat-option>
+                        <ng-container *ngIf="!isLoading">
+                          <mat-option *ngFor="let yard of yardsList" [value]="yard" (mouseover)="showMoreYard = true">
+                            <span *ngIf="!yard.notfound">{{yard.yardName}}</span>
+                            <span *ngIf="yard.notfound" class="nofind">{{yard.notfound}}</span>
+                          </mat-option>
+                        </ng-container>
+                      </mat-autocomplete>
+                    </div>
+                  </div>
                 </div>
+              </div>
               </div>
             </div>
           </div>
-          <div class="row">
-            <div class="col-6">
-              <div class="card-body table-responsive">
-                <mat-spinner *ngIf="isLoadingSource" class="myspinner" [diameter]="32"></mat-spinner>
-                <div class="vietgoal-table-settings style-1 vg-scroll">
-                  <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
-                    <thead>
-                      <ng-container *ngFor="let colName of sourcePaginationSettings.columnsName; let colIndex = index;">
-                        <th *ngIf="sourcePaginationSettings.visibles[colIndex]"
-                          [style.width]="(colIndex == 0) ? '100px' : ((colIndex == sourcePaginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
-                          (click)="sortSourceToggles(colIndex)">
-                          <!-- <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }} -->
-                          <span style="vertical-align: middle;">{{colName | translate}}
-                            <i style="float: none;" class="material-icons asc-sort-icons"
-                              *ngIf="sourcePaginationSettings.sortAbles[colIndex]">
-                              {{ (sourcePaginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((sourcePaginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
-                            </i>
-                          </span>
-                        </th>
-                      </ng-container>
-                    </thead>
-                    <tbody>
-                      <ng-container *ngFor="let student of sourceStudentsList; let i = index;">
-                        <tr>
-                          <td>{{ firstRowOnPage + i }}</td>
-                          <ng-container
-                              *ngFor="let colName of sourcePaginationSettings.columnsName; let colIndex = index">
-                              <td
-                                  *ngIf="colIndex != 0 && sourcePaginationSettings.visibles[colIndex]">
-                                  {{ utilsService.getColumnValue(student, colIndex, sourcePaginationSettings.columnsNameMapping) }}
-                              </td>
-                          </ng-container>
-                        </tr>
-                      </ng-container>
-                    </tbody>
-                  </table>
-                </div>
-                <mat-paginator [length]="sourceTotal" [pageSize]="sourcePageSize" [pageSizeOptions]="pageSizesList"
-                  [showFirstLastButtons]="true" (page)="sourcePageEvent($event)">
-                </mat-paginator>
+          <div class="row card-body" style="padding: 0 30px !important;">
+            <div class="col-5" style=" max-width: calc(47%) !important; padding-left: 22px !important;">
+              <h4>{{ 'MESSAGE.NameList.OldClassStudentsList' | translate}}</h4>
+              <div class="row">
+                <div class="col-6">Bai tap*</div>
+                <div class="col-6">Lop cu*</div>
               </div>
+              <mat-card class="vg-source-scroll style-1">
+                <div class="table-responsive">
+                  <mat-spinner *ngIf="isLoadingSource" class="myspinner" [diameter]="32"></mat-spinner>
+                  <div class="vietgoal-table-settings">
+                    <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
+                      <thead>
+                        <ng-container *ngFor="let colName of sourcePaginationSettings.columnsName; let colIndex = index;">
+                          <th *ngIf="sourcePaginationSettings.visibles[colIndex]"
+                            [style.width]="(colIndex == 0) ? '50px' : 
+                              ((colIndex == 1) ? '100px' : ((colIndex == sourcePaginationSettings.columnsName.length - 1) ? '150px' : 'auto'))"
+                            (click)="sortSourceToggles(colIndex)"
+                             [ngClass]="{'topCheckboxPadding': colIndex == 0}">
+                            <ng-container class="checkbox-section" *ngIf="colIndex == 0">
+                              <mat-checkbox [ngClass]="{'mat-checkbox-checked': sourceIsAllChecked, 'mat-checkbox-indeterminate': sourceIsAnyChecked}" class="checbox-margin" [(ngModel)]="isSourceAll" (change)="toggleAllSources()"></mat-checkbox>
+                            </ng-container>
+                            <span style="vertical-align: middle;">{{colName | translate}}
+                              <i style="float: none;" class="material-icons asc-sort-icons"
+                                *ngIf="sourcePaginationSettings.sortAbles[colIndex]">
+                                {{ (sourcePaginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((sourcePaginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                              </i>
+                            </span>
+                          </th>
+                        </ng-container>
+                      </thead>
+                      <tbody>
+                        <ng-container class="checkbox-section">
+                          <ng-container *ngFor="let student of sourceStudentsList; let i = index;">
+                            <tr>
+                               <td class="topCheckboxPadding">
+                                <mat-checkbox [(ngModel)]="selectedSourceStudentsList[i].select" (change)="updateAllSourceCheckbox()" class="checbox-margin">
+                                </mat-checkbox>
+                              </td>
+                              <td>{{ i + i }}</td>
+                              <ng-container *ngFor="let colName of sourcePaginationSettings.columnsName; let colIndex = index">
+                                  <td
+                                      *ngIf="colIndex > 1 && sourcePaginationSettings.visibles[colIndex]">
+                                      {{ utilsService.getColumnValue(student, colIndex, sourcePaginationSettings.columnsNameMapping) }}
+                                  </td>
+                              </ng-container>
+                            </tr>
+                          </ng-container>
+                           <ng-container *ngIf="sourceStudentsList.length < 1">
+                             <tr><td [attr.colspan]="sourcePaginationSettings.columnsName.length">Khong co du lieu</td></tr>
+                           </ng-container>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                  <mat-paginator [length]="sourceTotal" [pageSize]="sourcePageSize" [pageSizeOptions]="pageSizesList"
+                    [showFirstLastButtons]="true" (page)="sourcePageEvent($event)">
+                  </mat-paginator>
+                </div>
+              </mat-card>
             </div>
-            <div class="col-6">
-              <div class="card-body table-responsive">
-                <mat-spinner *ngIf="isLoadingTarget" class="myspinner" [diameter]="32"></mat-spinner>
-                <div class="vietgoal-table-settings style-1 vg-scroll">
-                  <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
-                    <thead>
-                      <ng-container *ngFor="let colName of targetPaginationSettings.columnsName; let colIndex = index;">
-                        <th *ngIf="targetPaginationSettings.visibles[colIndex]"
-                          [style.width]="(colIndex == 0) ? '100px' : ((colIndex == targetPaginationSettings.columnsName.length - 1) ? '150px' : 'auto')"
-                          (click)="sortTargetToggles(colIndex)">
-                          <!-- <span style="vertical-align: middle;">{{ ("MESSAGE.NameList." + colName | translate) }} -->
-                          <span style="vertical-align: middle;">{{colName | translate}}
-                            <i style="float: none;" class="material-icons asc-sort-icons"
-                              *ngIf="targetPaginationSettings.sortAbles[colIndex]">
-                              {{ (targetPaginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((targetPaginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
-                            </i>
-                          </span>
-                        </th>
-                      </ng-container>
-                    </thead>
-                    <tbody>
-                      <ng-container *ngFor="let student of targetStudentsList; let i = index;">
-                        <tr>
-                          <td>{{ firstRowOnPage + i }}</td>
-                          <ng-container
-                              *ngFor="let colName of targetPaginationSettings.columnsName; let colIndex = index">
-                              <td
-                                  *ngIf="colIndex != 0 && targetPaginationSettings.visibles[colIndex]">
-                                  {{ utilsService.getColumnValue(student, colIndex, targetPaginationSettings.columnsNameMapping) }}
-                              </td>
-                          </ng-container>
-                        </tr>
-                      </ng-container>
-                    </tbody>
-                  </table>
-                </div>
-                <mat-paginator [length]="targetTotal" [pageSize]="targetPageSize" [pageSizeOptions]="pageSizesList"
-                  [showFirstLastButtons]="true" (page)="targetePageEvent($event)">
-                </mat-paginator>
+            <div class="col-2" style="vertical-align: middle; min-height: 500px; max-width: calc(6%) !important; text-align: center;">
+              <span [ngClass]="{'btn-move-all-left-disabled': selectedSourceStudentsIdList.length < 1}"
+                class="btn btn-info btn-sm transfer-btn move-all-right">{{ ('MESSAGE.NameList.TransferClass' | translate)}}<br/>>></span><br />
+              <span [ngClass]="{'btn-move-all-right-disabled': selectedTargetStudentsIdList.length < 1}"
+                class="btn btn-info btn-sm transfer-btn move-all-left">{{ ('MESSAGE.NameList.TransferClass' | translate)}}<br/><<</span><br />
+            </div>
+            <div class="col-5" style=" max-width: calc(47%) !important;">
+              <h4>{{ 'MESSAGE.NameList.NewClassStudentsList' | translate}}</h4>
+              <div class="row">
+                <div class="col-6">Bai tap*</div>
+                <div class="col-6">Lop moi*</div>
               </div>
+              <mat-card class="vg-target-scroll style-1">
+                <div class="table-responsive">
+                  <mat-spinner *ngIf="isLoadingTarget" class="myspinner" [diameter]="32"></mat-spinner>
+                  <div class="vietgoal-table-settings">
+                    <table class="table table-condensed table-striped table-bordered table-hover" style="width: 100%">
+                      <thead>
+                        <ng-container *ngFor="let colName of targetPaginationSettings.columnsName; let colIndex = index;">
+                          <th *ngIf="targetPaginationSettings.visibles[colIndex]"
+                            [style.width]="(colIndex == 0) ? '50px' : 
+                              ((colIndex == 1) ? '100px' : ((colIndex == targetPaginationSettings.columnsName.length - 1) ? '150px' : 'auto'))"
+                            (click)="sortTargetToggles(colIndex)"
+                             [ngClass]="{'topCheckboxPadding': colIndex == 0}">
+                            <ng-container class="checkbox-section" *ngIf="colIndex == 0">
+                              <mat-checkbox [ngClass]="{'mat-checkbox-checked': targetIsAllChecked, 'mat-checkbox-indeterminate': targetIsAnyChecked}" class="checbox-margin" [(ngModel)]="isTargetAll" (change)="toggleAllTargets()"></mat-checkbox>
+                            </ng-container>
+                            <span style="vertical-align: middle;">{{colName | translate}}
+                              <i style="float: none;" class="material-icons asc-sort-icons"
+                                *ngIf="targetPaginationSettings.sortAbles[colIndex]">
+                                {{ (targetPaginationSettings.sortToggles[colIndex] == '') ? 'unfold_more' : ((targetPaginationSettings.sortToggles[colIndex] == 'ASC') ? 'expand_less' : 'expand_more') }}
+                              </i>
+                            </span>
+                          </th>
+                        </ng-container>
+                      </thead>
+                      <tbody>
+                        <ng-container class="checkbox-section">
+                          <ng-container *ngFor="let student of targetStudentsList; let i = index;">
+                            <tr>
+                               <td class="topCheckboxPadding">
+                                <mat-checkbox [(ngModel)]="selectedTargetStudentsList[i].select"  (change)="updateAllTargetCheckbox()" class="checbox-margin">
+                                </mat-checkbox>
+                              </td>
+                              <td>{{ i + i }}</td>
+                              <ng-container
+                                  *ngFor="let colName of targetPaginationSettings.columnsName; let colIndex = index">
+                                  <td
+                                      *ngIf="colIndex > 1 && targetPaginationSettings.visibles[colIndex]">
+                                      {{ utilsService.getColumnValue(student, colIndex, targetPaginationSettings.columnsNameMapping) }}
+                                  </td>
+                              </ng-container>
+                            </tr>
+                          </ng-container>
+                           <ng-container *ngIf="targetStudentsList.length < 1">
+                             <tr><td [attr.colspan]="targetPaginationSettings.columnsName.length">Khong co du lieu</td></tr>
+                           </ng-container>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                  <mat-paginator [length]="targetTotal" [pageSize]="targetPageSize" [pageSizeOptions]="pageSizesList"
+                    [showFirstLastButtons]="true" (page)="targetePageEvent($event)">
+                  </mat-paginator>
+                </div>
+              </mat-card>
             </div>
           </div>
           </div>

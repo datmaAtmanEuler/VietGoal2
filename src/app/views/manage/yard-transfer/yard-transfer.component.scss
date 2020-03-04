@@ -8,4 +8,43 @@
     position: absolute;
     top: 15px;
     right: 10px;
+    height: 44px;
+    width: 25px;
+}
+
+.transfer-btn{
+	position: absolute;
+    left: 0;
+    margin: auto;
+    padding: 5px 19px;
+}
+.move-all-right{
+    top: calc(25% - 25px);
+}
+.move-all-left{
+    top: calc(25% + 25px);
+}
+.checkbox-section {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  height: 60px;
+}
+
+.checkbox-margin {
+  margin: 0 10px;
+}
+::ng-deep {
+    .mat-checkbox-frame {
+        border-color: #ff4081;
+    }
+}
+.topCheckboxPadding{
+    padding: 8px 8px 0 8px !important
+}
+.btn-move-all-left-disabled, .btn-move-all-right-disabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    background: #717171;
+    box-shadow: none;
 }

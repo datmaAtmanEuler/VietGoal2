@@ -27,7 +27,7 @@ export class DistrictEditComponent implements OnInit {
 	searchProvincesCtrl = new FormControl();
 	isLoading = false;
 	errorMsg: string;
-	district: District = new District(0, '', '',0, false, new Date(), null, 1, null, null, null);
+	district: District;
 	provincesList: Province[] = [];
 
 	constructor(public activeModal: NgbActiveModal, private provinceService: ProvinceService, config: NgbModalConfig, private modalService: NgbModal, private districtService: DistrictService, private route: ActivatedRoute, private router: Router) {

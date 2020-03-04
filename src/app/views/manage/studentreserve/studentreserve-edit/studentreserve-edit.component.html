@@ -1,197 +1,43 @@
-<div class="modal-body" *ngIf="popup">
-    <div class="text-center border border-light p-5">
-        <p class="h4 mb-4">Class Information</p>
-        <form>
-            
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.Area' |translate}}:<span class="text-danger">(*)</span></label>
-                    <div  class="col-6 label-middling" >
-                        <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
-                            [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
-                    </div>
-                    <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.id)"
-                        [displayWith]="displayAreaFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let area of areasList" [value]="area">
-                                <span *ngIf="area">{{area.AreaName}}</span>
-                                <span *ngIf="!area" class="nofind">Not found</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Đăng ký bảo lưu</h4>
+  </div>
+  <div class="modal-body">
+    <div class="text-center border border-light">
+      <div class="form-group row">
+        <label class="col-3 label-middling"><strong>Học viên:</strong><span class="text-danger">(*)</span></label>
+        <div class="col-4 label-middling">
+           
+          <input #hoTenHocHien class="form-control" placeholder="Học viên" ><span (click)="showContactList()" class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon"><i class="material-icons" style="font-size:20px">people</i></span>
+           
+        </div>
+      </div>
+      <div class="form-group row">
+            <label class="col-3 label-middling"><strong>{{ "MESSAGE.NameList.Day" | translate }}:</strong><span class="text-danger">(*)</span></label>
+            <mat-form-field>
+                <div class="col-9 label-middling">
+              <input matInput [disabled]="true" (dateChange)="addedDateEvent($event)" [matDatepicker]="addedDateFilter" class="col-sm-3 form-control">
+                
+              <span mat-raised-button (click)="addedDateFilter.open()"
+                class="btn btn-primary calendar-btn search-button btn-link btn-sm btn-just-icon">
+                <i class="material-icons">date_range</i>
+              </span>
                 </div>
-
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.Yard' |translate}}:<span class="text-danger">(*)</span></label>
-                    <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
-                        [matAutocomplete]="yardAC" [formControl]="searchYardsCtrl">
-                        </div>
-                    <mat-autocomplete #yardAC="matAutocomplete" (optionSelected)="changeYard(searchYardsCtrl.value.id)"
-                        [displayWith]="displayYardFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let yard of yardsList" [value]="yard">
-                                <span *ngIf="yard">{{yard.YardName}}</span>
-                                <span *ngIf="!yard" class="nofind">Not found</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
-
-                 <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.TrainingGround' |translate}}:<span class="text-danger">(*)</span></label>
-                    <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="{{'MESSAGE.NameList.TrainingGround' |translate}}"
-                        [matAutocomplete]="trainingGroundAC" [formControl]="searchTrainingGroundsCtrl">
-                    </div>
-                    <mat-autocomplete #trainingGroundAC="matAutocomplete" [displayWith]="displayTrainingGroundFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let trainingGround of trainingGroundsList" [value]="trainingGround">
-                                <span *ngIf="trainingGround">{{trainingGround.TrainingGroundName}}</span>
-                                <span *ngIf="!trainingGround" class="nofind">"Not found"</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.DisplayOrder' |translate}}:</label>
-                    <div  class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="aclass.displayOrder"
-                        class="form-control" placeholder="{{'MESSAGE.NameList.DisplayOrder' | translate}}">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.ClassCode' |translate}}:<span class="text-danger">(*)</span></label>
-                    <div  class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="aclass.classCode"
-                        class="form-control" placeholder="{{'MESSAGE.NameList.ClassCode' |translate}}"> 
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.ClassName' |translate}}:<span class="text-danger">(*)</span></label>
-                    <div  class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="aclass.className"
-                        class="form-control" placeholder="{{'MESSAGE.NameList.ClassName' |translate}}">
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.Manager' |translate}}:</label>
-                    <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Manager' |translate}}" [matAutocomplete]="managerAC"
-                        [formControl]="searchManagersCtrl">
-                    </div>
-                    <mat-autocomplete #managerAC="matAutocomplete" [displayWith]="displayManagerFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let manager of managersList" [value]="manager">
-                                <span *ngIf="manager">{{manager.UserName}}</span>
-                                <span *ngIf="!manager" class="nofind">Not found</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.MainCoach' |translate}}:</label>
-                    <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="{{'MESSAGE.NameList.MainCoach' |translate}}" [matAutocomplete]="mainCoachAC"
-                        [formControl]="searchMainCoachsCtrl">
-                    </div>
-                    <mat-autocomplete #mainCoachAC="matAutocomplete" [displayWith]="displayMainCoachFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let mainCoach of mainCoachsList" [value]="mainCoach">
-                                <span *ngIf="mainCoach">{{mainCoach.UserName}}</span>
-                                <span *ngIf="!mainCoach" class="nofind">Not found</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.ViceCoach' |translate}}:</label>
-                    <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="{{'MESSAGE.NameList.ViceCoach' |translate}}" [matAutocomplete]="viceCoachAC"
-                        [formControl]="searchViceCoachsCtrl">
-                        </div>
-                    <mat-autocomplete #viceCoachAC="matAutocomplete" [displayWith]="displayViceCoachFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let viceCoach of viceCoachsList" [value]="viceCoach">
-                                <span *ngIf="viceCoach">{{viceCoach.UserName}}</span>
-                                <span *ngIf="!viceCoach" class="nofind">Not found</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.Ages' |translate}}:</label>
-                    <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Ages' |translate}}" [matAutocomplete]="ageAC"
-                        [formControl]="searchAgesCtrl">
-                        </div>
-                    <mat-autocomplete #ageAC="matAutocomplete" [displayWith]="displayAgeFn">
-                        <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
-                            <mat-spinner></mat-spinner>
-                        </mat-option>
-                        <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let age of agesList" [value]="age">
-                                <span *ngIf="age">{{age.AgeName}}</span>
-                                <span *ngIf="!age" class="nofind">Not found</span>
-                            </mat-option>
-                        </ng-container>
-                    </mat-autocomplete>
-                </div>
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.Week' |translate}}:</label>
-                    <div  class="col-6 label-middling" >
-                    <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="aclass.week">
-                        <option>---- Select week ----</option>
-                        <ng-container *ngFor="let week of weeksList">
-                            <option [value]="week">{{ weeksListName[week - 1] }}</option>
-                        </ng-container>
-                    </select>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.ShiftDay' |translate}}:</label>
-                    <div  class="col-6 label-middling" >
-                    <select class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="aclass.shiftDay">
-                        <option>---- Select shift day ----</option>
-                        <ng-container *ngFor="let shiftDay of shiftDaysList">
-                            <option [value]="shiftDay">{{ shiftDaysListName[shiftDay - 1] }}</option>
-                        </ng-container>
-                    </select>
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.Note' |translate}}</label>
-                    <div class=" col-6 label-middling">
-                    <textarea  [ngModelOptions]="{standalone: true}" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="aclass.description"
-                        class="form-control" placeholder='{{"MESSAGE.NameList.Note" |translate}}'></textarea>
-                    </div>
-                </div>
-            
-        </form>
-        <button *ngIf="popup" class="btn btn-warning mr-3" (click)="closeMe()"
-            alt=''>{{"MESSAGE.NameList.Close" |translate}}</button>
-        <button class="btn btn-info" (click)="UpdateClass()" alt=''>{{"MESSAGE.NameList.Save" |translate}}</button>
+              <!-- <mat-datepicker-toggle matSuffix [for]="addedDateFilter"></mat-datepicker-toggle> -->
+              <mat-datepicker #addedDateFilter disabled="false"></mat-datepicker>
+            </mat-form-field>
+        
+      </div>
+      <div class="form-group row">
+        <label class="col-3 label-middling"><strong>Trạng thái:</strong><span class="text-danger">(*)</span></label>
+        <div class="col-4 label-middling">
+          <select class="form-control" placeholder="Trạng thái">Trạng thái
+            <option>Chờ duyệt</option>
+            <option>Đã duyệt</option>
+            <option>Không duyệt</option>
+        </select>
+        </div>
+      </div>
     </div>
-</div>
+    <button class="btn btn-warning mr-3" (click)="closeMe()" alt=''>{{ "MESSAGE.NameList.Close" | translate}}</button>
+    <button class="btn btn-success " (click)="Update()" alt=''>{{ "MESSAGE.NameList.OK" | translate}}</button>
+  </div>

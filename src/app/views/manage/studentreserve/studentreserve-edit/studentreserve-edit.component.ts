@@ -1,7 +1,7 @@
 /**
  * Begin import system requirements
  * **/
-import { Component, OnInit, ViewChild, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbActiveModal, NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
@@ -23,13 +23,17 @@ import { TrainingGroundService } from '../../../../services/list/training-ground
 import { UserService } from '../../../../services/acl/user.service';
 import { AgeService } from '../../../../services/list/age.service';
 import { Class } from '../../../../models/manage/class';
-import { ClassFilter } from 'app/models/filter/classfilter';
-import { AreaFilter } from 'app/models/filter/areafilter';
-
-import { YardFilter } from 'app/models/filter/yardfilter';
-import { TrainingGroundFilter } from 'app/models/filter/trainingroundfilter';
-import { Week, WeekToList, WeekToListName } from 'app/models/enums/week.enums';
-import { ShiftDay, ShiftDayToList, ShiftDayToListName } from 'app/models/enums/shiftday.enums';
+import { ClassFilter } from '../../../../models/filter/classfilter';
+import { AreaFilter } from '../../../../models/filter/areafilter';
+import {StudentListComponent} from '../studentlist/studentlist.component';
+import { YardFilter } from '../../../../models/filter/yardfilter';
+import { TrainingGroundFilter } from '../../../../models/filter/trainingroundfilter';
+import { Week, WeekToList, WeekToListName } from '../../../../models/enums/week.enums';
+import { ShiftDay, ShiftDayToList, ShiftDayToListName } from '../../../../models/enums/shiftday.enums';
+import { Student } from '../../../../models/manage/student';
+import { MatDatepickerInputEvent } from '@angular/material';
+import { UtilsService } from '../../../../services/utils.service';
+import { CommonFilter } from '../../../../models/filter/commonfilter';
 /**
  * End import services
  * **/
@@ -44,7 +48,7 @@ import { ShiftDay, ShiftDayToList, ShiftDayToListName } from 'app/models/enums/s
 export class StudentReserveEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('id') id: number;
-
+	@ViewChild('hoTenHocHien' , {static: false}) hoTenHocHien: ElementRef;
 	currentUser: any = {};
 	areasList: any[] = [];
 	yardsList: any[] = [];
@@ -69,8 +73,8 @@ export class StudentReserveEditComponent implements OnInit {
 	aclass : any = {}
 	isLoading = false;
 	errorMsg: string;
-
-	constructor(public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal,
+	filter: CommonFilter = new CommonFilter();
+	constructor(public utilsService: UtilsService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal,
 		private classService: ClassService,
 		private areaService: AreaService,
 		private yardService: YardService,
@@ -87,6 +91,9 @@ export class StudentReserveEditComponent implements OnInit {
 
 		// this.getProvince();
 	}
+	addedDateEvent(event: MatDatepickerInputEvent<Date>) {
+		this.filter.absentDate = this.utilsService.stringDate(event.value);
+	  }
 
 	displayAreaFn(user): string {
 		return user && user.areaName && !user.notfound ? user.areaName : '';
@@ -203,10 +210,8 @@ export class StudentReserveEditComponent implements OnInit {
 
 	}
 
-	UpdateClass() {
+	Update() {
 		const _this= this
-		this.class.Week = Number.parseInt(_this.class.Week + "", 10);
-		this.class.ShiftDay = Number.parseInt(_this.class.ShiftDay + "", 10);
 		this.classService.addOrUpdateClass(_this.class).subscribe(
 			() => {
 				if (!_this.popup) {
@@ -216,7 +221,7 @@ export class StudentReserveEditComponent implements OnInit {
 				}
 			},
 			() => {
-				_this.modalService.open(ConfirmComponent, { size: 'lg' });
+				// _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			});
 	}
 	
@@ -225,4 +230,12 @@ export class StudentReserveEditComponent implements OnInit {
 		this.activeModal.close();
 	}
 
+	showContactList() {
+		const _this = this;
+			const modalRef = this.modalService.open(StudentListComponent, { size: 'xl' });
+			modalRef.componentInstance.popup = true;
+			modalRef.componentInstance.selectContact.subscribe((data: any) => {
+				_this.hoTenHocHien.nativeElement.value = data; 
+			});
+	}
 }

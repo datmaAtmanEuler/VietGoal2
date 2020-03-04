@@ -26,7 +26,7 @@ import { UtilsService } from '../../../services/utils.service';
 })
 export class TrainingGroundsComponent implements OnInit {ModalDirective;
   trainingroundsList:any[] = [];
-  traininground: any;
+  traininground: TrainingGround;
   areasList:any[] = [];
   area: any;
   yardsList: any[]=[];
@@ -96,13 +96,14 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
   new PerfectScrollbar(vgscroll);
   }
 
-  remove(traininground: TrainingGround) {
-    this.traininground = traininground;
+  remove(id: any) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     modalRef.componentInstance.confirmObject = 'TrainingGround';
     modalRef.componentInstance.decide.subscribe(() => {
-        _this.deleteTraningGround();
+        _this.service.deleteTrainingGround(id).subscribe(()=>{
+          _this.reload();
+        })
     });
 }
 
@@ -175,18 +176,10 @@ edit(ID: null | number) {
     _this.reload();
 });
 }
-
-deleteTraningGround() {
-  const _this = this;
-  this.service.deleteTrainingGround(this.traininground.id).subscribe((res: any) => {
-    _this.reload();
-  });
-}
-
 doNothing(): void {}
 
 displayAreaFn(area: any) {
-    return area && area.AreaName && !area.notfound ? area.AreaName : '';
+    return area && area.areaName && !area.notfound ? area.areaName : '';
   }
 
 changeArea(areaId: number) {
@@ -198,15 +191,12 @@ changeArea(areaId: number) {
   }
 
   displayYardFn(yard: any) {
-    return yard && yard.YardName && !yard.notfound ? yard.YardName : '';
+    return yard && yard.yardName && !yard.notfound ? yard.yardName : '';
   }
 
 changeYard(yardId: number) {
-    this.filter.YardId = yardId;
-    this.service.getTrainingGroundsList(this.filter).subscribe((list) => {
-      this.trainingroundsList = list;
-      this.reload();
-    });
+   this.traininground.yardId = yardId;
+   this.reload();
   }
   
 openImport() {

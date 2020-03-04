@@ -282,4 +282,9 @@ export class UtilsService {
   daysInMonth(month, year) { 
     return new Date(year, month, 0).getDate(); 
   } 
+  
+	objectToString(object){
+		if(typeof(object) == 'object') return '' ;
+		return object;
+	}
 }  

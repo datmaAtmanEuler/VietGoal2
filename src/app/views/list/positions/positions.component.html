@@ -21,9 +21,9 @@
                         <!-- <button class="btn btn-vietgoal btn-sm mr-2" (click)="searchAdvanced = !searchAdvanced">
                           {{ 'MESSAGE.NameList.SearchAdvanced' | translate}}
                         </button> -->
-                        <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                        <input (keyup.enter)="search()" [(ngModel)]="searchTerm" class="form-control" type="text"
                           placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                        <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                        <button type="button" (click)="search()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
                           class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
                           <i class="material-icons">search</i>
                         </button>

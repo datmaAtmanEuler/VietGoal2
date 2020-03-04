@@ -3,12 +3,23 @@
         <p class="h4 mb-4">Area Information</p>
         <form>
             <div class="form-group row">
-                <label class="col-3 label-middling">{{'MESSAGE.NameList.Central' |translate}}:<span class="text-danger">(*)</span></label>
-                <div class="col-6 label-middling">
-                    <select [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="area.centralId"
-                        class="form-control">
-                    </select>
-                </div>
+                <label class="col-3 label-middling" for="centralAC">{{'MESSAGE.NameList.Central' |translate}}:<span class="text-danger">(*)</span></label>
+                <div  class="col-6 label-middling" >
+                <input class="form-control" placeholder="{{'MESSAGE.NameList.CentralName' |translate}}" id="centralAC"
+                    [matAutocomplete]="centralAC" [formControl]="searchCentralsCtrl">
+                    </div>
+                <mat-autocomplete #centralAC="matAutocomplete" (optionSelected)="changeCentral(searchCentralsCtrl.value.id)"
+                    [displayWith]="displayCentralFn">
+                    <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
+                        <mat-spinner></mat-spinner>
+                    </mat-option>
+                    <ng-container *ngIf="!isLoading">
+                        <mat-option *ngFor="let central of centralsList" [value]="central">
+                            <span *ngIf="central">{{central.centralName}}</span>
+                            <span *ngIf="!central" class="nofind">Not found</span>
+                        </mat-option>
+                    </ng-container>
+                </mat-autocomplete>
             </div>
 
             <div class="form-group row">

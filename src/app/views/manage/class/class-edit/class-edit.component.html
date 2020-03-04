@@ -4,9 +4,9 @@
         <form>
             
                 <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.Area' |translate}}:<span class="text-danger">(*)</span></label>
+                    <label class="col-3 label-middling" for="areaAC">{{'MESSAGE.NameList.Area' |translate}}:<span class="text-danger">(*)</span></label>
                     <div  class="col-6 label-middling" >
-                        <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"
+                        <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}" id="areaAC"
                             [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
                     </div>
                     <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.id)"
@@ -16,7 +16,7 @@
                         </mat-option>
                         <ng-container *ngIf="!isLoading">
                             <mat-option *ngFor="let area of areasList" [value]="area">
-                                <span *ngIf="area">{{area.AreaName}}</span>
+                                <span *ngIf="area">{{area.areaName}}</span>
                                 <span *ngIf="!area" class="nofind">Not found</span>
                             </mat-option>
                         </ng-container>
@@ -24,9 +24,9 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.Yard' |translate}}:<span class="text-danger">(*)</span></label>
+                    <label class="col-3 label-middling" for="yardAC">{{'MESSAGE.NameList.Yard' |translate}}:<span class="text-danger">(*)</span></label>
                     <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"
+                    <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}" id="yardAC"
                         [matAutocomplete]="yardAC" [formControl]="searchYardsCtrl">
                         </div>
                     <mat-autocomplete #yardAC="matAutocomplete" (optionSelected)="changeYard(searchYardsCtrl.value.id)"
@@ -36,27 +36,28 @@
                         </mat-option>
                         <ng-container *ngIf="!isLoading">
                             <mat-option *ngFor="let yard of yardsList" [value]="yard">
-                                <span *ngIf="yard">{{yard.YardName}}</span>
+                                <span *ngIf="yard">{{yard.yardName}}</span>
                                 <span *ngIf="!yard" class="nofind">Not found</span>
                             </mat-option>
                         </ng-container>
                     </mat-autocomplete>
                 </div>
 
-                 <div class="form-group row">
-                    <label class="col-3 label-middling">{{'MESSAGE.NameList.TrainingGround' |translate}}:<span class="text-danger">(*)</span></label>
+                <div class="form-group row">
+                    <label class="col-3 label-middling" for="traininggroundAC">{{'MESSAGE.NameList.TrainingGround' |translate}}:<span class="text-danger">(*)</span></label>
                     <div  class="col-6 label-middling" >
-                    <input class="form-control" placeholder="{{'MESSAGE.NameList.TrainingGround' |translate}}"
-                        [matAutocomplete]="trainingGroundAC" [formControl]="searchTrainingGroundsCtrl">
-                    </div>
-                    <mat-autocomplete #trainingGroundAC="matAutocomplete" [displayWith]="displayTrainingGroundFn">
+                    <input class="form-control" placeholder="{{'MESSAGE.NameList.TrainingGroundName' |translate}}" id="traininggroundAC"
+                        [matAutocomplete]="traininggroundAC" [formControl]="searchTrainingGroundsCtrl">
+                        </div>
+                    <mat-autocomplete #traininggroundAC="matAutocomplete" (optionSelected)="changeTrainingGround(searchTrainingGroundsCtrl.value.id)"
+                        [displayWith]="displayTrainingGroundFn">
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
                             <mat-spinner></mat-spinner>
                         </mat-option>
                         <ng-container *ngIf="!isLoading">
-                            <mat-option *ngFor="let trainingGround of trainingGroundsList" [value]="trainingGround">
-                                <span *ngIf="trainingGround">{{trainingGround.TrainingGroundName}}</span>
-                                <span *ngIf="!trainingGround" class="nofind">"Not found"</span>
+                            <mat-option *ngFor="let trainingground of traininggroundsList" [value]="trainingground">
+                                <span *ngIf="trainingground">{{trainingground.trainingGroundName}}</span>
+                                <span *ngIf="!trainingground" class="nofind">Not found</span>
                             </mat-option>
                         </ng-container>
                     </mat-autocomplete>
@@ -65,7 +66,7 @@
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.DisplayOrder' |translate}}:</label>
                     <div  class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="aclass.displayOrder"
+                    <input [ngModelOptions]="{standalone: true}" type="number" [(ngModel)]="class.displayOrder"
                         class="form-control" placeholder="{{'MESSAGE.NameList.DisplayOrder' | translate}}">
                     </div>
                 </div>
@@ -73,14 +74,14 @@
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.ClassCode' |translate}}:<span class="text-danger">(*)</span></label>
                     <div  class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="aclass.classCode"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="class.classCode"
                         class="form-control" placeholder="{{'MESSAGE.NameList.ClassCode' |translate}}"> 
                     </div>
                 </div>
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.ClassName' |translate}}:<span class="text-danger">(*)</span></label>
                     <div  class="col-6 label-middling" >
-                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="aclass.className"
+                    <input [ngModelOptions]="{standalone: true}" type="text" [(ngModel)]="class.className"
                         class="form-control" placeholder="{{'MESSAGE.NameList.ClassName' |translate}}">
                     </div>
                 </div>
@@ -184,7 +185,7 @@
                 <div class="form-group row">
                     <label class="col-3 label-middling">{{'MESSAGE.NameList.Note' |translate}}</label>
                     <div class=" col-6 label-middling">
-                    <textarea  [ngModelOptions]="{standalone: true}" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="aclass.description"
+                    <textarea  [ngModelOptions]="{standalone: true}" id="exampleFormControlTextarea1" rows="4" [(ngModel)]="class.description"
                         class="form-control" placeholder='{{"MESSAGE.NameList.Note" |translate}}'></textarea>
                     </div>
                 </div>

@@ -20,11 +20,11 @@ export class TrainingGroundService {
 
     getTrainingGroundsList(filter: any): Observable<any> {
         let queryString =  Object.keys(filter).map(key => key + '=' + filter[key]).join('&');
-        return this.http.get(environment.apiUrl + 'TrainingGrounds?' + queryString , this.httpOptions);
+        return this.http.get(environment.serverUrl + 'TrainingGrounds?' + queryString , this.httpOptions);
     }
     
     getTrainingGround(id: any): Observable<any> {
-        return this.http.get(environment.apiUrl + `TrainingGrounds/${id}` , this.httpOptions);
+        return this.http.get(environment.serverUrl + `TrainingGrounds/${id}` , this.httpOptions);
     }
 
     addOrUpdateTrainingGround(train: TrainingGround): Observable<any> {

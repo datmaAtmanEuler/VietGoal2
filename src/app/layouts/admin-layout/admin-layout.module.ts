@@ -124,7 +124,6 @@ import { TextEditorComponent } from '../../views/manage/texteditor/texteditor.co
 import { StudentReserveComponent } from '../../views/manage/studentreserve/studentreserve.component';
 import { StudentReserveEditComponent } from '../../views/manage/studentreserve/studentreserve-edit/studentreserve-edit.component';
 import { StudentReserveImportComponent } from '../../views/manage/studentreserve/studentreserve-import/studentreserve-import.component';
-import { ConfirmComponent } from '../../views/manage/studentreserve/registrationreserved/confirm.component';
 import { StudentRegisterModulesComponent } from '../../views/manage/student-register-modules/student-register-modules.component';
 import { NotificationComponent } from '../../views/manage/notification/notification.component';
 import { NotificationEditComponent } from '../../views/manage/notification/notification-edit/notification-edit.component';
@@ -133,6 +132,7 @@ import { UserAdministrationComponent } from '../../views/manage/useradministrati
 import { UserAdministrationEditComponent } from '../../views/manage/useradministration/user-administration-edit/user-administration-edit.component';
 import { UserAdministrationImportComponent } from '../../views/manage/useradministration/user-administration-import/user-administration-import.component';
 import { YardTransferComponent } from '../../views/manage/yard-transfer/yard-transfer.component';
+import { StudentListComponent } from '../../views/manage/studentreserve/studentlist/studentlist.component';
 
 
 @NgModule({
@@ -169,6 +169,7 @@ import { YardTransferComponent } from '../../views/manage/yard-transfer/yard-tra
   declarations: [
     YardTransferComponent,
     StudentRegisterModulesComponent,
+    StudentListComponent,
     KpiConfigsComponent,
     KpiConfigEditComponent,
     StudentRegistrationComponent,
@@ -253,7 +254,6 @@ import { YardTransferComponent } from '../../views/manage/yard-transfer/yard-tra
     StudentReserveComponent,
     StudentReserveEditComponent,
     StudentReserveImportComponent,
-    ConfirmComponent,
     NotificationComponent,
     NotificationEditComponent,
     NotificationSeenComponent,
@@ -286,7 +286,8 @@ import { YardTransferComponent } from '../../views/manage/yard-transfer/yard-tra
     ScheduleComponent,
     StudentEditComponent,
     KpiConfigEditComponent,
-    UserAdministrationImportComponent
+    UserAdministrationImportComponent,
+    StudentListComponent
   ],
   providers: [
     NgxMaterialTimepickerModule,

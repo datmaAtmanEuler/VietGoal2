@@ -1,60 +1,66 @@
-import { Component, OnInit } from '@angular/core';
-import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
-import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { ASCSort, SORD_DIRECTION } from '../../../../models/sort';
+import { NgbModalConfig, NgbModal, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { UtilsService } from 'app/services/utils.service';
+import { UtilsService } from '../../../../services/utils.service';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { FormControl } from '@angular/forms';
 import { environment } from 'environments/environment';
-import { CommonFilter } from 'app/models/filter/commonfilter';
+import { CommonFilter } from '../../../../models/filter/commonfilter';
 import { finalize, switchMap, debounceTime, startWith, tap } from 'rxjs/operators';
 import { MatDatepickerInputEvent } from '@angular/material/datepicker/typings/datepicker-input';
-import { StudentAttendanceOverRangeService } from 'app/services/manage/studentattendanceoverrange.service';
-import { StudentService } from 'app/services/manage/student.service';
-import { StudentAttendanceOverRange } from 'app/models/manage/studentattendanceoverrange';
+import { StudentAttendanceService } from '../../../../services/manage/studentattendance.service';
+import { AreaService } from 'app/services/list/area.service';
+import { YardService } from 'app/services/list/yard.service';
+import { ClassService } from 'app/services/manage/class.service';
+import { AreaFilter } from 'app/models/filter/areafilter';
+import { YardFilter } from 'app/models/filter/yardfilter';
+import { ClassFilter } from 'app/models/filter/classfilter';
 
 @Component({
-  selector: 'app-studentattendanceoverrange-add',
-  templateUrl: './studentattendanceoverrange-add.component.html',
-  styleUrls: ['./studentattendanceoverrange-add.component.scss']
+  selector: 'app-studentlist',
+  templateUrl: './studentlist.component.html',
+  styleUrls: ['./studentlist.component.scss']
 })
-export class StudentAttendanceOverRangeAddComponent implements OnInit {
-  StudentAttendanceOverRangeAddList: any[] = [];
-  studentAttendance
+export class StudentListComponent implements OnInit {
+ 
+  studentList: any[] = [];
   filter: CommonFilter = new CommonFilter();
   searchAdvanced: boolean = false;
+  searchTerm:string = '';
+  pageIndex:number = 1;
   pageSizesList: number[] = [5, 10, 20, 100];
+  pageSize:number = this.pageSizesList[1];
   currentUser: any;
-  Total: number;
-  classID: number;
-  absentDate: string;
-  firstRowOnPage: number;
-  loading: boolean;
-
-  intoClassId: number;
+  loading: boolean = true;
+  Total: any;
+  firstRowOnPage: any;
+  @Output('selectContact') selectContact: EventEmitter<any> = new EventEmitter();
 
   paginationSettings: any = {
     sort: new ASCSort(),
     sortToggles: [
       null,
-      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
-      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,SORD_DIRECTION.ASC,
-      null
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC,
+      SORD_DIRECTION.ASC, SORD_DIRECTION.ASC, SORD_DIRECTION.ASC
     ],
-    columnsName: ['Order', 'Mã học sinh', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Số thứ tự', 'Ngày nhập học', 'Ngày kết thúc học phần', 'Action'],
-    // columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'DisplayOrder', 'AdmissionDate', 'EndTermDate', 'Action'],
-    columnsNameMapping: [null, 'studentCode', 'firstName', 'lastName', 'gender', 'dob', 'displayOrder', 'admissionDate', 'endTermDate', null],
-    sortAbles: [false, true, true, true, true, true, true, true, true, false],
-    visibles: [true, true, true, true, true, true, true, true, true, true]
+    // columnsName: ['Order', 'Mã học sinh', 'Họ đệm', 'Tên', 'Giới tính', 'Ngày sinh', 'Vắng', 'Lý do'],
+    columnsName: ['Order', 'StudentCode', 'FirstName', 'LastName', 'Gender', 'DateOfBirth', 'AdmissionDay', 'EndDayTerm'],
+    columnsNameMapping: ['id', 'studentCode', 'firstName', 'lastName', 'gender', 'dob', 'admissionDay', 'enddayTerm'],
+    sortAbles: [false, true, true, true, true, true, true, false],
+    visibles: [true, true, true, true, true, true, true, true]
   }
   constructor(public utilsService: UtilsService,
     private router: Router,
+    public activeModal: NgbActiveModal,
+    private areaService: AreaService,
+    private yardService: YardService,
+    private classService: ClassService,
     config: NgbModalConfig,
     private modalService: NgbModal,
+    private service: StudentAttendanceService,
     private route: ActivatedRoute,
-    private service: StudentAttendanceOverRangeService,
-    private studentService: StudentService,
     private http: HttpClient) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -63,20 +69,18 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
     utilsService.loadPaginatorLabels();
 
   }
-  
+
   ngOnInit() {
-    
+
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
 
-    this.classID = parseInt(this.route.snapshot.paramMap.get('classID'));
-    this.absentDate = this.route.snapshot.paramMap.get('absentDate'); 
-    
     this.filter.pageIndex = 1;
     this.filter.pageSize = this.pageSizesList[1];
-    this.reload();
+    // this.reload();
     this.filtersEventsBinding();
   }
+
 
   pageEvent(pageE: any) {
     this.filter.pageIndex = pageE.pageIndex + 1;
@@ -84,49 +88,28 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
     this.reload();
   }
   reload() {
-    
-    this.filter.idClass = this.classID;
-    this.filter.sortName = this.paginationSettings.sort.SortName;
-    this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
-    console.log('filter');
-    console.log(this.filter);
-    if(this.classID) {
+
+    // if(this.filter.absentDate && this.filter.classId){
+    if (this.filter.classId) {
+      this.filter.sortName = this.paginationSettings.sort.SortName;
+      this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
       this.loading = true;
-      this.StudentAttendanceOverRangeAddList = [];
-      this.studentService.getList(this.filter).subscribe((response: any) => {
+      this.studentList = [];
+      this.service.getList(this.filter).subscribe((response: any) => {
         const list = response.results ? response.results : [];
         this.Total = (response && response.rowCount) ? response.rowCount : 0;
         this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
         setTimeout(() => {
           this.loading = false;
-          this.StudentAttendanceOverRangeAddList = list || [];
+          this.studentList = list || [];
         }, 500);
       });
+      // }else if(!this.filter.absentDate){
+      //   this.utilsService.showNotification('top','center','Vui lòng nhập <strong>ngày</strong>!',3);
+    } else if (!this.filter.classId) {
+      this.utilsService.showNotification('top', 'center', 'Vui lòng nhập <strong>lớp học</strong>!', 3);
     }
   }
-  select(one: any){
-    if(this.intoClassId){
-      let modelSelect = new StudentAttendanceOverRange();
-      modelSelect.studentId = one.id;
-      modelSelect.classId = this.intoClassId;
-      modelSelect.date = this.absentDate;
-      modelSelect.isAbsent = false;
-      modelSelect.reason = 'bận lớp cũ';
-      modelSelect.attendanceType = 0;
-      const listtoput: StudentAttendanceOverRange[] = [];
-      listtoput.push(modelSelect);
-      // alert(`chọn học viên id:${one.id} qua lớp id:${this.intoClassId}`)
-      this.service.put(listtoput, this.intoClassId, this.absentDate).subscribe((response) => {
-        if(response.message) {
-          this.notifyResponseWithDate(response,this.absentDate);
-          // this.router.navigate(['quanly/diemdanhhocvienngoai']);
-        }
-      });
-    } else{
-      this.utilsService.showNotification('top', 'center', 'Chưa chọn lớp học', 3);
-    }
-  }
-
 
   sortToggles(colIndex: number) {
     const _this = this;
@@ -138,7 +121,11 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
     else
       this.utilsService.doNothing();
   }
+  //Date Events
 
+  addedDateEvent(event: MatDatepickerInputEvent<Date>) {
+    this.filter.absentDate = this.utilsService.stringDate(event.value);
+  }
   //load Autocomplete
 
   listareaes: any;
@@ -160,14 +147,15 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
   displayClassFn(object): string {
     return object && object.className && !object.notfound ? object.className : '';
   }
-  changeArea(areaId){
+  changeArea(areaId) {
     // this.filter.areaId = areaId;
   }
-  changeYard(yardId){
+  changeYard(yardId) {
     // this.filter.yardId = yardId;
   }
-  changeClass(classId){
-    this.intoClassId = classId;
+  changeClass(classId) {
+    this.filter.classId = classId;
+    this.reload();
   }
   filtersEventsBinding() {
 
@@ -179,7 +167,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
           this.listareaes = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.http.get(environment.serverUrl + 'Areas?pageIndex=1&pageSize=20&sortName=areaName&sortDirection=ASC')
+        switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1,100,0,'id','ASC'))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -204,7 +192,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
           this.listyardes = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.http.get(environment.serverUrl + 'Yards?pageIndex=1&pageSize=20&sortName=yardName&sortDirection=ASC')
+        switchMap(value => this.yardService.getYardsList(new YardFilter(value , 1 , 100, 0,'id','ASC'))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -229,7 +217,7 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
           this.listclasses = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.http.get(environment.serverUrl + 'Class?pageIndex=1&pageSize=20&sortName=className&sortDirection=ASC')
+        switchMap(value => this.classService.getClassList(new ClassFilter(value , 1 ,100,0,0,0,'id','ASC',0,0,0))
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -247,13 +235,13 @@ export class StudentAttendanceOverRangeAddComponent implements OnInit {
 
       });
   }
-  // Additional function
-  notifyResponseWithDate(response: any, absentDate: string): any {
-    if(response && response.status == 0){
-      this.utilsService.showNotification('top', 'center', response.message, 2);
-    } else{
-      this.utilsService.showNotification('top', 'center', this.utilsService.FormatString(response.message, absentDate), 4);
-    }
+	closeMe() {
+		this.activeModal.close();
+	}
+  sendData(data: any) {
+    this.selectContact.emit(data);
+    this.activeModal.close();
   }
+
 }
 

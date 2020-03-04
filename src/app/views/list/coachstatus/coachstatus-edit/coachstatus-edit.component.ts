@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
 import { CoachStatus } from 'app/models/list/coachstatus';
 import { CoachStatusService } from 'app/services/list/coachstatus.service';
+import { UtilsService } from 'app/services/utils.service';
 
 @Component({
 	selector: 'app-coachstatus-edit',
@@ -19,7 +20,7 @@ export class CoachStatusEditComponent implements OnInit {
 	CoachStatus: CoachStatus = new CoachStatus(0, '', '');
 	currentUser: any;
 
-	constructor(public activeModal: NgbActiveModal, private CoachStatusService: CoachStatusService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
+	constructor(public utilsService: UtilsService, public activeModal: NgbActiveModal, private CoachStatusService: CoachStatusService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
 		this.CoachStatusId = this.route.snapshot.queryParams['Id'];
 		this.CoachStatusId = (this.CoachStatusId) ? this.CoachStatusId : 0;
 		config.backdrop = 'static';
@@ -48,7 +49,8 @@ export class CoachStatusEditComponent implements OnInit {
 
 	UpdateTTHLV() {
 		this.CoachStatusService.addOrUpdateCoachStatus(this.CoachStatus).subscribe(
-			() => {
+			(response: any) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -64,6 +66,12 @@ export class CoachStatusEditComponent implements OnInit {
 
 	closeMe() {
 		this.activeModal.close();
+	}
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilsService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
+		}
 	}
 
 }

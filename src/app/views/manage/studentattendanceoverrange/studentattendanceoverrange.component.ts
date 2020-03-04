@@ -21,7 +21,6 @@ import { StudentAttendanceOverRangeService } from 'app/services/manage/studentat
 export class StudentAttendanceOverRangeComponent implements OnInit {
   StudentAttendanceOverRangeList: any[] = [];
   filter: CommonFilter = new CommonFilter();
-  searchTerm: string = '';
   searchAdvanced: boolean = true;
   pageSizesList: number[] = [5, 10, 20, 100];
   currentUser: any;
@@ -84,10 +83,13 @@ export class StudentAttendanceOverRangeComponent implements OnInit {
     this.filter.pageSize = pageE.pageSize;
     this.reload();
   }
+  search(){
+    this.reload();
+    this.filter.searchTerm = '';
+  }
   reload() {
     if(this.filter.absentDate && this.filter.classId){
       
-      this.filter.searchTerm = this.searchTerm;
       this.filter.sortName = this.paginationSettings.sort.SortName;
       this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
       console.log('filter');

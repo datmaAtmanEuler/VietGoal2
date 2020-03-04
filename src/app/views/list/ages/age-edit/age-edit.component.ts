@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
 import { Age } from 'app/models/list/age';
 import { AgeService } from 'app/services/list/age.service';
+import { UtilsService } from 'app/services/utils.service';
 
 @Component({
 	selector: 'app-age-edit',
@@ -19,7 +20,7 @@ export class AgeEditComponent implements OnInit {
 	age: any;
 	currentUser: any;
 
-	constructor(public activeModal: NgbActiveModal, private AgeService: AgeService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
+	constructor(public utilsService: UtilsService, public activeModal: NgbActiveModal, private AgeService: AgeService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
 		this.AgeId = this.route.snapshot.queryParams['Id'];
 		this.AgeId = (this.AgeId) ? this.AgeId : 0;
 		config.backdrop = 'static';
@@ -48,7 +49,8 @@ export class AgeEditComponent implements OnInit {
 
 	UpdateAge() {
 		this.AgeService.addOrUpdateAge(this.age, 0).subscribe(
-			() => {
+			(response: any) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -63,6 +65,12 @@ export class AgeEditComponent implements OnInit {
 
 	closeMe() {
 		this.activeModal.close();
+	}
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilsService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
+		}
 	}
 
 

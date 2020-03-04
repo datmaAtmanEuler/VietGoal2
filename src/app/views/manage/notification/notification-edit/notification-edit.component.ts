@@ -64,7 +64,8 @@ export class NotificationEditComponent implements OnInit {
 	Update() {
     this.notification.content = this.content;
 		this.service.addOrUpdate(this.notification).subscribe(
-			() => {
+			(response: any) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -91,6 +92,12 @@ export class NotificationEditComponent implements OnInit {
   onPaste($event: any): void {
     console.log($event);
   }
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilsService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
+		}
+	}
   // Date Event
   createdDateEvent(event: MatDatepickerInputEvent<Date>) {
     this.notification.createdDate = this.utilsService.stringDate(event.value);

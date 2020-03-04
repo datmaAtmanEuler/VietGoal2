@@ -88,7 +88,7 @@ export class StudentStatusComponent implements OnInit {
   remove(id: any) {
     const _this = this;
     const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
-    modalRef.componentInstance.confirmObject = 'Students State';
+    modalRef.componentInstance.confirmObject = 'StudentStatus';
     modalRef.componentInstance.decide.subscribe(() => {
       _this.service.deleteStudentStatus(id).subscribe(() => {
         _this.reload();

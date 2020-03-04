@@ -60,6 +60,10 @@ export class CollectionComponent implements OnInit {
     this.filter.pageSize = pageE.pageSize;
     this.reload();
   }
+  search(){
+    this.reload();
+    this.filter.searchTerm = '';
+  }
   reload() {
     this.filter.sortName = this.paginationSettings.sort.SortName;
     this.filter.sortDirection = this.paginationSettings.sort.SortDirection; 

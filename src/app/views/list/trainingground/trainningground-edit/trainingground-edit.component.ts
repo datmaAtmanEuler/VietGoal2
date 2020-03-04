@@ -12,6 +12,8 @@ import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operator
 import { FormControl } from '@angular/forms';
 import { AreaFilter } from 'app/models/filter/areafilter';
 import { AreaService } from 'app/services/list/area.service';
+import { UtilsService } from 'app/services/utils.service';
+import { CommonFilter } from 'app/models/filter/commonfilter';
 
 @Component({
 	selector: 'app-training-ground-edit',
@@ -23,7 +25,6 @@ import { AreaService } from 'app/services/list/area.service';
 export class TrainingGroundEditComponent implements OnInit {
 	@Input('popup') popup: boolean;
 	@Input('id') id: number;
-	@Input('UserId') UserId: null | number;
 	currentUser: any;
 	searchAreasCtrl = new FormControl();
 	searchYardsCtrl = new FormControl();
@@ -32,8 +33,8 @@ export class TrainingGroundEditComponent implements OnInit {
 	areasList: any;
 	yardsList: any;
 	trainingground: TrainingGround ;
-
-	constructor(private areaService: AreaService, private yardservice: YardService, public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private service: TrainingGroundService, private route: ActivatedRoute, private router: Router) {
+	mainFilter = new CommonFilter();
+	constructor(public utilsService: UtilsService, private areaService: AreaService, private yardservice: YardService, public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private service: TrainingGroundService, private route: ActivatedRoute, private router: Router) {
 		this.id = this.route.snapshot.queryParams['id'];
 		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
@@ -65,7 +66,7 @@ export class TrainingGroundEditComponent implements OnInit {
 		return yard && yard.yardName && !yard.notfound ? yard.yardName : '';
 	}
 	changeYard(yardID : number){
-		this.trainingground.yardId = yardID;
+		this.mainFilter.yardId = yardID;
 	}
 	changeArea(areaID) {
 		this.trainingground.areaId = areaID;
@@ -80,7 +81,7 @@ export class TrainingGroundEditComponent implements OnInit {
 					this.areasList = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.areaService.getAreasList(new AreaFilter(value, 1, 100, 0, 'id', 'ASC'))
+				switchMap(value => this.areaService.getAreasList(new AreaFilter(this.utilsService.objectToString(value), 1, 100, 0, 'id', 'ASC'))
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -108,7 +109,7 @@ export class TrainingGroundEditComponent implements OnInit {
 				this.yardsList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value => this.yardservice.getYardsList(new YardFilter(value, 1, 100, 0, 'id', 'ASC'))
+			switchMap(value => this.yardservice.getYardsList(new YardFilter(this.utilsService.objectToString(value), 1, 100, 0, 'id', 'ASC'))
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -142,7 +143,7 @@ export class TrainingGroundEditComponent implements OnInit {
 					_this.closeMe();
 				}
 			} else {
-				//const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
+				const modalRef = _this.modalService.open(ConfirmComponent, { size: 'lg' });
 			}
 		});
 	}

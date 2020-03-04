@@ -12,6 +12,7 @@ import {  debounceTime, tap, switchMap, finalize, startWith, debounce  } from 'r
 import { pipe } from 'rxjs';
 import { AreaService } from 'app/services/list/area.service';
 import { AreaFilter } from 'app/models/filter/areafilter';
+import { UtilsService } from 'app/services/utils.service';
 
 @Component({
 	selector: 'app-santap-edit',
@@ -32,7 +33,7 @@ export class YardEditComponent implements OnInit {
 	yard : Yard;
 	ayard : any = [];
 	errorMsg: string;
-	constructor( config: NgbModalConfig, private modalService: NgbModal,public activeModal: NgbActiveModal,private areaService: AreaService, private centralService: CentralService, private yardService: YardService, private route: ActivatedRoute, private router: Router) {
+	constructor(public utilsService: UtilsService, config: NgbModalConfig, private modalService: NgbModal,public activeModal: NgbActiveModal,private areaService: AreaService, private centralService: CentralService, private yardService: YardService, private route: ActivatedRoute, private router: Router) {
 		this.id = this.route.snapshot.queryParams['id'];
 		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
@@ -79,7 +80,7 @@ export class YardEditComponent implements OnInit {
 				this.centralList = [];
 				this.isLoading = true;
 			}),
-			switchMap(value=> this.centralService.getCentralsList(new CentralFilter(value,1,100,0,0,0,'id','ASC'))
+			switchMap(value=> this.centralService.getCentralsList(new CentralFilter(this.utilsService.objectToString(value),1,100,0,0,0,'id','ASC'))
 			.pipe(
 				finalize(()=>{
 					this.isLoading = false;
@@ -107,7 +108,7 @@ export class YardEditComponent implements OnInit {
 				this.arealist = [];
 				this.isLoading = true;
 			}),
-			switchMap(value=> this.areaService.getAreasList(new AreaFilter(value,1,100,0,'id','ASC'))
+			switchMap(value=> this.areaService.getAreasList(new AreaFilter(this.utilsService.objectToString(value),1,100,0,'id','ASC'))
 			.pipe(
 				finalize(()=>{
 					this.isLoading = false;

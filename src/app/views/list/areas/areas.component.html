@@ -27,9 +27,9 @@
                                           class="btn btn-primary search-button advanced-search-others btn-link btn-sm btn-just-icon">
                                           <i class="material-icons advanced-search-btn">search</i>
                                         </button>
-                          <input [(ngModel)]="searchTerm" class="form-control" type="text"
+                          <input [(ngModel)]="mainfilter.searchTerm" class="form-control" type="text"
                             placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
-                          <button type="button" (click)="reload()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
+                          <button type="button" (click)="search()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
                             class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
                             <i class="material-icons">search</i>
                           </button>
@@ -89,7 +89,7 @@
                       <tbody>
                         <ng-container *ngFor="let area of areasList; let i = index;">
                           <tr>
-                            <td>{{ utilsService.padIntegerLeftWithZeros(i + 1, 3) }}</td>
+                            <td>{{firstRowOnPage + i }}</td>
                             <ng-container *ngFor="let colName of paginationSettings.columnsName; let colIndex = index">
                               <td
                                 *ngIf="colIndex != 0 && colIndex != paginationSettings.columnsName.length - 1 && paginationSettings.visibles[colIndex]">
@@ -111,7 +111,7 @@
                       </tbody>
                     </table>
                   </div>
-                  <mat-paginator [length]="Total" [pageSize]="pageSize" [pageSizeOptions]="pageSizesList"
+                  <mat-paginator [length]="Total" [pageSize]="mainfilter.PageSize" [pageSizeOptions]="pageSizesList"
                     [showFirstLastButtons]="true" (page)="pageEvent($event)">
                   </mat-paginator>
                 </div>

@@ -15,6 +15,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { AreaImportComponent } from './area-import/area-import.component';
 import { FormControl } from '@angular/forms';
 import { UtilsService } from '../../../services/utils.service';
+import { CommonFilter } from 'app/models/filter/commonfilter';
 
 @Component({
   selector: 'app-areas',
@@ -38,7 +39,7 @@ export class AreasComponent implements OnInit {ModalDirective;
 
   searchCentralsCtrl = new FormControl();
 
-  filter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 'id','ASC');
+  mainfilter = new CommonFilter();
   centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 0, 0, 'id','ASC');
 
   /**
@@ -53,7 +54,7 @@ export class AreasComponent implements OnInit {ModalDirective;
       null
     ],
     columnsName: ['Order', 'AreaCode', 'AreaName', 'Central', 'Action'],
-    columnsNameMapping: ['id', 'areaCode', 'areaName', 'centralId', ''],
+    columnsNameMapping: ['id', 'areaCode', 'areaName', 'centralName', ''],
     sortAbles: [false, true, true, true, false],
     visibles:  [true, true, true, true, true]
   }
@@ -86,56 +87,49 @@ export class AreasComponent implements OnInit {ModalDirective;
       }
   }
   ngOnInit() {
-    
+    this.mainfilter.PageIndex = 1;
+    this.mainfilter.PageSize = this.pageSizesList[1];
+    this.centralService.getCentralsList(this.centralFilter).subscribe((response)=>{
+      this.centralsList = response.results;
+    });
     this.reload();
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
+
     new PerfectScrollbar(vgscroll);
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
-    remove(area: Area) {
-        this.area = area;
+    remove(id : any) {
     	const _this = this;
     	const modalRef = this.modalService.open(ConfirmComponent, { windowClass: 'modal-confirm' });
     	modalRef.componentInstance.confirmObject = 'RegionsList';
     	modalRef.componentInstance.decide.subscribe(() => {
-        	_this.deleteArea();
+        this.service.deleteArea(id).subscribe(()=>{
+          _this.reload()
+        })
     	});
     }
 
     reload() {
       const _this = this;
       this.isLoading = true;
-      _this.centralsList = [];
-      this.centralService.getCentralsList(_this.centralFilter).subscribe(
+      this.mainfilter.SortName = this.paginationSettings.sort.SortName;
+      this.mainfilter.SortDirection = this.paginationSettings.sort.SortDirection;
+      this.centralService.getCentralsList(this.mainfilter).subscribe(
           (response: any) => {
             const list = response.results ? response.results : [];
+            _this.Total = (response && response.rowCount) ? response.rowCount : 0;
             _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-            setTimeout(() => {
-              _this.centralsList = (list) ? list : []; 
-              _this.areasList = [];
-              _this.service.getAreasList(_this.filter).subscribe(
-                  (response: any) => {
-                    const list = response.results ? response.results : [];
-                    
-                    _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
                     setTimeout(() => {
-                      _this.areasList = (list) ? list : [];
+                      _this.centralsList = (list) ? list : [];
                       _this.isLoading = false;
                     }, 500);
                   },
                   (err: any) => {
-                    _this.areasList = [];
+                    _this.centralsList = [];
                     _this.isLoading = false;
                   }
               );
-            }, 500);
-          },
-          (err: any) => {
-            _this.centralsList = [];
-            _this.isLoading = false;
-          }
-      );
     }
 
   add() {
@@ -148,7 +142,6 @@ export class AreasComponent implements OnInit {ModalDirective;
     modalRef.componentInstance.popup = true;
     if (id) {
       modalRef.componentInstance.id = id;
-      modalRef.componentInstance.UserId = _this.currentUser.UserId;
     }
     modalRef.result.then(function(){
       _this.reload();
@@ -157,31 +150,19 @@ export class AreasComponent implements OnInit {ModalDirective;
 
 
 
-  deleteArea() {
-    const _this = this;
-    this.service.deleteArea(this.area.id, this.currentUser.UserId).subscribe((res: any) => {
-      _this.reload();
-    });
-  }
   pageEvent(variable: any){
     this.pageIndex = variable.pageIndex+1;
     this.pageSize = variable.pageSize;
     this.reload();
   }
   
-  
   doNothing(): void {}
-
   displayCentralFn(central: any) {
     return central && central.centralName && !central.notfound ? central.centralName : '';
   }
 
 changeCentral(centralId: number) {
-    this.filter.CentralId = centralId;
-    this.service.getAreasList(this.filter).subscribe((list) => {
-      this.areasList = list;
-      this.reload();
-    });
+  this.mainfilter.CentralId = centralId;
   }
 
   openImport() {

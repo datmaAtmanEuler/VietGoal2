@@ -2,7 +2,8 @@ export class Ward {
 	id:null | number;
 	wardCode: string;
     wardName: string;
-    districtId: number;
+	districtId: number;
+	provinceId: number;
 	displayOrder:number;
 	
 	

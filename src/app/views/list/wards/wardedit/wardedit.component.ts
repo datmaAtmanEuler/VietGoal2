@@ -10,8 +10,9 @@ import { DistrictFilter } from '../../../../models/filter/districtfilter';
 import { debounceTime, tap, switchMap, finalize, startWith } from 'rxjs/operators';
 import { SORD_DIRECTION } from "../../../../models/sort";
 import { FormControl } from '@angular/forms';
-import { WardFilter } from 'app/models/filter/wardfilter';
-import { ProvinceService } from 'app/services/list/province.service';
+import { WardFilter } from '../../../../models/filter/wardfilter';
+import { ProvinceService } from '../../../../services/list/province.service';
+import { UtilsService } from '../../../../services/utils.service';
 
 @Component({
 	selector: 'app-ward-edit',
@@ -24,7 +25,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	@Input('id') id: number;
 	@Input('UserId') UserId: null | number;
 	ward : Ward;
-	filter: WardFilter = new WardFilter ('',1,100,0,0,'id','ASC');
+	filter: WardFilter = new WardFilter('',1,100,0,0,'id','ASC');
 	listdistrict: any[] = [];
 	listprovince: any[] = [];
 	/**
@@ -37,8 +38,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	*/
 	searchDistrictsCtrl = new FormControl();
 	searchProvincesCtrl = new FormControl();
-  
-
+ 
 	/**
 	* ---------------------------
 	*/
@@ -46,29 +46,28 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 	errorMsg: string;
   	isLoading = false;
 
-	constructor(private cd: ChangeDetectorRef,private provinceService: ProvinceService, private districtService: DistrictService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
+	constructor(private cd: ChangeDetectorRef, public utilsService: UtilsService, private provinceService: ProvinceService, private districtService: DistrictService,public activeModal: NgbActiveModal, config: NgbModalConfig, private modalService: NgbModal, private wardService: WardService, private route: ActivatedRoute, private router: Router) {
 		this.id = this.route.snapshot.queryParams['id'];
 		this.id = (this.id) ? this.id : 0;
 		config.backdrop = 'static';
      	config.keyboard = false;
 		config.scrollable = false;
 	}  
-
 	displayProvinceFn(pro): string {
 		return pro && pro.provinceName && !pro.notfound ? pro.provinceName : '';
 	}
 	displayDistrictFn(dis): string {
 		return dis && dis.districtName && !dis.notfound ? dis.districtName : '';
 	}
-	changeProvince(provinceId) {
-		// this.wardFilter.provinceId = provinceId;
-	}
-	
-	changeDistrict(districtId) {
+	changeProvince(provinceId: number) {
+		this.ward.provinceId = provinceId;
+	  }
+	changeDistrict(districtId: number) {
 		this.ward.districtId = districtId;
 	}
 
 	GetWardById(id: number) {
+		console.log(id);
 		this.ward = new Ward();
 		this.wardService.getWard((id) ? id : this.id).subscribe(
 			(aWard) => {
@@ -101,7 +100,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 					this.listprovince = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.provinceService.getProvincesList({ 'SearchTerm': value, 'PageIndex': 1, 'PageSize': 10, 'SortName': 'id', 'SortDirection': 'ASC' })
+				switchMap(value => this.provinceService.getProvincesList({ 'SearchTerm': this.utilsService.objectToString(value), 'PageIndex': 1, 'PageSize': 10, 'SortName': 'id', 'SortDirection': 'ASC' })
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -126,7 +125,7 @@ export class WardEditComponent implements OnInit, AfterViewInit {
 			startWith(''),
 	        debounceTime(300),
 	        tap(() => this.isLoading = true),
-	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(value, 1, 10000, 0, 'id', 'ASC'))
+	        switchMap(value => _this.districtService.getDistrictsList(new DistrictFilter(this.utilsService.objectToString(value), 1, 10000, 0, 'id', 'ASC'))
 	        .pipe(
 	          finalize(() => this.isLoading = false),
 	          )

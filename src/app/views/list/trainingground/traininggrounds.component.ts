@@ -18,6 +18,9 @@ import { FormControl } from '@angular/forms';
 import { AreaFilter } from '../../../models/filter/areafilter';
 import { YardFilter } from '../../../models/filter/yardfilter';
 import { UtilsService } from '../../../services/utils.service';
+import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
+import { CommonFilter } from '../../../models/filter/commonfilter';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-training-grounds',
@@ -26,7 +29,6 @@ import { UtilsService } from '../../../services/utils.service';
 })
 export class TrainingGroundsComponent implements OnInit {ModalDirective;
   trainingroundsList:any[] = [];
-  traininground: TrainingGround;
   areasList:any[] = [];
   area: any;
   yardsList: any[]=[];
@@ -44,7 +46,7 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
   searchAdvanced: boolean = false;
   areaFilter: AreaFilter = new AreaFilter( this.searchTerm,this.pageIndex, this.pageSize,0,'id','ASC');
   yardFilter: YardFilter = new YardFilter( this.searchTerm,this.pageIndex, this.pageSize,0,'id','ASC');
-  filter: TrainingGroundFilter = new TrainingGroundFilter( this.searchTerm,this.pageIndex, this.pageSize,0,0, 'id','ASC');
+  mainfilter = new CommonFilter()
 
   /**
    * BEGIN SORT SETTINGS
@@ -90,7 +92,16 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
       }
   }
   ngOnInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+  this.mainfilter.pageIndex = 1;
+  this.mainfilter.pageSize = this.pageSizesList[1];
+  this.areaService.getAreasList(this.areaFilter).subscribe((response : any)=>{
+    this.areasList = response.results;
+  });
+  this.yardService.getYardsList(this.yardFilter).subscribe((response)=>{
+    this.yardsList = response.results;
+  });
+  this.filtersEventsBinding();
   this.reload();
   const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
   new PerfectScrollbar(vgscroll);
@@ -108,32 +119,21 @@ export class TrainingGroundsComponent implements OnInit {ModalDirective;
 }
 
 pageEvent(variable: any){
-  this.pageIndex = variable.pageIndex+1;
-  this.pageSize = variable.pageSize;
+  this.mainfilter.PageIndex = variable.pageIndex + 1;
+  this.mainfilter.PageSize = variable.pageSize;
   this.reload();
 }
 reload() {
   const _this = this;
   this.isLoading = true;
-  _this.areasList = [];
-  this.areaService.getAreasList(this.areaFilter).subscribe(
+ this.mainfilter.SortName = this.paginationSettings.sort.SortName;
+ this.mainfilter.SortDirection = this.paginationSettings.sort.SortDirection;
+  this.service.getTrainingGroundsList(this.mainfilter).subscribe(
       (response: any) => {
         const list = response.results ? response.results : [];
+        this.Total = (response && response.rowCount) ? response.rowCount : 0;
+        this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
         setTimeout(() => {
-          _this.areasList = (list) ? list : [];
-          _this.yardsList = [];
-          _this.yardService.getYardsList(_this.yardFilter).subscribe(
-              (response: any) => {
-                const list = response.results ? response.results : [];
-                setTimeout(() => {
-                  _this.yardsList = (list) ? list : [];
-                  _this.trainingroundsList = [];
-                  _this.service.getTrainingGroundsList(_this.filter).subscribe(
-                      (response: any) => {
-                        const list = response.results ? response.results : [];
-                        _this.Total = (response && response.rowCount) ? response.rowCount : 0;
-                        _this.firstRowOnPage = (response && response.firstRowOnPage) ? response.firstRowOnPage : 0;
-                        setTimeout(() => {
                           _this.trainingroundsList = (list) ? list : [];
                           _this.isLoading = false;
                         }, 500);
@@ -141,24 +141,59 @@ reload() {
                       (err: any) => {
                         _this.trainingroundsList = [];
                         _this.isLoading = false;
-                      }
-                  );
-                }, 500);
-              },
-              (err: any) => {
-                _this.yardsList = [];
-                _this.isLoading = false;
-              }
-          );
-        }, 500);
-      },
-      (err: any) => {
-        _this.areasList = [];
-        _this.isLoading = false;
-      }
-  );
+      });
 }
+filtersEventsBinding() {
+  this.searchAreasCtrl.valueChanges
+    .pipe(
+      startWith(''),
+      debounceTime(500),
+      tap(() => {
+        this.areasList = [];
+        this.isLoading = true;
+      }),
+      switchMap(value => this.areaService.getAreasList(new AreaFilter(this.utilsService.objectToString(value),1,100,0,'id','ASC'))
+        .pipe(
+          finalize(() => {
+            this.isLoading = false
+          }),
+        )
+      )
+    )
+    .subscribe((response: any) => {
+      const data = response.results;
+      if (data == undefined) {
+        this.areasList = [{ notfound: 'Not Found' }];
+      } else {
+        this.areasList = data.length ? data : [{ notfound: 'Not Found' }];
+      }
 
+    });
+  this.searchYardsCtrl.valueChanges.pipe(
+    startWith(''),
+    debounceTime(500),
+    tap(() => {
+      this.yardsList = [];
+      this.isLoading = true;
+    }),
+    switchMap(value => this.yardService.getYardsList(new YardFilter(this.utilsService.objectToString(value), this.pageIndex,this.pageSize,0,'id','ASC'))
+      .pipe(
+        finalize(() => {
+          this.isLoading = false
+        }),
+      )
+    )
+  )
+    .subscribe((response: any) => {
+      const data = response.results;
+      if (data == undefined) {
+        this.yardsList = [{ notfound: 'Not Found' }];
+      } else {
+        this.yardsList = data.length ? data : [{ notfound: 'Not Found' }];
+      }
+
+    });
+}
 
 add() {
   this.edit(null);
@@ -170,7 +205,6 @@ edit(ID: null | number) {
   modalRef.componentInstance.popup = true;
   if (ID) {
     modalRef.componentInstance.id = ID;
-    modalRef.componentInstance.UserId = _this.currentUser.UserId;
   }
   modalRef.result.then(function(){
     _this.reload();
@@ -184,9 +218,9 @@ displayAreaFn(area: any) {
 
 changeArea(areaId: number) {
     this.yardFilter.AreaId = areaId;
-    this.yardService.getYardsList(this.yardFilter).subscribe((list) => {
-      this.yardsList = list;
-      this.reload();
+    this.yardService.getYardsList(this.yardFilter).subscribe((response : any) => {
+      this.yardsList = response.results;
+      
     });
   }
 
@@ -195,7 +229,7 @@ changeArea(areaId: number) {
   }
 
 changeYard(yardId: number) {
-   this.traininground.yardId = yardId;
+   this.mainfilter.yardId = yardId;
    this.reload();
   }
   

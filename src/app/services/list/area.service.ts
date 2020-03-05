@@ -35,8 +35,8 @@ export class AreaService {
         }
     }
 
-    deleteArea(id: number, deletedBy: number): Observable<any> {
-        return this.http.delete(environment.serverUrl + `Areas/${id}?deletedBy=${deletedBy}` , this.httpOptions);
+    deleteArea(id: number): Observable<any> {
+        return this.http.delete(environment.serverUrl + `Areas/${id}` , this.httpOptions);
     }
     getTemplate(fileName: string) {
         return `${environment.serverOriginUrl}Docs/Templates/${fileName}`;

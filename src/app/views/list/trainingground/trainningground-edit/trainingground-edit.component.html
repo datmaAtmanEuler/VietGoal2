@@ -21,7 +21,7 @@
                 <div class="form-group row" >
                     <label class="col-5 label-middling">{{'MESSAGE.NameList.Area' | translate}}<span class="text-danger">(*)</span></label>
                         <div  class="col-7 label-middling" >
-                            <input class="form-control" placeholder="{{'MESSAGE.NameList.Area' |translate}}"  [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
+                            <input class="form-control" id="areaAC" placeholder="{{'MESSAGE.NameList.Area' |translate}}"  [matAutocomplete]="areaAC" [formControl]="searchAreasCtrl">
                         </div>
                     <mat-autocomplete #areaAC="matAutocomplete" (optionSelected)="changeArea(searchAreasCtrl.value.id)" [displayWith]="displayAreaFn">
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">
@@ -39,7 +39,7 @@
                 <div class="form-group row" >
                     <label class="col-5 label-middling">{{'MESSAGE.NameList.Yard' | translate}}<span class="text-danger">(*)</span></label>
                         <div  class="col-7 label-middling" >
-                            <input class="form-control" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"  [matAutocomplete]="yardAC" [formControl]="searchYardsCtrl">
+                            <input class="form-control" id="yardAC" placeholder="{{'MESSAGE.NameList.Yard' |translate}}"  [matAutocomplete]="yardAC" [formControl]="searchYardsCtrl">
                         </div>
                     <mat-autocomplete #yardAC="matAutocomplete" (optionSelected)="changeYard(searchYardsCtrl.value.id)" [displayWith]="displayYardFn">
                         <mat-option *ngIf="isLoading" class="is-loading bigger-spinner">

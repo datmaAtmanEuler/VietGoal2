@@ -61,26 +61,26 @@ export class NotificationComponent implements OnInit {
     const vgscroll = <HTMLElement>document.querySelector('.vg-scroll');
     new PerfectScrollbar(vgscroll);
 
-    this.filter.pageIndex = 1;
-    this.filter.pageSize = this.pageSizesList[1];
-    this.filter.searchTerm = '';
+    this.filter.PageIndex = 1;
+    this.filter.PageSize = this.pageSizesList[1];
+    this.filter.SearchTerm = '';
     this.reload();
   }
 
   pageEvent(pageE: any) { 
-    this.filter.pageIndex = pageE.pageIndex + 1;
-    this.filter.pageSize = pageE.pageSize;
+    this.filter.PageIndex = pageE.pageIndex + 1;
+    this.filter.PageSize = pageE.pageSize;
     this.reload();
   }
   search(){
       this.reload();
-      this.filter.searchTerm = '';
+      this.filter.SearchTerm = '';
   }
   reload() {
 
     // if(this.filter.absentDate && this.filter.classId){
-      this.filter.sortName = this.paginationSettings.sort.SortName;
-      this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
+      this.filter.SortName = this.paginationSettings.sort.SortName;
+      this.filter.SortDirection = this.paginationSettings.sort.SortDirection;
       console.log('filter');
       console.log(this.filter);
       this.loading = true;

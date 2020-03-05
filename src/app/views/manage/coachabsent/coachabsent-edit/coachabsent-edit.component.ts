@@ -138,7 +138,8 @@ export class CoachAbsentEditComponent implements OnInit {
 	}
 	Update() {
 		this.service.addOrUpdate(this.CoachAbsent).subscribe(
-			() => {
+			(response: any) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -152,6 +153,12 @@ export class CoachAbsentEditComponent implements OnInit {
 
 	closeMe() {
 		this.activeModal.close();
+	}
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
+		}
 	}
 	// Date events
 	absentDateEvent(event: MatDatepickerInputEvent<Date>) {

@@ -60,8 +60,6 @@ export class CentralEditComponent implements OnInit {
 		config.backdrop = 'static';
 		config.keyboard = false;
 		config.scrollable = false;
-
-		// this.getProvince();
 	}
 	ngOnInit() {
 		this.loadAutocompletes();
@@ -98,12 +96,10 @@ export class CentralEditComponent implements OnInit {
 	}
 
 	UpdateCentral() {
-		console.log(this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined ? this.searchProvincesCtrl.value.ID : 'a');
-		console.log(this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined ? this.searchDistrictsCtrl.value.ID : 'b');
-		console.log(this.searchWardsCtrl.value && this.searchWardsCtrl.value.ID != undefined ? this.searchWardsCtrl.value.ID : 'c');
 		this.central.area = this.central.area * 1;
 		this.CentralService.addOrUpdateCentral(this.central).subscribe(
-			() => {
+			(response: any) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -124,20 +120,6 @@ export class CentralEditComponent implements OnInit {
 	}
 	// Autocomplete 
 
-	provinceIDfilted() {
-		if (this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined) {
-			return this.searchProvincesCtrl.value.ID
-		} else {
-			return 0;
-		}
-	}
-	wardObservableFilter(value: any): Observable<any> {
-		if (this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined) {
-			return this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=${value}&DistrictID=${this.searchDistrictsCtrl.value.ID}&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-		} else {
-			return this.http.get(`https://localhost:44349/Api/Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-		}
-	}
 	displayProvinceFn(user): string {
 		return user && user.provinceName && !user.notfound ? user.provinceName : '';
 	}
@@ -244,6 +226,12 @@ export class CentralEditComponent implements OnInit {
 				}
 
 			});
+	}
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
+		}
 	}
 
 }

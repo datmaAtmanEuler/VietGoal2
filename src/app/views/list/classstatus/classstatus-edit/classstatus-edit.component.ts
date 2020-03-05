@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
 import { ClassStatusService } from 'app/services/list/classstatus.service';
 import { ClassStatus } from 'app/models/list/classstatus';
+import { UtilsService } from 'app/services/utils.service';
 
 @Component({
   selector: 'app-classstatus-edit',
@@ -19,7 +20,7 @@ export class ClassStatusEditComponent implements OnInit {
 	ClassStatus: ClassStatus;
 	currentUser: any;
 
-	constructor(public activeModal: NgbActiveModal, private ClassStatusService: ClassStatusService, config: NgbModalConfig , private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
+	constructor(public utilsService: UtilsService, public activeModal: NgbActiveModal, private ClassStatusService: ClassStatusService, config: NgbModalConfig , private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
 		this.ClassStatusId = this.route.snapshot.queryParams['Id'];
 		this.ClassStatusId = (this.ClassStatusId) ? this.ClassStatusId : 0;
 		config.backdrop = 'static';
@@ -49,7 +50,8 @@ export class ClassStatusEditComponent implements OnInit {
 
 	UpdateTTLH() {
 		this.ClassStatusService.addOrUpdateClassStatus(this.ClassStatus).subscribe(
-			() => {
+			(response: any) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -64,6 +66,12 @@ export class ClassStatusEditComponent implements OnInit {
 	
 	closeMe() {
 		this.activeModal.close();
+	}
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilsService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
+		}
 	}
 
 

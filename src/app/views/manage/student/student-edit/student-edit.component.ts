@@ -14,6 +14,7 @@ import { DistrictService } from 'app/services/list/district.service';
 import { HttpClient } from '@angular/common/http';
 import { DistrictFilter } from 'app/models/filter/districtfilter';
 import { Observable } from 'rxjs';
+import { WardService } from 'app/services/list/ward.service';
 
 @Component({
 	selector: 'app-student-edit',
@@ -30,9 +31,11 @@ export class StudentEditComponent implements OnInit {
 	Student: Student = new Student();
 	currentUser: any;
 	fullName: any;
+	provinceId: any = '';
+	districtId: any = '';
 
 	constructor(public activeModal: NgbActiveModal, private StudentService: StudentService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router, public utilsService: UtilsService,
-		private provinceService: ProvinceService, private districtService: DistrictService, private http: HttpClient) {
+		private provinceService: ProvinceService, private districtService: DistrictService, private wardService: WardService) {
 		this.StudentId = this.route.snapshot.queryParams['Id'];
 		this.StudentId = (this.StudentId) ? this.StudentId : 0;
 		config.backdrop = 'static';
@@ -54,11 +57,12 @@ export class StudentEditComponent implements OnInit {
 				const ipStatusAC = <HTMLInputElement>document.getElementById('ipStatusAC');
 				ipDOBDP.value = this.utilsService.stringDate(this.Student.dob, true);
 				ipadmissionDateDP.value = this.utilsService.stringDate(this.Student.admissionDate, true);
-				this.http.get(environment.serverUrl+'Wards/'+this.Student.wardId).subscribe((response: any) => {
+				
+				this.wardService.getWard(this.Student.wardId).subscribe((response: any) => {
 					ipWardAC.value = response.wardName;
-					this.http.get(environment.serverUrl+'Districts/'+response.districtId).subscribe((response: any) => {
+					this.districtService.getDistrict(response.districtId).subscribe((response: any) => {
 						ipProvinceAC.value = response.districtName;
-						this.http.get(environment.serverUrl+'Provinces/'+response.provinceId).subscribe((response: any) => {
+						this.provinceService.getProvince(response.provinceId).subscribe((response: any) => {
 							ipDistrictAC.value = response.provinceName;
 						});
 					});
@@ -156,7 +160,7 @@ export class StudentEditComponent implements OnInit {
 					this.listprovince = [];
 					this.isLoading = true;
 				}),
-				switchMap(value => this.http.get(environment.serverUrl+'Provinces?pageIndex=1&pageSize=20&sortName=provinceName&sortDirection=ASC')
+				switchMap(value => this.provinceService.getProvincesList({ 'searchTerm': this.utilsService.objectToString(value), 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
 					.pipe(
 						finalize(() => {
 							this.isLoading = false
@@ -181,7 +185,7 @@ export class StudentEditComponent implements OnInit {
 				this.isLoading = true;
 			}),
 			// switchMap(value => this.districtService.getDistrictsList(new DistrictFilter(value, 1, 100, null, this.provinceIDfilted()))
-			switchMap(value => this.http.get(environment.serverUrl+'Districts?pageIndex=1&pageSize=20&sortName=districtName&sortDirection=ASC')
+			switchMap(value => this.districtService.getDistrictsList({ 'SearchTerm': this.utilsService.objectToString(value), 'ProvinceId': this.provinceId, 'pageIndex': 1, 'pageSize': 20, 'sortName': 'id', 'sortDirection': 'ASC' })
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -206,7 +210,7 @@ export class StudentEditComponent implements OnInit {
 				this.isLoading = true;
 			}),
 			// switchMap(value => this.wardObservableFilter(value)
-			switchMap(value => this.http.get(environment.serverUrl+'Wards?pageIndex=1&pageSize=20&sortName=wardName&sortDirection=ASC')
+			switchMap(value => this.wardService.getWardsList({ SearchTerm: this.utilsService.objectToString(value), DistrictId: this.districtId, PageIndex: 1, PageSize: 20 })
 				.pipe(
 					finalize(() => {
 						this.isLoading = false
@@ -241,33 +245,17 @@ export class StudentEditComponent implements OnInit {
 		this.Student.studentStatusId = id;
 	  }
 	changeProvince(provinceID) {
-		// this.districtService.getDistrictsList(new DistrictFilter('', 1, 100, null, provinceID)).subscribe((list) => {
-		// 	this.listdistrict = list;
-		// });
+		this.provinceId = provinceID;
+		this.searchDistrictsCtrl.setValue('');
 	}
 	changeDistrict(districtID) {
-		// this.http.get(`${environment.serverUrl}Wards/?SearchTerm=&DistrictID=${districtID}&SortName=&SortDirection=&PageIndex=1&PageSize=20`).subscribe((list) => {
-		// 	this.listward = list;
-		// });
+		this.districtId = districtID;
+		this.searchWardsCtrl.setValue('');
 	}
 	changeWard(wardID) {
 		this.Student.wardId = wardID;
 	}
 
-	provinceIDfilted() {
-		if (this.searchProvincesCtrl.value && this.searchProvincesCtrl.value.ID != undefined) {
-			return this.searchProvincesCtrl.value.ID
-		} else {
-			return 0;
-		}
-	}
-	wardObservableFilter(value: any): Observable<any> {
-		if (this.searchDistrictsCtrl.value && this.searchDistrictsCtrl.value.ID != undefined) {
-			return this.http.get(`${environment.serverUrl}Wards/?SearchTerm=${value}&DistrictID=${this.searchDistrictsCtrl.value.ID}&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-		} else {
-			return this.http.get(`${environment.serverUrl}Wards/?SearchTerm=${value}&DistrictID=0&SortName=&SortDirection=&PageIndex=1&PageSize=100`)
-		}
-	}
 	//Additional function
 	notifyResponse(response: any): any {
 		if(response && response.message){

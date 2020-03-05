@@ -1,22 +1,16 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Central } from '../../../models/manage/central';
 import { CentralService } from '../../../services/manage/central.service';
 import { UtilsService } from '../../../services/utils.service';
-import { Router } from '@angular/router';
 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
 
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
-import { CentralFilter } from 'app/models/filter/centralfilter';
 import { FormControl } from '@angular/forms';
 import { startWith, debounceTime, tap, switchMap, finalize } from 'rxjs/operators';
 import { ProvinceService } from 'app/services/list/province.service';
-import { HttpClient } from '@angular/common/http';
 import { DistrictService } from 'app/services/list/district.service';
-import { DistrictFilter } from 'app/models/filter/districtfilter';
-import { Observable } from 'rxjs';
-import { environment } from 'environments/environment';
 import { CentralEditComponent } from './central-edit/central-edit.component';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { CentralImportComponent } from './central-import/central-import.component';
@@ -69,7 +63,7 @@ export class CentralComponent implements OnInit {
    */
   firstRowOnPage: any;
 
-  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: CentralService, private router: Router, private modalService: NgbModal,
+  constructor(public utilsService: UtilsService, config: NgbModalConfig, private service: CentralService, private modalService: NgbModal,
     private provinceService: ProvinceService, private districtService: DistrictService, private wardService: WardService) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -93,8 +87,11 @@ export class CentralComponent implements OnInit {
     this.filter.PageSize = variable.pageSize;
     this.reload();
   }
+  search(){
+    this.reload();
+    this.filter.searchTerm = '';
+  }
   reload() {
-    this.filter.SearchTerm = this.searchTerm;
     this.filter.sortName = this.paginationSettings.sort.SortName;
     this.filter.sortDirection = this.paginationSettings.sort.SortDirection;
 
@@ -119,7 +116,7 @@ export class CentralComponent implements OnInit {
     const modalRef = this.modalService.open(CentralEditComponent, { size: 'lg' });
     modalRef.componentInstance.popup = true;
     modalRef.componentInstance.CentralId = CentralId;
-    modalRef.result.then(function (result) {
+    modalRef.result.then(function () {
       _this.reload();
     });
   }
@@ -136,7 +133,6 @@ export class CentralComponent implements OnInit {
 
 
   openImport() {
-    const _this = this;
     const modalRef = this.modalService.open(CentralImportComponent, { size: 'lg' });
     modalRef.result.then(function (importModel: any) {
       console.log(importModel);

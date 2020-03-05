@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
 import { Collection } from 'app/models/list/collection';
 import { CollectionService } from 'app/services/list/collection.service';
+import { UtilsService } from 'app/services/utils.service';
 
 @Component({
 	selector: 'app-collection-edit',
@@ -19,7 +20,7 @@ export class CollectionEditComponent implements OnInit {
 	Collection: Collection = new Collection();
 	currentUser: any;
 
-	constructor(public activeModal: NgbActiveModal, private CollectionService: CollectionService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
+	constructor(public utilsService: UtilsService, public activeModal: NgbActiveModal, private CollectionService: CollectionService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
 		this.CollectionId = this.route.snapshot.queryParams['Id'];
 		this.CollectionId = (this.CollectionId) ? this.CollectionId : 0;
 		config.backdrop = 'static';
@@ -48,7 +49,8 @@ export class CollectionEditComponent implements OnInit {
 
 	UpdateCollection() {
 		this.CollectionService.addOrUpdateCollection(this.Collection).subscribe(
-			() => {
+			(response: any) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -63,6 +65,12 @@ export class CollectionEditComponent implements OnInit {
 
 	closeMe() {
 		this.activeModal.close();
+	}
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilsService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
+		}
 	}
 
 }

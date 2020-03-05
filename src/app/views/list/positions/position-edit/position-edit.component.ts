@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Position } from 'app/models/list/position';
 import { PositionService } from 'app/services/list/position.service';
 import { ConfirmComponent } from '../../../../shared/modal/confirm/confirm.component';
+import { UtilsService } from 'app/services/utils.service';
 @Component({
 	selector: 'app-position-edit',
 	templateUrl: './position-edit.component.html',
@@ -19,7 +20,7 @@ export class PositionEditComponent implements OnInit {
 	position: Position = new Position(0, '', '', 0);
 	currentUser: any;
 
-	constructor(public activeModal: NgbActiveModal, private PositionService: PositionService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
+	constructor(public utilsService: UtilsService, public activeModal: NgbActiveModal, private PositionService: PositionService, config: NgbModalConfig, private modalService: NgbModal, private route: ActivatedRoute, private router: Router) {
 		this.PositionId = this.route.snapshot.queryParams['Id'];
 		this.PositionId = (this.PositionId) ? this.PositionId : 0;
 		config.backdrop = 'static';
@@ -48,7 +49,8 @@ export class PositionEditComponent implements OnInit {
 
 	UpdatePosition() {
 		this.PositionService.addOrUpdatePosition(this.position).subscribe(
-			() => {
+			(response: any) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -62,6 +64,12 @@ export class PositionEditComponent implements OnInit {
 
 	closeMe() {
 		this.activeModal.close();
+	}
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilsService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
+		}
 	}
 
 }

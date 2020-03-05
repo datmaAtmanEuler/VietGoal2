@@ -21,7 +21,7 @@
                         <!-- <button class="btn btn-vietgoal btn-sm mr-2" (click)="searchAdvanced = !searchAdvanced">
                           {{ 'MESSAGE.NameList.SearchAdvanced' | translate}}
                         </button> -->
-                        <input (keyup.enter)="search()" [(ngModel)]="filter.searchTerm" class="form-control" type="text"
+                        <input (keyup.enter)="search()" [(ngModel)]="filter.SearchTerm" class="form-control" type="text"
                           placeholder="{{ 'MESSAGE.NameList.Search' | translate }}" aria-label="Search">
                         <button type="button" (click)="search()" title="{{ 'MESSAGE.NameList.Search' | translate}}"
                           class="btn btn-primary search-button btn-link btn-sm btn-just-icon">
@@ -83,7 +83,7 @@
                     </tbody>
                   </table>
                 </div>
-                <mat-paginator [length]="Total" [pageSize]="filter.pageSize" [pageSizeOptions]="pageSizesList"
+                <mat-paginator [length]="Total" [pageSize]="filter.PageSize" [pageSizeOptions]="pageSizesList"
                   [showFirstLastButtons]="true" (page)="pageEvent($event)">
                 </mat-paginator>
               </div>

@@ -147,7 +147,10 @@ export class CoachAbsentComponent implements OnInit {
     this.pageSize = pageE.pageSize;
     this.reload();
   }
-  reload = function() {
+  search(){
+    this.reload();
+  }
+  reload() {
     const _this= this;
     const filter = {
       fromDate: this.utilsService.stringDate(this.fromDate),

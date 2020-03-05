@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmComponent } from 'app/shared/modal/confirm/confirm.component';
 import { Fee } from 'app/models/list/fee';
 import { FeeService } from 'app/services/list/fee.service';
+import { UtilsService } from 'app/services/utils.service';
 
 @Component({
 	selector: 'app-fee-edit',
@@ -19,7 +20,7 @@ export class FeeEditComponent implements OnInit {
 	Fee: Fee = new Fee();
 	currentUser: any;
 
-	constructor(config: NgbModalConfig, private modalService: NgbModal, public activeModal: NgbActiveModal, private FeeService: FeeService, private route: ActivatedRoute, private router: Router) {
+	constructor(public utilsService: UtilsService, config: NgbModalConfig, private modalService: NgbModal, public activeModal: NgbActiveModal, private FeeService: FeeService, private route: ActivatedRoute, private router: Router) {
 		this.FeeId = this.route.snapshot.queryParams['Id'];
 		this.FeeId = (this.FeeId) ? this.FeeId : 0;
 		config.backdrop = 'static';
@@ -47,7 +48,8 @@ export class FeeEditComponent implements OnInit {
 
 	UpdateFee() {
 		this.FeeService.addOrUpdateFee(this.Fee).subscribe(
-			(resp) => {
+			(response: any) => {
+				this.notifyResponse(response);
 				if (!this.popup) {
 					this.ReturnList();
 				} else {
@@ -62,6 +64,12 @@ export class FeeEditComponent implements OnInit {
 
 	closeMe() {
 		this.activeModal.close();
+	}
+	//Additional function
+	notifyResponse(response: any): any {
+		if(response && response.message){
+		  this.utilsService.showNotification('top', 'center', response.message, (response.status == 0) ? 2 : 4);
+		}
 	}
 
 }

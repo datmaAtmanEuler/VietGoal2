@@ -7,7 +7,7 @@ import { AreaFilter } from '../../../models/filter/areafilter';
 import { CentralFilter } from '../../../models/filter/centralfilter';
 import { Router } from '@angular/router'; 
 import { ConfirmComponent } from '../../../shared/modal/confirm/confirm.component';
-import { ASCSort, SORD_DIRECTION } from 'app/models/sort';
+import { ASCSort, SORD_DIRECTION } from '../../../models/sort';
 import { MatPaginatorIntl } from '@angular/material/paginator';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import {TranslateService} from '@ngx-translate/core';
@@ -15,10 +15,10 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { AreaImportComponent } from './area-import/area-import.component';
 import { FormControl } from '@angular/forms';
 import { UtilsService } from '../../../services/utils.service';
-import { CommonFilter } from 'app/models/filter/commonfilter';
+import { CommonFilter } from '../../../models/filter/commonfilter';
 
 @Component({
-  selector: 'app-areas',
+  selector: '../../..-areas',
   templateUrl: './areas.component.html',
   styleUrls: ['./areas.component.scss']
 })
@@ -36,9 +36,7 @@ export class AreasComponent implements OnInit {ModalDirective;
   Total: any;
   firstRowOnPage: any;
   searchAdvanced : boolean = false;
-
   searchCentralsCtrl = new FormControl();
-
   mainfilter = new CommonFilter();
   centralFilter: CentralFilter = new CentralFilter( this.searchTerm,this.pageIndex, this.pageSize,0, 0, 0, 'id','ASC');
 

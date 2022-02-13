@@ -36,7 +36,7 @@
     "@ngx-translate/core": "^12.0.0",
     "@ngx-translate/http-loader": "^4.0.0",
     "@ngx-translate/i18n-polyfill": "^1.0.0",
-    "ajv": "6.10.0",
+    "ajv": "6.12.3",
     "arrive": "2.4.1",
     "bootstrap": "4.3.1",
     "bootstrap-material-design": "4.1.2",
